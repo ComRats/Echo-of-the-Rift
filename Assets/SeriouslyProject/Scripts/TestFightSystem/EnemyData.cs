@@ -6,6 +6,7 @@ namespace FightSystem.Data
     public class EnemyData : ScriptableObject
     {
         public string _name;
+        [TextArea(3, 10)]
         public string _description;
 
         public Sprite _sprite;
