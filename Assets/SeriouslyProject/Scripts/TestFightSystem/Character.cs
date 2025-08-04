@@ -22,6 +22,15 @@ namespace FightSystem.Character
             Inizialize();
 
             button = GetComponent<Button>();
+
+            if (contextMenu == null)
+                contextMenu = FindObjectOfType<ContextMenu>();
+
+            button.onClick.AddListener(() => Debug.Log("Button clicked!"));
+
+            button.onClick.AddListener(() => contextMenu.ChangePosition(transform.GetChild(0)));
+            button.onClick.AddListener(() => contextMenu.FightStateController());
+
         }
 
         private void Inizialize()
