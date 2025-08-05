@@ -125,6 +125,16 @@ public class FightManager : MonoBehaviour
         }
     }
 
+    public void DeleteEnemyOnList(Enemy enemy)
+    {
+        if (enemy.Health <= 0)
+        {
+            enemies.Remove(enemy);
+            bases.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
+    }
+
     public enum StateFight
     {
         None,

@@ -41,19 +41,19 @@ public class ContextMenu : MonoBehaviour
         }
     }
 
-    public void ChangePosition(Transform _newParent)
+    public void ChangePosition(Transform _newParent, Character _character)
     {
         contextMenu.SetParent(_newParent);
         contextMenu.localPosition = Vector3.zero;
 
-        SetCharacter();
+        SetCharacter(_character);
 
         fightManager.CurrentStateFight = StateFight.None;
     }
 
-    public void SetCharacter()
+    public void SetCharacter(Character _character)
     {
-        character = GetComponentInParent<Character>();
+        character = _character;
     }
 
     public void FightStateController()
@@ -112,6 +112,8 @@ public class ContextMenu : MonoBehaviour
             fightManager.StopEnemyBlinking();
             Enemy.TakeDamage(character.GiveDamage());
             character.IsTurn = false;
+
+            fightManager.DeleteEnemyOnList(Enemy);
             Enemy = null;
         }
     }

@@ -26,10 +26,12 @@ namespace FightSystem.Character
             if (contextMenu == null)
                 contextMenu = FindObjectOfType<ContextMenu>();
 
-            button.onClick.AddListener(() => Debug.Log("Button clicked!"));
-
-            button.onClick.AddListener(() => contextMenu.ChangePosition(transform.GetChild(0)));
-            button.onClick.AddListener(() => contextMenu.FightStateController());
+            button.onClick.AddListener(() =>
+            {
+                contextMenu.SetCharacter(this); // Передаём себя напрямую
+                contextMenu.ChangePosition(transform.GetChild(0), this);
+                contextMenu.FightStateController();
+            });
 
         }
 
