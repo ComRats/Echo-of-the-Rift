@@ -20,7 +20,10 @@ public class FightTrigger : MonoBehaviour
         if (collision.TryGetComponent<ISceneLoader>(out var sceneLoader))
         {
             EnterTrigger();
-        }
+
+            if (collision.TryGetComponent<TestMovement>(out var movement))
+                movement.canMove = false;
+            }
     }
 
     private void EnterTrigger()

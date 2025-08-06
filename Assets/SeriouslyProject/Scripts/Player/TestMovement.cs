@@ -18,7 +18,8 @@ public class TestMovement : MonoBehaviour, ISceneLoader
 
     private void Update()
     {
-        Moving();
+        if (canMove)
+            Moving();
     }
 
     private void Moving()
