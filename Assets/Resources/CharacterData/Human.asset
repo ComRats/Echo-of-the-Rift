@@ -16,10 +16,10 @@ MonoBehaviour:
   _description: Human
   _sprite: {fileID: 862427899, guid: 0a51a8ee9d846b9428a48924d15a35ce, type: 3}
   _damage: 15
-  _priority: 15
-  _maxMana: 50
-  _mana: 50
-  _maxHealth: 100
-  _health: 100
+  _priority: 10
+  _maxMana: 10
+  _mana: 10
+  _maxHealth: 30
+  _health: 30
   _heal: 10
   _armor: 2

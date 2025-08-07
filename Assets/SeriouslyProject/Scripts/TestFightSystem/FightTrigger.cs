@@ -9,16 +9,23 @@ using System.IO;
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour
 {
-    [Header("FightSettings")]
+    [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemyesSettings> enemies = new List<EnemyesSettings>();
 
-    private const string SavePath = "enemies_data.json"; // <-- верно
+    private const string EnemySavePath = "enemies_data.json"; // <-- верно
+
+    [Header("CharcterFightSettings")]
+    [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
+    private List<CharactersSettings> characters = new List<CharactersSettings>();
+
+    private const string CharacterSavePath = "characters_data.json"; // <-- верно
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<ISceneLoader>(out var sceneLoader))
         {
+            characters = collision.GetComponent<Team>().characters;
             EnterTrigger();
 
             if (collision.TryGetComponent<TestMovement>(out var movement))
@@ -28,7 +35,8 @@ public class FightTrigger : MonoBehaviour
 
     private void EnterTrigger()
     {
-        SaveEnemiesToFile(); // Сохраняем врагов перед переходом
+        SaveEnemiesToFile();
+        SaveCharactersToFile();
         SceneManager.LoadScene("TestScene");
     }
 
@@ -37,32 +45,22 @@ public class FightTrigger : MonoBehaviour
     {
         FightData data = new FightData { enemies = this.enemies };
         string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, SavePath), json);
-        Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, SavePath)}");
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, EnemySavePath), json);
+        Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 
-
-    //[Button("Загрузить врагов из файла")]
-    //private void LoadEnemiesFromFile()
-    //{
-    //    string path = Path.Combine(Application.persistentDataPath, SavePath);
-    //    if (File.Exists(path))
-    //    {
-    //        string json = File.ReadAllText(path);
-    //        EnemyListWrapper wrapper = JsonUtility.FromJson<EnemyListWrapper>(json);
-    //        this.enemies = wrapper.enemies;
-    //        Debug.Log($"[FightTrigger] Враги загружены: {this.enemies.Count} шт.");
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("[FightTrigger] Файл врагов не найден!");
-    //    }
-    //}
+    private void SaveCharactersToFile()
+    {
+        CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
+        string json = JsonUtility.ToJson(data, true);
+        File.WriteAllText(Path.Combine(Application.persistentDataPath, CharacterSavePath), json);
+        Debug.Log($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
+    }
 
     [Serializable]
-    private class EnemyListWrapper
+    private class CharacterDataWrapper
     {
-        public List<EnemyesSettings> enemies;
+        public List<CharactersSettings> characters;
     }
 }
 

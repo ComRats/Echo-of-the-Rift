@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 9033014257014286328}
   - component: {fileID: 5331974340841231968}
   - component: {fileID: 1808547916611058563}
+  - component: {fileID: 7434136987225483318}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -254,6 +255,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerSpeed: 5
   canMove: 1
+--- !u!114 &7434136987225483318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738678033949911019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2980482955b1726469d3e585780acabf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characters:
+  - useCharacterData: 1
+    characterDataName: Human
+    characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
+    _name: 
+    _description: 
+    _damage: 0
+    _priority: 0
+    _maxMana: 0
+    _mana: 0
+    _maxHealth: 0
+    _health: 0
+    _heal: 0
+    _armor: 0
+    spritePath: 
 --- !u!1 &4650786699909764950
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,3 +431,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerUI: {fileID: 0}
+  openInvenoryKey: 101

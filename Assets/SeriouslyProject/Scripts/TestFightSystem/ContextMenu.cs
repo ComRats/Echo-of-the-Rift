@@ -152,7 +152,7 @@ public class ContextMenu : MonoBehaviour
 
         if (totalCharacterPriority > totalEnemyPriority)
         {
-            SceneManager.LoadScene("PlayerCastomization");
+            SceneManager.LoadScene("PlayerScene");
         }
         else if (totalEnemyPriority > totalCharacterPriority)
         {

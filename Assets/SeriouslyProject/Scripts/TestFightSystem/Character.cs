@@ -57,5 +57,56 @@ namespace FightSystem.Character
 
             SetGradient(1f);
         }
+
+        public void InitializeFromSettings(CharactersSettings settings)
+        {
+            if (settings.useCharacterData)
+            {
+                characterData = settings.GetCharacterData();
+
+                if (characterData != null)
+                {
+                    Name = gameObject.name = characterData._name;
+                    Sprite.sprite = characterData._sprite;
+                    Description = characterData._description;
+                    Damage = characterData._damage;
+                    MaxHealth = characterData._maxHealth;
+                    Health = characterData._health;
+                    MaxMana = characterData._maxMana;
+                    Mana = characterData._mana;
+                    Heal = characterData._heal;
+                    Priority = characterData._priority;
+                    Armor = characterData._armor;
+                }
+                else
+                {
+                    Debug.LogWarning($"Не найден CharacterData с именем {settings.characterDataName}");
+                }
+            }
+            else
+            {
+                Name = gameObject.name = settings._name;
+                Sprite.sprite = settings.GetSprite();
+                Description = settings._description;
+                Damage = settings._damage;
+                MaxHealth = settings._maxHealth;
+                Health = settings._health;
+                MaxMana = settings._maxMana;
+                Mana = settings._mana;
+                Heal = settings._heal;
+                Priority = settings._priority;
+                Armor = settings._armor;
+            }
+
+            // Обновление UI
+            healthText.text = Health + " / " + MaxHealth;
+            manaText.text = Mana + " / " + MaxMana;
+            healthBar.minValue = 0;
+            healthBar.maxValue = MaxHealth;
+            healthBar.value = Health;
+
+            SetGradient(1f);
+        }
+
     }
 }

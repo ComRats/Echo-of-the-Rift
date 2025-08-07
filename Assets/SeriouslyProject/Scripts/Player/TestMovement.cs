@@ -20,6 +20,11 @@ public class TestMovement : MonoBehaviour, ISceneLoader
     {
         if (canMove)
             Moving();
+        else
+        {
+            direction = Vector2.zero;
+            animator.SetFloat("Speed", 0f);
+        }    
     }
 
     private void Moving()
