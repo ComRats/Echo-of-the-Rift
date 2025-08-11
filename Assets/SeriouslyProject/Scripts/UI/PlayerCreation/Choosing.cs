@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -6,43 +5,46 @@ using UnityEngine.UI;
 
 public class Choosing : MonoBehaviour
 {
-    [SerializeField] private Button leftButton; 
+    public TextMeshProUGUI descriptionText;
+    [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
     [SerializeField] private TextMeshProUGUI valueText;
-    [SerializeField] private List<Stats> stats;
+    [SerializeField] private PointsManager pointsManager;
+    [SerializeField] private List<string> descriptions;
 
-    private int value;
-    private int Value
-    {
-        get => value;
-        set
-        {
-            this.value = value;
-            valueText.text = this.value.ToString();
-        }
-    }
+    private int currentValue = 0;
 
     private void Start()
     {
         leftButton.onClick.AddListener(() => ChangeValue(-1));
         rightButton.onClick.AddListener(() => ChangeValue(1));
-
-        Value = 0;
     }
 
     private void ChangeValue(int step)
     {
-        int newValue = Value + step;
-        if (newValue >= 0 && newValue <= stats.Count)
+        int newValue = currentValue + step;
+
+        if (step > 0)
         {
-            Value = newValue;
+            if (pointsManager.usedPoints < pointsManager.maxPoints && newValue < descriptions.Count)
+            {
+                pointsManager.usedPoints++;
+                currentValue = newValue;
+                UpdateUI();
+            }
+        }
+
+        else if (step < 0 && currentValue > 0)
+        {
+            pointsManager.usedPoints--;
+            currentValue = newValue;
+            UpdateUI();
         }
     }
 
-    [Serializable]
-    private struct Stats
+    public void UpdateUI()
     {
-        public TextMeshProUGUI statsText;
-        public Sprite sprite;
+        valueText.text = currentValue.ToString();
+        descriptionText.text = descriptions[currentValue];
     }
 }
