@@ -4,9 +4,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Apperance : MonoBehaviour
+public class Apperance : MonoBehaviour, IUpdatableUI
 {
     [SerializeField] private TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI DescriptionText => descriptionText;
+
     [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
     [SerializeField] private TextMeshProUGUI valueText;
