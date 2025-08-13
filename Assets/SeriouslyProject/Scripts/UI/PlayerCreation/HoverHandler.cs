@@ -9,24 +9,30 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private TextMeshProUGUI description;
     private PointsManager points;
-    private Choosing choosing;
+    private IUpdatableUI uiHandler;
 
     private void Start()
     {
-        choosing = GetComponent<Choosing>();
+        uiHandler = GetComponent<IUpdatableUI>();
         points = GetComponentInParent<PointsManager>();
-        description = choosing.descriptionText;
 
-        description.text = descriptionText + (points.maxPoints - points.usedPoints).ToString() + descriptionText1;
+        if (uiHandler is Choosing)
+        {
+            description = uiHandler.DescriptionText;
+            description.text = descriptionText + (points.maxPoints - points.usedPoints).ToString() + descriptionText1;
+        }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        choosing.UpdateUI();
+        uiHandler.UpdateUI();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        description.text = descriptionText + (points.maxPoints - points.usedPoints).ToString() + descriptionText1;
+        if (uiHandler is Choosing)
+            description.text = descriptionText + (points.maxPoints - points.usedPoints).ToString() + descriptionText1;
+        else
+            uiHandler.UpdateUI();
     }
 }

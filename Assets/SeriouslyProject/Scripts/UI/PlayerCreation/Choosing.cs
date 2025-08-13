@@ -3,9 +3,11 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Choosing : MonoBehaviour
+public class Choosing : MonoBehaviour, IUpdatableUI
 {
     public TextMeshProUGUI descriptionText;
+    public TextMeshProUGUI DescriptionText => descriptionText;
+
     [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
     [SerializeField] private TextMeshProUGUI valueText;
