@@ -133,9 +133,23 @@ public class InventoryUI : MonoBehaviour
     // Обновление всех слотов
     private void RefreshAllSlots()
     {
+        Debug.Log("Refreshing all slots...");
         for (int i = 0; i < _slotUIElements.Count; i++)
         {
             _slotUIElements[i].UpdateSlotVisuals();
+        }
+    }
+    
+    // Метод для принудительного обновления (для отладки)
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public void ForceRefreshAllSlots()
+    {
+        Debug.Log("=== FORCE REFRESH ALL SLOTS ===");
+        for (int i = 0; i < _slotUIElements.Count; i++)
+        {
+            Debug.Log($"Refreshing slot {i}");
+            _slotUIElements[i].DebugSlotState();
+            _slotUIElements[i].ForceUpdate();
         }
     }
     

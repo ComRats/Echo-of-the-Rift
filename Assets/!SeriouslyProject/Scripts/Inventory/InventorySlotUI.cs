@@ -55,15 +55,32 @@ public class InventorySlotUI : MonoBehaviour
             return;
         }
         
+        // Отладочный вывод
+        Debug.Log($"Updating slot visuals: {_assignedSlot.Item.ItemName}, Quantity: {_assignedSlot.Quantity}");
+        
         // Устанавливаем иконку предмета
-        _itemIcon.sprite = _assignedSlot.Item.Icon;
-        _itemIcon.enabled = true;
+        if (_assignedSlot.Item.Icon != null)
+        {
+            _itemIcon.sprite = _assignedSlot.Item.Icon;
+            _itemIcon.enabled = true;
+            _itemIcon.color = Color.white; // Убеждаемся, что цвет не прозрачный
+            
+            Debug.Log($"Icon set for {_assignedSlot.Item.ItemName}");
+        }
+        else
+        {
+            Debug.LogWarning($"No icon assigned for item: {_assignedSlot.Item.ItemName}");
+            _itemIcon.enabled = false;
+        }
         
         // Устанавливаем количество
         if (_assignedSlot.Quantity > 1)
         {
             _quantityText.text = _assignedSlot.Quantity.ToString();
             _quantityText.enabled = true;
+            _quantityText.color = Color.white; // Убеждаемся, что текст видимый
+            
+            Debug.Log($"Quantity text set: {_assignedSlot.Quantity}");
         }
         else
         {
@@ -78,8 +95,12 @@ public class InventorySlotUI : MonoBehaviour
     private void SetSlotEmpty()
     {
         _itemIcon.enabled = false;
+        _itemIcon.sprite = null;
         _quantityText.enabled = false;
+        _quantityText.text = "";
         _backgroundImage.color = _normalColor;
+        
+        Debug.Log($"Slot {_slotIndex} cleared visually");
     }
     
     // Анимация появления предмета (с DOTween)
@@ -101,5 +122,38 @@ public class InventorySlotUI : MonoBehaviour
                 SetSlotEmpty();
                 onComplete?.Invoke();
             });
+    }
+    
+    // Метод для отладки - проверка состояния слота
+    [System.Diagnostics.Conditional("UNITY_EDITOR")]
+    public void DebugSlotState()
+    {
+        Debug.Log($"=== SLOT {_slotIndex} DEBUG ===");
+        Debug.Log($"Assigned slot null: {_assignedSlot == null}");
+        
+        if (_assignedSlot != null)
+        {
+            Debug.Log($"Slot empty: {_assignedSlot.IsEmpty()}");
+            if (!_assignedSlot.IsEmpty())
+            {
+                Debug.Log($"Item: {_assignedSlot.Item.ItemName}");
+                Debug.Log($"Quantity: {_assignedSlot.Quantity}");
+                Debug.Log($"Icon null: {_assignedSlot.Item.Icon == null}");
+            }
+        }
+        
+        Debug.Log($"ItemIcon enabled: {_itemIcon.enabled}");
+        Debug.Log($"ItemIcon sprite null: {_itemIcon.sprite == null}");
+        Debug.Log($"QuantityText enabled: {_quantityText.enabled}");
+        Debug.Log($"QuantityText text: '{_quantityText.text}'");
+        Debug.Log("========================");
+    }
+    
+    // Принудительное обновление с отладкой
+    public void ForceUpdate()
+    {
+        Debug.Log($"Force updating slot {_slotIndex}");
+        DebugSlotState();
+        UpdateSlotVisuals();
     }
 }
