@@ -20,7 +20,7 @@ public class InventorySlotUI : MonoBehaviour
     private InventorySlot _assignedSlot;
     private int _slotIndex;
     private bool _isSelected = false;
-    
+
     // События для взаимодействия с слотом
     public System.Action<int> OnSlotClicked;
     public System.Action<int> OnSlotRightClicked;

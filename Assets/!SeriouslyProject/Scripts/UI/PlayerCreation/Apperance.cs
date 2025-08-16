@@ -15,7 +15,7 @@ public class Apperance : MonoBehaviour, IUpdatableUI
     [SerializeField] private List<ApperanceProperty> appProperty;
 
     private int currentValue = 0;
-    private RectTransform lastParent;
+    private Transform lastParent;
 
     private void Start()
     {
@@ -56,7 +56,7 @@ public class Apperance : MonoBehaviour, IUpdatableUI
             }
         }
 
-        RectTransform parent = appProperty[currentValue].transform;
+        Transform parent = appProperty[currentValue].transform;
         lastParent = parent;
 
         if (parent != null)
@@ -70,8 +70,10 @@ public class Apperance : MonoBehaviour, IUpdatableUI
             GameObject newObj = new GameObject(appProperty[currentValue].sprite.name);
             newObj.transform.SetParent(parent, false);
 
-            Image img = newObj.AddComponent<Image>();
+            SpriteRenderer img = newObj.AddComponent<SpriteRenderer>();
             img.sprite = appProperty[currentValue].sprite;
+            img.sortingLayerName = "Player";
+            img.sortingOrder = 1;
         }
     }
 
@@ -80,7 +82,7 @@ public class Apperance : MonoBehaviour, IUpdatableUI
     private struct ApperanceProperty
     {
         public Sprite sprite;
-        public RectTransform transform;
+        public Transform transform;
         public string description;
     }
 }
