@@ -49,6 +49,8 @@ public class UploadTarget : MonoBehaviour
         if (player != null)
         {
             player.GetComponent<TestMovement>().canMove = true;
+            gameObject.transform.position = new(0f, 0.59f, 0f);
+            gameObject.transform.localScale = new(0.0035f, 0.0035f, 0f);
         }
 
         // отписка от события
