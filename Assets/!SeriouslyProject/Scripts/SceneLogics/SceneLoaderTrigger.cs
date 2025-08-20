@@ -12,7 +12,7 @@ public class SceneLoaderTrigger : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.F))
             {
-                GlobalLoader.Instance.LoadToScene(nextSceneToLoad, collision.gameObject, nextPositionToLoad);
+                GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
             }
         }
     }

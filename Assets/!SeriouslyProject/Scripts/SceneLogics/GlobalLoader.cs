@@ -1,26 +1,28 @@
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.IO;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerPrefab;
 
     public static GlobalLoader Instance => instance;
-
     private static GlobalLoader instance;
-    private Vector3? overridePosition = null;
-    /// <summary>
-    /// сохранение всего зависит от сцены тоесть к примеру сохранение язычка в одной сцене будет отличаться от сохранения в другой сцене это нужно изменить
-    /// </summary>
-    private string SavePath => Path.Combine(Application.persistentDataPath, $"playerSave_{SceneManager.GetActiveScene().name}.json");
 
+    private GameObject playerInstance;
+    private Vector3? overridePosition = null;
+
+    // --- глобальные данные ---
     private int selectedTongueIndex = 0;
     public int SelectedTongueIndex
     {
         get => selectedTongueIndex;
-        set => selectedTongueIndex = value;
+        set
+        {
+            selectedTongueIndex = value;
+            SaveGlobal(); // при изменении сразу сохраняем
+        }
     }
 
     private void Awake()
@@ -33,74 +35,102 @@ public class GlobalLoader : MonoBehaviour
 
         instance = this;
 
-        player = Instantiate(player);
+        playerInstance = Instantiate(playerPrefab);
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        LoadGlobal(); // загружаем глобальные данные при старте
+
+        Debug.Log(SaveLoadSystem.GetPath($"playerSave_{SceneManager.GetActiveScene().name}"));
     }
 
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
-        Save();
+        SavePlayer();
+        SaveGlobal();
     }
 
     private void OnApplicationQuit()
     {
-        Save();
+        SavePlayer();
+        SaveGlobal();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        DontDestroyOnLoad(player);
-        Load();
+        DontDestroyOnLoad(playerInstance);
+        LoadPlayer();
     }
 
-    private void Save()
+    // -----------------------
+    // Сохранение/загрузка игрока
+    private void SavePlayer()
     {
-        if (player == null) return;
+        if (playerInstance == null) return;
 
         var data = new PlayerData
         {
-            Position = player.transform.position,
-            Rotation = player.transform.rotation,
-            SelectedTongueIndex = selectedTongueIndex
+            Position = playerInstance.transform.position,
+            Rotation = playerInstance.transform.rotation
         };
 
-        File.WriteAllText(SavePath, JsonUtility.ToJson(data, true));
+        string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
+        SaveLoadSystem.Save(fileName, data);
     }
 
-    private void Load()
+    private void LoadPlayer()
     {
-        if (player == null) return;
+        if (playerInstance == null) return;
 
         if (overridePosition != null)
         {
-            player.transform.position = overridePosition.Value;
+            playerInstance.transform.position = overridePosition.Value;
             overridePosition = null;
             return;
         }
 
-        if (!File.Exists(SavePath)) return;
+        string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
+        var data = SaveLoadSystem.Load<PlayerData>(fileName);
+        if (data == null) return;
 
-        var json = File.ReadAllText(SavePath);
-        var data = JsonUtility.FromJson<PlayerData>(json);
+        playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
+    }
 
-        player.transform.SetPositionAndRotation(data.Position, data.Rotation);
+    // -----------------------
+    // Сохранение/загрузка глобальных данных
+    private void SaveGlobal()
+    {
+        var data = SaveLoadSystem.Load<GlobalData>("globalSave");
+        data.SelectedTongueIndex = selectedTongueIndex;
+        SaveLoadSystem.Save("globalSave", data);
+    }
+
+    private void LoadGlobal()
+    {
+        var data = SaveLoadSystem.Load<GlobalData>("globalSave");
         selectedTongueIndex = data.SelectedTongueIndex;
     }
 
-    public void LoadToScene(string sceneToLoad, GameObject objectToLoad, Vector3 positionToLoad)
+    // Переход между сценами
+    public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
         overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    [System.Serializable]
+    // Классы данных
+    [Serializable]
     private class PlayerData
     {
         public Vector3 Position;
         public Quaternion Rotation;
+    }
+
+    [Serializable]
+    private class GlobalData
+    {
         public int SelectedTongueIndex;
     }
 }
