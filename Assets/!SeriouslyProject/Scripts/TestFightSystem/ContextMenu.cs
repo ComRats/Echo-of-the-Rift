@@ -145,7 +145,7 @@ public class ContextMenu : MonoBehaviour
         }
     }
 
-    public void RunOutFight()
+    public void OnRunOutFight()
     {
         int totalCharacterPriority = fightManager.characters.Sum(character => character.Priority);
         int totalEnemyPriority = fightManager.enemies.Sum(enemy => enemy.Priority);
@@ -157,6 +157,7 @@ public class ContextMenu : MonoBehaviour
         else if (totalEnemyPriority > totalCharacterPriority)
         {
             character.IsTurn = false;
+            FindObjectOfType<TestMovement>().canMove = true;
         }
     }
 

@@ -9,6 +9,10 @@ using System.IO;
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour
 {
+    [Header("OtherSettings")]
+    [SerializeField] private string nextSceneToLoad = "TestScene";
+    [SerializeField] private Vector3 nextPositionToLoad;
+
     [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemyesSettings> enemies = new List<EnemyesSettings>();
@@ -37,7 +41,7 @@ public class FightTrigger : MonoBehaviour
     {
         SaveEnemiesToFile();
         SaveCharactersToFile();
-        SceneManager.LoadScene("TestScene");
+        GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
     }
 
     [Button("Сохранить врагов в файл")]
