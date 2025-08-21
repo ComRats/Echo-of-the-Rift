@@ -20,4 +20,5 @@ MonoBehaviour:
         keys: []
         values: []
   bookmarks: []
-  bookmarkedScenePaths: []
+  bookmarkedScenePaths:
+  - Assets/!SeriouslyProject/Scenes/TestScene.unity

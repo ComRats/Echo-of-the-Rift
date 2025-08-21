@@ -1,6 +1,7 @@
 using FightSystem.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace FightSystem.Character
 {
@@ -106,6 +107,29 @@ namespace FightSystem.Character
             healthBar.value = Health;
 
             SetGradient(1f);
+        }
+
+        public void GetXP(int _getXP)
+        {
+            currentXP += _getXP;
+
+            UpdateLevel();
+        }
+
+        private void UpdateLevel()
+        {
+            if (currentXP >= MaxXP)
+            {
+                Damage = characterData._damagePerLevel * Level;
+                MaxHealth = characterData._maxHealthPerLevel * Level;
+                Heal = characterData._healPerLevel * Level;
+                Armor = characterData._armorPerLevel * Level;
+                MaxMana = characterData._maxManaPerLevel * Level;
+                XPreward = characterData._xpRewardPerLevel * Level;
+
+                Health = MaxHealth;
+                Mana = MaxMana;
+            }
         }
 
     }

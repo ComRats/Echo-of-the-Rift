@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VInspector.Libs;
 
 public class Base : MonoBehaviour
 {
@@ -18,19 +19,24 @@ public class Base : MonoBehaviour
 
     public bool IsBlinking { get; set; } = true;
 
-    public string Name { get;  set; }
-    public string Description { get;  set; }
+    public string Name { get; set; }
+    public string Description { get; set; }
 
-    public Image Sprite { get;  set; }
+    public Image Sprite { get; set; }
+
+    public int Level { get; set; } = 1;
+    public int currentXP { get; set; } = 0;
+    public int MaxXP { get; set; } = 100;
+    public int XPreward { get; set; } = 30;
 
     public int Damage { get; set; }
-    public int Heal { get; set; }
     public int MaxHealth { get; set; }
     public int Health { get; set; }
-    public int Armor { get; set; } = 1;
     public int MaxMana { get; set; }
     public int Mana { get; set; }
+    public int Heal { get; set; }
     public int Priority { get; set; }
+    public int Armor { get; set; } = 1;
 
     public void TakeDamage(int _damage)
     {
