@@ -19,6 +19,8 @@ public class FightManager : MonoBehaviour
 
     [SerializeField] private List<Base> bases = new();
 
+    private int allEnemyXP;
+
     private void Start()
     {
         InitializationLists();
@@ -56,6 +58,12 @@ public class FightManager : MonoBehaviour
         if (characters.All(c => c.Health > 0) && enemies.All(e => e.Health == 0))
         {
             Debug.Log("You are WiN!");
+            
+            foreach (var character in characters)
+            {
+                character.GetXP(allEnemyXP / characters.Count);
+                Debug.Log(character.name + " получил " + (allEnemyXP / characters.Count) + " XP");
+            }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -69,7 +77,6 @@ public class FightManager : MonoBehaviour
 
     private void ContinueFight()
     {
-
     }
 
     private void InitializationLists()
@@ -85,6 +92,11 @@ public class FightManager : MonoBehaviour
             .Concat(characters.Cast<Base>())
             .OrderByDescending(item => item.Priority)
             .ToList();
+
+        foreach (var enemy in enemies)
+        {
+            allEnemyXP += enemy.XPreward;
+        }
     }
 
     private IEnumerator WaitCharacterTurn(Character _character)

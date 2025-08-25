@@ -17,11 +17,21 @@ MonoBehaviour:
     \u0431\u044B\u043A \u043E\u0431\u044A\u0435\u0432\u0448\u0438\u0439\u0441\u044F
     \u0440\u0430\u0437\u043B\u0438\u0447\u043D\u044B\u0445 \u0442\u0440\u0430\u0432"
   _sprite: {fileID: 21300000, guid: 714aa5f87cb75be459576224f6d798b3, type: 3}
-  _damage: 10
+  _damage: 5
   _priority: 5
-  _maxMana: 0
-  _mana: 0
-  _maxHealth: 50
-  _health: 50
-  _heal: 0
-  _armor: 10
+  _maxMana: 20
+  _mana: 20
+  _maxHealth: 15
+  _health: 15
+  _heal: 5
+  _armor: 5
+  _level: 5
+  _currentXP: 0
+  _maxXP: 0
+  _xpReward: 25
+  _damagePerLevel: 2
+  _maxHealthPerLevel: 4
+  _healPerLevel: 1
+  _armorPerLevel: 1
+  _maxManaPerLevel: 4
+  _xpRewardPerLevel: 5

@@ -601,6 +601,7 @@ MonoBehaviour:
     m_NumColorKeys: 3
     m_NumAlphaKeys: 2
   fill: {fileID: 8876870335853886283}
+  textPrefab: {fileID: 8261798280073824967, guid: 53043beec11f6114ba31259433d5375f, type: 3}
   enemyData: {fileID: 11400000, guid: 18bb3a63be584f1419ec9f88cb945b0c, type: 2}
   contextMenu: {fileID: 0}
 --- !u!1 &7620609953232619610

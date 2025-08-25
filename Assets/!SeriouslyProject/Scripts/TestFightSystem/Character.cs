@@ -131,6 +131,5 @@ namespace FightSystem.Character
                 Mana = MaxMana;
             }
         }
-
     }
 }
