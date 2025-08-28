@@ -42,7 +42,7 @@ public class Base : MonoBehaviour
 
     public void TakeDamage(int _damage)
     {
-        FightAnimation.ShowDamage(textPrefab, _damage, gameObject.transform, Color.red);
+        FightAnimation.ShowText(textPrefab, _damage - (Armor), gameObject.transform, Color.red);
         Health -= _damage - (Armor);
         healthBar.value = Health;
         healthText.text = Health.ToString() + " / " + MaxHealth;
@@ -52,7 +52,7 @@ public class Base : MonoBehaviour
 
     public void TakeMagicDamage(int _damage)
     {
-        FightAnimation.ShowDamage(textPrefab, _damage, gameObject.transform, Color.blue);
+        FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, Color.blue);
         Mana -= _damage - (_damage / 100);
         manaBar.value = Mana;
         manaText.text = Mana.ToString() + " / " + MaxMana;
@@ -89,7 +89,7 @@ public class Base : MonoBehaviour
     {
         if (Health < MaxHealth)
         {
-            FightAnimation.ShowDamage(textPrefab, _heal, gameObject.transform, Color.green);
+            FightAnimation.ShowText(textPrefab, _heal, gameObject.transform, Color.green);
             Health += _heal;
             healthText.text = Health.ToString() + " / " + MaxHealth;
             healthBar.value = Health;

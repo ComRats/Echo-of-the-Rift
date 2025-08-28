@@ -105,6 +105,8 @@ public class EnemyesSettings
     [FoldoutGroup("Параметры вручную")] public int _heal;
     [HideIf("useEnemyData")]
     [FoldoutGroup("Параметры вручную")] public int _armor;
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")] public int _xpReward;
 
     [HideIf("useEnemyData")]
     [FoldoutGroup("Параметры вручную")]

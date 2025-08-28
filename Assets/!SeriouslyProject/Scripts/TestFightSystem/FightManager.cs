@@ -10,6 +10,7 @@ public class FightManager : MonoBehaviour
 {
     public StateFight CurrentStateFight = StateFight.None;
 
+    [SerializeField] private float damageDelay = 1;
     [SerializeField] private TextMeshProUGUI fightTurn;
     [SerializeField] private ContextMenu contextMenu;
     [SerializeField] private ContextText contextText;
@@ -36,6 +37,7 @@ public class FightManager : MonoBehaviour
 
             if (bases[i] is Enemy enemy && enemy.Health > 0)
             {
+                yield return new WaitForSeconds(damageDelay);
                 GetCharacterLowestHP().TakeDamage(enemy.Damage);
 
                 Debug.Log($"{GetCharacterLowestHP().Name} After Damage {GetCharacterLowestHP().Health}");
@@ -63,6 +65,8 @@ public class FightManager : MonoBehaviour
             {
                 character.GetXP(allEnemyXP / characters.Count);
                 Debug.Log(character.name + " получил " + (allEnemyXP / characters.Count) + " XP");
+                Debug.Log(character.name + " allEnemyXP " + allEnemyXP + " XP");
+                Debug.Log(character.name + " characters.Count " + characters.Count);
             }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))

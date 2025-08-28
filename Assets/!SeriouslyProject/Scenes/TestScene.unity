@@ -408,6 +408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentStateFight: 0
+  damageDelay: 1
   fightTurn: {fileID: 1349405641}
   contextMenu: {fileID: 8611235187967662012}
   contextText: {fileID: 1349405643}

@@ -78,6 +78,7 @@ namespace FightSystem.Character
                     Heal = characterData._heal;
                     Priority = characterData._priority;
                     Armor = characterData._armor;
+                    XPreward = characterData._xpReward;
                 }
                 else
                 {
@@ -111,6 +112,7 @@ namespace FightSystem.Character
 
         public void GetXP(int _getXP)
         {
+            FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), gameObject.transform, Color.magenta, 1f);
             currentXP += _getXP;
 
             UpdateLevel();
@@ -120,6 +122,8 @@ namespace FightSystem.Character
         {
             if (currentXP >= MaxXP)
             {
+                FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
+
                 Damage = characterData._damagePerLevel * Level;
                 MaxHealth = characterData._maxHealthPerLevel * Level;
                 Heal = characterData._healPerLevel * Level;

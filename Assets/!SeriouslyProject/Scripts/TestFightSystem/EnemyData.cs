@@ -29,7 +29,7 @@ namespace FightSystem.Data
         public int _maxXP;
 
         [BoxGroup("Rewards")]
-        public int _xpReward = 10;
+        public int _xpReward;
 
         [BoxGroup("Per Level Growth")]
         public int _damagePerLevel = 1;

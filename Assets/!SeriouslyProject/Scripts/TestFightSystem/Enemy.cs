@@ -20,7 +20,6 @@ namespace FightSystem.Enemy
             StartCoroutine(Blinking());
 
             button = GetComponent<Button>();
-            Debug.Log("œ»«ƒ¿¿¿¿¿" + button);
             button.onClick.AddListener(SetComponent);
 
 
@@ -40,6 +39,7 @@ namespace FightSystem.Enemy
             Mana = enemyData._mana;
             Heal = enemyData._heal;
             Priority = enemyData._priority;
+            XPreward = enemyData._xpReward;
 
             healthText.text = Health.ToString() + " /" + MaxHealth;
             manaText.text = Mana.ToString() + " /" + MaxMana;
@@ -74,6 +74,8 @@ namespace FightSystem.Enemy
                     Mana = enemyData._mana;
                     Heal = enemyData._heal;
                     Priority = enemyData._priority;
+                    XPreward = enemyData._xpReward;
+
                 }
                 else
                 {
@@ -92,6 +94,8 @@ namespace FightSystem.Enemy
                 Mana = settings._mana;
                 Heal = settings._heal;
                 Priority = settings._priority;
+                XPreward = settings._xpReward;
+
             }
 
             // Œ·ÌÓ‚ÎÂÌËÂ UI

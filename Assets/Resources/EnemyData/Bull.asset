@@ -25,10 +25,10 @@ MonoBehaviour:
   _health: 15
   _heal: 5
   _armor: 5
-  _level: 5
+  _level: 1
   _currentXP: 0
   _maxXP: 0
-  _xpReward: 25
+  _xpReward: 100
   _damagePerLevel: 2
   _maxHealthPerLevel: 4
   _healPerLevel: 1
