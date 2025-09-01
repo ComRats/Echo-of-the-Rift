@@ -2,15 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.EventSystems;
 
-public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private Image _backgroundImage;      // Фон слота
     [SerializeField] private Image _itemIcon;             // Иконка предмета
     [SerializeField] private TextMeshProUGUI _quantityText; // Текст количества
-    [SerializeField] private CanvasGroup _canvasGroup;    // Для изменения альфы при драге
+    [SerializeField] private Button _slotButton;          // Кнопка для взаимодействия
     
     [Header("Visual Settings")]
     [SerializeField] private Color _normalColor = Color.white;
@@ -27,22 +26,12 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
     public System.Action<int> OnSlotRightClicked;
     public System.Action<int> OnSlotHovered;
     
-    // Для drag and drop
-    private Canvas _parentCanvas;
-    private GameObject _draggedItem;
-    private Image _draggedIcon;
-    private TextMeshProUGUI _draggedQuantity;
-    private int _draggedQuantityAmount;
-    private Item _draggedItemData;
-    
     private void Awake()
     {
-        // Находим родительский Canvas
-        _parentCanvas = GetComponentInParent<Canvas>();
-        
-        if (_canvasGroup == null)
+        // Подписываемся на события кнопки
+        if (_slotButton != null)
         {
-            _canvasGroup = gameObject.AddComponent<CanvasGroup>();
+            _slotButton.onClick.AddListener(() => OnSlotClicked?.Invoke(_slotIndex));
         }
         
         // Изначально слот пустой
@@ -166,115 +155,5 @@ public class InventorySlotUI : MonoBehaviour, IPointerDownHandler, IBeginDragHan
         Debug.Log($"Force updating slot {_slotIndex}");
         DebugSlotState();
         UpdateSlotVisuals();
-    }
-    
-    // IPointerDownHandler - Начало клика
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            OnSlotRightClicked?.Invoke(_slotIndex);
-            // TODO: Можно добавить логику разделения стака (split stack) здесь
-        }
-        else if (eventData.button == PointerEventData.InputButton.Left && !_assignedSlot.IsEmpty())
-        {
-            // Подготовка к драгу
-        }
-    }
-    
-    // IBeginDragHandler - Начало драга
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (_assignedSlot.IsEmpty()) return;
-        
-        // Создаем dragged item
-        _draggedItem = new GameObject("DraggedItem");
-        _draggedItem.transform.SetParent(_parentCanvas.transform, false);
-        _draggedItem.transform.SetAsLastSibling();
-        
-        RectTransform rectTransform = _draggedItem.AddComponent<RectTransform>();
-        rectTransform.sizeDelta = new Vector2(50, 50); // Размер иконки
-        
-        _draggedIcon = _draggedItem.AddComponent<Image>();
-        _draggedIcon.sprite = _itemIcon.sprite;
-        _draggedIcon.raycastTarget = false;
-        
-        _draggedQuantity = _draggedItem.AddComponent<TextMeshProUGUI>();
-        _draggedQuantity.raycastTarget = false;
-        _draggedQuantity.fontSize = 14;
-        _draggedQuantity.alignment = TextAlignmentOptions.BottomRight;
-        
-        CanvasGroup draggedGroup = _draggedItem.AddComponent<CanvasGroup>();
-        draggedGroup.blocksRaycasts = false;
-        
-        // Копируем данные
-        _draggedItemData = _assignedSlot.Item;
-        _draggedQuantityAmount = _assignedSlot.Quantity;
-        if (_draggedQuantityAmount > 1)
-        {
-            _draggedQuantity.text = _draggedQuantityAmount.ToString();
-        }
-        
-        // Убираем из исходного слота
-        _assignedSlot.Clear();
-        UpdateSlotVisuals();
-        
-        // Делаем исходный слот полупрозрачным
-        _canvasGroup.alpha = 0.6f;
-        _canvasGroup.blocksRaycasts = false;
-    }
-    
-    // IDragHandler - Процесс драга
-    public void OnDrag(PointerEventData eventData)
-    {
-        if (_draggedItem != null)
-        {
-            _draggedItem.transform.position = eventData.position;
-        }
-    }
-    
-    // IEndDragHandler - Конец драга
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        if (_draggedItem == null) return;
-        
-        // Проверяем, над каким слотом дропнули
-        InventorySlotUI dropSlot = eventData.pointerEnter?.GetComponent<InventorySlotUI>();
-        
-        bool success = false;
-        if (dropSlot != null && dropSlot != this)
-        {
-            // Пытаемся переместить в новый слот
-            Inventory inventory = FindObjectOfType<Inventory>();
-            success = inventory.MoveItem(_slotIndex, dropSlot._slotIndex, _draggedQuantityAmount);
-        }
-        
-        if (!success)
-        {
-            // Возвращаем обратно
-            _assignedSlot.AddItem(_draggedItemData, _draggedQuantityAmount);
-            UpdateSlotVisuals();
-        }
-        
-        // Уничтожаем dragged item
-        Destroy(_draggedItem);
-        _draggedItem = null;
-        
-        // Восстанавливаем исходный слот
-        _canvasGroup.alpha = 1f;
-        _canvasGroup.blocksRaycasts = true;
-    }
-    
-    // IPointerEnterHandler - Наведение
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        _backgroundImage.color = _highlightColor;
-        OnSlotHovered?.Invoke(_slotIndex);
-    }
-    
-    // IPointerExitHandler - Уход курсора
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        _backgroundImage.color = _normalColor;
     }
 }

@@ -118,66 +118,6 @@ public class Inventory : MonoBehaviour
         return false;
     }
     
-    // Переместить предмет из одного слота в другой
-    public bool MoveItem(int fromIndex, int toIndex, int quantity = -1)
-    {
-        if (fromIndex == toIndex) return false;
-        
-        InventorySlot fromSlot = GetSlot(fromIndex);
-        InventorySlot toSlot = GetSlot(toIndex);
-        
-        if (fromSlot == null || toSlot == null || fromSlot.IsEmpty()) return false;
-        
-        Item item = fromSlot.Item;
-        int moveQuantity = quantity > 0 ? quantity : fromSlot.Quantity;
-        
-        // Если слот назначения пустой или совместимый
-        if (toSlot.CanAddItem(item))
-        {
-            int remaining = toSlot.AddItem(item, moveQuantity);
-            int movedAmount = moveQuantity - remaining;
-            
-            if (movedAmount > 0)
-            {
-                fromSlot.RemoveItem(movedAmount);
-                NotifySlotChanged(fromIndex);
-                NotifySlotChanged(toIndex);
-                NotifyInventoryChanged();
-                return true;
-            }
-        }
-        else
-        {
-            // Если не совместимы - свап слотов
-            SwapSlots(fromIndex, toIndex);
-            return true;
-        }
-        
-        return false;
-    }
-    
-    // Обмен слотами
-    public void SwapSlots(int indexA, int indexB)
-    {
-        InventorySlot temp = GetSlot(indexA).Clone();
-        GetSlot(indexA).Clear();
-        
-        int remainingA = GetSlot(indexA).AddItem(GetSlot(indexB).Item, GetSlot(indexB).Quantity);
-        GetSlot(indexB).Clear();
-        
-        GetSlot(indexB).AddItem(temp.Item, temp.Quantity);
-        
-        // Если что-то не поместилось в A (редкий случай)
-        if (remainingA > 0)
-        {
-            GetSlot(indexB).AddItem(temp.Item, remainingA);
-        }
-        
-        NotifySlotChanged(indexA);
-        NotifySlotChanged(indexB);
-        NotifyInventoryChanged();
-    }
-    
     // Приватные методы для отправки событий
     private void NotifySlotChanged(int slotIndex)
     {
