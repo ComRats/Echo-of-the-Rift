@@ -101,7 +101,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4155473629866139103}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
   _backgroundImage: {fileID: 4517780835854196996}
   _itemIcon: {fileID: 7322008992983611788}
   _quantityText: {fileID: 3097815707569855118}
-  _slotButton: {fileID: 0}
+  _canvasGroup: {fileID: 0}
   _normalColor: {r: 1, g: 1, b: 1, a: 1}
   _highlightColor: {r: 1, g: 1, b: 0.8, a: 1}
   _selectedColor: {r: 0.8, g: 1, b: 0.8, a: 1}
