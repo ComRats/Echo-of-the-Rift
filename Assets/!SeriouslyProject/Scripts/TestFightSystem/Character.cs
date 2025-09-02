@@ -1,7 +1,6 @@
 using FightSystem.Data;
 using UnityEngine;
 using UnityEngine.UI;
-using static Cinemachine.DocumentationSortingAttribute;
 
 namespace FightSystem.Character
 {
@@ -20,7 +19,7 @@ namespace FightSystem.Character
         {   
             Sprite = GetComponent<Image>();
 
-            Inizialize();
+            //LocalInizialize();
 
             button = GetComponent<Button>();
 
@@ -36,19 +35,9 @@ namespace FightSystem.Character
 
         }
 
-        private void Inizialize()
+        private void LocalInizialize()
         {
-            Name = gameObject.name = characterData._name;
-            Sprite.sprite = characterData._sprite;
-            Description = characterData._description;
-            Damage = characterData._damage;
-            MaxHealth = characterData._maxHealth;
-            Health = characterData._health;
-            MaxMana = characterData._maxMana;
-            Mana = characterData._mana;
-            Heal = characterData._heal;
-            Priority = characterData._priority;
-            Armor = characterData._armor;
+            Inizialize(characterData, gameObject);
 
             healthText.text = Health.ToString() + " / " + MaxHealth;
             manaText.text = Mana.ToString() + " / " + MaxMana;
@@ -67,18 +56,7 @@ namespace FightSystem.Character
 
                 if (characterData != null)
                 {
-                    Name = gameObject.name = characterData._name;
-                    Sprite.sprite = characterData._sprite;
-                    Description = characterData._description;
-                    Damage = characterData._damage;
-                    MaxHealth = characterData._maxHealth;
-                    Health = characterData._health;
-                    MaxMana = characterData._maxMana;
-                    Mana = characterData._mana;
-                    Heal = characterData._heal;
-                    Priority = characterData._priority;
-                    Armor = characterData._armor;
-                    XPreward = characterData._xpReward;
+                    Inizialize(characterData, gameObject);
                 }
                 else
                 {
@@ -101,13 +79,7 @@ namespace FightSystem.Character
             }
 
             // Обновление UI
-            healthText.text = Health + " / " + MaxHealth;
-            manaText.text = Mana + " / " + MaxMana;
-            healthBar.minValue = 0;
-            healthBar.maxValue = MaxHealth;
-            healthBar.value = Health;
-
-            SetGradient(1f);
+            UpdateUI();
         }
 
         public void GetXP(int _getXP)
@@ -129,7 +101,7 @@ namespace FightSystem.Character
                 Heal = characterData._healPerLevel * Level;
                 Armor = characterData._armorPerLevel * Level;
                 MaxMana = characterData._maxManaPerLevel * Level;
-                XPreward = characterData._xpRewardPerLevel * Level;
+                XpReward = characterData._xpRewardPerLevel * Level;
 
                 Health = MaxHealth;
                 Mana = MaxMana;

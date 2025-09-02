@@ -99,7 +99,7 @@ public class FightManager : MonoBehaviour
 
         foreach (var enemy in enemies)
         {
-            allEnemyXP += enemy.XPreward;
+            allEnemyXP += enemy.XpReward;
         }
     }
 

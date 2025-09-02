@@ -29,7 +29,7 @@ public class Base : MonoBehaviour
     public int Level { get; set; } = 1;
     public int currentXP { get; set; } = 0;
     public int MaxXP { get; set; } = 100;
-    public int XPreward { get; set; } = 30;
+    public int XpReward { get; set; } = 30;
 
     public int Damage { get; set; }
     public int MaxHealth { get; set; }
@@ -40,10 +40,30 @@ public class Base : MonoBehaviour
     public int Priority { get; set; }
     public int Armor { get; set; } = 1;
 
+    public void Inizialize(IData data, GameObject gameObj)
+    {
+        Name = gameObj.name = data.Name;
+        Sprite.sprite = data.Sprite;
+        Description = data.Description;
+        Damage = data.Damage;
+        MaxHealth = data.MaxHealth;
+        Health = data.Health;
+        MaxMana = data.MaxMana;
+        Mana = data.Mana;
+        Heal = data.Heal;
+        Priority = data.Priority;
+        Armor = data.Armor;
+        XpReward = data.XpReward;
+    }
+
     public void TakeDamage(int _damage)
     {
-        FightAnimation.ShowText(textPrefab, _damage - (Armor), gameObject.transform, Color.red);
-        Health -= _damage - (Armor);
+        int currentDamage = _damage - Armor;
+        if (currentDamage > 0)
+            Health -= currentDamage;
+        else currentDamage = 0;
+
+        FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, Color.red);
         healthBar.value = Health;
         healthText.text = Health.ToString() + " / " + MaxHealth;
         SetGradient(healthBar.normalizedValue);
@@ -58,6 +78,17 @@ public class Base : MonoBehaviour
         manaText.text = Mana.ToString() + " / " + MaxMana;
         SetGradient(manaBar.normalizedValue);
         TryDeath();
+    }
+
+    public void UpdateUI()
+    {
+        healthText.text = Health + " / " + MaxHealth;
+        manaText.text = Mana + " / " + MaxMana;
+        healthBar.minValue = 0;
+        healthBar.maxValue = MaxHealth;
+        healthBar.value = Health;
+
+        SetGradient(1f);
     }
 
     internal void SetGradient(float _value)

@@ -1,5 +1,4 @@
 using FightSystem.Data;
-using UnityEditor.U2D.Animation;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -16,7 +15,8 @@ namespace FightSystem.Enemy
         {
             Sprite = GetComponent<Image>();
 
-            Inizialize();
+            //LocalInizialize();
+
             StartCoroutine(Blinking());
 
             button = GetComponent<Button>();
@@ -27,27 +27,12 @@ namespace FightSystem.Enemy
                 contextMenu = FindObjectOfType<ContextMenu>();
         }
 
-        public void Inizialize()
+        public void LocalInizialize()
         {
-            Name = gameObject.name = enemyData._name;
-            Sprite.sprite = enemyData._sprite;
-            Description = enemyData._description;
-            Damage = enemyData._damage;
-            MaxHealth = enemyData._maxHealth;
-            Health = enemyData._health;
-            MaxMana = enemyData._maxMana;
-            Mana = enemyData._mana;
-            Heal = enemyData._heal;
-            Priority = enemyData._priority;
-            XPreward = enemyData._xpReward;
+            Inizialize(enemyData, gameObject);
 
-            healthText.text = Health.ToString() + " /" + MaxHealth;
-            manaText.text = Mana.ToString() + " /" + MaxMana;
-            healthBar.minValue = 0;
-            healthBar.maxValue = MaxHealth;
-            healthBar.value = Health;
+            UpdateUI();
 
-            SetGradient(1f);
         }
 
         private void SetComponent()
@@ -64,18 +49,7 @@ namespace FightSystem.Enemy
 
                 if (enemyData != null)
                 {
-                    Name = gameObject.name = enemyData._name;
-                    Sprite.sprite = enemyData._sprite;
-                    Description = enemyData._description;
-                    Damage = enemyData._damage;
-                    MaxHealth = enemyData._maxHealth;
-                    Health = enemyData._health;
-                    MaxMana = enemyData._maxMana;
-                    Mana = enemyData._mana;
-                    Heal = enemyData._heal;
-                    Priority = enemyData._priority;
-                    XPreward = enemyData._xpReward;
-
+                    Inizialize(enemyData, gameObject);
                 }
                 else
                 {
@@ -94,18 +68,12 @@ namespace FightSystem.Enemy
                 Mana = settings._mana;
                 Heal = settings._heal;
                 Priority = settings._priority;
-                XPreward = settings._xpReward;
+                XpReward = settings._xpReward;
 
             }
 
             // Обновление UI
-            healthText.text = Health + " / " + MaxHealth;
-            manaText.text = Mana + " / " + MaxMana;
-            healthBar.minValue = 0;
-            healthBar.maxValue = MaxHealth;
-            healthBar.value = Health;
-
-            SetGradient(1f);
+            UpdateUI();
         }
 
         public void GetXP(int _getXP)
@@ -124,7 +92,7 @@ namespace FightSystem.Enemy
                 Heal = enemyData._healPerLevel * Level;
                 Armor = enemyData._armorPerLevel * Level;
                 MaxMana = enemyData._maxManaPerLevel * Level;
-                XPreward = enemyData._xpRewardPerLevel * Level;
+                XpReward = enemyData._xpRewardPerLevel * Level;
 
                 Health = MaxHealth;
                 Mana = MaxMana;
