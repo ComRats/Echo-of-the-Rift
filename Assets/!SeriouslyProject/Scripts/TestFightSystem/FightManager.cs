@@ -40,13 +40,10 @@ public class FightManager : MonoBehaviour
                 yield return new WaitForSeconds(damageDelay);
                 GetCharacterLowestHP().TakeDamage(enemy.Damage);
 
-                Debug.Log($"{GetCharacterLowestHP().Name} After Damage {GetCharacterLowestHP().Health}");
-
                 DeleteCharacterOnList(GetCharacterLowestHP());
             }
             else if (bases[i] is Character character && character.Health > 0)
             {
-                Debug.Log($"{character.Name} character.isTurn {character.IsTurn}");
 
                 yield return StartCoroutine(WaitCharacterTurn(character));
             }
@@ -61,17 +58,21 @@ public class FightManager : MonoBehaviour
         {
             Debug.Log("You are WiN!");
             
-            foreach (var character in characters)
+            foreach (var basic in bases)
             {
-                character.GetXP(allEnemyXP / characters.Count);
-                Debug.Log(character.name + " получил " + (allEnemyXP / characters.Count) + " XP");
-                Debug.Log(character.name + " allEnemyXP " + allEnemyXP + " XP");
-                Debug.Log(character.name + " characters.Count " + characters.Count);
+                basic.GetXP(allEnemyXP / characters.Count);
+                Debug.Log(basic.name + " получил " + (allEnemyXP / characters.Count) + " XP");
             }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
             Debug.Log("You are LOSE!");
+
+            foreach (var basic in bases)
+            {
+                basic.GetXP(allEnemyXP / enemies.Count);
+                Debug.Log(basic.name + " получил " + (allEnemyXP / characters.Count) + " XP");
+            }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
         {
@@ -138,6 +139,7 @@ public class FightManager : MonoBehaviour
         {
             bases.Remove(character);
             characters.Remove(character);
+            Destroy(character.gameObject);
         }
     }
 

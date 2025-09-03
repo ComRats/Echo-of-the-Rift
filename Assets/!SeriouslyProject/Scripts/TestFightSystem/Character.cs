@@ -81,31 +81,5 @@ namespace FightSystem.Character
             // Обновление UI
             UpdateUI();
         }
-
-        public void GetXP(int _getXP)
-        {
-            FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), gameObject.transform, Color.magenta, 1f);
-            currentXP += _getXP;
-
-            UpdateLevel();
-        }
-
-        private void UpdateLevel()
-        {
-            if (currentXP >= MaxXP)
-            {
-                FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
-
-                Damage = characterData._damagePerLevel * Level;
-                MaxHealth = characterData._maxHealthPerLevel * Level;
-                Heal = characterData._healPerLevel * Level;
-                Armor = characterData._armorPerLevel * Level;
-                MaxMana = characterData._maxManaPerLevel * Level;
-                XpReward = characterData._xpRewardPerLevel * Level;
-
-                Health = MaxHealth;
-                Mana = MaxMana;
-            }
-        }
     }
 }

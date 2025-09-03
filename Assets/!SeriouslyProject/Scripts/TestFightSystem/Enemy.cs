@@ -75,30 +75,5 @@ namespace FightSystem.Enemy
             // Обновление UI
             UpdateUI();
         }
-
-        public void GetXP(int _getXP)
-        {
-            currentXP += _getXP;
-
-            UpdateLevel();
-        }
-
-        private void UpdateLevel()
-        {
-            if (currentXP >= MaxXP)
-            {
-                Damage = enemyData._damagePerLevel * Level;
-                MaxHealth = enemyData._maxHealthPerLevel * Level;
-                Heal = enemyData._healPerLevel * Level;
-                Armor = enemyData._armorPerLevel * Level;
-                MaxMana = enemyData._maxManaPerLevel * Level;
-                XpReward = enemyData._xpRewardPerLevel * Level;
-
-                Health = MaxHealth;
-                Mana = MaxMana;
-
-
-            }
-        }
     }
 }

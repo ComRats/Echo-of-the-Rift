@@ -1,3 +1,4 @@
+using FightSystem.Data;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -40,8 +41,12 @@ public class Base : MonoBehaviour
     public int Priority { get; set; }
     public int Armor { get; set; } = 1;
 
+    private IData data;
+
     public void Inizialize(IData data, GameObject gameObj)
     {
+        this.data = data;
+
         Name = gameObj.name = data.Name;
         Sprite.sprite = data.Sprite;
         Description = data.Description;
@@ -149,6 +154,33 @@ public class Base : MonoBehaviour
                 Sprite.color = color;
                 yield return null;
             }
+        }
+    }
+
+    public void GetXP(int _getXP)
+    {
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), gameObject.transform, Color.magenta, 1f);
+
+        currentXP += _getXP;
+
+        UpdateLevel();
+    }
+
+    private void UpdateLevel()
+    {
+        if (currentXP >= MaxXP)
+        {
+            FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
+
+            Damage = data.DamagePerLevel * Level;
+            MaxHealth = data.MaxHealthPerLevel * Level;
+            Heal = data.HealPerLevel * Level;
+            Armor = data.ArmorPerLevel * Level;
+            MaxMana = data.MaxManaPerLevel * Level;
+            XpReward = data.XpRewardPerLevel * Level;
+
+            Health = MaxHealth;
+            Mana = MaxMana;
         }
     }
 
