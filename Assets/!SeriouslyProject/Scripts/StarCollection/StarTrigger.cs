@@ -10,6 +10,7 @@ public class StarTrigger : MonoBehaviour
     {
         if (collision.TryGetComponent<Player>(out var player))
         {
+            backPanel.gameObject.SetActive(true);
 
         }
     }
