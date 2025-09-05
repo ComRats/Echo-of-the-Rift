@@ -1,52 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI.Extensions;
 
 public class Star : MonoBehaviour
 {
-    [SerializeField] private List<Star> stars;
-    [SerializeField] private List<LineRenderer> lines;
-    [SerializeField] private Material lineMaterial;
-    private void Start()
+    [SerializeField] private List<Star> connectedStars;
+    [SerializeField] private UILineRenderer linePrefab;
+
+    private Canvas canvas;
+    private Camera uiCam;
+
+    private void Awake()
     {
-        // Создаём LineRenderer для каждой пары объектов
-        for (int i = 0; i < stars.Count; i++)
+        canvas = GetComponentInParent<Canvas>();
+        uiCam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
+
+        foreach (var star in connectedStars)
         {
-            for (int j = i + 1; j < stars.Count; j++)
-            {
-                GameObject lineObj = new GameObject("Line_" + i + "_" + j);
-                lineObj.transform.parent = transform;
-                LineRenderer lr = lineObj.AddComponent<LineRenderer>();
+            if (star == null) continue;
 
-                lr.material = lineMaterial;
-                lr.startWidth = 0.05f;
-                lr.endWidth = 0.05f;
-                lr.positionCount = 2;
+            var lineObj = Instantiate(linePrefab.gameObject, canvas.transform);
+            lineObj.transform.SetParent(transform);
+            var lr = lineObj.GetComponent<UILineRenderer>();
 
-                lines.Add(lr);
-            }
+            var rt = lr.rectTransform;
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            rt.localPosition = Vector3.zero;
+            rt.localScale = Vector3.one;
+
+            Vector2 a = WorldToLocal(transform.position, lr.rectTransform);
+            Vector2 b = WorldToLocal(star.transform.position, lr.rectTransform);
+
+            lr.Points = new[] { a, b };
+            lr.SetAllDirty();
         }
     }
 
-    private void Update()
+    private Vector2 WorldToLocal(Vector3 worldPos, RectTransform targetRect)
     {
-        int index = 0;
-        for (int i = 0; i < stars.Count; i++)
-        {
-            for (int j = i + 1; j < stars.Count; j++)
-            {
-                if (stars[i] != null && stars[j] != null)
-                {
-                    lines[index].enabled = true;
-                    lines[index].SetPosition(0, stars[i].transform.position);
-                    lines[index].SetPosition(1, stars[j].transform.position);
-                }
-                else
-                {
-                    lines[index].enabled = false;
-                }
-                index++;
-            }
-        }
+        Vector2 screen = RectTransformUtility.WorldToScreenPoint(uiCam, worldPos);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(targetRect, screen, uiCam, out var local);
+        return local;
     }
 }
