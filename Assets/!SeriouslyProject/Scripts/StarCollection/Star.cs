@@ -7,11 +7,12 @@ public class Star : MonoBehaviour
     [SerializeField] private List<Star> connectedStars;
     [SerializeField] private UILineRenderer linePrefab;
 
-    [SerializeField] private Canvas canvas;
+    private Canvas canvas;
     private Camera uiCam;
 
     private void Awake()
     {
+        canvas = transform.parent.GetComponentInParent<Canvas>();
         uiCam = canvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : canvas.worldCamera;
 
         foreach (var star in connectedStars)

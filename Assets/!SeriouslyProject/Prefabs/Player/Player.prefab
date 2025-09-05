@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 5331974340841231968}
   - component: {fileID: 1808547916611058563}
   - component: {fileID: 7434136987225483318}
-  - component: {fileID: -5034105874844596818}
+  - component: {fileID: -7914314194156218776}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -283,7 +283,7 @@ MonoBehaviour:
     _heal: 0
     _armor: 0
     spritePath: 
---- !u!114 &-5034105874844596818
+--- !u!114 &-7914314194156218776
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -292,10 +292,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2738678033949911019}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ec00bff1a0005e4c8e6524342413fd8, type: 3}
+  m_Script: {fileID: 11500000, guid: d90d2d1bf7a3c504bb593087e407b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  language: 0
 --- !u!1 &4650786699909764950
 GameObject:
   m_ObjectHideFlags: 0

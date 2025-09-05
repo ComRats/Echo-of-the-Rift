@@ -17,7 +17,10 @@ public class StarTrigger : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out var player))
+        {
             playerInside = false;
+            backPanel.gameObject.SetActive(false);
+        }
     }
 
     private void Update()
