@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Слой_2" data-name="Слой 2" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 25.91 45.08">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: url(#_Безымянный_градиент_173);
+        opacity: .5;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .25px;
+      }
+    </style>
+    <linearGradient id="_Безымянный_градиент_173" data-name="Безымянный градиент 173" x1="27.62" y1="7.86" x2="6.77" y2="43.96" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#006837"/>
+      <stop offset=".45" stop-color="#006837" stop-opacity=".98"/>
+      <stop offset=".61" stop-color="#006837" stop-opacity=".92"/>
+      <stop offset=".72" stop-color="#006837" stop-opacity=".8"/>
+      <stop offset=".81" stop-color="#006837" stop-opacity=".64"/>
+      <stop offset=".89" stop-color="#006837" stop-opacity=".43"/>
+      <stop offset=".96" stop-color="#006837" stop-opacity=".17"/>
+      <stop offset="1" stop-color="#006837" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <g id="_Трава" data-name="Трава">
+    <path class="cls-1" d="M14.58.4c8.54,12.19,12.44,28.98,10.86,43.96-.04.33-.32.58-.66.58H8.67c-.41,0-.71-.37-.64-.77,1.27-7.65-.17-13.26-5.43-19.1-.61-.68-1.76-1.12-2.34-1.9-.34-.46.06-1.12.63-1.03,7.81,1.28,10.98,11.78,12.51,18.56.15.66-.21.83.53.79.27-.02.51-.2.59-.45,3.16-9.82,4.09-21.4,1.63-31.48-.23-.95-2.24-7.34-2.7-8.33-.04-.09-.06-.18-.06-.28v-.19c0-.36.29-.65.65-.65h0c.22,0,.42.1.54.28Z"/>
+  </g>
+</svg>

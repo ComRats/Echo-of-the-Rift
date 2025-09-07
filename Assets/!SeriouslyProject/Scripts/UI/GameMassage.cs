@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class GameMassage
 {
-    private GameObject newMessage;
+    private static GameObject newMessage;
 
-    public void ButtonMassage(GameObject target, bool isShow, Sprite sprite, Vector3 offset = default)
+    public static void ButtonMassage(GameObject target, bool isShow, Sprite sprite, Vector3 offset = default)
     {
         if (isShow)
         {

@@ -1,3 +1,5 @@
+using Sirenix.OdinInspector;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,9 +8,10 @@ public class StarTrigger : MonoBehaviour
 {
     [SerializeField] private Image backPanel;
     [SerializeField] private Vector3 keyMassageOffset;
+    [SerializeField, Range(0, 30)] private int spriteIndex;
 
-    private SpriteCollection sprites;
-    private GameMassage message = new();
+    [ValueDropdown("GetSpriteNames")]
+    [SerializeField] private SpriteCollection sprites;
     private bool playerInside = false;
 
     private void Start()
@@ -21,7 +24,7 @@ public class StarTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out var player))
         {
             playerInside = true;
-            message.ButtonMassage(gameObject, playerInside, sprites.sprites[14], keyMassageOffset);
+            GameMassage.ButtonMassage(gameObject, playerInside, sprites.sprites[spriteIndex], keyMassageOffset);
         }
     }
 
@@ -31,7 +34,7 @@ public class StarTrigger : MonoBehaviour
         {
             playerInside = false;
             backPanel.gameObject.SetActive(false);
-            message.ButtonMassage(gameObject, playerInside, sprites.sprites[14], keyMassageOffset);
+            GameMassage.ButtonMassage(gameObject, playerInside, sprites.sprites[spriteIndex], keyMassageOffset);
         }
     }
 
@@ -41,5 +44,15 @@ public class StarTrigger : MonoBehaviour
         {
             backPanel.gameObject.SetActive(!backPanel.gameObject.activeSelf);
         }
+    }
+
+    private string[] GetSpriteNames()
+    {
+        if (sprites == null || sprites.sprites == null)
+            return new string[0];
+
+        return sprites.sprites
+            .Select((s, i) => $"{i}: {(s != null ? s.name : "<empty>")}")
+            .ToArray();
     }
 }

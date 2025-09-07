@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Слой_2" data-name="Слой 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 23.25 14.25">
+  <defs>
+    <style>
+      .cls-1 {
+        opacity: .25;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .25px;
+      }
+    </style>
+  </defs>
+  <g id="_Цветы" data-name="Цветы">
+    <ellipse class="cls-1" cx="11.62" cy="7.12" rx="11.5" ry="7"/>
+  </g>
+</svg>
