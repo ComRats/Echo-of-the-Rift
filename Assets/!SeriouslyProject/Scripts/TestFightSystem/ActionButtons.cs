@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class ActionButtons : MonoBehaviour
 {
-    [SerializeField] private Button magicAttack;
     [SerializeField] private Button physicAttack;
-
+    [SerializeField] private GameObject physicAttackButtons;
+    [SerializeField] private Button magicAttack;
+    [SerializeField] private GameObject magicAttackButtons;
 
     private void Start()
     {
@@ -17,16 +18,17 @@ public class ActionButtons : MonoBehaviour
 
     public void MagicAction()
     {
-        OpenButtons();
+        OpenButtons(magicAttackButtons, physicAttackButtons);
     }
 
     public void PhysicAction()
     {
-        OpenButtons();
+        OpenButtons(physicAttackButtons, magicAttackButtons);
     }
 
-    private void OpenButtons()
+    private void OpenButtons(GameObject _buttons1, GameObject _buttons2)
     {
-
+        _buttons1.SetActive(!_buttons1.activeSelf);
+        _buttons2.SetActive(false);
     }
 }
