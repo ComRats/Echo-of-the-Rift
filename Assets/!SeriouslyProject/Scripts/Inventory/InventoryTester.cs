@@ -203,6 +203,6 @@ public class InventoryTester : MonoBehaviour
     {
         Debug.Log("=== UI DEBUG ===");
         PrintInventoryInfo();
-        _inventoryUI.ForceRefreshAllSlots();
+        //_inventoryUI.ForceRefreshAllSlots();
     }
 }

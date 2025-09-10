@@ -4,39 +4,42 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     [Header("Inventory Settings")]
-    [SerializeField] private int _inventorySize = 36; // Как в Minecraft: 36 слотов
-    
-    // Приватный массив слотов
-    private InventorySlot[] _slots;
-    
-    // События для уведомления UI об изменениях
-    public event Action<int> OnSlotChanged; // Передаём индекс изменённого слота
-    public event Action OnInventoryChanged;  // Общее событие изменения инвентаря
-    
-    // Публичные свойства для безопасного доступа
+    [SerializeField] private int _inventorySize = 36;         // обычные слоты
+    [SerializeField] private int _equipmentSize = 4;          // слоты экипировки (например: голова, тело, оружие, ботинки)
+
+    private InventorySlot[] _slots;           // обычные предметы
+    private InventorySlot[] _equipmentSlots;  // экипировка
+
+    public event Action<int> OnSlotChanged;
+    public event Action OnInventoryChanged;
+
     public int Size => _inventorySize;
-    public InventorySlot[] Slots => _slots; // Только для чтения извне
-    
+    public int EquipmentSize => _equipmentSize;
+
+    public InventorySlot[] Slots => _slots;
+    public InventorySlot[] EquipmentSlots => _equipmentSlots;
+
     private void Awake()
     {
         InitializeInventory();
     }
-    
-    // Инициализация инвентаря
+
     private void InitializeInventory()
     {
+        // === обычные слоты ===
         _slots = new InventorySlot[_inventorySize];
-        
-        // Создаём пустые слоты
         for (int i = 0; i < _inventorySize; i++)
-        {
             _slots[i] = new InventorySlot();
-        }
-        
-        Debug.Log($"Inventory initialized with {_inventorySize} slots");
+
+        // === экипировка ===
+        _equipmentSlots = new InventorySlot[_equipmentSize];
+        for (int i = 0; i < _equipmentSize; i++)
+            _equipmentSlots[i] = new InventorySlot();
+
+        Debug.Log($"Inventory initialized with {_inventorySize} slots + {_equipmentSize} equipment slots");
     }
-    
-    // Получить слот по индексу (безопасно)
+
+    // === Работа с обычными слотами ===
     public InventorySlot GetSlot(int index)
     {
         if (index < 0 || index >= _inventorySize)
@@ -44,19 +47,27 @@ public class Inventory : MonoBehaviour
             Debug.LogWarning($"Inventory slot index {index} is out of range!");
             return null;
         }
-        
         return _slots[index];
     }
-    
-    // Добавить предмет в инвентарь (автоматический поиск места)
+
+    // === Работа с экипировкой ===
+    public InventorySlot GetEquipmentSlot(int index)
+    {
+        if (index < 0 || index >= _equipmentSize)
+        {
+            Debug.LogWarning($"Equipment slot index {index} is out of range!");
+            return null;
+        }
+        return _equipmentSlots[index];
+    }
+
+    // ✅ Добавить предмет (в инвентарь)
     public bool AddItem(Item item, int quantity = 1)
     {
-        if (item == null || quantity <= 0)
-            return false;
-        
+        if (item == null || quantity <= 0) return false;
         int remainingQuantity = quantity;
-        
-        // Сначала пытаемся добавить к существующим стакам того же предмета
+
+        // 1) Добавляем в существующие стаки
         if (item.IsStackable)
         {
             for (int i = 0; i < _inventorySize; i++)
@@ -65,67 +76,137 @@ public class Inventory : MonoBehaviour
                 {
                     remainingQuantity = _slots[i].AddItem(item, remainingQuantity);
                     NotifySlotChanged(i);
-                    
                     if (remainingQuantity <= 0)
                     {
                         NotifyInventoryChanged();
-                        return true; // Всё поместилось
+                        return true;
                     }
                 }
             }
         }
-        
-        // Затем ищем пустые слоты
+
+        // 2) Кладём в пустые слоты
         for (int i = 0; i < _inventorySize; i++)
         {
             if (_slots[i].IsEmpty())
             {
                 remainingQuantity = _slots[i].AddItem(item, remainingQuantity);
                 NotifySlotChanged(i);
-                
                 if (remainingQuantity <= 0)
                 {
                     NotifyInventoryChanged();
-                    return true; // Всё поместилось
+                    return true;
                 }
             }
         }
-        
-        // Если что-то осталось - инвентарь полон
+
         NotifyInventoryChanged();
-        return remainingQuantity < quantity; // Вернём true если хотя бы что-то добавилось
+        return remainingQuantity < quantity;
     }
-    
-    // Убрать предмет из конкретного слота
+
+    // ✅ Экипировать предмет (например, шлем в слот головы)
+    public bool EquipItem(int equipmentIndex, Item item)
+    {
+        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
+        if (item == null) return false;
+
+        _equipmentSlots[equipmentIndex].Clear();
+        _equipmentSlots[equipmentIndex].AddItem(item, 1);
+
+        NotifyInventoryChanged();
+        return true;
+    }
+
+    // ✅ Снять предмет (возвращает его обратно в инвентарь)
+    public bool UnequipItem(int equipmentIndex)
+    {
+        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
+
+        var slot = _equipmentSlots[equipmentIndex];
+        if (slot.IsEmpty()) return false;
+
+        Item item = slot.Item;
+        slot.Clear();
+
+        AddItem(item, 1); // кладём обратно в инвентарь
+        NotifyInventoryChanged();
+        return true;
+    }
+
+    // ✅ Удаление по индексу
     public bool RemoveItem(int slotIndex, int quantity = 1)
     {
-        if (slotIndex < 0 || slotIndex >= _inventorySize)
-            return false;
-        
+        if (slotIndex < 0 || slotIndex >= _inventorySize) return false;
+
         InventorySlot slot = _slots[slotIndex];
-        if (slot.IsEmpty())
-            return false;
-        
+        if (slot.IsEmpty()) return false;
+
         int removedAmount = slot.RemoveItem(quantity);
-        
         if (removedAmount > 0)
         {
             NotifySlotChanged(slotIndex);
             NotifyInventoryChanged();
             return true;
         }
-        
         return false;
     }
-    
-    // Приватные методы для отправки событий
-    private void NotifySlotChanged(int slotIndex)
+
+    // ✅ Удаление по Item
+    public bool RemoveItem(Item item, int quantity = 1)
     {
-        OnSlotChanged?.Invoke(slotIndex);
+        if (item == null || quantity <= 0) return false;
+
+        int remaining = quantity;
+        for (int i = 0; i < _inventorySize; i++)
+        {
+            if (!_slots[i].IsEmpty() && _slots[i].Item == item)
+            {
+                int removed = _slots[i].RemoveItem(remaining);
+                remaining -= removed;
+                NotifySlotChanged(i);
+
+                if (remaining <= 0)
+                {
+                    NotifyInventoryChanged();
+                    return true;
+                }
+            }
+        }
+
+        NotifyInventoryChanged();
+        return remaining < quantity;
     }
-    
-    private void NotifyInventoryChanged()
+
+    // ✅ Проверка
+    public bool Contains(Item item, int quantity = 1) => CountItem(item) >= quantity;
+
+    // ✅ Подсчёт предмета
+    public int CountItem(Item item)
     {
-        OnInventoryChanged?.Invoke();
+        int count = 0;
+        for (int i = 0; i < _inventorySize; i++)
+        {
+            if (!_slots[i].IsEmpty() && _slots[i].Item == item)
+                count += _slots[i].Quantity;
+        }
+        return count;
     }
+
+    // ✅ Очистка
+    public void ClearInventory()
+    {
+        for (int i = 0; i < _inventorySize; i++)
+        {
+            _slots[i].Clear();
+            NotifySlotChanged(i);
+        }
+
+        for (int i = 0; i < _equipmentSize; i++)
+            _equipmentSlots[i].Clear();
+
+        NotifyInventoryChanged();
+    }
+
+    private void NotifySlotChanged(int slotIndex) => OnSlotChanged?.Invoke(slotIndex);
+    private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();
 }
