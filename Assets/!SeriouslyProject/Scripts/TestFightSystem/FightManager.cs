@@ -33,8 +33,6 @@ public class FightManager : MonoBehaviour
     {
         for (int i = 0; i < bases.Count; i++)
         {
-            Debug.Log($"{bases[i].Name} {bases[i].Health}");
-
             if (bases[i] is Enemy enemy && enemy.Health > 0)
             {
                 yield return new WaitForSeconds(damageDelay);
@@ -44,7 +42,6 @@ public class FightManager : MonoBehaviour
             }
             else if (bases[i] is Character character && character.Health > 0)
             {
-
                 yield return StartCoroutine(WaitCharacterTurn(character));
             }
         }
