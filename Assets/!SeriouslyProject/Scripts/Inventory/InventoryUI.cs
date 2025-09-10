@@ -93,7 +93,8 @@ public class InventoryUI : MonoBehaviour
                 continue;
             }
 
-            slotUI.Initialize(i, _inventory.GetSlot(i));
+            // Инициализируем как обычный слот (isEquipmentSlot = false)
+            slotUI.Initialize(i, _inventory.GetSlot(i), false);
             slotUI.OnSlotClicked += OnSlotClicked;
             slotUI.OnSlotRightClicked += OnSlotRightClicked;
             slotUI.OnSlotHovered += OnSlotHovered;
@@ -101,7 +102,7 @@ public class InventoryUI : MonoBehaviour
             _slotUIElements.Add(slotUI);
         }
         
-        Debug.Log($"Created {_slotUIElements.Count} inventory slots");
+        Debug.Log($"Created {_slotUIElements.Count} inventory slots with drag & drop support");
     }
 
     // === Создание слотов экипировки ===
@@ -112,7 +113,6 @@ public class InventoryUI : MonoBehaviour
 
         _equipmentSlotUIElements.Clear();
 
-        // допустим, у тебя фиксированное число экипируемых слотов
         int equipmentSlotCount = _inventory.EquipmentSize; 
 
         for (int i = 0; i < equipmentSlotCount; i++)
@@ -125,7 +125,8 @@ public class InventoryUI : MonoBehaviour
                 continue;
             }
 
-            slotUI.Initialize(i, _inventory.GetEquipmentSlot(i));
+            // Инициализируем как слот экипировки (isEquipmentSlot = true)
+            slotUI.Initialize(i, _inventory.GetEquipmentSlot(i), true);
             slotUI.OnSlotClicked += OnEquipmentSlotClicked;
             slotUI.OnSlotRightClicked += OnEquipmentSlotRightClicked;
             slotUI.OnSlotHovered += OnEquipmentSlotHovered;
@@ -133,7 +134,7 @@ public class InventoryUI : MonoBehaviour
             _equipmentSlotUIElements.Add(slotUI);
         }
 
-        Debug.Log($"Created {_equipmentSlotUIElements.Count} equipment slots");
+        Debug.Log($"Created {_equipmentSlotUIElements.Count} equipment slots with drag & drop support");
     }
 
     // === Обычные слоты ===
@@ -161,42 +162,102 @@ public class InventoryUI : MonoBehaviour
     private void OnEquipmentSlotClicked(int slotIndex)
     {
         Debug.Log($"Equipment Slot {slotIndex} clicked");
-        // TODO: Логика экипировки
+        SelectSlot(slotIndex);
+        
+        // Можно добавить специальную логику для клика по экипировке
+        var equipmentSlot = _inventory.GetEquipmentSlot(slotIndex);
+        if (!equipmentSlot.IsEmpty())
+        {
+            Debug.Log($"Equipment slot contains: {equipmentSlot.Item.ItemName}");
+        }
     }
 
     private void OnEquipmentSlotRightClicked(int slotIndex)
     {
         Debug.Log($"Equipment Slot {slotIndex} right clicked");
-        // TODO: Снять/быстро снять предмет
+        
+        // Быстрое снятие экипировки правой кнопкой мыши
+        var equipmentSlot = _inventory.GetEquipmentSlot(slotIndex);
+        if (!equipmentSlot.IsEmpty())
+        {
+            bool success = _inventory.UnequipItem(slotIndex);
+            if (success)
+            {
+                Debug.Log($"Quickly unequipped item from slot {slotIndex}");
+            }
+            else
+            {
+                Debug.Log($"Failed to unequip item from slot {slotIndex} - inventory might be full");
+            }
+        }
     }
 
     private void OnEquipmentSlotHovered(int slotIndex)
     {
-        // TODO: Подсказка по предмету
+        // TODO: Подсказка по предмету экипировки
+        var equipmentSlot = _inventory.GetEquipmentSlot(slotIndex);
+        if (!equipmentSlot.IsEmpty())
+        {
+            // Здесь можно показать tooltip с информацией о предмете
+            Debug.Log($"Hovering over equipped item: {equipmentSlot.Item.ItemName}");
+        }
     }
 
     // === Обычные клики ===
     private void OnSlotClicked(int slotIndex)
     {
-        Debug.Log($"Slot {slotIndex} clicked");
+        Debug.Log($"Inventory Slot {slotIndex} clicked");
         SelectSlot(slotIndex);
+        
+        // Можно добавить логику использования предмета при клике
+        var slot = _inventory.GetSlot(slotIndex);
+        if (!slot.IsEmpty())
+        {
+            Debug.Log($"Inventory slot contains: {slot.Item.ItemName} x{slot.Quantity}");
+        }
     }
     
     private void OnSlotRightClicked(int slotIndex)
     {
-        Debug.Log($"Slot {slotIndex} right clicked");
+        Debug.Log($"Inventory Slot {slotIndex} right clicked");
+        
+        // Можно добавить логику быстрого использования или разделения стака
+        var slot = _inventory.GetSlot(slotIndex);
+        if (!slot.IsEmpty())
+        {
+            // Пример: быстрое использование предмета
+            if (slot.Item.ItemType == ItemType.Consumable)
+            {
+                slot.Item.Use();
+                _inventory.RemoveItem(slotIndex, 1);
+                Debug.Log($"Used {slot.Item.ItemName}");
+            }
+            else
+            {
+                Debug.Log($"Cannot use {slot.Item.ItemName} - not a consumable item");
+            }
+        }
     }
     
     private void OnSlotHovered(int slotIndex)
     {
-        // TODO: Tooltip
+        // TODO: Показать tooltip с информацией о предмете
+        var slot = _inventory.GetSlot(slotIndex);
+        if (!slot.IsEmpty())
+        {
+            Debug.Log($"Hovering over: {slot.Item.ItemName}");
+            // Здесь можно показать tooltip с описанием предмета
+        }
     }
     
     private void SelectSlot(int slotIndex)
     {
         _selectedSlotIndex = slotIndex;
+        Debug.Log($"Selected slot: {slotIndex}");
     }
 
+    // === Методы для внешнего управления ===
+    
     public void OpenInventory()
     {
         if (_isOpen) return;
@@ -210,6 +271,8 @@ public class InventoryUI : MonoBehaviour
         DOTween.Sequence()
             .Append(_inventoryPanel.transform.DOScale(_originalScale, _openAnimationDuration).SetEase(Ease.OutBack))
             .Join(_canvasGroup.DOFade(1f, _openAnimationDuration));
+            
+        Debug.Log("Inventory opened");
     }
     
     public void CloseInventory()
@@ -221,14 +284,62 @@ public class InventoryUI : MonoBehaviour
         DOTween.Sequence()
             .Append(_inventoryPanel.transform.DOScale(0f, _closeAnimationDuration).SetEase(Ease.InBack))
             .Join(_canvasGroup.DOFade(0f, _closeAnimationDuration))
-            .OnComplete(() => _inventoryPanel.SetActive(false));
+            .OnComplete(() => {
+                _inventoryPanel.SetActive(false);
+                Debug.Log("Inventory closed");
+            });
     }
     
     public void ToggleInventory()
     {
-        if (_isOpen) CloseInventory();
-        else OpenInventory();
+        if (_isOpen) 
+            CloseInventory();
+        else 
+            OpenInventory();
     }
     
+    // === Методы для отладки и тестирования ===
+    
+    public void ForceRefreshAllSlots()
+    {
+        Debug.Log("Force refreshing all slots");
+        RefreshAllSlots();
+    }
+    
+    public void DebugInventoryState()
+    {
+        Debug.Log("=== INVENTORY UI DEBUG ===");
+        Debug.Log($"Is Open: {_isOpen}");
+        Debug.Log($"Selected Slot: {_selectedSlotIndex}");
+        Debug.Log($"Regular Slots: {_slotUIElements.Count}");
+        Debug.Log($"Equipment Slots: {_equipmentSlotUIElements.Count}");
+        
+        // Отладка содержимого слотов
+        for (int i = 0; i < _slotUIElements.Count; i++)
+        {
+            var slot = _inventory.GetSlot(i);
+            if (!slot.IsEmpty())
+            {
+                Debug.Log($"Inventory Slot {i}: {slot.Item.ItemName} x{slot.Quantity}");
+            }
+        }
+        
+        for (int i = 0; i < _equipmentSlotUIElements.Count; i++)
+        {
+            var slot = _inventory.GetEquipmentSlot(i);
+            if (!slot.IsEmpty())
+            {
+                Debug.Log($"Equipment Slot {i}: {slot.Item.ItemName}");
+            }
+        }
+        
+        Debug.Log("========================");
+    }
+    
+    // === Публичные свойства ===
+    
     public bool IsOpen => _isOpen;
+    public int SelectedSlotIndex => _selectedSlotIndex;
+    public List<InventorySlotUI> SlotUIElements => _slotUIElements;
+    public List<InventorySlotUI> EquipmentSlotUIElements => _equipmentSlotUIElements;
 }
