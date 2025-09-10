@@ -7,7 +7,7 @@ namespace FightSystem.Enemy
     public class Enemy : Base
     {
         [SerializeField] private EnemyData enemyData;
-        [SerializeField] private ContextMenu contextMenu;
+        [SerializeField] private ActionButtons actionButtons;
 
         private Button button;
 
@@ -20,11 +20,13 @@ namespace FightSystem.Enemy
             StartCoroutine(Blinking());
 
             button = GetComponent<Button>();
-            button.onClick.AddListener(SetComponent);
+            button.onClick.AddListener(() => 
+            {
+                actionButtons.currentEnemy = this; 
+                //actionButtons.OnEnemySelected(this);
+            });
 
-
-            if (contextMenu == null)
-                contextMenu = FindObjectOfType<ContextMenu>();
+            actionButtons = FindObjectOfType<ActionButtons>();
         }
 
         public void LocalInizialize()
@@ -33,12 +35,6 @@ namespace FightSystem.Enemy
 
             UpdateUI();
 
-        }
-
-        private void SetComponent()
-        {
-            contextMenu.Enemy = GetComponent<Enemy>();
-            contextMenu.FightStateController();
         }
 
         public void InitializeFromSettings(EnemyesSettings settings)

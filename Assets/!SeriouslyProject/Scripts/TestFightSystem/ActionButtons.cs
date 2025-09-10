@@ -1,6 +1,7 @@
 ﻿using FightSystem.Character;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,11 +20,11 @@ public class ActionButtons : MonoBehaviour
     #endregion 
 
     [HideInInspector] public Enemy currentEnemy;
-    private List<Character> characters;
-    private BattleActions battleActions;
 
     [SerializeField] private FightManager fightManager;
     [SerializeField] private List<ButtonsMethods> buttonsMethods;
+
+    private Action pendingAction;
 
     private void Start()
     {
@@ -35,8 +36,6 @@ public class ActionButtons : MonoBehaviour
 
     private void Initialize()
     {
-        characters = fightManager.characters;
-
         IterateButtons();
     }
 
@@ -59,20 +58,38 @@ public class ActionButtons : MonoBehaviour
                 continue;
             }
 
-            var localMethod = methodInfo;
+            bm.button.onClick.RemoveAllListeners();
 
-            bm.button.onClick.AddListener(() =>
+            var localMethod = methodInfo;
+            var localButton = bm.button;
+
+            localButton.onClick.AddListener(() =>
             {
-                foreach (var character in characters)
+                var activeChar = fightManager.ActiveCharacter;
+                if (activeChar == null)
                 {
-                    int damage = character.Damage;
-                    var ba = new BattleActions(character, damage);
-                    localMethod.Invoke(ba, null);
+                    Debug.LogWarning("No active character (fightManager.ActiveCharacter == null).");
+                    return;
                 }
+
+                if (currentEnemy == null)
+                {
+                    Debug.LogWarning("No target enemy selected (ActionButtons.currentEnemy == null).");
+                    return;
+                }
+
+                int damage = activeChar.GiveDamage();
+
+                var ba = new BattleActions(activeChar, damage, currentEnemy);
+
+                localMethod.Invoke(ba, null);
+
+                activeChar.IsTurn = false;
+
+                fightManager.DeleteEnemyOnList(currentEnemy);
             });
         }
     }
-
 
     public void MagicAction()
     {
@@ -93,36 +110,38 @@ public class ActionButtons : MonoBehaviour
     [System.Serializable]
     public class BattleActions
     {
-        private Base baseChar;
+        private Base attacker;
+        private Base target;
         private int damage;
 
-        public BattleActions(Base _baseChar, int _damage)
+        public BattleActions(Base _attacker, int _damage, Base _target)
         {
-            baseChar = _baseChar;
+            attacker = _attacker;
             damage = _damage;
+            target = _target;
         }
 
         public void SlashAttack()
         {
-            Debug.Log("SlashAttack");
-            baseChar.TakeDamage(damage);
+            Debug.Log($"{attacker.Name} бьёт {target.Name} на {damage} урона (SlashAttack)");
+            target.TakeDamage(damage);
         }
 
         public void RudeBlow()
         {
-            baseChar.TakeDamage(damage);
-
+            Debug.Log($"{attacker.Name} использует RudeBlow");
+            target.TakeDamage(damage);
         }
 
         public void ProudPose()
         {
-            baseChar.TakeDamage(damage);
+            Debug.Log($"{attacker.Name} делает ProudPose");
 
         }
 
         public void Parry()
         {
-            baseChar.TakeDamage(damage);
+            Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
 
         }
     }
@@ -130,7 +149,7 @@ public class ActionButtons : MonoBehaviour
     [System.Serializable]
     public struct ButtonsMethods
     {
-        public Button button;     
+        public Button button;
         public string methodName;
     }
 }

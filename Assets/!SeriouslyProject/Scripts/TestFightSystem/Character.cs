@@ -10,8 +10,6 @@ namespace FightSystem.Character
 
         [Header("DataCharacter")]
         [SerializeField] private CharacterData characterData;
-        [Header("ContextMenu")]
-        [SerializeField] private ContextMenu contextMenu;
 
         private Button button;
 
@@ -22,17 +20,6 @@ namespace FightSystem.Character
             //LocalInizialize();
 
             button = GetComponent<Button>();
-
-            if (contextMenu == null)
-                contextMenu = FindObjectOfType<ContextMenu>();
-
-            button.onClick.AddListener(() =>
-            {
-                contextMenu.SetCharacter(this); // Передаём себя напрямую
-                contextMenu.ChangePosition(transform.GetChild(0), this);
-                contextMenu.FightStateController();
-            });
-
         }
 
         private void LocalInizialize()

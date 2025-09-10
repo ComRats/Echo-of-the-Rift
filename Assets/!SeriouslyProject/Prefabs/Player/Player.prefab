@@ -283,6 +283,34 @@ MonoBehaviour:
     _heal: 0
     _armor: 0
     spritePath: 
+  - useCharacterData: 1
+    characterDataName: Human
+    characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
+    _name: 
+    _description: 
+    _damage: 0
+    _priority: 0
+    _maxMana: 0
+    _mana: 0
+    _maxHealth: 0
+    _health: 0
+    _heal: 0
+    _armor: 0
+    spritePath: 
+  - useCharacterData: 1
+    characterDataName: Human
+    characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
+    _name: 
+    _description: 
+    _damage: 0
+    _priority: 0
+    _maxMana: 0
+    _mana: 0
+    _maxHealth: 0
+    _health: 0
+    _heal: 0
+    _armor: 0
+    spritePath: 
 --- !u!114 &-7914314194156218776
 MonoBehaviour:
   m_ObjectHideFlags: 0

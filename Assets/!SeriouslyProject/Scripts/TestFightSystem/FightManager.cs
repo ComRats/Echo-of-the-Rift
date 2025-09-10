@@ -8,7 +8,7 @@ using TMPro;
 
 public class FightManager : MonoBehaviour
 {
-    public StateFight CurrentStateFight = StateFight.None;
+    public Character ActiveCharacter { get; private set; }
 
     [SerializeField] private float damageDelay = 1;
     [SerializeField] private TextMeshProUGUI fightTurn;
@@ -104,12 +104,19 @@ public class FightManager : MonoBehaviour
     private IEnumerator WaitCharacterTurn(Character _character)
     {
         _character.IsTurn = true;
+        ActiveCharacter = _character;
+
+        StartEnemyBlinking();
+
         while (_character.IsTurn)
         {
-            StartEnemyBlinking();//заменить на bool Enemy
             yield return null;
         }
+
+        ActiveCharacter = null;
+        StopEnemyBlinking();
     }
+
     public Character GetCharacterLowestHP()
     {
         return characters.OrderBy(character => character.Health).FirstOrDefault(); ;
@@ -148,13 +155,5 @@ public class FightManager : MonoBehaviour
             bases.Remove(enemy);
             Destroy(enemy.gameObject);
         }
-    }
-
-    public enum StateFight
-    {
-        None,
-        Attack,
-        Heal,
-        MagicAttack
     }
 }

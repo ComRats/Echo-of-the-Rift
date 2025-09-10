@@ -3647,7 +3647,7 @@ MonoBehaviour:
   magicAttack: {fileID: 1879273137}
   magicAttackButtons: {fileID: 143133837}
   currentEnemy: {fileID: 0}
-  fightManager: {fileID: 0}
+  fightManager: {fileID: 517749535}
   buttonsMethods:
   - button: {fileID: 1313098202}
     methodName: SlashAttack
