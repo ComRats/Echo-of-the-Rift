@@ -9,13 +9,9 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Button _closeButton;                 
     [SerializeField] private GameObject _inventoryPanel;          
 
-    [Header("Inventory References")]
-    [SerializeField] private Transform _slotsContainer;           
-    [SerializeField] private GameObject _slotPrefab;              
-
-    [Header("Equipment References")]
-    [SerializeField] private Transform _equipmentSlotsContainer;  
-    [SerializeField] private GameObject _equipmentSlotPrefab;     
+    [Header("Pre-made Slots")]
+    [SerializeField] private InventorySlotUI[] _inventorySlots;
+    [SerializeField] private InventorySlotUI[] _equipmentSlots;
 
     [Header("Animation Settings")]
     [SerializeField] private float _openAnimationDuration = 0.3f;
@@ -61,9 +57,9 @@ public class InventoryUI : MonoBehaviour
         _inventory.OnSlotChanged += OnSlotChanged;
         _inventory.OnInventoryChanged += OnInventoryChanged;
         
-        // Создаём UI для обычных и экипируемых слотов
-        CreateInventorySlots();
-        CreateEquipmentSlots();
+        // Инициализируем готовые слоты
+        InitializeInventorySlots();
+        InitializeEquipmentSlots();
     }
     
     private void OnDestroy()
@@ -74,67 +70,95 @@ public class InventoryUI : MonoBehaviour
             _inventory.OnInventoryChanged -= OnInventoryChanged;
         }
     }
-    
-    // === Создание обычных слотов ===
-    private void CreateInventorySlots()
+
+    // === Инициализация слотов инвентаря ===
+    private void InitializeInventorySlots()
     {
-        foreach (Transform child in _slotsContainer)
-            Destroy(child.gameObject);
+        if (_inventorySlots == null || _inventorySlots.Length == 0)
+        {
+            Debug.LogError("No inventory slots assigned! Please drag inventory slot GameObjects into the _inventorySlots array.");
+            return;
+        }
 
         _slotUIElements.Clear();
-        
-        for (int i = 0; i < _inventory.Size; i++)
-        {
-            GameObject slotObject = Instantiate(_slotPrefab, _slotsContainer);
-            InventorySlotUI slotUI = slotObject.GetComponent<InventorySlotUI>();
-            if (slotUI == null)
-            {
-                Debug.LogError("Slot prefab must have InventorySlotUI component!");
-                continue;
-            }
 
-            // Инициализируем как обычный слот (isEquipmentSlot = false)
-            slotUI.Initialize(i, _inventory.GetSlot(i), false);
-            slotUI.OnSlotClicked += OnSlotClicked;
-            slotUI.OnSlotRightClicked += OnSlotRightClicked;
-            slotUI.OnSlotHovered += OnSlotHovered;
-            
-            _slotUIElements.Add(slotUI);
+        int slotsToUse = Mathf.Min(_inventorySlots.Length, _inventory.Size);
+
+        for (int i = 0; i < slotsToUse; i++)
+        {
+            if (_inventorySlots[i] != null)
+            {
+                InventorySlotUI slotUI = _inventorySlots[i];
+
+                // Инициализируем как обычный слот (isEquipmentSlot = false)
+                slotUI.Initialize(i, _inventory.GetSlot(i), false);
+                slotUI.OnSlotClicked += OnSlotClicked;
+                slotUI.OnSlotRightClicked += OnSlotRightClicked;
+                slotUI.OnSlotHovered += OnSlotHovered;
+
+                _slotUIElements.Add(slotUI);
+
+                Debug.Log($"Initialized inventory slot {i}: {slotUI.name}");
+            }
+            else
+            {
+                Debug.LogError($"Inventory slot {i} is null! Please assign all slots in the inspector.");
+            }
         }
+
+        if (slotsToUse < _inventory.Size)
+        {
+            Debug.LogWarning($"Not enough inventory slots assigned! Have {slotsToUse}, need {_inventory.Size}. Please add more slots to the _inventorySlots array.");
+        }
+
+        Debug.Log($"Initialized {_slotUIElements.Count} inventory slots with drag & drop support");
         
-        Debug.Log($"Created {_slotUIElements.Count} inventory slots with drag & drop support");
+        OnInventoryChanged();
     }
 
-    // === Создание слотов экипировки ===
-    private void CreateEquipmentSlots()
+    // === Инициализация слотов экипировки ===
+    private void InitializeEquipmentSlots()
     {
-        foreach (Transform child in _equipmentSlotsContainer)
-            Destroy(child.gameObject);
+        if (_equipmentSlots == null || _equipmentSlots.Length == 0)
+        {
+            Debug.LogError("No equipment slots assigned! Please drag equipment slot GameObjects into the _equipmentSlots array.");
+            return;
+        }
 
         _equipmentSlotUIElements.Clear();
 
-        int equipmentSlotCount = _inventory.EquipmentSize; 
+        int slotsToUse = Mathf.Min(_equipmentSlots.Length, _inventory.EquipmentSize);
 
-        for (int i = 0; i < equipmentSlotCount; i++)
+        for (int i = 0; i < slotsToUse; i++)
         {
-            GameObject slotObject = Instantiate(_equipmentSlotPrefab, _equipmentSlotsContainer);
-            InventorySlotUI slotUI = slotObject.GetComponent<InventorySlotUI>();
-            if (slotUI == null)
+            if (_equipmentSlots[i] != null)
             {
-                Debug.LogError("Equipment slot prefab must have InventorySlotUI component!");
-                continue;
+                InventorySlotUI slotUI = _equipmentSlots[i];
+
+                // Инициализируем как слот экипировки (isEquipmentSlot = true)
+                slotUI.Initialize(i, _inventory.GetEquipmentSlot(i), true);
+                slotUI.OnSlotClicked += OnEquipmentSlotClicked;
+                slotUI.OnSlotRightClicked += OnEquipmentSlotRightClicked;
+                slotUI.OnSlotHovered += OnEquipmentSlotHovered;
+
+                _equipmentSlotUIElements.Add(slotUI);
+
+                Debug.Log($"Initialized equipment slot {i}: {slotUI.name}");
             }
-
-            // Инициализируем как слот экипировки (isEquipmentSlot = true)
-            slotUI.Initialize(i, _inventory.GetEquipmentSlot(i), true);
-            slotUI.OnSlotClicked += OnEquipmentSlotClicked;
-            slotUI.OnSlotRightClicked += OnEquipmentSlotRightClicked;
-            slotUI.OnSlotHovered += OnEquipmentSlotHovered;
-
-            _equipmentSlotUIElements.Add(slotUI);
+            else
+            {
+                Debug.LogError($"Equipment slot {i} is null! Please assign all slots in the inspector.");
+            }
         }
 
-        Debug.Log($"Created {_equipmentSlotUIElements.Count} equipment slots with drag & drop support");
+        if (slotsToUse < _inventory.EquipmentSize)
+        {
+            Debug.LogWarning($"Not enough equipment slots assigned! Have {slotsToUse}, need {_inventory.EquipmentSize}. Please add more slots to the _equipmentSlots array.");
+        }
+
+        Debug.Log($"Initialized {_equipmentSlotUIElements.Count} equipment slots with drag & drop support");
+        
+        OnInventoryChanged();
     }
 
     // === Обычные слоты ===
@@ -163,19 +187,21 @@ public class InventoryUI : MonoBehaviour
     {
         Debug.Log($"Equipment Slot {slotIndex} clicked");
         SelectSlot(slotIndex);
-        
+
         // Можно добавить специальную логику для клика по экипировке
         var equipmentSlot = _inventory.GetEquipmentSlot(slotIndex);
         if (!equipmentSlot.IsEmpty())
         {
             Debug.Log($"Equipment slot contains: {equipmentSlot.Item.ItemName}");
         }
+
+        OnInventoryChanged();
     }
 
     private void OnEquipmentSlotRightClicked(int slotIndex)
     {
         Debug.Log($"Equipment Slot {slotIndex} right clicked");
-        
+
         // Быстрое снятие экипировки правой кнопкой мыши
         var equipmentSlot = _inventory.GetEquipmentSlot(slotIndex);
         if (!equipmentSlot.IsEmpty())
@@ -190,6 +216,8 @@ public class InventoryUI : MonoBehaviour
                 Debug.Log($"Failed to unequip item from slot {slotIndex} - inventory might be full");
             }
         }
+        
+        OnInventoryChanged();
     }
 
     private void OnEquipmentSlotHovered(int slotIndex)
@@ -201,6 +229,8 @@ public class InventoryUI : MonoBehaviour
             // Здесь можно показать tooltip с информацией о предмете
             Debug.Log($"Hovering over equipped item: {equipmentSlot.Item.ItemName}");
         }
+
+        OnInventoryChanged();
     }
 
     // === Обычные клики ===
@@ -208,19 +238,21 @@ public class InventoryUI : MonoBehaviour
     {
         Debug.Log($"Inventory Slot {slotIndex} clicked");
         SelectSlot(slotIndex);
-        
+
         // Можно добавить логику использования предмета при клике
         var slot = _inventory.GetSlot(slotIndex);
         if (!slot.IsEmpty())
         {
             Debug.Log($"Inventory slot contains: {slot.Item.ItemName} x{slot.Quantity}");
         }
+        
+        OnInventoryChanged();
     }
-    
+
     private void OnSlotRightClicked(int slotIndex)
     {
         Debug.Log($"Inventory Slot {slotIndex} right clicked");
-        
+
         // Можно добавить логику быстрого использования или разделения стака
         var slot = _inventory.GetSlot(slotIndex);
         if (!slot.IsEmpty())
@@ -237,8 +269,10 @@ public class InventoryUI : MonoBehaviour
                 Debug.Log($"Cannot use {slot.Item.ItemName} - not a consumable item");
             }
         }
+        
+        OnInventoryChanged();
     }
-    
+
     private void OnSlotHovered(int slotIndex)
     {
         // TODO: Показать tooltip с информацией о предмете
@@ -248,46 +282,54 @@ public class InventoryUI : MonoBehaviour
             Debug.Log($"Hovering over: {slot.Item.ItemName}");
             // Здесь можно показать tooltip с описанием предмета
         }
+        OnInventoryChanged();
     }
-    
+
     private void SelectSlot(int slotIndex)
     {
         _selectedSlotIndex = slotIndex;
         Debug.Log($"Selected slot: {slotIndex}");
+        
+        OnInventoryChanged();
     }
 
     // === Методы для внешнего управления ===
-    
+
     public void OpenInventory()
     {
         if (_isOpen) return;
-        
+
         _isOpen = true;
         _inventoryPanel.SetActive(true);
-        
+
         _inventoryPanel.transform.localScale = Vector3.zero;
         _canvasGroup.alpha = 0f;
-        
+
         DOTween.Sequence()
             .Append(_inventoryPanel.transform.DOScale(_originalScale, _openAnimationDuration).SetEase(Ease.OutBack))
             .Join(_canvasGroup.DOFade(1f, _openAnimationDuration));
-            
+
         Debug.Log("Inventory opened");
+        
+        OnInventoryChanged();
     }
-    
+
     public void CloseInventory()
     {
         if (!_isOpen) return;
-        
+
         _isOpen = false;
-        
+
         DOTween.Sequence()
             .Append(_inventoryPanel.transform.DOScale(0f, _closeAnimationDuration).SetEase(Ease.InBack))
             .Join(_canvasGroup.DOFade(0f, _closeAnimationDuration))
-            .OnComplete(() => {
+            .OnComplete(() =>
+            {
                 _inventoryPanel.SetActive(false);
                 Debug.Log("Inventory closed");
             });
+            
+        OnInventoryChanged();    
     }
     
     public void ToggleInventory()

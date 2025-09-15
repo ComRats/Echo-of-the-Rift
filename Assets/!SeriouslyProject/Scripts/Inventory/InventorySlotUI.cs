@@ -4,6 +4,10 @@ using UnityEngine.EventSystems;
 using TMPro;
 using DG.Tweening;
 
+/// <summary>
+/// UI компонент слота инвентаря с поддержкой drag & drop
+/// Обрабатывает визуализацию предметов и их перетаскивание между слотами
+/// </summary>
 public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     [Header("UI References")]
@@ -23,18 +27,18 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     [SerializeField] private float _dragAlpha = 0.6f;
     [SerializeField] private Vector3 _dragScale = new Vector3(1.2f, 1.2f, 1.2f);
     
-    // Приватные поля
+    // Основные поля слота
     private InventorySlot _assignedSlot;
     private int _slotIndex;
     private bool _isSelected = false;
     private bool _isEquipmentSlot = false;
 
-    // События для взаимодействия с слотом
+    // События для взаимодействия с системой инвентаря
     public System.Action<int> OnSlotClicked;
     public System.Action<int> OnSlotRightClicked;
     public System.Action<int> OnSlotHovered;
     
-    // Drag & Drop поля
+    // Компоненты для drag & drop
     private Canvas _canvas;
     private CanvasGroup _canvasGroup;
     private RectTransform _rectTransform;
@@ -49,7 +53,15 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     
     private void Awake()
     {
-        // Получаем компоненты
+        InitializeComponents();
+        SetSlotEmpty();
+    }
+
+    /// <summary>
+    /// Инициализирует компоненты и подписывается на события
+    /// </summary>
+    private void InitializeComponents()
+    {
         _rectTransform = GetComponent<RectTransform>();
         _canvasGroup = GetComponent<CanvasGroup>();
         if (_canvasGroup == null)
@@ -62,12 +74,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         {
             _slotButton.onClick.AddListener(() => OnSlotClicked?.Invoke(_slotIndex));
         }
-        
-        // Изначально слот пустой
-        SetSlotEmpty();
     }
     
-    // Инициализация слота с привязкой к данным
+    /// <summary>
+    /// Инициализация слота с привязкой к данным инвентаря
+    /// </summary>
+    /// <param name="slotIndex">Индекс слота в массиве</param>
+    /// <param name="slot">Данные слота из системы инвентаря</param>
+    /// <param name="isEquipmentSlot">Является ли слот экипировкой</param>
     public void Initialize(int slotIndex, InventorySlot slot, bool isEquipmentSlot = false)
     {
         _slotIndex = slotIndex;
@@ -76,7 +90,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         UpdateSlotVisuals();
     }
     
-    // Обновление визуального отображения слота
+    /// <summary>
+    /// Обновляет визуальное отображение слота на основе данных
+    /// </summary>
     public void UpdateSlotVisuals()
     {
         if (_assignedSlot == null || _assignedSlot.IsEmpty())
@@ -97,7 +113,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             _itemIcon.enabled = false;
         }
         
-        // Устанавливаем количество
+        // Показываем количество только если больше 1
         if (_assignedSlot.Quantity > 1)
         {
             _quantityText.text = _assignedSlot.Quantity.ToString();
@@ -109,12 +125,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             _quantityText.enabled = false;
         }
         
-        // Анимация появления предмета
+        // Анимация появления предмета (если не перетаскиваем)
         if (!_isDragging)
             AnimateItemAppear();
     }
     
-    // Очистка слота (визуально)
+    /// <summary>
+    /// Очищает визуальное отображение пустого слота
+    /// </summary>
     private void SetSlotEmpty()
     {
         _itemIcon.enabled = false;
@@ -125,67 +143,77 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (!_isDragging)
             _backgroundImage.color = _normalColor;
     }
-    
-    // === DRAG & DROP IMPLEMENTATION ===
-    
+
+    #region Drag & Drop Implementation
+
     public void OnBeginDrag(PointerEventData eventData)
     {
         // Проверяем, есть ли предмет для перетаскивания
         if (_assignedSlot == null || _assignedSlot.IsEmpty())
             return;
-            
+
         _isDragging = true;
         _draggedSlot = this;
-        
+
         // Сохраняем исходное состояние
         _originalPosition = _rectTransform.anchoredPosition;
         _originalParent = transform.parent;
-        
+
         // Создаем визуальный preview для перетаскивания
         CreateDragPreview();
-        
+
         // Делаем оригинальный слот полупрозрачным
         _canvasGroup.alpha = _dragAlpha;
         _canvasGroup.blocksRaycasts = false;
-        
+
         Debug.Log($"Started dragging {_assignedSlot.Item.ItemName} from slot {_slotIndex}");
+        UpdateSlotVisuals();
     }
-    
+
     public void OnDrag(PointerEventData eventData)
     {
         if (!_isDragging || _dragPreview == null)
             return;
-            
+
         // Перемещаем preview за курсором
         Vector3 screenPosition = eventData.position;
-        Vector3 worldPosition = _canvas.worldCamera != null ? 
-            _canvas.worldCamera.ScreenToWorldPoint(screenPosition) : 
-            screenPosition;
-            
-        _dragPreview.transform.position = worldPosition;
+
+        // Правильное преобразование экранных координат
+        RectTransform canvasRect = _canvas.GetComponent<RectTransform>();
+        Vector2 localPoint;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            canvasRect,
+            screenPosition,
+            _canvas.worldCamera,
+            out localPoint
+        );
+
+        _dragPreview.transform.localPosition = localPoint;
+        UpdateSlotVisuals();
     }
-    
+
     public void OnEndDrag(PointerEventData eventData)
     {
         if (!_isDragging)
             return;
-            
+
         _isDragging = false;
-        
+
         // Восстанавливаем исходное состояние
         _canvasGroup.alpha = 1f;
         _canvasGroup.blocksRaycasts = true;
-        
+
         // Уничтожаем preview
         if (_dragPreview != null)
         {
             Destroy(_dragPreview);
             _dragPreview = null;
         }
-        
+
         _draggedSlot = null;
-        
+
         Debug.Log($"Ended dragging from slot {_slotIndex}");
+        UpdateSlotVisuals();
     }
     
     public void OnDrop(PointerEventData eventData)
@@ -202,8 +230,12 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // Сбрасываем подсветку
         ResetDropHighlight();
     }
-    
-    // Создание визуального preview для перетаскивания
+
+    #endregion
+
+    /// <summary>
+    /// Создает визуальный preview для перетаскивания
+    /// </summary>
     private void CreateDragPreview()
     {
         if (_dragPreview != null)
@@ -245,7 +277,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
     
-    // Обработка логики drop
+    /// <summary>
+    /// Обрабатывает логику размещения предмета в зависимости от типов слотов
+    /// </summary>
     private void HandleItemDrop(InventorySlotUI draggedSlot)
     {
         if (draggedSlot == null || draggedSlot._assignedSlot == null)
@@ -258,52 +292,72 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         Item draggedItem = draggedSlot._assignedSlot.Item;
         int draggedQuantity = draggedSlot._assignedSlot.Quantity;
         
-        // Случай 1: Перетаскиваем из инвентаря в экипировку
+        // Определяем тип операции на основе типов слотов
         if (!draggedSlot._isEquipmentSlot && _isEquipmentSlot)
         {
-            if (CanEquipItem(draggedItem))
-            {
-                // Экипируем предмет
-                EquipItem(draggedSlot, draggedItem);
-            }
-            else
-            {
-                Debug.Log($"Cannot equip {draggedItem.ItemName} in this equipment slot");
-                ShowDropFeedback(false);
-            }
+            // Перетаскиваем из инвентаря в экипировку
+            HandleEquipItem(draggedSlot, draggedItem);
         }
-        // Случай 2: Перетаскиваем из экипировки в инвентарь
         else if (draggedSlot._isEquipmentSlot && !_isEquipmentSlot)
         {
-            UnequipItem(draggedSlot, draggedItem, draggedQuantity);
+            // Перетаскиваем из экипировки в инвентарь
+            HandleUnequipItem(draggedSlot, draggedItem, draggedQuantity);
         }
-        // Случай 3: Обмен между обычными слотами
         else if (!draggedSlot._isEquipmentSlot && !_isEquipmentSlot)
         {
+            // Обмен между обычными слотами
             SwapInventoryItems(draggedSlot);
         }
-        // Случай 4: Обмен между слотами экипировки
         else if (draggedSlot._isEquipmentSlot && _isEquipmentSlot)
         {
-            SwapEquipmentItems(draggedSlot);
+            // Обмен между слотами экипировки
+            HandleEquipmentSwap(draggedSlot);
         }
     }
-    
-    // Проверка, можно ли экипировать предмет
+
+    /// <summary>
+    /// Проверяет, можно ли экипировать предмет в этот слот экипировки
+    /// </summary>
+    private bool CanEquipItemInThisSlot(Item item)
+    {
+        if (item == null) return false;
+        
+        // Базовая проверка типа предмета
+        if (!CanEquipItem(item)) return false;
+        
+        // Проверяем через компонент EquipmentSlotType, если он есть
+        EquipmentSlotType slotType = GetComponent<EquipmentSlotType>();
+        if (slotType != null)
+        {
+            return slotType.CanEquipItem(item);
+        }
+        
+        // Если компонента нет, разрешаем любую экипировку (обратная совместимость)
+        return true;
+    }
+
+    /// <summary>
+    /// Базовая проверка, является ли предмет экипировкой
+    /// </summary>
     private bool CanEquipItem(Item item)
     {
-        // Здесь можно добавить логику проверки типа предмета и типа слота экипировки
-        // Например, шлемы только в слот головы, оружие только в слот оружия и т.д.
-        
-        // Пока что разрешаем экипировать любые предметы типа Equipment
         return item.ItemType == ItemType.Equipment || 
                item.ItemType == ItemType.Weapon || 
                item.ItemType == ItemType.Armor;
     }
     
-    // Экипировка предмета
-    private void EquipItem(InventorySlotUI sourceSlot, Item item)
+    /// <summary>
+    /// Обрабатывает экипировку предмета
+    /// </summary>
+    private void HandleEquipItem(InventorySlotUI sourceSlot, Item item)
     {
+        if (!CanEquipItemInThisSlot(item))
+        {
+            Debug.Log($"Cannot equip {item.ItemName} in this equipment slot - wrong item type");
+            ShowDropFeedback(false);
+            return;
+        }
+
         Inventory inventory = FindObjectOfType<Inventory>();
         
         // Если в слоте экипировки уже есть предмет, возвращаем его в инвентарь
@@ -313,57 +367,117 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             inventory.UnequipItem(_slotIndex);
         }
         
-        // Убираем предмет из инвентаря
+        // Убираем предмет из инвентаря и экипируем
         inventory.RemoveItem(sourceSlot._slotIndex, 1);
-        
-        // Экипируем предмет
         inventory.EquipItem(_slotIndex, item);
         
         ShowDropFeedback(true);
         Debug.Log($"Equipped {item.ItemName} to equipment slot {_slotIndex}");
     }
     
-    // Снятие экипировки
-    private void UnequipItem(InventorySlotUI sourceSlot, Item item, int quantity)
+    /// <summary>
+    /// Обрабатывает снятие экипировки
+    /// </summary>
+    private void HandleUnequipItem(InventorySlotUI sourceSlot, Item item, int quantity)
     {
         Inventory inventory = FindObjectOfType<Inventory>();
         
-        // Проверяем, есть ли место в инвентаре
         if (_assignedSlot.IsEmpty())
         {
-            // Если целевой слот пустой, просто перемещаем
+            // Простое перемещение в пустой слот
             _assignedSlot.AddItem(item, quantity);
             sourceSlot._assignedSlot.Clear();
         }
         else if (_assignedSlot.CanAddItem(item))
         {
-            // Если можем добавить к существующему стаку
+            // Добавляем к существующему стаку
             _assignedSlot.AddItem(item, quantity);
             sourceSlot._assignedSlot.Clear();
         }
         else
         {
-            // Обмениваем предметы местами
-            SwapItems(sourceSlot);
+            // Нужен обмен - проверяем совместимость
+            Item inventoryItem = _assignedSlot.Item;
+            
+            EquipmentSlotType sourceSlotType = sourceSlot.GetComponent<EquipmentSlotType>();
+            bool canEquipInSourceSlot = false;
+            
+            if (sourceSlotType != null)
+            {
+                canEquipInSourceSlot = sourceSlotType.CanEquipItem(inventoryItem);
+            }
+            else
+            {
+                // Базовая проверка если нет компонента типа слота
+                canEquipInSourceSlot = CanEquipItem(inventoryItem);
+            }
+            
+            if (canEquipInSourceSlot)
+            {
+                SwapItems(sourceSlot);
+            }
+            else
+            {
+                string sourceSlotName = sourceSlotType != null ? sourceSlotType.SlotName : "equipment slot";
+                Debug.Log($"Cannot swap - {inventoryItem.ItemName} cannot be equipped in {sourceSlotName}");
+                ShowDropFeedback(false);
+                return;
+            }
         }
         
         ShowDropFeedback(true);
         Debug.Log($"Unequipped {item.ItemName} from equipment slot {sourceSlot._slotIndex}");
     }
+
+    /// <summary>
+    /// Обрабатывает обмен между слотами экипировки
+    /// </summary>
+    private void HandleEquipmentSwap(InventorySlotUI draggedSlot)
+    {
+        Item draggedItem = draggedSlot._assignedSlot.Item;
+        
+        // Проверяем совместимость обеих сторон
+        bool canSwap = CanEquipItemInThisSlot(draggedItem);
+        
+        if (canSwap && !_assignedSlot.IsEmpty())
+        {
+            EquipmentSlotType draggedSlotType = draggedSlot.GetComponent<EquipmentSlotType>();
+            if (draggedSlotType != null && !draggedSlotType.CanEquipItem(_assignedSlot.Item))
+            {
+                canSwap = false;
+                Debug.Log($"Cannot equip {_assignedSlot.Item.ItemName} in the other equipment slot type");
+            }
+        }
+        
+        if (canSwap)
+        {
+            SwapEquipmentItems(draggedSlot);
+        }
+        else
+        {
+            ShowDropFeedback(false);
+        }
+    }
     
-    // Обмен предметами между обычными слотами
+    /// <summary>
+    /// Обмен предметами между обычными слотами
+    /// </summary>
     private void SwapInventoryItems(InventorySlotUI draggedSlot)
     {
         SwapItems(draggedSlot);
     }
     
-    // Обмен предметами между слотами экипировки
+    /// <summary>
+    /// Обмен предметами между слотами экипировки
+    /// </summary>
     private void SwapEquipmentItems(InventorySlotUI draggedSlot)
     {
         SwapItems(draggedSlot);
     }
     
-    // Универсальный метод обмена предметами
+    /// <summary>
+    /// Универсальный метод обмена предметами между слотами
+    /// </summary>
     private void SwapItems(InventorySlotUI otherSlot)
     {
         if (otherSlot == null) return;
@@ -374,42 +488,48 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         
         Item otherItem = otherSlot._assignedSlot.IsEmpty() ? null : otherSlot._assignedSlot.Item;
         int otherQuantity = otherSlot._assignedSlot.IsEmpty() ? 0 : otherSlot._assignedSlot.Quantity;
-        
+
         // Очищаем оба слота
         _assignedSlot.Clear();
         otherSlot._assignedSlot.Clear();
-        
+
         // Устанавливаем новые значения
         if (otherItem != null)
             _assignedSlot.AddItem(otherItem, otherQuantity);
-            
+
         if (thisItem != null)
             otherSlot._assignedSlot.AddItem(thisItem, thisQuantity);
-        
+
         // Обновляем визуальное отображение
         UpdateSlotVisuals();
         otherSlot.UpdateSlotVisuals();
-        
+
         ShowDropFeedback(true);
         Debug.Log($"Swapped items between slots {_slotIndex} and {otherSlot._slotIndex}");
     }
-    
-    // Визуальная обратная связь при drop
+
+    #region Visual Effects
+
+    /// <summary>
+    /// Показывает визуальную обратную связь при drop операции
+    /// </summary>
     private void ShowDropFeedback(bool success)
     {
         Color feedbackColor = success ? Color.green : Color.red;
-        
+
         _backgroundImage.DOColor(feedbackColor, 0.1f)
             .OnComplete(() => _backgroundImage.DOColor(_normalColor, 0.2f));
+            
+        UpdateSlotVisuals();
     }
     
-    // Сброс подсветки drop зоны
+    /// <summary>
+    /// Сбрасывает подсветку drop зоны
+    /// </summary>
     private void ResetDropHighlight()
     {
         _backgroundImage.DOColor(_normalColor, 0.1f);
     }
-    
-    // === HOVER EFFECTS ===
     
     private void OnMouseEnter()
     {
@@ -419,6 +539,13 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             bool canDrop = CanDropItem(_draggedSlot);
             Color highlightColor = canDrop ? _dropValidColor : _dropInvalidColor;
             _backgroundImage.color = highlightColor;
+            
+            // Подсвечиваем типизированный слот если есть
+            EquipmentSlotType slotType = GetComponent<EquipmentSlotType>();
+            if (slotType != null && _draggedSlot._assignedSlot != null)
+            {
+                slotType.HighlightForItem(_draggedSlot._assignedSlot.Item, true);
+            }
         }
     }
     
@@ -427,11 +554,20 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         if (!_isDragging)
         {
             ResetDropHighlight();
+            
+            // Убираем подсветку типизированного слота
+            EquipmentSlotType slotType = GetComponent<EquipmentSlotType>();
+            if (slotType != null)
+            {
+                slotType.HighlightForItem(null, false);
+            }
         }
     }
     
-    // Проверка, можно ли сбросить предмет в этот слот
-    private bool CanDropItem(InventorySlotUI draggedSlot)
+    /// <summary>
+    /// Проверяет, можно ли сбросить предмет в этот слот
+    /// </summary>
+   private bool CanDropItem(InventorySlotUI draggedSlot)
     {
         if (draggedSlot == null || draggedSlot._assignedSlot == null)
             return false;
@@ -441,14 +577,34 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         // Если перетаскиваем в экипировку
         if (!draggedSlot._isEquipmentSlot && _isEquipmentSlot)
         {
-            return CanEquipItem(draggedItem);
+            return CanEquipItemInThisSlot(draggedItem);
+        }
+        
+        // Если обмен между слотами экипировки
+        if (draggedSlot._isEquipmentSlot && _isEquipmentSlot)
+        {
+            // Проверяем совместимость обеих сторон
+            bool canDropHere = CanEquipItemInThisSlot(draggedItem);
+            
+            if (!_assignedSlot.IsEmpty())
+            {
+                EquipmentSlotType draggedSlotType = draggedSlot.GetComponent<EquipmentSlotType>();
+                if (draggedSlotType != null)
+                {
+                    canDropHere = canDropHere && draggedSlotType.CanEquipItem(_assignedSlot.Item);
+                }
+            }
+            
+            return canDropHere;
         }
         
         // В остальных случаях разрешаем
         return true;
     }
     
-    // Анимация появления предмета (с DOTween)
+    /// <summary>
+    /// Анимация появления предмета (с DOTween)
+    /// </summary>
     private void AnimateItemAppear()
     {
         if (_itemIcon.enabled)
@@ -458,7 +614,9 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         }
     }
     
-    // Анимация исчезновения предмета
+    /// <summary>
+    /// Анимация исчезновения предмета
+    /// </summary>
     public void AnimateItemDisappear(System.Action onComplete = null)
     {
         _itemIcon.transform.DOScale(0f, 0.15f)
@@ -468,8 +626,14 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 onComplete?.Invoke();
             });
     }
-    
-    // Метод для отладки - проверка состояния слота
+
+    #endregion
+
+    #region Debug Methods
+
+    /// <summary>
+    /// Метод для отладки - проверка состояния слота
+    /// </summary>
     [System.Diagnostics.Conditional("UNITY_EDITOR")]
     public void DebugSlotState()
     {
@@ -495,15 +659,19 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
         Debug.Log("========================");
     }
     
-    // Принудительное обновление с отладкой
+    /// <summary>
+    /// Принудительное обновление с отладкой
+    /// </summary>
     public void ForceUpdate()
     {
         Debug.Log($"Force updating slot {_slotIndex}");
         DebugSlotState();
         UpdateSlotVisuals();
     }
+
+    #endregion
     
-    // Геттеры для внешнего доступа
+    // Публичные свойства для внешнего доступа
     public bool IsEquipmentSlot => _isEquipmentSlot;
     public InventorySlot AssignedSlot => _assignedSlot;
     public int SlotIndex => _slotIndex;

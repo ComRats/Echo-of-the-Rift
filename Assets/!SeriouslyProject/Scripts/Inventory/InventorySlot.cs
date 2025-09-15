@@ -1,13 +1,16 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Представляет один слот инвентаря, который может содержать предмет и его количество.
+/// Поддерживает стакирование предметов и базовые операции добавления/удаления.
+/// </summary>
 [System.Serializable]
 public class InventorySlot
 {
     [SerializeField] private Item _item;
     [SerializeField] private int _quantity;
     
-    // Публичные свойства для контролируемого доступа
     public Item Item => _item;
     public int Quantity => _quantity;
     
@@ -23,38 +26,47 @@ public class InventorySlot
         _quantity = quantity;
     }
     
-    // Проверяем, пустой ли слот
+    /// <summary>
+    /// Проверяет, является ли слот пустым
+    /// </summary>
     public bool IsEmpty()
     {
         return _item == null || _quantity <= 0;
     }
     
-    // Проверяем, можем ли добавить предмет в этот слот
+    /// <summary>
+    /// Проверяет, можно ли добавить указанный предмет в этот слот.
+    /// Учитывает правила стакирования и лимиты стака.
+    /// </summary>
     public bool CanAddItem(Item itemToAdd)
     {
-        // Если слот пустой, можем добавить любой предмет
         if (IsEmpty()) 
             return true;
             
-        // Если предмет тот же и можно стакать
+        // Можем добавить только если это тот же предмет, он стакируется и есть место
         return _item == itemToAdd && _item.IsStackable && _quantity < _item.MaxStackSize;
     }
     
-    // Добавляем предметы в слот, возвращаем количество, которое не поместилось
+    /// <summary>
+    /// Добавляет предметы в слот с учетом лимитов стакирования.
+    /// </summary>
+    /// <param name="itemToAdd">Предмет для добавления</param>
+    /// <param name="quantityToAdd">Количество для добавления</param>
+    /// <returns>Количество предметов, которые не поместились в слот</returns>
     public int AddItem(Item itemToAdd, int quantityToAdd)
     {
         if (!CanAddItem(itemToAdd))
             return quantityToAdd;
         
-        // Если слот пустой
         if (IsEmpty())
         {
+            // Заполняем пустой слот, учитывая максимальный размер стака
             _item = itemToAdd;
             _quantity = Math.Min(quantityToAdd, itemToAdd.MaxStackSize);
             return Math.Max(0, quantityToAdd - itemToAdd.MaxStackSize);
         }
         
-        // Если предмет уже есть в слоте
+        // Добавляем к существующему стаку
         int spaceLeft = _item.MaxStackSize - _quantity;
         int amountToAdd = Math.Min(spaceLeft, quantityToAdd);
         _quantity += amountToAdd;
@@ -62,7 +74,12 @@ public class InventorySlot
         return quantityToAdd - amountToAdd;
     }
     
-    // Убираем предметы из слота
+    /// <summary>
+    /// Удаляет указанное количество предметов из слота.
+    /// Автоматически очищает слот, если предметы закончились.
+    /// </summary>
+    /// <param name="quantityToRemove">Количество предметов для удаления</param>
+    /// <returns>Фактически удаленное количество предметов</returns>
     public int RemoveItem(int quantityToRemove)
     {
         if (IsEmpty())
@@ -71,7 +88,7 @@ public class InventorySlot
         int removedAmount = Math.Min(quantityToRemove, _quantity);
         _quantity -= removedAmount;
         
-        // Если слот опустел
+        // Очищаем слот если предметы закончились
         if (_quantity <= 0)
         {
             _item = null;
@@ -81,14 +98,18 @@ public class InventorySlot
         return removedAmount;
     }
     
-    // Очищаем слот полностью
+    /// <summary>
+    /// Полностью очищает слот
+    /// </summary>
     public void Clear()
     {
         _item = null;
         _quantity = 0;
     }
     
-    // Создаём копию слота
+    /// <summary>
+    /// Создает точную копию этого слота
+    /// </summary>
     public InventorySlot Clone()
     {
         return new InventorySlot(_item, _quantity);

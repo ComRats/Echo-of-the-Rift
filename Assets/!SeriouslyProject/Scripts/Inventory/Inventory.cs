@@ -1,15 +1,19 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// Система инвентаря с обычными слотами и слотами экипировки
+/// </summary>
 public class Inventory : MonoBehaviour
 {
     [Header("Inventory Settings")]
-    [SerializeField] private int _inventorySize = 36;         // обычные слоты
-    [SerializeField] private int _equipmentSize = 4;          // слоты экипировки (например: голова, тело, оружие, ботинки)
+    [SerializeField] private int _inventorySize = 36;         // обычные слоты для предметов
+    [SerializeField] private int _equipmentSize = 4;          // слоты экипировки (шлем, броня, оружие, ботинки)
 
-    private InventorySlot[] _slots;           // обычные предметы
-    private InventorySlot[] _equipmentSlots;  // экипировка
+    private InventorySlot[] _slots;           // массив обычных слотов
+    private InventorySlot[] _equipmentSlots;  // массив слотов экипировки
 
+    // События для уведомления UI об изменениях
     public event Action<int> OnSlotChanged;
     public event Action OnInventoryChanged;
 
@@ -24,14 +28,17 @@ public class Inventory : MonoBehaviour
         InitializeInventory();
     }
 
+    /// <summary>
+    /// Создает все слоты инвентаря при запуске
+    /// </summary>
     private void InitializeInventory()
     {
-        // === обычные слоты ===
+        // Создаем обычные слоты
         _slots = new InventorySlot[_inventorySize];
         for (int i = 0; i < _inventorySize; i++)
             _slots[i] = new InventorySlot();
 
-        // === экипировка ===
+        // Создаем слоты экипировки
         _equipmentSlots = new InventorySlot[_equipmentSize];
         for (int i = 0; i < _equipmentSize; i++)
             _equipmentSlots[i] = new InventorySlot();
@@ -39,7 +46,9 @@ public class Inventory : MonoBehaviour
         Debug.Log($"Inventory initialized with {_inventorySize} slots + {_equipmentSize} equipment slots");
     }
 
-    // === Работа с обычными слотами ===
+    /// <summary>
+    /// Получить обычный слот по индексу
+    /// </summary>
     public InventorySlot GetSlot(int index)
     {
         if (index < 0 || index >= _inventorySize)
@@ -50,7 +59,9 @@ public class Inventory : MonoBehaviour
         return _slots[index];
     }
 
-    // === Работа с экипировкой ===
+    /// <summary>
+    /// Получить слот экипировки по индексу
+    /// </summary>
     public InventorySlot GetEquipmentSlot(int index)
     {
         if (index < 0 || index >= _equipmentSize)
@@ -61,13 +72,15 @@ public class Inventory : MonoBehaviour
         return _equipmentSlots[index];
     }
 
-    // ✅ Добавить предмет (в инвентарь)
+    /// <summary>
+    /// Добавляет предмет в инвентарь. Сначала пытается добавить в существующие стаки, затем в пустые слоты
+    /// </summary>
     public bool AddItem(Item item, int quantity = 1)
     {
         if (item == null || quantity <= 0) return false;
         int remainingQuantity = quantity;
 
-        // 1) Добавляем в существующие стаки
+        // Если предмет можно складывать в стаки, ищем существующие стаки
         if (item.IsStackable)
         {
             for (int i = 0; i < _inventorySize; i++)
@@ -85,7 +98,7 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // 2) Кладём в пустые слоты
+        // Если остались предметы, кладем в пустые слоты
         for (int i = 0; i < _inventorySize; i++)
         {
             if (_slots[i].IsEmpty())
@@ -101,10 +114,12 @@ public class Inventory : MonoBehaviour
         }
 
         NotifyInventoryChanged();
-        return remainingQuantity < quantity;
+        return remainingQuantity < quantity; // вернет true, если хотя бы часть добавилась
     }
 
-    // ✅ Экипировать предмет (например, шлем в слот головы)
+    /// <summary>
+    /// Экипирует предмет в указанный слот экипировки
+    /// </summary>
     public bool EquipItem(int equipmentIndex, Item item)
     {
         if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
@@ -117,7 +132,9 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-    // ✅ Снять предмет (возвращает его обратно в инвентарь)
+    /// <summary>
+    /// Снимает экипировку и возвращает ее в обычный инвентарь
+    /// </summary>
     public bool UnequipItem(int equipmentIndex)
     {
         if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
@@ -128,12 +145,14 @@ public class Inventory : MonoBehaviour
         Item item = slot.Item;
         slot.Clear();
 
-        AddItem(item, 1); // кладём обратно в инвентарь
+        AddItem(item, 1); // возвращаем предмет в инвентарь
         NotifyInventoryChanged();
         return true;
     }
 
-    // ✅ Удаление по индексу
+    /// <summary>
+    /// Удаляет указанное количество предметов из конкретного слота
+    /// </summary>
     public bool RemoveItem(int slotIndex, int quantity = 1)
     {
         if (slotIndex < 0 || slotIndex >= _inventorySize) return false;
@@ -151,7 +170,9 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    // ✅ Удаление по Item
+    /// <summary>
+    /// Удаляет указанное количество определенного предмета из всего инвентаря
+    /// </summary>
     public bool RemoveItem(Item item, int quantity = 1)
     {
         if (item == null || quantity <= 0) return false;
@@ -174,13 +195,17 @@ public class Inventory : MonoBehaviour
         }
 
         NotifyInventoryChanged();
-        return remaining < quantity;
+        return remaining < quantity; // true, если хотя бы что-то удалили
     }
 
-    // ✅ Проверка
+    /// <summary>
+    /// Проверяет, есть ли в инвентаре нужное количество предмета
+    /// </summary>
     public bool Contains(Item item, int quantity = 1) => CountItem(item) >= quantity;
 
-    // ✅ Подсчёт предмета
+    /// <summary>
+    /// Подсчитывает общее количество определенного предмета в инвентаре
+    /// </summary>
     public int CountItem(Item item)
     {
         int count = 0;
@@ -192,21 +217,26 @@ public class Inventory : MonoBehaviour
         return count;
     }
 
-    // ✅ Очистка
+    /// <summary>
+    /// Очищает весь инвентарь и экипировку
+    /// </summary>
     public void ClearInventory()
     {
+        // Очищаем обычные слоты
         for (int i = 0; i < _inventorySize; i++)
         {
             _slots[i].Clear();
             NotifySlotChanged(i);
         }
 
+        // Очищаем слоты экипировки
         for (int i = 0; i < _equipmentSize; i++)
             _equipmentSlots[i].Clear();
 
         NotifyInventoryChanged();
     }
 
+    // Методы для уведомления подписчиков об изменениях
     private void NotifySlotChanged(int slotIndex) => OnSlotChanged?.Invoke(slotIndex);
     private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();
 }
