@@ -1224,10 +1224,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 637a49a7fc0e53b47b739b0c2504fb94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentStateFight: 0
   damageDelay: 1
   fightTurn: {fileID: 1349405641}
-  contextMenu: {fileID: 8611235187967662012}
   contextText: {fileID: 1349405643}
   enemies: []
   characters: []
@@ -5862,7 +5860,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &7105644259708371707
 GameObject:
   m_ObjectHideFlags: 0
@@ -5950,6 +5948,10 @@ MonoBehaviour:
   fightManager: {fileID: 517749535}
   contextText: {fileID: 1349405643}
   buttons: []
+  contextMenu: {fileID: 0}
+  buttonTexts: []
+  character: {fileID: 0}
+  <Enemy>k__BackingField: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -22,8 +22,8 @@ namespace FightSystem.Enemy
             button = GetComponent<Button>();
             button.onClick.AddListener(() => 
             {
-                actionButtons.currentEnemy = this; 
-                //actionButtons.OnEnemySelected(this);
+                actionButtons.currentEnemy = this;
+                actionButtons.OnEnemySelected(this);
             });
 
             actionButtons = FindObjectOfType<ActionButtons>();

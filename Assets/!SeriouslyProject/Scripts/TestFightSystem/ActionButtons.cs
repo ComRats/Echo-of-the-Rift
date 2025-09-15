@@ -72,24 +72,50 @@ public class ActionButtons : MonoBehaviour
                     return;
                 }
 
-                if (currentEnemy == null)
-                {
-                    Debug.LogWarning("No target enemy selected (ActionButtons.currentEnemy == null).");
-                    return;
-                }
-
                 int damage = activeChar.GiveDamage();
 
-                var ba = new BattleActions(activeChar, damage, currentEnemy);
+                // Создаём pendingAction без врага
+                pendingAction = () =>
+                {
+                    if (currentEnemy == null)
+                    {
+                        Debug.LogWarning("No target enemy selected.");
+                        return;
+                    }
 
-                localMethod.Invoke(ba, null);
+                    var ba = new BattleActions(activeChar, damage, currentEnemy);
+                    localMethod.Invoke(ba, null);
 
-                activeChar.IsTurn = false;
+                    activeChar.IsTurn = false;
+                    fightManager.DeleteEnemyOnList(currentEnemy);
+                };
 
-                fightManager.DeleteEnemyOnList(currentEnemy);
+                // Если враг уже выбран → сразу выполняем
+                if (currentEnemy != null)
+                {
+                    pendingAction.Invoke();
+                    pendingAction = null;
+                }
+                else
+                {
+                    Debug.Log("Ожидается выбор врага...");
+                }
             });
         }
     }
+
+    // вызывается врагом
+    public void OnEnemySelected(Enemy enemy)
+    {
+        currentEnemy = enemy;
+
+        if (pendingAction != null)
+        {
+            pendingAction.Invoke();
+            pendingAction = null;
+        }
+    }
+
 
     public void MagicAction()
     {

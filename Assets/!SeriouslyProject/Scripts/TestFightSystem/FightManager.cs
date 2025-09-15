@@ -5,6 +5,7 @@ using FightSystem.Enemy;
 using UnityEngine;
 using System.Linq;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class FightManager : MonoBehaviour
 {
@@ -21,6 +22,13 @@ public class FightManager : MonoBehaviour
     [SerializeField] private List<Base> bases = new();
 
     private int allEnemyXP;
+
+    //WARNING DELETE!!!!!!!!
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 
     private void Start()
     {
