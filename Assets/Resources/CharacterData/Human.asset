@@ -17,8 +17,8 @@ MonoBehaviour:
   _sprite: {fileID: 862427899, guid: 0a51a8ee9d846b9428a48924d15a35ce, type: 3}
   _damage: 15
   _priority: 10
-  _maxMana: 5
-  _mana: 5
+  _maxMana: 30
+  _mana: 30
   _maxHealth: 20
   _health: 20
   _heal: 3

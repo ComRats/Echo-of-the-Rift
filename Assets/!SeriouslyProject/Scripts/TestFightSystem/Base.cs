@@ -69,19 +69,19 @@ public class Base : MonoBehaviour
         else currentDamage = 0;
 
         FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, Color.red);
-        healthBar.value = Health;
-        healthText.text = Health.ToString() + " / " + MaxHealth;
-        SetGradient(healthBar.normalizedValue);
+        UpdateUI();
         TryDeath();
     }
 
     public void TakeMagicDamage(int _damage)
     {
+        if (_damage > 0)
+            Health -= _damage;
+        else _damage = 0;
+
         FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, Color.blue);
-        Mana -= _damage - (_damage / 100);
-        manaBar.value = Mana;
-        manaText.text = Mana.ToString() + " / " + MaxMana;
-        SetGradient(manaBar.normalizedValue);
+        Health -= _damage;
+        UpdateUI();
         TryDeath();
     }
 
@@ -92,6 +92,9 @@ public class Base : MonoBehaviour
         healthBar.minValue = 0;
         healthBar.maxValue = MaxHealth;
         healthBar.value = Health;
+
+        SetGradient(manaBar.normalizedValue);
+        SetGradient(healthBar.normalizedValue);
 
         SetGradient(1f);
     }

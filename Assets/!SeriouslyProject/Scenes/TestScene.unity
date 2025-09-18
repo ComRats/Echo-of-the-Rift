@@ -698,7 +698,7 @@ GameObject:
   - component: {fileID: 494633243}
   - component: {fileID: 494633242}
   m_Layer: 5
-  m_Name: SlashAttack
+  m_Name: MagicSlashAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2395,7 +2395,7 @@ GameObject:
   - component: {fileID: 1072720849}
   - component: {fileID: 1072720848}
   m_Layer: 5
-  m_Name: RudeBlow
+  m_Name: MagicRudeBlow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2650,7 +2650,7 @@ GameObject:
   - component: {fileID: 1157388001}
   - component: {fileID: 1157388000}
   m_Layer: 5
-  m_Name: ProudPose
+  m_Name: MagicProudPose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2978,7 +2978,7 @@ GameObject:
   - component: {fileID: 1192876163}
   - component: {fileID: 1192876162}
   m_Layer: 5
-  m_Name: Parry
+  m_Name: MagicParry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3649,12 +3649,28 @@ MonoBehaviour:
   buttonsMethods:
   - button: {fileID: 1313098202}
     methodName: SlashAttack
+    manaCost: 0
   - button: {fileID: 41601024}
     methodName: RudeBlow
+    manaCost: 0
   - button: {fileID: 1867330192}
     methodName: ProudPose
+    manaCost: 0
   - button: {fileID: 1698193060}
     methodName: Parry
+    manaCost: 0
+  - button: {fileID: 494633242}
+    methodName: MagicSlashAttack
+    manaCost: 5
+  - button: {fileID: 1072720848}
+    methodName: MagicRudeBlow
+    manaCost: 2
+  - button: {fileID: 1157388000}
+    methodName: MagicProudPose
+    manaCost: 3
+  - button: {fileID: 1192876162}
+    methodName: MagicParry
+    manaCost: 1
 --- !u!1 &1349405639
 GameObject:
   m_ObjectHideFlags: 0
@@ -5945,13 +5961,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a107a3d342d20148897252d9a0cad4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fightManager: {fileID: 517749535}
-  contextText: {fileID: 1349405643}
-  buttons: []
-  contextMenu: {fileID: 0}
-  buttonTexts: []
-  character: {fileID: 0}
-  <Enemy>k__BackingField: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -72,9 +72,14 @@ public class ActionButtons : MonoBehaviour
                     return;
                 }
 
+                if (activeChar.Mana < bm.manaCost)
+                {
+                    Debug.LogWarning($"{activeChar.Name} не хватает маны для {bm.methodName}. Нужно {bm.manaCost}, есть {activeChar.Mana}");
+                    return;
+                }
+
                 int damage = activeChar.GiveDamage();
 
-                // Создаём pendingAction без врага
                 pendingAction = () =>
                 {
                     if (currentEnemy == null)
@@ -86,11 +91,13 @@ public class ActionButtons : MonoBehaviour
                     var ba = new BattleActions(activeChar, damage, currentEnemy);
                     localMethod.Invoke(ba, null);
 
+                    activeChar.Mana -= bm.manaCost;
+                    activeChar.UpdateUI();
+
                     activeChar.IsTurn = false;
                     fightManager.DeleteEnemyOnList(currentEnemy);
                 };
 
-                // Если враг уже выбран → сразу выполняем
                 if (currentEnemy != null)
                 {
                     pendingAction.Invoke();
@@ -101,10 +108,10 @@ public class ActionButtons : MonoBehaviour
                     Debug.Log("Ожидается выбор врага...");
                 }
             });
+
         }
     }
 
-    // вызывается врагом
     public void OnEnemySelected(Enemy enemy)
     {
         currentEnemy = enemy;
@@ -139,12 +146,21 @@ public class ActionButtons : MonoBehaviour
         private Base attacker;
         private Base target;
         private int damage;
+        private int manaCost;
 
         public BattleActions(Base _attacker, int _damage, Base _target)
         {
             attacker = _attacker;
             damage = _damage;
             target = _target;
+        }
+
+        public BattleActions(Base _attacker, int _damage, Base _target, int _manaCost)
+        {
+            attacker = _attacker;
+            damage = _damage;
+            target = _target;
+            manaCost = _manaCost;
         }
 
         public void SlashAttack()
@@ -170,6 +186,33 @@ public class ActionButtons : MonoBehaviour
             Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
 
         }
+
+
+
+        public void MagicSlashAttack()
+        {
+            Debug.Log($"{attacker.Name} бьёт {target.Name} на {damage} урона (SlashAttack)");
+            target.TakeMagicDamage(damage);
+            attacker.Mana -= manaCost;
+        }
+
+        public void MagicRudeBlow()
+        {
+            Debug.Log($"{attacker.Name} использует RudeBlow");
+            target.TakeMagicDamage(damage);
+        }
+
+        public void MagicProudPose()
+        {
+            Debug.Log($"{attacker.Name} делает ProudPose");
+
+        }
+
+        public void MagicParry()
+        {
+            Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
+
+        }
     }
 
     [System.Serializable]
@@ -177,5 +220,7 @@ public class ActionButtons : MonoBehaviour
     {
         public Button button;
         public string methodName;
+        public int manaCost;
     }
+
 }

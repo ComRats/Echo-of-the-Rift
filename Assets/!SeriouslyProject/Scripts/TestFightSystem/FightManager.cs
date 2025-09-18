@@ -22,18 +22,23 @@ public class FightManager : MonoBehaviour
     [SerializeField] private List<Base> bases = new();
 
     private int allEnemyXP;
+    private int allCharacterXP;
+    private int characterStartCount;
+    private int enemiesStartCount;
 
     //WARNING DELETE!!!!!!!!
+#if UNITY_EDITOR
     private void Update()
     {
         if(Input.GetKeyDown(KeyCode.Space))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+#endif
 
     private void Start()
     {
         InitializationLists();
-
+        Initialization();
         StartCoroutine(StartFight());
     }
 
@@ -65,8 +70,8 @@ public class FightManager : MonoBehaviour
             
             foreach (var basic in bases)
             {
-                basic.GetXP(allEnemyXP / characters.Count);
-                Debug.Log(basic.name + " получил " + (allEnemyXP / characters.Count) + " XP");
+                basic.GetXP(allEnemyXP / characterStartCount);
+                Debug.Log(basic.name + " получил " + (allEnemyXP / characterStartCount) + " XP");
             }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
@@ -75,8 +80,8 @@ public class FightManager : MonoBehaviour
 
             foreach (var basic in bases)
             {
-                basic.GetXP(allEnemyXP / enemies.Count);
-                Debug.Log(basic.name + " получил " + (allEnemyXP / characters.Count) + " XP");
+                basic.GetXP(allCharacterXP / enemiesStartCount);
+                Debug.Log(basic.name + " получил " + (allEnemyXP / enemiesStartCount) + " XP");
             }
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
@@ -102,11 +107,21 @@ public class FightManager : MonoBehaviour
             .Concat(characters.Cast<Base>())
             .OrderByDescending(item => item.Priority)
             .ToList();
+    }
 
+    private void Initialization()
+    {
         foreach (var enemy in enemies)
         {
             allEnemyXP += enemy.XpReward;
         }
+        foreach (var character in characters)
+        {
+            allCharacterXP += character.XpReward;
+        }
+
+        characterStartCount = characters.Count;
+        enemiesStartCount = enemies.Count;
     }
 
     private IEnumerator WaitCharacterTurn(Character _character)
