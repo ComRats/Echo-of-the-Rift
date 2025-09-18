@@ -26,13 +26,7 @@ namespace FightSystem.Character
         {
             Inizialize(characterData, gameObject);
 
-            healthText.text = Health.ToString() + " / " + MaxHealth;
-            manaText.text = Mana.ToString() + " / " + MaxMana;
-            healthBar.minValue = 0;
-            healthBar.maxValue = MaxHealth;
-            healthBar.value = Health;
-
-            SetGradient(1f);
+            UpdateUI();
         }
 
         public void InitializeFromSettings(CharactersSettings settings)

@@ -6,16 +6,18 @@ using UnityEngine.UI;
 
 public class Base : MonoBehaviour
 {
-    [SerializeField] StateEffect stateEffect;
-    [SerializeField] float blinkDelaySeconds = 0.5f;
+    [SerializeField] private StateEffect stateEffect;
+    [SerializeField] private float blinkDelaySeconds = 0.5f;
 
     [Header("HealthBar")]
     public TextMeshProUGUI healthText;
-    public TextMeshProUGUI manaText;
     public Slider healthBar;
-    public Slider manaBar;
     public Gradient healthGgradient;
-    public Image fill;
+    public Image healthFill;
+    public TextMeshProUGUI manaText;
+    public Slider manaBar;
+    public Gradient manaGgradient;
+    public Image manaFill;
 
     [Header("TextPrefab")]
     public GameObject textPrefab;
@@ -80,7 +82,7 @@ public class Base : MonoBehaviour
         else _damage = 0;
 
         FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, Color.blue);
-        Health -= _damage;
+
         UpdateUI();
         TryDeath();
     }
@@ -88,20 +90,22 @@ public class Base : MonoBehaviour
     public void UpdateUI()
     {
         healthText.text = Health + " / " + MaxHealth;
-        manaText.text = Mana + " / " + MaxMana;
         healthBar.minValue = 0;
         healthBar.maxValue = MaxHealth;
         healthBar.value = Health;
 
-        SetGradient(manaBar.normalizedValue);
-        SetGradient(healthBar.normalizedValue);
+        manaText.text = Mana + " / " + MaxMana;
+        manaBar.minValue = 0;
+        manaBar.maxValue = MaxMana;
+        manaBar.value = Mana;
 
-        SetGradient(1f);
+        SetGradient(healthGgradient, healthFill, healthBar.normalizedValue);
+        SetGradient(manaGgradient, manaFill, manaBar.normalizedValue);
     }
 
-    internal void SetGradient(float _value)
+    internal void SetGradient(Gradient _gradient, Image _fill, float _value)
     {
-        fill.color = healthGgradient.Evaluate(_value);
+        _fill.color = _gradient.Evaluate(_value);
     }
 
     public int GiveHeal()
@@ -130,9 +134,7 @@ public class Base : MonoBehaviour
         {
             FightAnimation.ShowText(textPrefab, _heal, gameObject.transform, Color.green);
             Health += _heal;
-            healthText.text = Health.ToString() + " / " + MaxHealth;
-            healthBar.value = Health;
-            SetGradient(healthBar.normalizedValue);
+            UpdateUI();
         }
         else Health = MaxHealth;
     }
@@ -184,6 +186,8 @@ public class Base : MonoBehaviour
 
             Health = MaxHealth;
             Mana = MaxMana;
+
+            UpdateUI();
         }
     }
 
