@@ -89,7 +89,7 @@ public class Base : MonoBehaviour
 
     public void UpdateUI()
     {
-        healthText.text = Health + " / " + MaxHealth;
+        healthText.text = $"{Health}/{MaxHealth}";
         healthBar.minValue = 0;
         healthBar.maxValue = MaxHealth;
         healthBar.value = Health;
