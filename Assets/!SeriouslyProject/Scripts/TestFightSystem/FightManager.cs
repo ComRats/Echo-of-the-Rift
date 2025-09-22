@@ -73,6 +73,8 @@ public class FightManager : MonoBehaviour
                 basic.GetXP(allEnemyXP / characterStartCount);
                 Debug.Log(basic.name + " получил " + (allEnemyXP / characterStartCount) + " XP");
             }
+
+            Player.isWin = true;
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -83,6 +85,8 @@ public class FightManager : MonoBehaviour
                 basic.GetXP(allCharacterXP / enemiesStartCount);
                 Debug.Log(basic.name + " получил " + (allEnemyXP / enemiesStartCount) + " XP");
             }
+
+            Player.isWin = false;
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
         {
