@@ -54,7 +54,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: c9235e1fdc3982844a02eb9c804fc720, type: 3}
+    spritePortrait: {fileID: 3286163911610860551, guid: 0bc50712dc338694b83b3154c65c5ad6, type: 3}
     alternatePortraits: []
     spritePortraits: []
   - id: 2
@@ -2199,11 +2199,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 2
         type: 5
@@ -2215,16 +2215,16 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: "\u0422\u044B \u0443\u0436\u0435 \u043E\u0434\u043E\u043B\u0435\u043B
           \u0435\u0433\u043E?"
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -2245,7 +2245,8 @@ MonoBehaviour:
         destinationDialogueID: 20
         isConnector: 0
         priority: 2
-      conditionsString: CurrentQuestState("SafeMan_0") == "active"
+      conditionsString: CurrentQuestState("SafeMan_0") == "active" or (CurrentQuestState("SafeMan_0")
+        == "success")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -2293,21 +2294,15 @@ MonoBehaviour:
       delaySimStatus: 0
       falseConditionAction: Block
       conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 2
-        originDialogueID: 19
-        destinationConversationID: 2
-        destinationDialogueID: 21
-        isConnector: 0
-        priority: 2
-      conditionsString: Variable["BullisLive"] == true
+      outgoingLinks: []
+      conditionsString: CurrentQuestState("SafeMan_0") == "success"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 173.40079
+        x: 178.27884
         y: 218.10558
         width: 160
         height: 30
@@ -2349,68 +2344,19 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: Variable["BullisLive"] ~= true
+      conditionsString: CurrentQuestState("SafeMan_0") == "active"
       userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 396.87906
+        x: 399.31808
         y: 220.71422
         width: 160
         height: 30
-    - id: 21
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: 
-      - title: Description
-        value: 
-        type: 0
-        typeString: 
-      - title: Actor
-        value: 2
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: 1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Dialogue Text
-        value: 
-        type: 0
-        typeString: 
-      - title: Sequence
-        value: 
-        type: 0
-        typeString: 
-      conversationID: 2
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks: []
-      conditionsString: CurrentQuestState("SafeMan_0") == "success"
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 173.40079
-        y: 268.1056
-        width: 160
-        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 493.20306, y: 669.5124}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.8199997
   syncInfo:
     syncActors: 0

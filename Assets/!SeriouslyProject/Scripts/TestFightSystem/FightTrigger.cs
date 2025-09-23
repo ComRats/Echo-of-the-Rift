@@ -32,9 +32,9 @@ public class FightTrigger : MonoBehaviour
             characters = collision.GetComponent<Team>().characters;
             EnterTrigger();
 
-            if (collision.TryGetComponent<TestMovement>(out var movement))
-                movement.canMove = false;
-            }
+            //if (collision.TryGetComponent<TestMovement>(out var movement))
+            //    movement.canMove = false;
+        }
     }
 
     private void EnterTrigger()

@@ -213,6 +213,13 @@ public class ActionButtons : MonoBehaviour
             Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
 
         }
+
+        public void EscapeFight()
+        {
+            Player.Result = FightResult.Escape;
+            //Добавить переменную для сцены и логику
+            GlobalLoader.Instance.LoadToScene("PlayerScene", Vector3.zero);
+        }
     }
 
     [System.Serializable]

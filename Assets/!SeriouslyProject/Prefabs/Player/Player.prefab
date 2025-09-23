@@ -100,8 +100,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5511287140332337420}
   - {fileID: 1867807493694804736}
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbfc6e6e79f994f4ebadf72c6190d652, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 5
+  playerSpeed: 2.5
   canMove: 1
 --- !u!114 &7434136987225483318
 MonoBehaviour:
@@ -269,34 +269,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - useCharacterData: 1
-    characterDataName: Human
-    characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
-    _name: 
-    _description: 
-    _damage: 0
-    _priority: 0
-    _maxMana: 0
-    _mana: 0
-    _maxHealth: 0
-    _health: 0
-    _heal: 0
-    _armor: 0
-    spritePath: 
-  - useCharacterData: 1
-    characterDataName: Human
-    characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
-    _name: 
-    _description: 
-    _damage: 0
-    _priority: 0
-    _maxMana: 0
-    _mana: 0
-    _maxHealth: 0
-    _health: 0
-    _heal: 0
-    _armor: 0
-    spritePath: 
   - useCharacterData: 1
     characterDataName: Human
     characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
@@ -351,7 +323,7 @@ Transform:
   m_GameObject: {fileID: 4650786699909764950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -380,7 +352,7 @@ MonoBehaviour:
   m_Follow: {fileID: 2723504778289162104}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5.718328
+    OrthographicSize: 3.5
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

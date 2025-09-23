@@ -2,5 +2,5 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public static bool isWin = false;
+    public static FightResult Result = FightResult.None;
 }

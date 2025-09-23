@@ -74,7 +74,8 @@ public class FightManager : MonoBehaviour
                 Debug.Log(basic.name + " получил " + (allEnemyXP / characterStartCount) + " XP");
             }
 
-            Player.isWin = true;
+            Player.Result = FightResult.Win;
+            GlobalLoader.Instance.LoadToScene("PlayerScene", new Vector3(-25.3350859f, -3.5f, -0.0932526737f));
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -86,7 +87,9 @@ public class FightManager : MonoBehaviour
                 Debug.Log(basic.name + " получил " + (allEnemyXP / enemiesStartCount) + " XP");
             }
 
-            Player.isWin = false;
+            Player.Result = FightResult.Lose;
+            GlobalLoader.Instance.LoadToScene("PlayerScene", Vector3.zero);
+
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
         {
