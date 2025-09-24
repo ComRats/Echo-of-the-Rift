@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using Language.Lua;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -95,7 +97,12 @@ public class GlobalLoader : MonoBehaviour
         var data = SaveLoadSystem.Load<PlayerData>(fileName);
         if (data == null) return;
 
-        playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
+        if (fileName == null)
+        {
+            playerInstance.transform.position = new Vector3(-26.4892998f, 7.10053825f, 0.398466498f);
+        }
+        else
+            playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
     }
 
     // -----------------------
