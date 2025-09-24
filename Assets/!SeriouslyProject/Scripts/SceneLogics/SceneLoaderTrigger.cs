@@ -8,12 +8,9 @@ public class SceneLoaderTrigger : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<ISceneLoader>(out var sceneLoader))
+        if (collision.TryGetComponent<Player>(out var sceneLoader))
         {
-            if (Input.GetKey(KeyCode.F))
-            {
-                GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
-            }
+            GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
         }
     }
 }

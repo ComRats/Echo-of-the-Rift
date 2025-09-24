@@ -26,5 +26,6 @@ MonoBehaviour:
   bookmarks: []
   bookmarkedScenePaths:
   - Assets/!SeriouslyProject/Scenes/TestScene.unity
-  - Assets/!SeriouslyProject/Scenes/PlayerScene.unity
   - Assets/!SeriouslyProject/Scenes/InventoryDemo.unity
+  - Assets/!SeriouslyProject/Scenes/PlayerScene.unity
+  - Assets/!SeriouslyProject/Scenes/PlayerScene2.unity

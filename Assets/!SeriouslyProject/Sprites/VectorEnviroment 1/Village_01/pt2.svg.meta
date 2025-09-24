@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f406cc4c891940e40837ce7be02979de
+guid: 920564600ade16e4787c4f4878d57883
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -12,8 +12,8 @@ ScriptedImporter:
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 64
-  alignment: 9
-  customPivot: {x: 0.49221864, y: 0.07583277}
+  alignment: 0
+  customPivot: {x: 0, y: 0}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
@@ -39,16 +39,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: el1Sprite
+      name: 
       originalName: 
-      pivot: {x: 0.49221864, y: 0.07583277}
-      alignment: 9
+      pivot: {x: 0, y: 0}
+      alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 209
-        height: 262
-      spriteID: 55c6ca10075367544bb014af3da6dadb
+        width: 0
+        height: 0
+      spriteID: da857292aa91c9f498ec6d0a9f04a48a
     PhysicsOutlines: []
