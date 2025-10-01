@@ -7,7 +7,6 @@ public class ClickbleButtons : MonoBehaviour
 
     private void Start()
     {
-        playerUI = FindObjectOfType<PlayerUI>();
         //заменить на загрузку из настроек 
         openInvenoryKey = KeyCode.E;
     }
@@ -21,6 +20,9 @@ public class ClickbleButtons : MonoBehaviour
     {
         if (Input.GetKeyDown(openInvenoryKey))
         {
+            if (playerUI == null)
+                playerUI = FindObjectOfType<PlayerUI>();
+
             GameObject playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
             playerUIbackGround.SetActive(!playerUIbackGround.activeInHierarchy);
             playerUI.OpenPlayerUI();

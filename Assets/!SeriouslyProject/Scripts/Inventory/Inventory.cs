@@ -72,6 +72,11 @@ public class Inventory : MonoBehaviour
         return _equipmentSlots[index];
     }
 
+    public void TryAddItem(Item item)
+    {
+        AddItem(item);
+    }
+
     /// <summary>
     /// Добавляет предмет в инвентарь. Сначала пытается добавить в существующие стаки, затем в пустые слоты
     /// </summary>

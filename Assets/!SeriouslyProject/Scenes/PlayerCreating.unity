@@ -3726,7 +3726,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneName: PlayerCreating
-  nextScene: PlayerScene
+  nextScene: PlayerScene2
 --- !u!1001 &1856414946
 PrefabInstance:
   m_ObjectHideFlags: 0

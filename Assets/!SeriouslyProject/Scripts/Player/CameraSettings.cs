@@ -7,6 +7,11 @@ public class CameraSettings : MonoBehaviour
 
     private void Start()
     {
+        Initialize();
+    }
+
+    public void Initialize()
+    {
         CinemachineConfiner cam = GetComponent<CinemachineConfiner>();
 
         GameObject borderObj = GameObject.FindGameObjectWithTag(colliderTag);

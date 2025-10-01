@@ -1,6 +1,4 @@
 using System;
-using System.IO;
-using Language.Lua;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -12,7 +10,7 @@ public class GlobalLoader : MonoBehaviour
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
 
-    private GameObject playerInstance;
+    private Player playerInstance;
     private Vector3? overridePosition = null;
 
     // --- глобальные данные ---
@@ -37,7 +35,7 @@ public class GlobalLoader : MonoBehaviour
 
         instance = this;
 
-        playerInstance = Instantiate(playerPrefab);
+        playerInstance = Instantiate(playerPrefab.GetComponent<Player>());
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -64,6 +62,9 @@ public class GlobalLoader : MonoBehaviour
     {
         DontDestroyOnLoad(playerInstance);
         LoadPlayer();
+
+        playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
+        Debug.Log("OnSceneLoaded");
     }
 
     // -----------------------
@@ -86,6 +87,7 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance == null) return;
 
+
         if (overridePosition != null)
         {
             playerInstance.transform.position = overridePosition.Value;
@@ -95,14 +97,15 @@ public class GlobalLoader : MonoBehaviour
 
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
         var data = SaveLoadSystem.Load<PlayerData>(fileName);
-        if (data == null) return;
+        if (data == null)
+            return;
+        else 
+            playerInstance.transform.position = playerInstance.startPosition;
 
-        if (fileName == null)
-        {
-            playerInstance.transform.position = new Vector3(-26.4892998f, 7.10053825f, 0.398466498f);
-        }
-        else
+        if (fileName != null)
             playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
+
+        //playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
     }
 
     // -----------------------
