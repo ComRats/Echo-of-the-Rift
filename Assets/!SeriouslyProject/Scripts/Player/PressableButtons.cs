@@ -1,8 +1,9 @@
 using UnityEngine;
+using Zenject;
 
-public class ClickbleButtons : MonoBehaviour
+public class PressableButtons : MonoBehaviour
 {
-    [SerializeField] private PlayerUI playerUI;
+    [Inject] private PlayerUI playerUI;
     [SerializeField] private KeyCode openInvenoryKey = KeyCode.E;
 
     private void Start()
@@ -21,7 +22,10 @@ public class ClickbleButtons : MonoBehaviour
         if (Input.GetKeyDown(openInvenoryKey))
         {
             if (playerUI == null)
-                playerUI = FindObjectOfType<PlayerUI>();
+            {
+                Debug.LogError("PlayerUI не был инжектирован через Zenject!");
+                return;
+            }
 
             GameObject playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
             playerUIbackGround.SetActive(!playerUIbackGround.activeInHierarchy);

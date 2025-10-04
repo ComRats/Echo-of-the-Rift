@@ -24,10 +24,10 @@ EditorBuildSettings:
     path: Assets/SeriouslyProject/Scenes/VillageScene.unity
     guid: b90ef78eccfe70441bd780c4448341a3
   - enabled: 1
-    path: Assets/!SeriouslyProject/Scenes/PlayerScene.unity
+    path: Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_2.unity
     guid: a0cfa9f672ed7c645b1f52851442d6fd
   - enabled: 1
-    path: Assets/!SeriouslyProject/Scenes/PlayerScene2.unity
+    path: Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_1.unity
     guid: a528bf3a65804084b8df8f26577f7eff
   - enabled: 0
     path: Assets/!SeriouslyProject/Scenes/FightScene.unity

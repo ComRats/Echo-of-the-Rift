@@ -1,7 +1,7 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public class SceneLoaderTrigger : MonoBehaviour
+[ExecuteAlways]
+public class SceneLoaderTrigger : MonoBehaviour, IColliderDebugDrawable2D
 {
     [SerializeField] string nextSceneToLoad;
     [SerializeField] Vector3 nextPositionToLoad;
@@ -12,5 +12,10 @@ public class SceneLoaderTrigger : MonoBehaviour
         {
             GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
         }
+    }
+
+    private void OnDrawGizmos()
+    {
+        (this as IColliderDebugDrawable2D).OnDrawColliderGizmos2D();
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 using DG.Tweening;
 using TMPro;
 
-public class FightAnimation
+public static class FightAnimation
 {
     public static void ShowText(GameObject _textPrefab, int _value, Transform _showPosition, Color _textColor)
     {

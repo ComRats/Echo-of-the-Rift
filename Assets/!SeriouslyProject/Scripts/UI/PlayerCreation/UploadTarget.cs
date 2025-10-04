@@ -10,7 +10,6 @@ public class UploadTarget : MonoBehaviour
 
     private void Awake()
     {
-        // не уничтожать при смене сцены
         DontDestroyOnLoad(gameObject);
     }
 
@@ -31,7 +30,6 @@ public class UploadTarget : MonoBehaviour
 
     public void NextScene()
     {
-        // убираем и подписываемся заново (чтобы не было дубликатов)
         SceneManager.sceneLoaded -= OnSceneLoaded;
         SceneManager.sceneLoaded += OnSceneLoaded;
 
@@ -40,10 +38,8 @@ public class UploadTarget : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // теперь переносим объект в новую сцену
         SceneManager.MoveGameObjectToScene(gameObject, scene);
 
-        // снова делаем дочерним Player
         TargetToPlayer();
 
         if (player != null)
@@ -53,7 +49,6 @@ public class UploadTarget : MonoBehaviour
             gameObject.transform.localScale = new(0.0035f, 0.0035f, 0f);
         }
 
-        // отписка от события
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

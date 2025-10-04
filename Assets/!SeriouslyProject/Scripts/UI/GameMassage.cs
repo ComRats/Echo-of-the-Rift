@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameMassage
+public static class GameMassage
 {
     private static GameObject newMessage;
 

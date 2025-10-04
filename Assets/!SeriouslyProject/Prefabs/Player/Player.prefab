@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90d2d1bf7a3c504bb593087e407b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosition: {x: -12, y: -4, z: 0}
+  startPosition: {x: -35, y: -3, z: 0}
 --- !u!1 &4650786699909764950
 GameObject:
   m_ObjectHideFlags: 0
@@ -444,5 +444,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe6a2fe3c5811947afc41b986e388b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUI: {fileID: 0}
   openInvenoryKey: 101

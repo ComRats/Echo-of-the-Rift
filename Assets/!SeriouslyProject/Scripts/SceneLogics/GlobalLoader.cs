@@ -1,6 +1,7 @@
-using System;
+п»їusing System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
@@ -10,10 +11,10 @@ public class GlobalLoader : MonoBehaviour
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
 
-    private Player playerInstance;
+    [Inject] private Player playerInstance;
     private Vector3? overridePosition = null;
 
-    // --- глобальные данные ---
+    // --- РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ ---
     private int selectedTongueIndex = 0;
     public int SelectedTongueIndex
     {
@@ -21,7 +22,7 @@ public class GlobalLoader : MonoBehaviour
         set
         {
             selectedTongueIndex = value;
-            SaveGlobal(); // при изменении сразу сохраняем
+            SaveGlobal(); // РїСЂРё РёР·РјРµРЅРµРЅРёРё СЃСЂР°Р·Сѓ СЃРѕС…СЂР°РЅСЏРµРј
         }
     }
 
@@ -35,12 +36,11 @@ public class GlobalLoader : MonoBehaviour
 
         instance = this;
 
-        playerInstance = Instantiate(playerPrefab.GetComponent<Player>());
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        LoadGlobal(); // загружаем глобальные данные при старте
+        LoadGlobal(); // Р·Р°РіСЂСѓР¶Р°РµРј РіР»РѕР±Р°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ РїСЂРё СЃС‚Р°СЂС‚Рµ
 
         Debug.Log(SaveLoadSystem.GetPath($"playerSave_{SceneManager.GetActiveScene().name}"));
     }
@@ -60,7 +60,6 @@ public class GlobalLoader : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        DontDestroyOnLoad(playerInstance);
         LoadPlayer();
 
         playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
@@ -68,7 +67,7 @@ public class GlobalLoader : MonoBehaviour
     }
 
     // -----------------------
-    // Сохранение/загрузка игрока
+    // РЎРѕС…СЂР°РЅРµРЅРёРµ/Р·Р°РіСЂСѓР·РєР° РёРіСЂРѕРєР°
     private void SavePlayer()
     {
         if (playerInstance == null) return;
@@ -87,7 +86,6 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance == null) return;
 
-
         if (overridePosition != null)
         {
             playerInstance.transform.position = overridePosition.Value;
@@ -96,20 +94,28 @@ public class GlobalLoader : MonoBehaviour
         }
 
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
+        string filePath = SaveLoadSystem.GetPath(fileName);
+
+        if (!System.IO.File.Exists(filePath))
+        {
+            playerInstance.transform.position = playerInstance.startPosition;
+            playerInstance.transform.rotation = Quaternion.identity;
+            return;
+        }
+
         var data = SaveLoadSystem.Load<PlayerData>(fileName);
         if (data == null)
-            return;
-        else 
+        {
             playerInstance.transform.position = playerInstance.startPosition;
+            playerInstance.transform.rotation = Quaternion.identity;
+            return;
+        }
 
-        if (fileName != null)
-            playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
-
-        //playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
+        playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
     }
 
     // -----------------------
-    // Сохранение/загрузка глобальных данных
+    // РЎРѕС…СЂР°РЅРµРЅРёРµ/Р·Р°РіСЂСѓР·РєР° РіР»РѕР±Р°Р»СЊРЅС‹С… РґР°РЅРЅС‹С…
     private void SaveGlobal()
     {
         var data = SaveLoadSystem.Load<GlobalData>("globalSave");
@@ -123,14 +129,14 @@ public class GlobalLoader : MonoBehaviour
         selectedTongueIndex = data.SelectedTongueIndex;
     }
 
-    // Переход между сценами
+    // РџРµСЂРµС…РѕРґ РјРµР¶РґСѓ СЃС†РµРЅР°РјРё
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
         overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    // Классы данных
+    // РљР»Р°СЃСЃС‹ РґР°РЅРЅС‹С…
     [Serializable]
     private class PlayerData
     {

@@ -27,5 +27,7 @@ MonoBehaviour:
   bookmarkedScenePaths:
   - Assets/!SeriouslyProject/Scenes/TestScene.unity
   - Assets/!SeriouslyProject/Scenes/InventoryDemo.unity
-  - Assets/!SeriouslyProject/Scenes/PlayerScene.unity
-  - Assets/!SeriouslyProject/Scenes/PlayerScene2.unity
+  - Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_1.unity
+  - Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_2.unity
+  - Assets/!SeriouslyProject/Scenes/PlayerCreating.unity
+  - Assets/!SeriouslyProject/Scenes/MainMenu.unity

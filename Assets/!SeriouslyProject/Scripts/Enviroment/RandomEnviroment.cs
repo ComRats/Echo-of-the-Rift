@@ -37,10 +37,9 @@ public class RandomEnviroment : MonoBehaviour
 
         for (int i = 0; i < spawnCount; i++)
         {
-            // Случайная позиция внутри bounds по X и Y
             float randomX = Random.Range(bounds.min.x, bounds.max.x);
             float randomY = Random.Range(bounds.min.y, bounds.max.y);
-            float z = backGrass.transform.position.z; // Или другое значение для слоя
+            float z = backGrass.transform.position.z;
 
             Vector3 spawnPos = new Vector3(randomX, randomY, z);
 
