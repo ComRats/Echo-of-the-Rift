@@ -295,6 +295,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90d2d1bf7a3c504bb593087e407b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pressableButtons: {fileID: 6311396538040425498}
+  cameraSettings: {fileID: 1086631943437718153}
+  movement: {fileID: 1808547916611058563}
   startPosition: {x: -35, y: -3, z: 0}
 --- !u!1 &4650786699909764950
 GameObject:
@@ -324,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 4650786699909764950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -444,4 +447,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe6a2fe3c5811947afc41b986e388b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openInvenoryKey: 101
+  openInventoryKey: 101
+  openPauseMenuKey: 27

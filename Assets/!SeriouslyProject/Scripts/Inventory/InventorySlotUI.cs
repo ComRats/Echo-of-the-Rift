@@ -30,7 +30,7 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     // Основные поля слота
     private InventorySlot _assignedSlot;
     private int _slotIndex;
-    private bool _isSelected = false;
+    //private bool _isSelected = false;
     private bool _isEquipmentSlot = false;
 
     // События для взаимодействия с системой инвентаря

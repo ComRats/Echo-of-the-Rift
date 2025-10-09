@@ -3,13 +3,15 @@ using Zenject;
 
 public class PressableButtons : MonoBehaviour
 {
+    [SerializeField] private KeyCode openInventoryKey = KeyCode.E;
+    [SerializeField] private KeyCode openPauseMenuKey = KeyCode.Escape;
+
     [Inject] private PlayerUI playerUI;
-    [SerializeField] private KeyCode openInvenoryKey = KeyCode.E;
 
     private void Start()
     {
         //заменить на загрузку из настроек 
-        openInvenoryKey = KeyCode.E;
+        openInventoryKey = KeyCode.E;
     }
 
     private void Update()
@@ -19,7 +21,7 @@ public class PressableButtons : MonoBehaviour
 
     private void OpenPlayerIU()
     {
-        if (Input.GetKeyDown(openInvenoryKey))
+        if (Input.GetKeyDown(openInventoryKey))
         {
             if (playerUI == null)
             {

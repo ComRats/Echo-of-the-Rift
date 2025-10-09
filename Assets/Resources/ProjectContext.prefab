@@ -45,7 +45,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4e6589720da476459dc6dd71624b071, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
+  _scriptableObjectInstallers:
+  - {fileID: 11400000, guid: 59c197dfe71ef7744983cd7e69d7bf22, type: 2}
   _monoInstallers:
   - {fileID: -8115822860395015421}
   _installerPrefabs: []
@@ -74,5 +75,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ebec85ac5e45824ba2d0ea9fcce9cba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: -7914314194156218776, guid: 1f9ef87e639867048acda2b666965210, type: 3}
-  mainUI: {fileID: 5380684461530444215, guid: e23bbaaae50e37f41aaa380c10111b10, type: 3}
+  playerPrefab: {fileID: -7914314194156218776, guid: 1f9ef87e639867048acda2b666965210, type: 3}
+  mainUIPrefab: {fileID: 5380684461530444215, guid: e23bbaaae50e37f41aaa380c10111b10, type: 3}

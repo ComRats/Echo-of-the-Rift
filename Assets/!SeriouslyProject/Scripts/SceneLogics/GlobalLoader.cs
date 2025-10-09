@@ -6,8 +6,6 @@ using Zenject;
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
-    [SerializeField] private GameObject playerPrefab;
-
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
 
@@ -22,7 +20,6 @@ public class GlobalLoader : MonoBehaviour
         set
         {
             selectedTongueIndex = value;
-            SaveGlobal(); // при изменении сразу сохраняем
         }
     }
 
@@ -45,19 +42,6 @@ public class GlobalLoader : MonoBehaviour
         Debug.Log(SaveLoadSystem.GetPath($"playerSave_{SceneManager.GetActiveScene().name}"));
     }
 
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SavePlayer();
-        SaveGlobal();
-    }
-
-    private void OnApplicationQuit()
-    {
-        SavePlayer();
-        SaveGlobal();
-    }
-
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
@@ -68,7 +52,7 @@ public class GlobalLoader : MonoBehaviour
 
     // -----------------------
     // Сохранение/загрузка игрока
-    private void SavePlayer()
+    public void SavePlayer()
     {
         if (playerInstance == null) return;
 
@@ -116,7 +100,7 @@ public class GlobalLoader : MonoBehaviour
 
     // -----------------------
     // Сохранение/загрузка глобальных данных
-    private void SaveGlobal()
+    public void SaveGlobal()
     {
         var data = SaveLoadSystem.Load<GlobalData>("globalSave");
         data.SelectedTongueIndex = selectedTongueIndex;
@@ -134,6 +118,19 @@ public class GlobalLoader : MonoBehaviour
     {
         overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        SavePlayer();
+        SaveGlobal();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SavePlayer();
+        SaveGlobal();
     }
 
     // Классы данных

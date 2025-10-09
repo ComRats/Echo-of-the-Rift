@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public class UploadTarget : MonoBehaviour
 {
-    [SerializeField] private string sceneName = "PlayerCreating";
-    [SerializeField] private string nextScene = "PlayerScene";
+    [SerializeField] private string sceneName;
+    [SerializeField] private string nextScene;
 
-    private Player player;
+    [Inject] private Player playerInstance;
+    [Inject] private MainUI mainUiInstance;
 
     private void Awake()
     {
@@ -20,35 +22,43 @@ public class UploadTarget : MonoBehaviour
 
     public void TargetToPlayer()
     {
-        player = FindObjectOfType<Player>();
-        if (player != null && SceneManager.GetActiveScene().name != sceneName)
+        if (playerInstance != null && SceneManager.GetActiveScene().name != sceneName)
         {
-            Debug.Log("Всё получилось");
-            transform.SetParent(player.transform);
+            transform.SetParent(playerInstance.transform);
         }
     }
 
     public void NextScene()
     {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        SceneManager.LoadSceneAsync(nextScene).completed += _ =>
+        {
+            transform.SetParent(null);
 
-        SceneManager.LoadScene(nextScene);
+            SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+
+            RestoreValues();
+
+            TargetToPlayer();
+        };
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    private void RestoreValues()
     {
-        SceneManager.MoveGameObjectToScene(gameObject, scene);
+        playerInstance ??= Object.FindObjectOfType<Player>(true);
+        mainUiInstance ??= Object.FindObjectOfType<MainUI>(true);
 
-        TargetToPlayer();
+        if (playerInstance != null)
+            playerInstance.movement.canMove = true;
 
-        if (player != null)
+        if (mainUiInstance != null)
         {
-            player.GetComponent<TestMovement>().canMove = true;
-            gameObject.transform.position = new(0f, 0.59f, 0f);
-            gameObject.transform.localScale = new(0.0035f, 0.0035f, 0f);
+            mainUiInstance.canOpenUI = true;
+            mainUiInstance.gameObject.SetActive(true);
         }
 
-        SceneManager.sceneLoaded -= OnSceneLoaded;
+        GameTimer.ResumeGame();
+
+        transform.position = new Vector3(0f, 0.59f, 0f);
+        transform.localScale = Vector3.one * 0.0035f;
     }
 }
