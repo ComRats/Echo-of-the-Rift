@@ -44,7 +44,7 @@ public class Base : MonoBehaviour
 
     private IData data;
 
-    public void Inizialize(IData data, GameObject gameObj)
+    public void Initialize(IData data, GameObject gameObj)
     {
         this.data = data;
 

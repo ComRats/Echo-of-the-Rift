@@ -24,7 +24,7 @@ namespace FightSystem.Character
 
         private void LocalInizialize()
         {
-            Inizialize(characterData, gameObject);
+            Initialize(characterData, gameObject);
 
             UpdateUI();
         }
@@ -37,7 +37,7 @@ namespace FightSystem.Character
 
                 if (characterData != null)
                 {
-                    Inizialize(characterData, gameObject);
+                    Initialize(characterData, gameObject);
                 }
                 else
                 {

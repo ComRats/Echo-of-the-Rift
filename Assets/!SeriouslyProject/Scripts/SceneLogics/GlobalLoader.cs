@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FightSystem.Data;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -12,15 +13,11 @@ public class GlobalLoader : MonoBehaviour
     [Inject] private Player playerInstance;
     private Vector3? overridePosition = null;
 
-    // --- глобальные данные ---
     private int selectedTongueIndex = 0;
     public int SelectedTongueIndex
     {
         get => selectedTongueIndex;
-        set
-        {
-            selectedTongueIndex = value;
-        }
+        set => selectedTongueIndex = value;
     }
 
     private void Awake()
@@ -32,26 +29,22 @@ public class GlobalLoader : MonoBehaviour
         }
 
         instance = this;
-
         DontDestroyOnLoad(gameObject);
 
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        LoadGlobal(); // загружаем глобальные данные при старте
-
-        Debug.Log(SaveLoadSystem.GetPath($"playerSave_{SceneManager.GetActiveScene().name}"));
+        LoadGlobal();
+        LoadPlayerData();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-
         playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
-        Debug.Log("OnSceneLoaded");
     }
 
     // -----------------------
-    // Сохранение/загрузка игрока
+    // Сохранение / загрузка игрока
     public void SavePlayer()
     {
         if (playerInstance == null) return;
@@ -62,8 +55,23 @@ public class GlobalLoader : MonoBehaviour
             Rotation = playerInstance.transform.rotation
         };
 
-        string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
-        SaveLoadSystem.Save(fileName, data);
+        SaveLoadSystem.Save($"playerSave_{SceneManager.GetActiveScene().name}", data);
+        SaveLoadSystem.Save("playerData", playerInstance.playerSaver);
+    }
+
+    private void LoadPlayerData()
+    {
+        if (SaveLoadSystem.Exists("playerData"))
+        {
+            playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData");
+        }
+        else
+        {
+            var characterData = Resources.Load<CharacterData>("CharacterData/Human");
+            playerInstance.playerSaver = new Player.PlayerSaver();
+            playerInstance.playerSaver.LoadFrom(characterData);
+            SaveLoadSystem.Save("playerData", playerInstance.playerSaver);
+        }
     }
 
     private void LoadPlayer()
@@ -78,9 +86,7 @@ public class GlobalLoader : MonoBehaviour
         }
 
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
-        string filePath = SaveLoadSystem.GetPath(fileName);
-
-        if (!System.IO.File.Exists(filePath))
+        if (!System.IO.File.Exists(SaveLoadSystem.GetPath(fileName)))
         {
             playerInstance.transform.position = playerInstance.startPosition;
             playerInstance.transform.rotation = Quaternion.identity;
@@ -99,11 +105,10 @@ public class GlobalLoader : MonoBehaviour
     }
 
     // -----------------------
-    // Сохранение/загрузка глобальных данных
+    // Глобальные данные
     public void SaveGlobal()
     {
-        var data = SaveLoadSystem.Load<GlobalData>("globalSave");
-        data.SelectedTongueIndex = selectedTongueIndex;
+        var data = new GlobalData { SelectedTongueIndex = selectedTongueIndex };
         SaveLoadSystem.Save("globalSave", data);
     }
 
@@ -113,6 +118,7 @@ public class GlobalLoader : MonoBehaviour
         selectedTongueIndex = data.SelectedTongueIndex;
     }
 
+    // -----------------------
     // Переход между сценами
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
@@ -133,7 +139,6 @@ public class GlobalLoader : MonoBehaviour
         SaveGlobal();
     }
 
-    // Классы данных
     [Serializable]
     private class PlayerData
     {

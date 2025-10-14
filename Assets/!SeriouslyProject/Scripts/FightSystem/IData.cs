@@ -14,6 +14,8 @@ public interface IData
     int Health { get; set; }
     int Heal { get; set; }
     int Armor { get; set; }
+    int Lucky { get; set; }
+    int CreteChance { get; set; }
 
     int Level { get; set; }
     int CurrentXP { get; set; }

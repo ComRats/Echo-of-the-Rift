@@ -31,7 +31,7 @@ namespace FightSystem.Enemy
 
         public void LocalInizialize()
         {
-            Inizialize(enemyData, gameObject);
+            Initialize(enemyData, gameObject);
 
             UpdateUI();
 
@@ -45,7 +45,7 @@ namespace FightSystem.Enemy
 
                 if (enemyData != null)
                 {
-                    Inizialize(enemyData, gameObject);
+                    Initialize(enemyData, gameObject);
                 }
                 else
                 {

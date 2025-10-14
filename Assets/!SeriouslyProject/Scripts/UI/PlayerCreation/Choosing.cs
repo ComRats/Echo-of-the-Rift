@@ -14,7 +14,7 @@ public class Choosing : MonoBehaviour, IUpdatableUI
     [SerializeField] private PointsManager pointsManager;
     [SerializeField] private List<string> descriptions;
 
-    private int currentValue = 0;
+    [HideInInspector] public int currentValue = 0;
 
     private void Start()
     {

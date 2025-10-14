@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 public class UploadTarget : MonoBehaviour
 {
+    [SerializeField] private PointsManager points;
+    [SerializeField] private TextMeshProUGUI descriptionStats;
     [SerializeField] private string sceneName;
     [SerializeField] private string nextScene;
 
@@ -30,16 +33,26 @@ public class UploadTarget : MonoBehaviour
 
     public void NextScene()
     {
-        SceneManager.LoadSceneAsync(nextScene).completed += _ =>
+        if (points.usedPoints >= points.maxPoints)
         {
-            transform.SetParent(null);
+            points.AddPointsToPlayer();
+            descriptionStats.text = "Загрузка...";
 
-            SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+            SceneManager.LoadSceneAsync(nextScene).completed += _ =>
+            {
+                transform.SetParent(null);
 
-            RestoreValues();
+                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
 
-            TargetToPlayer();
-        };
+                RestoreValues();
+
+                TargetToPlayer();
+            };
+        }
+        else
+        {
+            descriptionStats.text = $"Распределите оставшиеся очки: ({points.maxPoints - points.usedPoints})";
+        }
     }
 
     private void RestoreValues()

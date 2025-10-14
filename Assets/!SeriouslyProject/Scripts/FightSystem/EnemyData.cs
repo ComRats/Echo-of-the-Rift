@@ -25,6 +25,8 @@ namespace FightSystem.Data
         public int _health;
         public int _heal;
         public int _armor;
+        public int _lucky;
+        public int _creteChance;
 
         public int Damage { get => _damage; set => _damage = value; }
         public int Priority { get => _priority; set => _priority = value; }
@@ -34,6 +36,8 @@ namespace FightSystem.Data
         public int Health { get => _health; set => _health = value; }
         public int Heal { get => _heal; set => _heal = value; }
         public int Armor { get => _armor; set => _armor = value; }
+        public int Lucky { get => _lucky; set => _lucky = value; }
+        public int CreteChance { get => _creteChance; set => _creteChance = value; }
 
         [BoxGroup("Progression")]
         [OnValueChanged("UpdateStats")]
