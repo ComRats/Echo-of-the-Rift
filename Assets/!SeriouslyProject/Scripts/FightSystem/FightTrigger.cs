@@ -17,13 +17,13 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemyesSettings> enemies = new List<EnemyesSettings>();
 
-    private const string EnemySavePath = "enemies_data.json"; // <-- верно
+    private const string EnemySavePath = "enemies_data.json";
 
     [Header("CharcterFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
 
-    private const string CharacterSavePath = "characters_data.json"; // <-- верно
+    private const string CharacterSavePath = "characters_data.json";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -31,9 +31,6 @@ public class FightTrigger : MonoBehaviour
         {
             characters = collision.GetComponent<Team>().characters;
             EnterTrigger();
-
-            //if (collision.TryGetComponent<TestMovement>(out var movement))
-            //    movement.canMove = false;
         }
     }
 

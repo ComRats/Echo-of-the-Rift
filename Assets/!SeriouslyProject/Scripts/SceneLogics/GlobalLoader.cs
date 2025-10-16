@@ -12,6 +12,7 @@ public class GlobalLoader : MonoBehaviour
 
     [Inject] private Player playerInstance;
     private Vector3? overridePosition = null;
+    private bool isStart;
 
     private int selectedTongueIndex = 0;
     public int SelectedTongueIndex
@@ -94,7 +95,7 @@ public class GlobalLoader : MonoBehaviour
         }
 
         var data = SaveLoadSystem.Load<PlayerData>(fileName);
-        if (data == null)
+        if (data == null && isStart == false)
         {
             playerInstance.transform.position = playerInstance.startPosition;
             playerInstance.transform.rotation = Quaternion.identity;
@@ -102,20 +103,26 @@ public class GlobalLoader : MonoBehaviour
         }
 
         playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
+        Debug.LogError(SaveLoadSystem.GetPath(fileName));
     }
 
     // -----------------------
     // Глобальные данные
     public void SaveGlobal()
     {
-        var data = new GlobalData { SelectedTongueIndex = selectedTongueIndex };
+        var data = new GlobalData
+        {
+            selectedTongueIndex = selectedTongueIndex,
+            sceneIndex = SceneManager.GetActiveScene().buildIndex
+        };
         SaveLoadSystem.Save("globalSave", data);
     }
 
     private void LoadGlobal()
     {
         var data = SaveLoadSystem.Load<GlobalData>("globalSave");
-        selectedTongueIndex = data.SelectedTongueIndex;
+        selectedTongueIndex = data.selectedTongueIndex;
+        isStart = data.isStart;
     }
 
     // -----------------------
@@ -147,8 +154,10 @@ public class GlobalLoader : MonoBehaviour
     }
 
     [Serializable]
-    private class GlobalData
+    public class GlobalData
     {
-        public int SelectedTongueIndex;
+        public int selectedTongueIndex;
+        public int sceneIndex;
+        public bool isStart;
     }
 }

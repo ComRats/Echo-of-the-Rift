@@ -36245,6 +36245,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 1720836046}
     m_Modifications:
     - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
       propertyPath: m_SortingLayer
       value: 4
       objectReference: {fileID: 0}
@@ -38710,7 +38718,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -23.794462, y: 1.0200777, z: 9.064268}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1790443063}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
