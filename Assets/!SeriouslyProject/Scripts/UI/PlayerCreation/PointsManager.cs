@@ -3,42 +3,48 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PointsManager : MonoBehaviour
-{//ÍÓÆÍÎ ÑÄÅËÀÒÜ ×ÒÎÁÛ ÏĞÈ ÍÀÆÀÒÈÈ ÍÀ ÊÍÎÏÊÓ "ÄÀËÅÅ" ÏĞÎÈÑÕÎÄÈËÎ ÑÎÕĞÀÍÅÍÈÅ ÑÒÀÒÎÂ Â ÏÅĞÑÎÍÀÆÀ
+{
     public int maxPoints = 10;
     public int usedPoints = 0;
 
     [SerializeField] private List<PointsData> pointsData = new();
 
+    private CharacterData characterData;
+
+    private void Start()
+    {
+        characterData = Resources.Load<CharacterData>("CharacterData/Human");
+    }
+
     public void AddPointsToPlayer()
     {
-        CharacterData characterData = Resources.Load<CharacterData>("CharacterData/Human");
-
         if (characterData != null)
         {
             foreach (var data in pointsData)
             {
+                Debug.LogError(data.usedPoints);
                 switch (data.description)
                 {
                     case "Power":
-                        characterData.Damage += data.usedPoints + (int)(0.3f * data.usedPoints);
-                        characterData.Health += data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.MaxHealth += data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.Damage = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.Health = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.MaxHealth = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
                         break;
                     case "Intellect":
-                        characterData.Mana += data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.MaxMana += data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.Damage += data.usedPoints+ (int)(0.3f * data.usedPoints);
+                        characterData.Mana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.MaxMana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        //magic damage
                         break;
                     case "Agility":
-                        characterData.Priority += data.usedPoints + (int)(0.3f * data.usedPoints);
-                        characterData.Armor += data.usedPoints + (int)(0.3f * data.usedPoints);
+                        characterData.Priority = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
+                        characterData.Armor = 1 + (int)(0.4f * data.usedPoints);
                         break;
                     case "Lucky":
-                        characterData.Lucky += data.usedPoints + (int)(0.3f * data.usedPoints);
-                        characterData.CreteChance += data.usedPoints + (int)(0.3f * data.usedPoints);
+                        characterData.Lucky = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
+                        characterData.CreteChance = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
                         break;
                     default:
-                        // Ëîãèêà äëÿ îáğàáîòêè íåèçâåñòíîãî òèïà
+
                         break;
                 }
             }

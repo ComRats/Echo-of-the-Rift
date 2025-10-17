@@ -133,6 +133,12 @@ public class GlobalLoader : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
+    public void LoadToScene(int sceneToLoad, Vector3 positionToLoad)
+    {
+        overridePosition = positionToLoad;
+        SceneManager.LoadScene(sceneToLoad);
+    }
+
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;

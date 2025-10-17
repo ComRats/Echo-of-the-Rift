@@ -187,6 +187,8 @@ public class Base : MonoBehaviour
             Mana = MaxMana;
 
             UpdateUI();
+            
+            GlobalLoader.Instance.SavePlayer();
         }
     }
 

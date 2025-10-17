@@ -30,7 +30,7 @@ public class FightManager : MonoBehaviour
 #if UNITY_EDITOR
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 #endif
@@ -67,7 +67,7 @@ public class FightManager : MonoBehaviour
         if (characters.All(c => c.Health > 0) && enemies.All(e => e.Health == 0))
         {
             Debug.Log("You are WiN!");
-            
+
             foreach (var basic in bases)
             {
                 basic.GetXP(allEnemyXP / characterStartCount);
@@ -75,7 +75,7 @@ public class FightManager : MonoBehaviour
             }
 
             Player.Result = FightResult.Win;
-            GlobalLoader.Instance.LoadToScene("PlayerScene", new Vector3(-25.3350859f, -3.5f, -0.0932526737f));
+            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex, Vector3.zero);
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -88,7 +88,7 @@ public class FightManager : MonoBehaviour
             }
 
             Player.Result = FightResult.Lose;
-            GlobalLoader.Instance.LoadToScene("PlayerScene", Vector3.zero);
+            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex, Vector3.zero);
 
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
