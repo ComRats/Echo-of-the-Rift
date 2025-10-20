@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 public class FightManager : MonoBehaviour
 {
@@ -75,6 +76,9 @@ public class FightManager : MonoBehaviour
             }
 
             Player.Result = FightResult.Win;
+
+            //Показывать UI и Игрока
+
             GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex, Vector3.zero);
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
@@ -88,6 +92,9 @@ public class FightManager : MonoBehaviour
             }
 
             Player.Result = FightResult.Lose;
+
+            //Показывать UI и Игрока
+
             GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex, Vector3.zero);
 
         }

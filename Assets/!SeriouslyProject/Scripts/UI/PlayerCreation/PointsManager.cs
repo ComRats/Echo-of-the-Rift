@@ -22,7 +22,6 @@ public class PointsManager : MonoBehaviour
         {
             foreach (var data in pointsData)
             {
-                Debug.LogError(data.usedPoints);
                 switch (data.description)
                 {
                     case "Power":

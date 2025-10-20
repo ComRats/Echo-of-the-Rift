@@ -1483,6 +1483,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameMassage: {fileID: 3932973036968523622, guid: dea713af298cf2042b15c3a8197272e4, type: 3}
   LoadButton: {fileID: 704416836}
+  gameAlertPrefab: {fileID: 7490771056175563970, guid: e4f3045de98221d43bd381cd2da8045f, type: 3}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0

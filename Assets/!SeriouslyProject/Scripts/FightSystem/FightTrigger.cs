@@ -1,10 +1,10 @@
-using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using FightSystem.Data;
 using UnityEngine;
 using System;
 using System.IO;
+using Zenject;
 
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour
@@ -27,7 +27,7 @@ public class FightTrigger : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<ISceneLoader>(out var sceneLoader))
+        if (collision.TryGetComponent<Player>(out var player))
         {
             characters = collision.GetComponent<Team>().characters;
             EnterTrigger();
@@ -38,6 +38,9 @@ public class FightTrigger : MonoBehaviour
     {
         SaveEnemiesToFile();
         SaveCharactersToFile();
+
+        //Убирать UI и Игрока
+
         GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
     }
 
@@ -45,16 +48,14 @@ public class FightTrigger : MonoBehaviour
     private void SaveEnemiesToFile()
     {
         FightData data = new FightData { enemies = this.enemies };
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, EnemySavePath), json);
+        SaveLoadSystem.Save(EnemySavePath, data);
         Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(Path.Combine(Application.persistentDataPath, CharacterSavePath), json);
+        SaveLoadSystem.Save(CharacterSavePath, data);
         Debug.Log($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 

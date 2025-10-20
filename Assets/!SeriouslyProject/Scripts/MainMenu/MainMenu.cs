@@ -5,6 +5,7 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField] private GameObject gameMassage;
     [SerializeField] private GameObject LoadButton;
+    [SerializeField] private GameAlert gameAlertPrefab;
     private GlobalLoader.GlobalData globalData;
 
     private void Start()
@@ -16,6 +17,11 @@ public class MainMenu : MonoBehaviour
     }
 
     public void Play()
+    {
+        GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", TryPlay, "Нет", GameMassage.CloseAlert, 1f, Color.black);
+    }
+
+    private void TryPlay()
     {
         var data = new GlobalLoader.GlobalData
         {
@@ -34,6 +40,6 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
-        Application.Quit();
+        GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f, Color.black);
     }
 }

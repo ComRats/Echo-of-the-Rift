@@ -84,6 +84,7 @@ public class PauseMenu : MonoBehaviour
     {
         GameTimer.PauseGame();
         pauseMenu.SetActive(false);
+
         _playerInstance.movement.canMove = false;
         _mainUIInstance.canOpenUI = false;
         _mainUIInstance.gameObject.SetActive(false);

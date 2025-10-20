@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[ExecuteAlways]
+[ExecuteAlways, RequireComponent(typeof(Collider2D))]
 public class SceneLoaderTrigger : MonoBehaviour, IColliderDebugDrawable2D
 {
     [SerializeField] string nextSceneToLoad;

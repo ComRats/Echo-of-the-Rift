@@ -5,6 +5,7 @@ using UnityEngine;
 public static class GameMassage
 {
     private static GameObject newMessage;
+    private static GameAlert activeAlert;
 
     public static void ButtonMassage(GameObject target, bool isShow, Sprite sprite, Vector3 offset = default)
     {
@@ -33,7 +34,7 @@ public static class GameMassage
         }
     }
 
-    public static void WarningMassage(GameObject textPrefab, string massage, int duration, Color textColor)
+    public static void WarningMassage(GameObject textPrefab, string massage, float duration, Color textColor)
     {
         Canvas canvas = Object.FindObjectOfType<Canvas>();
         GameObject textObj = Object.Instantiate(textPrefab, canvas.transform);
@@ -62,5 +63,60 @@ public static class GameMassage
         seq.OnComplete(() => Object.Destroy(textObj));
     }
 
+    public static void GameAlert(
+        GameAlert alertPrefab,
+        string message,
+        string leftButtonText, System.Action leftButtonAction,
+        string rightButtonText, System.Action rightButtonAction,
+        float duration,
+        Color textColor)
+    {
+        if (activeAlert != null) return;
 
+        var canvas = Object.FindObjectOfType<Canvas>();
+        activeAlert = Object.Instantiate(alertPrefab, canvas.transform);
+        activeAlert.name = "GameAlert";
+        activeAlert.transform.SetAsLastSibling();
+
+        activeAlert.mainText.text = message;
+        activeAlert.mainText.color = textColor;
+
+        activeAlert.leftButtonText.text = leftButtonText;
+        activeAlert.leftButton.onClick.RemoveAllListeners();
+        activeAlert.leftButton.onClick.AddListener(() =>
+        {
+            leftButtonAction?.Invoke();
+            CloseAlert();
+        });
+
+        activeAlert.rightButtonText.text = rightButtonText;
+        activeAlert.rightButton.onClick.RemoveAllListeners();
+        activeAlert.rightButton.onClick.AddListener(() =>
+        {
+            rightButtonAction?.Invoke();
+            CloseAlert();
+        });
+
+        var group = activeAlert.GetComponent<CanvasGroup>() ?? activeAlert.gameObject.AddComponent<CanvasGroup>();
+        group.alpha = 0f;
+        group.DOFade(1f, 0.4f);
+
+        activeAlert.transform.localScale = Vector3.zero;
+        activeAlert.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+    }
+
+    public static void CloseAlert()
+    {
+        if (activeAlert == null) return;
+
+        var group = activeAlert.GetComponent<CanvasGroup>();
+        var seq = DOTween.Sequence();
+        seq.Append(group.DOFade(0f, 0.3f));
+        seq.Join(activeAlert.transform.DOScale(0.8f, 0.3f));
+        seq.OnComplete(() =>
+        {
+            Object.Destroy(activeAlert.gameObject);
+            activeAlert = null;
+        });
+    }
 }

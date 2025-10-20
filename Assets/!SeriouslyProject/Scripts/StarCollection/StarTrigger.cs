@@ -11,7 +11,7 @@ public class StarTrigger : MonoBehaviour
     [SerializeField, Range(0, 30)] private int spriteIndex;
 
     [ValueDropdown("GetSpriteNames")]
-    [SerializeField] private SpriteCollection sprites;
+    [SerializeField] private SpriteCollection sprites;//Inject in future
     private bool playerInside = false;
 
     private void Start()
