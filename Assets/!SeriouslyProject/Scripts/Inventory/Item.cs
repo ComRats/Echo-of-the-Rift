@@ -8,8 +8,8 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     [Header("Basic Info")]
-    [SerializeField] private int _id;
-    [SerializeField] private string _itemName;
+    public int Id;
+    public string _itemName;
     [SerializeField] [TextArea(2, 4)] private string _description;
     [SerializeField] private Sprite _icon;
     
@@ -25,7 +25,7 @@ public class Item : ScriptableObject
     [SerializeField] private EquipmentSubtype _equipmentSubtype = EquipmentSubtype.None;
     
     // Публичные свойства для контролируемого доступа к данным
-    public int ID => _id;
+    public int ID => Id;
     public string ItemName => _itemName;
     public string Description => _description;
     public Sprite Icon => _icon;

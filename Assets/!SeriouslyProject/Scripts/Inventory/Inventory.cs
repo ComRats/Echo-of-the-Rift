@@ -1,5 +1,9 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.IO;
+
 
 /// <summary>
 /// Система инвентаря с обычными слотами и слотами экипировки
@@ -70,11 +74,6 @@ public class Inventory : MonoBehaviour
             return null;
         }
         return _equipmentSlots[index];
-    }
-
-    public void TryAddItem(Item item)
-    {
-        AddItem(item);
     }
 
     /// <summary>
@@ -244,4 +243,85 @@ public class Inventory : MonoBehaviour
     // Методы для уведомления подписчиков об изменениях
     private void NotifySlotChanged(int slotIndex) => OnSlotChanged?.Invoke(slotIndex);
     private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();
+
+    #region SAVE / LOAD
+
+    // Сохранение инвентаря
+    public void SaveInventory()
+    {
+        var data = new InventoryData
+        {
+            slots = new List<InventorySlotData>(),
+            equipmentSlots = new List<InventorySlotData>()
+        };
+
+        // обычные слоты
+        foreach (var slot in _slots)
+            data.slots.Add(!slot.IsEmpty() ? new InventorySlotData { itemId = slot.Item.Id, quantity = slot.Quantity } : null);
+
+        // слоты экипировки
+        foreach (var slot in _equipmentSlots)
+            data.equipmentSlots.Add(!slot.IsEmpty() ? new InventorySlotData { itemId = slot.Item.Id, quantity = slot.Quantity } : null);
+
+        string fileName = $"inventorySave_{SceneManager.GetActiveScene().name}";
+        SaveLoadSystem.Save(fileName, data);
+
+        Debug.Log("Inventory saved!");
+    }
+
+    // Загрузка инвентаря
+    public void LoadInventory(ItemDatabase itemDatabase)
+    {
+        string fileName = $"inventorySave_{SceneManager.GetActiveScene().name}";
+        var data = SaveLoadSystem.Load<InventoryData>(fileName);
+        if (data == null)
+        {
+            Debug.LogWarning("No inventory save found!");
+            return;
+        }
+
+        // загружаем обычные слоты
+        for (int i = 0; i < _slots.Length; i++)
+        {
+            _slots[i].Clear();
+            if (i < data.slots.Count && data.slots[i] != null)
+            {
+                Item item = itemDatabase.GetItemById(data.slots[i].itemId);
+                if (item != null)
+                    _slots[i].AddItem(item, data.slots[i].quantity);
+            }
+        }
+
+        // загружаем слоты экипировки
+        for (int i = 0; i < _equipmentSlots.Length; i++)
+        {
+            _equipmentSlots[i].Clear();
+            if (i < data.equipmentSlots.Count && data.equipmentSlots[i] != null)
+            {
+                Item item = itemDatabase.GetItemById(data.equipmentSlots[i].itemId);
+                if (item != null)
+                    _equipmentSlots[i].AddItem(item, data.equipmentSlots[i].quantity);
+            }
+        }
+
+        Debug.Log("Inventory loaded!");
+    }
+
+    [Serializable]
+    private class InventoryData
+    {
+        public List<InventorySlotData> slots;
+        public List<InventorySlotData> equipmentSlots;
+    }
+
+    [Serializable]
+    private class InventorySlotData
+    {
+        public int itemId;
+        public int quantity;
+    }
+
+    #endregion
+
+    
 }
