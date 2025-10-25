@@ -17,12 +17,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/!SeriouslyProject/Scenes/PlayerCastomization.unity
     guid: f889811d5b8a161458e5a78713aa2537
-  - enabled: 0
+  - enabled: 1
     path: Assets/!SeriouslyProject/Scenes/LoadingScene.unity
     guid: 30ca0607302c7364eb5d9fb6cc4e8d95
-  - enabled: 0
-    path: Assets/SeriouslyProject/Scenes/VillageScene.unity
-    guid: b90ef78eccfe70441bd780c4448341a3
   - enabled: 1
     path: Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_2.unity
     guid: a0cfa9f672ed7c645b1f52851442d6fd

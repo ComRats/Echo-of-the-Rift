@@ -6,7 +6,13 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject gameMassage;
     [SerializeField] private GameObject LoadButton;
     [SerializeField] private GameAlert gameAlertPrefab;
+    [SerializeField] private SceneLoader startSceneLoader;
+    [SerializeField] private SceneLoader loadSceneLoader;
     private GlobalLoader.GlobalData globalData;
+
+    //[Inject] private GameSettings gameSettings;
+    //[Inject] private Player _playerInstance;
+    //[Inject] private MainUI _mainUIInstance;
 
     private void Start()
     {
@@ -18,24 +24,36 @@ public class MainMenu : MonoBehaviour
 
     public void Play()
     {
-        GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", TryPlay, "Нет", GameMassage.CloseAlert, 1f, Color.black);
+        if (SaveLoadSystem.Exists("globalSave"))
+            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", TryPlay, "Нет", GameMassage.CloseAlert, 1f, Color.black);
+        else
+            TryPlay();
     }
 
     private void TryPlay()
     {
+        SaveLoadSystem.ClearAllSaves();
         var data = new GlobalLoader.GlobalData
         {
             isStart = true
         };
         SaveLoadSystem.Save("globalSave", data);
 
-        SceneManager.LoadScene(1);
+        startSceneLoader.LoadAsync();
     }
 
     public void Load()
     {
         globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave");
-        SceneManager.LoadScene(globalData.sceneIndex);
+        loadSceneLoader.LoadAsync(globalData.SceneIndex);
+
+        //if (_playerInstance != null)
+        //{
+        //    GameTimer.ResumeGame();
+        //    _playerInstance.movement.canMove = true;
+        //    _mainUIInstance.canOpenUI = true;
+        //    _mainUIInstance.gameObject.SetActive(true);
+        //}
     }
 
     public void Quit()

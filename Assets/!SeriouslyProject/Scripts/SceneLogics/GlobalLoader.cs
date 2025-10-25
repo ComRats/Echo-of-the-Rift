@@ -41,7 +41,7 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-        playerInstance.GetComponentInChildren<CameraSettings>().Initialize();
+        playerInstance.cameraSettings.Initialize();
     }
 
     // -----------------------
@@ -79,7 +79,7 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance == null) return;
 
-        if (overridePosition != null)
+        if (overridePosition.HasValue)
         {
             playerInstance.transform.position = overridePosition.Value;
             overridePosition = null;
@@ -87,23 +87,30 @@ public class GlobalLoader : MonoBehaviour
         }
 
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
-        if (!System.IO.File.Exists(SaveLoadSystem.GetPath(fileName)))
+        string filePath = SaveLoadSystem.GetPath(fileName);
+
+        if (!SaveLoadSystem.Exists(filePath))
         {
-            playerInstance.transform.position = playerInstance.startPosition;
-            playerInstance.transform.rotation = Quaternion.identity;
+            ResetPlayerTransform();
             return;
         }
 
         var data = SaveLoadSystem.Load<PlayerData>(fileName);
-        if (data == null && isStart == false)
+
+        if (data == null || isStart)
         {
-            playerInstance.transform.position = playerInstance.startPosition;
-            playerInstance.transform.rotation = Quaternion.identity;
+            ResetPlayerTransform();
             return;
         }
 
         playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
         Debug.LogError(SaveLoadSystem.GetPath(fileName));
+    }
+
+    private void ResetPlayerTransform()
+    {
+        playerInstance.transform.position = playerInstance.startPosition;
+        playerInstance.transform.rotation = Quaternion.identity;
     }
 
     // -----------------------
@@ -164,6 +171,15 @@ public class GlobalLoader : MonoBehaviour
     {
         public int selectedTongueIndex;
         public int sceneIndex;
+        public string SceneIndex
+        {
+            get => SceneUtility.GetScenePathByBuildIndex(sceneIndex);
+            set
+            {
+                sceneIndex = SceneUtility.GetBuildIndexByScenePath(value);
+            }
+        }
+
         public bool isStart;
     }
 }

@@ -73,10 +73,35 @@ public static class SaveLoadSystem
     }
 
     /// <summary>
-    /// Очистить весь кеш (например при смене профиля игрока).
+    /// Очистить весь кеш (например, при смене профиля игрока).
     /// </summary>
     public static void ClearCache()
     {
         cache.Clear();
+    }
+
+    /// <summary>
+    /// Полная очистка всех сохранений из папки и кеша.
+    /// </summary>
+    public static void ClearAllSaves()
+    {
+        string dir = Application.persistentDataPath;
+
+        if (Directory.Exists(dir))
+        {
+            foreach (string file in Directory.GetFiles(dir, "*.json"))
+            {
+                try
+                {
+                    File.Delete(file);
+                }
+                catch (IOException e)
+                {
+                    Debug.LogWarning($"Не удалось удалить {file}: {e.Message}");
+                }
+            }
+        }
+
+        ClearCache();
     }
 }
