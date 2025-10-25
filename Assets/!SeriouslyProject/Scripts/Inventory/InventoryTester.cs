@@ -4,46 +4,48 @@ public class InventoryTester : MonoBehaviour
 {
     [Header("Test Items")]
     [SerializeField] private Item[] _testItems; // Массив тестовых предметов
-    
+
     [Header("References")]
     [SerializeField] private Inventory _inventory;
     [SerializeField] private InventoryUI _inventoryUI;
-    
+
     [Header("Test Settings")]
     [SerializeField] private KeyCode _toggleInventoryKey = KeyCode.Tab;
     [SerializeField] private KeyCode _addRandomItemKey = KeyCode.Q;
     [SerializeField] private KeyCode _clearInventoryKey = KeyCode.C;
     [SerializeField] private KeyCode _debugKey = KeyCode.F1;
-    
+    [SerializeField] private KeyCode _pigKey = KeyCode.J;
+
+
     private void Start()
     {
         // Автоматически находим компоненты, если не назначены
         if (_inventory == null)
             _inventory = FindObjectOfType<Inventory>();
-            
+
         if (_inventoryUI == null)
             _inventoryUI = FindObjectOfType<InventoryUI>();
-        
+
         // Проверяем, что всё найдено
         if (_inventory == null)
         {
             Debug.LogError("Inventory not found! Make sure there's an Inventory component in the scene.");
             return;
         }
-        
+
         if (_inventoryUI == null)
         {
             Debug.LogError("InventoryUI not found! Make sure there's an InventoryUI component in the scene.");
             return;
         }
-        
+
         Debug.Log("InventoryTester initialized successfully!");
         Debug.Log($"Controls: {_toggleInventoryKey} - Toggle Inventory, {_addRandomItemKey} - Add Random Item, {_clearInventoryKey} - Clear Inventory, {_debugKey} - Debug UI");
-        
+
         // Добавляем несколько тестовых предметов при старте
         AddTestItems();
     }
-    
+
     private void Update()
     {
         // Обработка клавиш
@@ -51,21 +53,31 @@ public class InventoryTester : MonoBehaviour
         {
             _inventoryUI.ToggleInventory();
         }
-        
+
         if (Input.GetKeyDown(_addRandomItemKey))
         {
             AddRandomItem();
         }
-        
+
         if (Input.GetKeyDown(_clearInventoryKey))
         {
             ClearInventory();
         }
-        
+
         if (Input.GetKeyDown(_debugKey))
         {
             DebugUI();
         }
+
+        if (Input.GetKeyDown(_pigKey))
+        {
+            DebugUI();
+        }
+    }
+
+    private void AddPig()
+    {
+        // Не трожь
     }
     
     // Добавить случайный предмет
@@ -76,13 +88,13 @@ public class InventoryTester : MonoBehaviour
             Debug.LogWarning("No test items assigned!");
             return;
         }
-        
+
         // Выбираем случайный предмет
         Item randomItem = _testItems[Random.Range(0, _testItems.Length)];
-        
+
         // Определяем количество в зависимости от типа предмета
         int randomQuantity;
-        
+
         if (randomItem.IsStackable)
         {
             // Для стакаемых предметов - случайное количество от 1 до 10
@@ -93,9 +105,9 @@ public class InventoryTester : MonoBehaviour
             // Для нестакаемых предметов - всегда 1
             randomQuantity = 1;
         }
-        
+
         bool success = _inventory.AddItem(randomItem, randomQuantity);
-        
+
         if (success)
         {
             string stackInfo = randomItem.IsStackable ? $" (stackable, max: {randomItem.MaxStackSize})" : " (non-stackable)";

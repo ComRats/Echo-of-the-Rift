@@ -26,8 +26,4 @@ public class InventoryTeam : MonoBehaviour
 
     }
 
-    void OnValidate()
-    {
-        member.UpdateUI();
-    }
 }
