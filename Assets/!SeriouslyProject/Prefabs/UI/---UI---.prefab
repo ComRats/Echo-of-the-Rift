@@ -20054,6 +20054,7 @@ MonoBehaviour:
   _addRandomItemKey: 113
   _clearInventoryKey: 99
   _debugKey: 282
+  _pigKey: 106
 --- !u!114 &6892952002544769126
 MonoBehaviour:
   m_ObjectHideFlags: 0
