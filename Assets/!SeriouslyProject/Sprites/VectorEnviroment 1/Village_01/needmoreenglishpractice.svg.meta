@@ -12,8 +12,8 @@ ScriptedImporter:
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 64
-  alignment: 0
-  customPivot: {x: 0, y: 0}
+  alignment: 9
+  customPivot: {x: 0.44619626, y: 0.10823114}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
@@ -39,16 +39,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: needmoreenglishpracticeSprite
       originalName: 
-      pivot: {x: 0, y: 0}
-      alignment: 0
+      pivot: {x: 0.46197802, y: 0.054137513}
+      alignment: 9
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 65
+        height: 149
       spriteID: 8eaf0dea67795794faf6f8f1773bad4d
     PhysicsOutlines: []

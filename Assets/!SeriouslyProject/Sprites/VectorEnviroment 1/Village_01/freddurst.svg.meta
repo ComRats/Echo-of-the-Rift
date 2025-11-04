@@ -12,8 +12,8 @@ ScriptedImporter:
   texturedSpriteMeshType: 0
   svgPixelsPerUnit: 100
   gradientResolution: 64
-  alignment: 0
-  customPivot: {x: 0, y: 0}
+  alignment: 9
+  customPivot: {x: 0.4842391, y: 0.07029842}
   generatePhysicsShape: 0
   viewportOptions: 0
   preserveViewport: 0
@@ -39,16 +39,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: freddurstSprite
       originalName: 
-      pivot: {x: 0, y: 0}
-      alignment: 0
+      pivot: {x: 0.4842391, y: 0.07029842}
+      alignment: 9
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 154
+        height: 225
       spriteID: 69d0bfdb9d54f7948a3fbda21f961f5b
     PhysicsOutlines: []
