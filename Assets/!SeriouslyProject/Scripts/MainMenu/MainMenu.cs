@@ -1,13 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private GameObject gameMassage;
     [SerializeField] private GameObject LoadButton;
     [SerializeField] private GameAlert gameAlertPrefab;
     [SerializeField] private SceneLoader startSceneLoader;
     [SerializeField] private SceneLoader loadSceneLoader;
+
     private GlobalLoader.GlobalData globalData;
 
     //[Inject] private GameSettings gameSettings;
@@ -22,7 +21,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void Play()
+    public void TryPlay()
     {
         if (SaveLoadSystem.Exists("globalSave"))
             GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", TryPlay, "Нет", GameMassage.CloseAlert, 1f, Color.black);
@@ -30,7 +29,7 @@ public class MainMenu : MonoBehaviour
             TryPlay();
     }
 
-    private void TryPlay()
+    private void Play()
     {
         SaveLoadSystem.ClearAllSaves();
         var data = new GlobalLoader.GlobalData

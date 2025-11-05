@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Base : MonoBehaviour
+public class Base : MonoBehaviour, IData
 {
     [SerializeField] private StateEffect stateEffect;
     [SerializeField] private float blinkDelaySeconds = 0.5f;
@@ -25,22 +25,31 @@ public class Base : MonoBehaviour
 
     public string Name { get; set; }
     public string Description { get; set; }
-
     public Image Sprite { get; set; }
 
+    public int Damage { get; set; }
+    public int Priority { get; set; }
+    public int MaxMana { get; set; }
+    public int Mana { get; set; }
+    public int MaxHealth { get; set; }
+    public int Health { get; set; }
+    public int Heal { get; set; }
+    public int Armor { get; set; }
+    public int Lucky { get; set; } = 0;
+    public int CreteChance { get; set; } = 0;
+
     public int Level { get; set; } = 1;
-    public int currentXP { get; set; } = 0;
+    public int CurrentXP { get; set; } = 0;
     public int MaxXP { get; set; } = 100;
     public int XpReward { get; set; } = 30;
 
-    public int Damage { get; set; }
-    public int MaxHealth { get; set; }
-    public int Health { get; set; }
-    public int MaxMana { get; set; }
-    public int Mana { get; set; }
-    public int Heal { get; set; }
-    public int Priority { get; set; }
-    public int Armor { get; set; } = 1;
+    public int DamagePerLevel { get; set; } = 1;
+    public int MaxHealthPerLevel { get; set; } = 1;
+    public int HealPerLevel { get; set; } = 1;
+    public int ArmorPerLevel { get; set; } = 1;
+    public int MaxManaPerLevel { get; set; } = 1;
+    public int XpRewardPerLevel { get; set; } = 1;
+    Sprite IData.Sprite { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
     private IData data;
 
@@ -59,7 +68,18 @@ public class Base : MonoBehaviour
         Heal = data.Heal;
         Priority = data.Priority;
         Armor = data.Armor;
+        Lucky = data.Lucky;
+        CreteChance = data.CreteChance;
         XpReward = data.XpReward;
+        Level = data.Level;
+        CurrentXP = data.CurrentXP;
+        MaxXP = data.MaxXP;
+        DamagePerLevel = data.DamagePerLevel;
+        MaxHealthPerLevel = data.MaxHealthPerLevel;
+        HealPerLevel = data.HealPerLevel;
+        ArmorPerLevel = data.ArmorPerLevel;
+        MaxManaPerLevel = data.MaxManaPerLevel;
+        XpRewardPerLevel = data.XpRewardPerLevel;
     }
 
     public void TakeDamage(int _damage)
@@ -165,14 +185,14 @@ public class Base : MonoBehaviour
     {
         FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), gameObject.transform, Color.magenta, 1f);
 
-        currentXP += _getXP;
+        CurrentXP += _getXP;
 
         UpdateLevel();
     }
 
     private void UpdateLevel()
     {
-        if (currentXP >= MaxXP)
+        if (CurrentXP >= MaxXP)
         {
             FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
 

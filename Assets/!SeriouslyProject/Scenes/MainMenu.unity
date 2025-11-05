@@ -460,6 +460,34 @@ PrefabInstance:
       propertyPath: _serializableScene.SceneName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: InstantiateThisObject
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GlobalLoader, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8847125969954317363, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -964,7 +992,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 563306629}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: TryPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1611,7 +1639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd866da46a3ffe4f8516e4c5b6cb873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameMassage: {fileID: 3932973036968523622, guid: dea713af298cf2042b15c3a8197272e4, type: 3}
   LoadButton: {fileID: 704416836}
   gameAlertPrefab: {fileID: 7490771056175563970, guid: e4f3045de98221d43bd381cd2da8045f, type: 3}
   startSceneLoader: {fileID: 50756310}
@@ -5067,6 +5094,18 @@ PrefabInstance:
       propertyPath: _serializableScene.SceneName
       value: PlayerCreating
       objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8847125969954317363, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -5119,6 +5158,6 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 619394802}
   - {fileID: 1991578913}
-  - {fileID: 1915941037}
   - {fileID: 43801648}
   - {fileID: 1121178421}
+  - {fileID: 1915941037}

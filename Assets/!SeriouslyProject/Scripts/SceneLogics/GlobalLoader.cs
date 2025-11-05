@@ -89,7 +89,7 @@ public class GlobalLoader : MonoBehaviour
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
         string filePath = SaveLoadSystem.GetPath(fileName);
 
-        if (!SaveLoadSystem.Exists(filePath))
+        if (!SaveLoadSystem.Exists(fileName))
         {
             ResetPlayerTransform();
             return;
@@ -144,6 +144,11 @@ public class GlobalLoader : MonoBehaviour
     {
         overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
+    }
+
+    public void InstantiateThisObject()
+    {
+        Instantiate(gameObject);
     }
 
     private void OnDestroy()

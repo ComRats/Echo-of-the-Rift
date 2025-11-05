@@ -83,7 +83,7 @@ public class FightDataLoader : MonoBehaviour
             GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
             Character characterComponent = newCharacter.GetComponent<Character>();
             characterComponent.InitializeFromSettings(characterSettings);
-            Debug.Log($"[œ≈–—ŒÕ¿∆] —ÓÁ‰‡Ì: {characterSettings._name}");
+            Debug.Log($"[œ≈–—ŒÕ¿∆] —ÓÁ‰‡Ì: {characterSettings.Name}");
         }
     }
 }

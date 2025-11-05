@@ -156,7 +156,7 @@ public class FightManager : MonoBehaviour
 
     public Character GetCharacterLowestHP()
     {
-        return characters.OrderBy(character => character.Health).FirstOrDefault(); ;
+        return characters.OrderBy(character => character.Health).FirstOrDefault();
     }
 
     private Enemy GetEnemyHighestPriority()

@@ -1,6 +1,8 @@
 using FightSystem.Data;
 using UnityEngine;
+using UnityEngine.U2D;
 using UnityEngine.UI;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace FightSystem.Character
 {
@@ -46,17 +48,29 @@ namespace FightSystem.Character
             }
             else
             {
-                Name = gameObject.name = settings._name;
-                Sprite.sprite = settings.GetSprite();
-                Description = settings._description;
-                Damage = settings._damage;
-                MaxHealth = settings._maxHealth;
-                Health = settings._health;
-                MaxMana = settings._maxMana;
-                Mana = settings._mana;
-                Heal = settings._heal;
-                Priority = settings._priority;
-                Armor = settings._armor;
+                Name = characterData.Name;
+                Description = characterData.Description;
+                Damage = characterData.Damage;
+                Priority = characterData.Priority;
+                MaxMana = characterData.MaxMana;
+                Mana = characterData.Mana;
+                MaxHealth = characterData.MaxHealth;
+                Health = characterData.Health;
+                Heal = characterData.Heal;
+                Armor = characterData.Armor;
+                Lucky = characterData.Lucky;
+                CreteChance = characterData.CreteChance;
+                Level = characterData.Level;
+                CurrentXP = characterData.CurrentXP;
+                MaxXP = characterData.MaxXP;
+                XpReward = characterData.XpReward;
+                DamagePerLevel = characterData.DamagePerLevel;
+                MaxHealthPerLevel = characterData.MaxHealthPerLevel;
+                HealPerLevel = characterData.HealPerLevel;
+                ArmorPerLevel = characterData.ArmorPerLevel;
+                MaxManaPerLevel = characterData.MaxManaPerLevel;
+                XpRewardPerLevel = characterData.XpRewardPerLevel;
+                Sprite.sprite = characterData.Sprite;
             }
 
             // Обновление UI
