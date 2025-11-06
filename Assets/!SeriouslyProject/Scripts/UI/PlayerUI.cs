@@ -4,10 +4,12 @@ using UnityEngine;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private List<Tongue> tongues;
+
     private int selectedTongueIndex = 0;
 
     private void Start()
     {
+        if (GlobalLoader.Instance != null)
         selectedTongueIndex = GlobalLoader.Instance.SelectedTongueIndex;
     }
 

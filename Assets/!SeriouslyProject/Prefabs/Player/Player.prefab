@@ -272,8 +272,8 @@ MonoBehaviour:
   - useCharacterData: 1
     characterDataName: Human
     characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
-    _name: 
-    _description: 
+    name: 
+    description: 
     _damage: 0
     _priority: 0
     _maxMana: 0
@@ -282,6 +282,19 @@ MonoBehaviour:
     _health: 0
     _heal: 0
     _armor: 0
+    _lucky: 0
+    _creteChance: 0
+    _level: 0
+    _currentXP: 0
+    _maxXP: 0
+    _xpReward: 0
+    damagePerLevel: 1
+    maxHealthPerLevel: 1
+    healPerLevel: 1
+    armorPerLevel: 1
+    maxManaPerLevel: 1
+    xpRewardPerLevel: 1
+    sprite: {fileID: 0}
     spritePath: 
 --- !u!114 &-7914314194156218776
 MonoBehaviour:
@@ -295,9 +308,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d90d2d1bf7a3c504bb593087e407b622, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spriteRenderer: {fileID: 3297244487077200008}
   pressableButtons: {fileID: 6311396538040425498}
   cameraSettings: {fileID: 1086631943437718153}
   movement: {fileID: 1808547916611058563}
+  playerSaver:
+    name: 
+    description: 
+    sprite: {fileID: 0}
+    spritePath: 
+    damage: 0
+    priority: 0
+    maxMana: 0
+    mana: 0
+    maxHealth: 0
+    health: 0
+    heal: 0
+    armor: 0
+    lucky: 0
+    creteChance: 0
+    level: 0
+    currentXP: 0
+    maxXP: 0
+    xpReward: 0
+    damagePerLevel: 0
+    maxHealthPerLevel: 0
+    healPerLevel: 0
+    armorPerLevel: 0
+    maxManaPerLevel: 0
+    xpRewardPerLevel: 0
   startPosition: {x: -35, y: -3, z: 0}
 --- !u!1 &4650786699909764950
 GameObject:

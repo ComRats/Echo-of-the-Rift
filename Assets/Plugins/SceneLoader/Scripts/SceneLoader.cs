@@ -91,6 +91,7 @@ public class SceneLoader : MonoBehaviour
 
     public async void LoadAsync(string _targetScene)
     {
+        transform.parent = null;
         DontDestroyOnLoad(gameObject);
 
         if (_targetScene == null)

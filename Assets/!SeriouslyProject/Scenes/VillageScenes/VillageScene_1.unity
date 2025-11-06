@@ -21008,8 +21008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 1011134993}
+  _monoInstallers: []
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -21054,8 +21053,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fa996c2232b8fb42864c136c5003781, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: -7914314194156218776, guid: 1f9ef87e639867048acda2b666965210, type: 3}
-  mainUI: {fileID: 5380684461530444215, guid: e23bbaaae50e37f41aaa380c10111b10, type: 3}
 --- !u!1 &1012759044
 GameObject:
   m_ObjectHideFlags: 0

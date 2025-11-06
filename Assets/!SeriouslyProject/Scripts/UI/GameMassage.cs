@@ -36,8 +36,7 @@ public static class GameMassage
 
     public static void WarningMassage(GameObject textPrefab, string massage, float duration, Color textColor)
     {
-        Canvas canvas = Object.FindObjectOfType<Canvas>();
-        GameObject textObj = Object.Instantiate(textPrefab, canvas.transform);
+        GameObject textObj = Object.Instantiate(textPrefab, FindCanvas().transform);
         textObj.name = "WarningMassage";
         textObj.transform.SetAsLastSibling();
 
@@ -73,8 +72,7 @@ public static class GameMassage
     {
         if (activeAlert != null) return;
 
-        var canvas = Object.FindObjectOfType<Canvas>();
-        activeAlert = Object.Instantiate(alertPrefab, canvas.transform);
+        activeAlert = Object.Instantiate(alertPrefab, FindCanvas().transform);
         activeAlert.name = "GameAlert";
         activeAlert.transform.SetAsLastSibling();
 
@@ -103,6 +101,19 @@ public static class GameMassage
 
         activeAlert.transform.localScale = Vector3.zero;
         activeAlert.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+    }
+
+    private static Canvas FindCanvas()
+    {
+        Canvas targetCanvas = null;
+        var canvases = Object.FindObjectsOfType<Canvas>(true);
+        foreach (var canvas in canvases)
+        {
+            if (!canvas.gameObject.activeInHierarchy) continue;
+            if (canvas.CompareTag("Main")) return canvas;
+            if (targetCanvas == null) targetCanvas = canvas;
+        }
+        return targetCanvas;
     }
 
     public static void CloseAlert()

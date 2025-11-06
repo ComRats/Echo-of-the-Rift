@@ -12522,6 +12522,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 1220888064643448117}
   playerUI: {fileID: 2469614738324408511}
+  inventoryTester: {fileID: 5148840519358986816}
+  canvas: {fileID: 8350040842568991320}
   canOpenUI: 1
 --- !u!1 &5479070883063013135
 GameObject:

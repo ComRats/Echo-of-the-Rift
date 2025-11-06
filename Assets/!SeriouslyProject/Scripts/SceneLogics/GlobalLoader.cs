@@ -1,5 +1,6 @@
 ﻿using FightSystem.Data;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
@@ -7,10 +8,14 @@ using Zenject;
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
+    [SerializeField] private List<SerializableScene> notShowScene;
+
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
 
     [Inject] private Player playerInstance;
+    [Inject] private MainUI mainUI;
+
     private Vector3? overridePosition = null;
     private bool isStart;
 
@@ -36,6 +41,30 @@ public class GlobalLoader : MonoBehaviour
 
         LoadGlobal();
         LoadPlayerData();
+
+    }
+
+    private void Show()
+    {
+        //foreach (var s in notShowScene)
+        //{
+        //    Debug.LogWarning("Текущая сцена: " + SceneManager.GetActiveScene().name);
+        //    Debug.LogWarning("Сцена: " + s.SceneName);
+        //    Debug.LogWarning("SceneManager.GetActiveScene().name != s.SceneName " + SceneManager.GetActiveScene().name == s.SceneName);
+
+        //    if (SceneManager.GetActiveScene().name == s.SceneName)
+        //    {
+        playerInstance.Show();
+        mainUI.Show();
+        //}
+
+        //}
+    }
+
+    private void Hide()
+    {
+        playerInstance.Hide();
+        mainUI.Hide();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -64,6 +93,7 @@ public class GlobalLoader : MonoBehaviour
     {
         if (SaveLoadSystem.Exists("playerData"))
         {
+            //Debug.LogWarning(playerInstance);
             playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData");
         }
         else
@@ -148,7 +178,7 @@ public class GlobalLoader : MonoBehaviour
 
     public void InstantiateThisObject()
     {
-        Instantiate(gameObject);
+        Show();
     }
 
     private void OnDestroy()

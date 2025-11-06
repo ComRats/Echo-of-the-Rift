@@ -24,9 +24,9 @@ public class MainMenu : MonoBehaviour
     public void TryPlay()
     {
         if (SaveLoadSystem.Exists("globalSave"))
-            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", TryPlay, "Нет", GameMassage.CloseAlert, 1f, Color.black);
+            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", Play, "Нет", GameMassage.CloseAlert, 1f, Color.black);
         else
-            TryPlay();
+            Play();
     }
 
     private void Play()
@@ -59,4 +59,6 @@ public class MainMenu : MonoBehaviour
     {
         GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f, Color.black);
     }
+
+   
 }

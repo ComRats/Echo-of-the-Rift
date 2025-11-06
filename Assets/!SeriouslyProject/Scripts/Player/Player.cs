@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public SpriteRenderer spriteRenderer;
     public PressableButtons pressableButtons;
     public CameraSettings cameraSettings;
     public TestMovement movement;
@@ -10,6 +11,26 @@ public class Player : MonoBehaviour
 
     public static FightResult Result = FightResult.None;
     public Vector3 startPosition;
+
+    public void Hide()
+    {
+        Debug.LogWarning("Hide player");
+
+        spriteRenderer.enabled = false;
+        movement.enabled = false;
+        cameraSettings.enabled = false;
+        pressableButtons.enabled = false;
+    }
+
+    public void Show()
+    {
+        Debug.LogWarning("Show player");
+
+        spriteRenderer.enabled = true;
+        movement.enabled = true;
+        cameraSettings.enabled = true;
+        pressableButtons.enabled = true;
+    }
 
     [System.Serializable]
     public class PlayerSaver : IData
