@@ -1,4 +1,5 @@
-﻿using FightSystem.Character;
+﻿using EchoRift;
+using FightSystem.Character;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;

@@ -1,10 +1,10 @@
-using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Zenject;
 
 public class SceneLoader : MonoBehaviour
 {
@@ -15,9 +15,9 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] bool _useSceneManager = false;
 
     [Header("Events")]
-    [SerializeField] UnityEvent _onSceneLoaded;
-    [SerializeField] UnityEvent _onSceneActivated;
-    [SerializeField] UnityEvent _onSceneUnloaded;
+    public UnityEvent _onSceneLoaded;
+    public UnityEvent _onSceneActivated;
+    public UnityEvent _onSceneUnloaded;
 
     private const string LoadingScene = "LoadingScene";
     private AsyncOperation _asyncLoadOperation;

@@ -1,3 +1,4 @@
+using EchoRift;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 

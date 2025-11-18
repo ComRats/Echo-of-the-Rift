@@ -319,8 +319,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.9}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 15, y: -46}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 7.0699973, y: -18.300001}
+  m_SizeDelta: {x: 100, y: 155.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &198288129
 MonoBehaviour:
@@ -335,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.56078434}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1714,6 +1714,8 @@ GameObject:
   - component: {fileID: 681012208}
   - component: {fileID: 681012211}
   - component: {fileID: 681012209}
+  - component: {fileID: 681012212}
+  - component: {fileID: 681012213}
   m_Layer: 5
   m_Name: NextScene
   m_TagString: Untagged
@@ -1807,6 +1809,48 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 681012207}
   m_CullTransparentMesh: 1
+--- !u!114 &681012212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681012207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd365665b7127cd4f976e9a586967674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializableScene:
+    Scene: {fileID: 102900000, guid: a528bf3a65804084b8df8f26577f7eff, type: 3}
+    SceneName: VillageScene_1
+    _sceneIndexInBuildSettings: 6
+    _isSceneEnabledInBuildSettings: 1
+  _loadingSpeed: 0.5
+  _preloadOnStart: 0
+  _loadSceneMode: 0
+  _useSceneManager: 0
+  _onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneUnloaded:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &681012213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 681012207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8e5e0369ba6e24e98fdf81f63eafe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &688426329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3806,6 +3850,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612922b59cc0faa4498473307bf733eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextSceneLoader: {fileID: 681012212}
   points: {fileID: 76523502}
   descriptionStats: {fileID: 870794089}
   sceneName: PlayerCreating

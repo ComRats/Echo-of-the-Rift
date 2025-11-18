@@ -1,3 +1,4 @@
+using EchoRift;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -82,12 +83,12 @@ public class PauseMenu : MonoBehaviour
 
     private void ResetValues()
     {
-        GameTimer.PauseGame();
+        PauseGame();
         pauseMenu.SetActive(false);
-
-        _playerInstance.movement.canMove = false;
-        _mainUIInstance.canOpenUI = false;
-        _mainUIInstance.gameObject.SetActive(false);
+        GlobalLoader.Instance.Hide();
+        //_playerInstance.movement.canMove = false;
+        //_mainUIInstance.canOpenUI = false;
+        //_mainUIInstance.gameObject.SetActive(false);
     }
 
     public void PauseGame()

@@ -1,3 +1,4 @@
+using EchoRift;
 using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine;

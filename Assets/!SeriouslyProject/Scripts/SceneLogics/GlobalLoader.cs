@@ -1,4 +1,5 @@
-﻿using FightSystem.Data;
+﻿using EchoRift;
+using FightSystem.Data;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class GlobalLoader : MonoBehaviour
 
     }
 
-    private void Show()
+    public void Show()
     {
         //foreach (var s in notShowScene)
         //{
@@ -61,7 +62,7 @@ public class GlobalLoader : MonoBehaviour
         //}
     }
 
-    private void Hide()
+    public void Hide()
     {
         playerInstance.Hide();
         mainUI.Hide();
@@ -152,6 +153,7 @@ public class GlobalLoader : MonoBehaviour
             selectedTongueIndex = selectedTongueIndex,
             sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
+        Debug.LogError(data.sceneIndex);
         SaveLoadSystem.Save("globalSave", data);
     }
 
@@ -176,17 +178,12 @@ public class GlobalLoader : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    public void InstantiateThisObject()
-    {
-        Show();
-    }
-
-    private void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-        SavePlayer();
-        SaveGlobal();
-    }
+    //private void OnDestroy()
+    //{
+    //    SceneManager.sceneLoaded -= OnSceneLoaded;
+    //    SavePlayer();
+    //    SaveGlobal();
+    //}
 
     private void OnApplicationQuit()
     {

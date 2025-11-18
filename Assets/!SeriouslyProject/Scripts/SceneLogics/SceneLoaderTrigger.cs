@@ -1,3 +1,4 @@
+using EchoRift;
 using UnityEngine;
 
 [ExecuteAlways, RequireComponent(typeof(Collider2D))]

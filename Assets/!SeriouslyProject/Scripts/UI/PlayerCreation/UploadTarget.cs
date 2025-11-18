@@ -1,10 +1,12 @@
-﻿using TMPro;
+﻿using EchoRift;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 public class UploadTarget : MonoBehaviour
 {
+    [SerializeField] private SceneLoader nextSceneLoader;
     [SerializeField] private PointsManager points;
     [SerializeField] private TextMeshProUGUI descriptionStats;
     [SerializeField] private string sceneName;
@@ -38,16 +40,15 @@ public class UploadTarget : MonoBehaviour
             points.AddPointsToPlayer();
             descriptionStats.text = "Загрузка...";
 
-            SceneManager.LoadSceneAsync(nextScene).completed += _ =>
-            {
-                transform.SetParent(null);
+            transform.SetParent(null);
 
-                SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+            SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
 
-                RestoreValues();
+            RestoreValues();
 
-                TargetToPlayer();
-            };
+            TargetToPlayer();
+
+            nextSceneLoader.LoadAsync();            
         }
         else
         {

@@ -1,3 +1,4 @@
+using EchoRift;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
