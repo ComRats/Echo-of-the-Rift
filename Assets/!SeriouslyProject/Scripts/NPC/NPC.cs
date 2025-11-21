@@ -1,7 +1,7 @@
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
-public class NPS : MonoBehaviour, ITalkable
+public class NPC : MonoBehaviour, ITalkable
 {
     [SerializeField] private bool isTalkable;
     [SerializeField] private DialogueSystemTrigger DSTrigger;

@@ -4,7 +4,6 @@ using UnityEngine;
 public class SceneLoaderBridge : MonoBehaviour
 {
     private SceneLoader sceneLoader;
-    private GlobalLoader globalLoader;
 
     private void Awake()
     {
@@ -24,6 +23,6 @@ public class SceneLoaderBridge : MonoBehaviour
 
     private void HandleSceneActivated()
     {
-        FindObjectOfType<GlobalLoader>().Show();
+        GlobalLoader.Instance.Show();
     }
 }

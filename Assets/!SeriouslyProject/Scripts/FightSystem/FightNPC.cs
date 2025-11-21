@@ -18,7 +18,7 @@ public enum FightResult
     Escape
 }
 
-public class FightNPS : MonoBehaviour
+public class FightNPC : MonoBehaviour
 {
     [Header("Quest Settings")]
     [SerializeField] private QuestChange[] quests;

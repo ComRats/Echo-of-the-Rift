@@ -274,20 +274,20 @@ MonoBehaviour:
     characterData: {fileID: 11400000, guid: c5461b2378bdb37439cd5e504b5a0059, type: 2}
     name: 
     description: 
-    _damage: 0
-    _priority: 0
-    _maxMana: 0
-    _mana: 0
-    _maxHealth: 0
-    _health: 0
-    _heal: 0
-    _armor: 0
-    _lucky: 0
-    _creteChance: 0
-    _level: 0
-    _currentXP: 0
-    _maxXP: 0
-    _xpReward: 0
+    _damage: 3
+    _priority: 43
+    _maxMana: 5
+    _mana: 6
+    _maxHealth: 7
+    _health: 12
+    _heal: 1
+    _armor: 2
+    _lucky: 23
+    _creteChance: 23
+    _level: 1
+    _currentXP: 23
+    _maxXP: 70
+    _xpReward: 50
     damagePerLevel: 1
     maxHealthPerLevel: 1
     healPerLevel: 1
@@ -295,7 +295,7 @@ MonoBehaviour:
     maxManaPerLevel: 1
     xpRewardPerLevel: 1
     sprite: {fileID: 0}
-    spritePath: 
+    spritePath: "CharacterData/Sprites/\u041A\u0440i\u0431_Test"
 --- !u!114 &-7914314194156218776
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -14,9 +14,19 @@ public class CameraSettings : MonoBehaviour
     {
         CinemachineConfiner cam = GetComponent<CinemachineConfiner>();
 
+        if (cam == null)
+            cam = GetComponent<CinemachineConfiner>();
+
+        if (cam == null)
+        {
+            Debug.LogWarning("CinemachineConfiner не найден!");
+            return;
+        }
+
         GameObject borderObj = GameObject.FindGameObjectWithTag(colliderTag);
         if (borderObj == null)
         {
+            Debug.LogWarning("Объект с тегом " + colliderTag + " не найден!");
             return;
         }
 

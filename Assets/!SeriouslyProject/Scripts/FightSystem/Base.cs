@@ -196,12 +196,16 @@ public class Base : MonoBehaviour, IData
         {
             FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
 
-            Damage = data.DamagePerLevel * Level;
-            MaxHealth = data.MaxHealthPerLevel * Level;
-            Heal = data.HealPerLevel * Level;
-            Armor = data.ArmorPerLevel * Level;
-            MaxMana = data.MaxManaPerLevel * Level;
-            XpReward = data.XpRewardPerLevel * Level;
+            Level++;
+
+            CurrentXP -= MaxXP;
+            Damage += data.DamagePerLevel * Level;
+            MaxHealth += data.MaxHealthPerLevel * Level;
+            Heal += data.HealPerLevel * Level;
+            Armor += data.ArmorPerLevel * Level;
+            MaxMana += data.MaxManaPerLevel * Level;
+            XpReward += data.XpRewardPerLevel * Level;
+            MaxXP += data.MaxXP * Level;
 
             Health = MaxHealth;
             Mana = MaxMana;
@@ -209,6 +213,8 @@ public class Base : MonoBehaviour, IData
             UpdateUI();
             
             GlobalLoader.Instance.SavePlayer();
+
+            UpdateLevel();
         }
     }
 

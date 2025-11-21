@@ -71,11 +71,13 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-        playerInstance.cameraSettings.Initialize();
+
+        if (playerInstance.cameraSettings != null)
+            playerInstance.cameraSettings.Initialize();
+        else
+            Debug.LogWarning("CameraSettings не найден у Player!");
     }
 
-    // -----------------------
-    // Сохранение / загрузка игрока
     public void SavePlayer()
     {
         if (playerInstance == null) return;
@@ -144,8 +146,6 @@ public class GlobalLoader : MonoBehaviour
         playerInstance.transform.rotation = Quaternion.identity;
     }
 
-    // -----------------------
-    // Глобальные данные
     public void SaveGlobal()
     {
         var data = new GlobalData
@@ -153,7 +153,6 @@ public class GlobalLoader : MonoBehaviour
             selectedTongueIndex = selectedTongueIndex,
             sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
-        Debug.LogError(data.sceneIndex);
         SaveLoadSystem.Save("globalSave", data);
     }
 
@@ -164,8 +163,6 @@ public class GlobalLoader : MonoBehaviour
         isStart = data.isStart;
     }
 
-    // -----------------------
-    // Переход между сценами
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
         overridePosition = positionToLoad;
@@ -185,11 +182,13 @@ public class GlobalLoader : MonoBehaviour
     //    SaveGlobal();
     //}
 
+#if !UNITY_EDITOR
     private void OnApplicationQuit()
     {
         SavePlayer();
         SaveGlobal();
     }
+#endif
 
     [Serializable]
     private class PlayerData

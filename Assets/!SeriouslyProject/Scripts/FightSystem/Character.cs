@@ -43,34 +43,38 @@ namespace FightSystem.Character
                 }
                 else
                 {
-                    Debug.LogWarning($"Не найден CharacterData с именем {settings.characterDataName}");
+                    Debug.LogError($"Не найден CharacterData с именем {settings.characterDataName}");
                 }
             }
             else
             {
-                Name = characterData.Name;
-                Description = characterData.Description;
-                Damage = characterData.Damage;
-                Priority = characterData.Priority;
-                MaxMana = characterData.MaxMana;
-                Mana = characterData.Mana;
-                MaxHealth = characterData.MaxHealth;
-                Health = characterData.Health;
-                Heal = characterData.Heal;
-                Armor = characterData.Armor;
-                Lucky = characterData.Lucky;
-                CreteChance = characterData.CreteChance;
-                Level = characterData.Level;
-                CurrentXP = characterData.CurrentXP;
-                MaxXP = characterData.MaxXP;
-                XpReward = characterData.XpReward;
-                DamagePerLevel = characterData.DamagePerLevel;
-                MaxHealthPerLevel = characterData.MaxHealthPerLevel;
-                HealPerLevel = characterData.HealPerLevel;
-                ArmorPerLevel = characterData.ArmorPerLevel;
-                MaxManaPerLevel = characterData.MaxManaPerLevel;
-                XpRewardPerLevel = characterData.XpRewardPerLevel;
-                Sprite.sprite = characterData.Sprite;
+                CharacterData character = new();
+
+                character.Name = settings.Name;
+                character.Description = settings.Description;
+                character.Sprite = settings.GetSprite();
+                character.Damage = settings.Damage;
+                character.Priority = settings.Priority;
+                character.MaxMana = settings.MaxMana;
+                character.Mana = settings.Mana;
+                character.MaxHealth = settings.MaxHealth;
+                character.Health = settings.Health;
+                character.Heal = settings.Heal;
+                character.Armor = settings.Armor;
+                character.Lucky = settings.Lucky;
+                character.CreteChance = settings.CreteChance;
+                character.Level = settings.Level;
+                character.CurrentXP = settings.CurrentXP;
+                character.MaxXP = settings.MaxXP;
+                character.XpReward = settings.XpReward;
+                character.DamagePerLevel = settings.DamagePerLevel;
+                character.MaxHealthPerLevel = settings.MaxHealthPerLevel;
+                character.HealPerLevel = settings.HealPerLevel;
+                character.ArmorPerLevel = settings.ArmorPerLevel;
+                character.MaxManaPerLevel = settings.MaxManaPerLevel;
+                character.XpRewardPerLevel = settings.XpRewardPerLevel;
+
+                Initialize(character, gameObject);
             }
 
             // Обновление UI

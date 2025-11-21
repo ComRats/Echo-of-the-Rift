@@ -18,13 +18,13 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemyesSettings> enemies = new List<EnemyesSettings>();
 
-    private const string EnemySavePath = "enemies_data.json";
+    private const string EnemySavePath = "enemies_data";
 
     [Header("CharcterFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
 
-    private const string CharacterSavePath = "characters_data.json";
+    private const string CharacterSavePath = "characters_data";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -57,7 +57,7 @@ public class FightTrigger : MonoBehaviour
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
         SaveLoadSystem.Save(CharacterSavePath, data);
-        Debug.Log($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
+        Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 
     [Serializable]
@@ -74,6 +74,7 @@ public class EnemyesSettings
     [LabelWidth(200)]
     [LabelText("Использовать шаблон врага")]
     public bool useEnemyData = true;
+
     [Space(1)]
     [LabelWidth(200)]
     [LabelText("Имя шаблона врага (ресурсы)")]
@@ -85,32 +86,127 @@ public class EnemyesSettings
     public EnemyData enemyData;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public string _name;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private string name;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")][TextArea(3, 10)] public string _description;
+    [FoldoutGroup("Параметры вручную")]
+    [TextArea(3, 10)]
+    [SerializeField] private string description;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _damage;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _damage;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _priority;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _priority;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _maxMana;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _maxMana;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _mana;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _mana;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _maxHealth;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _maxHealth;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _health;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _health;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _heal;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _heal;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _armor;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _armor;
+
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")] public int _xpReward;
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _lucky;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _creteChance;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _level;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _currentXP;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _maxXP;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _xpReward;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int damagePerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int maxHealthPerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int healPerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int armorPerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int maxManaPerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int xpRewardPerLevel = 1;
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
+    [LabelText("Спрайт врага")]
+    [SerializeField] private Sprite sprite;
 
     [HideIf("useEnemyData")]
     [FoldoutGroup("Параметры вручную")]
     [LabelText("Путь до спрайта (Resources)")]
     public string spritePath;
+
+    public string Name { get => name; set => name = value; }
+    public string Description { get => description; set => description = value; }
+    public Sprite Sprite { get => sprite; set => sprite = value; }
+    public int Damage { get => _damage; set => _damage = value; }
+    public int Priority { get => _priority; set => _priority = value; }
+    public int MaxMana { get => _maxMana; set => _maxMana = value; }
+    public int Mana { get => _mana; set => _mana = value; }
+    public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
+    public int Health { get => _health; set => _health = value; }
+    public int Heal { get => _heal; set => _heal = value; }
+    public int Armor { get => _armor; set => _armor = value; }
+    public int Lucky { get => _lucky; set => _lucky = value; }
+    public int CreteChance { get => _creteChance; set => _creteChance = value; }
+    public int Level { get => _level; set => _level = value; }
+    public int CurrentXP { get => _currentXP; set => _currentXP = value; }
+    public int MaxXP { get => _maxXP; set => _maxXP = value; }
+    public int XpReward { get => _xpReward; set => _xpReward = value; }
+    public int DamagePerLevel { get => damagePerLevel; set => damagePerLevel = value; }
+    public int MaxHealthPerLevel { get => maxHealthPerLevel; set => maxHealthPerLevel = value; }
+    public int HealPerLevel { get => healPerLevel; set => healPerLevel = value; }
+    public int ArmorPerLevel { get => armorPerLevel; set => armorPerLevel = value; }
+    public int MaxManaPerLevel { get => maxManaPerLevel; set => maxManaPerLevel = value; }
+    public int XpRewardPerLevel { get => xpRewardPerLevel; set => xpRewardPerLevel = value; }
 
     public Sprite GetSprite()
     {
@@ -123,6 +219,6 @@ public class EnemyesSettings
         if (!useEnemyData || string.IsNullOrEmpty(enemyDataName))
             return null;
 
-        return Resources.Load<EnemyData>("EnemyData/"+enemyDataName);
+        return Resources.Load<EnemyData>("EnemyData/" + enemyDataName);
     }
 }

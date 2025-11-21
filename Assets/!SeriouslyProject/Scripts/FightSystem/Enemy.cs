@@ -49,23 +49,38 @@ namespace FightSystem.Enemy
                 }
                 else
                 {
-                    Debug.LogWarning($"Не найден EnemyData с именем {settings.enemyDataName}");
+                    Debug.LogError($"Не найден EnemyData с именем {settings.enemyDataName}");
                 }
             }
             else
             {
-                Name = gameObject.name = settings._name;
-                Sprite.sprite = settings.GetSprite();
-                Description = settings._description;
-                Damage = settings._damage;
-                MaxHealth = settings._maxHealth;
-                Health = settings._health;
-                MaxMana = settings._maxMana;
-                Mana = settings._mana;
-                Heal = settings._heal;
-                Priority = settings._priority;
-                XpReward = settings._xpReward;
+                EnemyData enemy = new();
 
+                enemy.Name = settings.Name;
+                enemy.Description = settings.Description;
+                enemy.Sprite = settings.GetSprite();
+                enemy.Damage = settings.Damage;
+                enemy.Priority = settings.Priority;
+                enemy.MaxMana = settings.MaxMana;
+                enemy.Mana = settings.Mana;
+                enemy.MaxHealth = settings.MaxHealth;
+                enemy.Health = settings.Health;
+                enemy.Heal = settings.Heal;
+                enemy.Armor = settings.Armor;
+                enemy.Lucky = settings.Lucky;
+                enemy.CreteChance = settings.CreteChance;
+                enemy.Level = settings.Level;
+                enemy.CurrentXP = settings.CurrentXP;
+                enemy.MaxXP = settings.MaxXP;
+                enemy.XpReward = settings.XpReward;
+                enemy.DamagePerLevel = settings.DamagePerLevel;
+                enemy.MaxHealthPerLevel = settings.MaxHealthPerLevel;
+                enemy.HealPerLevel = settings.HealPerLevel;
+                enemy.ArmorPerLevel = settings.ArmorPerLevel;
+                enemy.MaxManaPerLevel = settings.MaxManaPerLevel;
+                enemy.XpRewardPerLevel = settings.XpRewardPerLevel;
+
+                Initialize(enemy, gameObject);
             }
 
             // Обновление UI
