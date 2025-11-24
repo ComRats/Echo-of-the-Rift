@@ -1,31 +1,29 @@
 using UnityEngine;
 
 /// <summary>
-/// ScriptableObject представляющий предмет в системе инвентаря.
-/// Содержит базовую информацию, настройки стакирования и логику совместимости с экипировкой.
+/// ScriptableObject, представляющий предмет в инвентаре.
 /// </summary>
-[CreateAssetMenu(fileName = "New Item", menuName = "Inventory/Item")]
+[CreateAssetMenu(fileName = "Новый предмет", menuName = "Инвентарь/Предмет")]
 public class Item : ScriptableObject
 {
-    [Header("Basic Info")]
-    public int Id;
-    public string _itemName;
+    [Header("Основная информация")]
+    [SerializeField] private int _id;
+    [SerializeField] private string _itemName;
     [SerializeField] [TextArea(2, 4)] private string _description;
     [SerializeField] private Sprite _icon;
     
-    [Header("Stack Settings")]
+    [Header("Настройки стаков")]
     [SerializeField] private int _maxStackSize = 64;
     [SerializeField] private bool _isStackable = true;
     
-    [Header("Item Type")]
+    [Header("Тип предмета")]
     [SerializeField] private ItemType _itemType;
     [SerializeField] private ItemRarity _rarity = ItemRarity.Common;
     
-    [Header("Equipment Subtype")]
+    [Header("Подтип экипировки")]
     [SerializeField] private EquipmentSubtype _equipmentSubtype = EquipmentSubtype.None;
     
-    // Публичные свойства для контролируемого доступа к данным
-    public int ID => Id;
+    public int Id => _id;
     public string ItemName => _itemName;
     public string Description => _description;
     public Sprite Icon => _icon;
@@ -36,11 +34,8 @@ public class Item : ScriptableObject
     public EquipmentSubtype EquipmentSubtype => _equipmentSubtype;
     
     /// <summary>
-    /// Проверяет совместимость предмета с категорией слота экипировки.
-    /// Используется системой drag & drop для валидации размещения предметов.
+    /// Проверяет, совместим ли предмет с указанной категорией слота.
     /// </summary>
-    /// <param name="category">Категория слота экипировки</param>
-    /// <returns>True, если предмет можно разместить в слоте данной категории</returns>
     public bool IsCompatibleWithSlotCategory(EquipmentSlotCategory category)
     {
         switch (category)
@@ -74,34 +69,33 @@ public class Item : ScriptableObject
     }
     
     /// <summary>
-    /// Виртуальный метод использования предмета.
-    /// Переопределяется в наследниках для специфичного поведения.
+    /// Использовать предмет.
     /// </summary>
     public virtual void Use()
     {
-        Debug.Log($"Using {_itemName}");
+        Debug.Log($"Использован предмет: {_itemName}");
     }
     
     /// <summary>
-    /// Генерирует текст всплывающей подсказки для UI.
-    /// Включает название, описание и тип экипировки если применимо.
+    /// Генерирует текст для всплывающей подсказки.
     /// </summary>
-    /// <returns>Отформатированная строка для отображения в tooltip</returns>
     public virtual string GetTooltip()
     {
-        string tooltip = $"<b>{_itemName}</b>\n{_description}";
-        
-        // Добавляем информацию о типе экипировки
-        if (_equipmentSubtype != EquipmentSubtype.None)
+        var builder = new System.Text.StringBuilder();
+        builder.Append($"<b>{_itemName}</b>\n");
+        builder.Append($"<color=grey><i>{_rarity}</i></color>\n\n");
+        builder.Append($"{_description}\n\n");
+
+        if (_itemType == ItemType.Equipment || _itemType == ItemType.Weapon || _itemType == ItemType.Armor)
         {
-            tooltip += $"\n<i>Type: {GetEquipmentSubtypeDisplayName()}</i>";
+            builder.Append($"Type: {GetEquipmentSubtypeDisplayName()}\n");
         }
-        
-        return tooltip;
+
+        return builder.ToString();
     }
     
     /// <summary>
-    /// Возвращает локализованное название подтипа экипировки для отображения в UI
+    /// Возвращает отображаемое имя подтипа экипировки.
     /// </summary>
     public string GetEquipmentSubtypeDisplayName()
     {
@@ -126,49 +120,47 @@ public class Item : ScriptableObject
 }
 
 /// <summary>
-/// Основные категории предметов в игре
+/// Категории предметов.
 /// </summary>
 public enum ItemType
 {
-    Consumable,     // Расходуемые предметы (зелья, еда)
-    Equipment,      // Общая экипировка
-    Material,       // Материалы для крафта
-    Tool,          // Инструменты
-    Weapon,        // Оружие
-    Armor          // Броня и защитное снаряжение
+    Consumable,     // Расходуемый
+    Equipment,      // Экипировка
+    Material,       // Материал
+    Tool,           // Инструмент
+    Weapon,         // Оружие
+    Armor           // Броня
 }
 
 /// <summary>
-/// Уровни редкости предметов, влияющие на цвет отображения и ценность
+/// Редкость предмета.
 /// </summary>
 public enum ItemRarity
 {
-    Common,        // Обычные предметы (серый/белый)
-    Uncommon,      // Необычные предметы (зеленый)
-    Rare,          // Редкие предметы (синий)
-    Epic,          // Эпические предметы (фиолетовый)
-    Legendary      // Легендарные предметы (оранжевый)
+    Common,        // Обычный
+    Uncommon,      // Необычный
+    Rare,          // Редкий
+    Epic,          // Эпический
+    Legendary      // Легендарный
 }
 
 /// <summary>
-/// Подтипы экипировки для более точной категоризации слотов
+/// Подтипы экипировки.
 /// </summary>
 public enum EquipmentSubtype
 {
-    None,           // Для неэкипируемых предметов
+    None,           // Нет
     
-    // Подтипы брони
-    Helmet,         // Шлемы, шапки
-    ChestArmor,     // Нагрудники, рубашки
-    LegArmor,       // Штаны, поножи
-    Boots,          // Ботинки, сапоги
+    Helmet,         // Шлем
+    ChestArmor,     // Нагрудник
+    LegArmor,       // Поножи
+    Boots,          // Ботинки
     Gloves,         // Перчатки
     
-    // Подтипы экипировки
-    Shield,         // Щиты
-    Ring,           // Кольца
-    Amulet,         // Амулеты, ожерелья
-    Accessory,      // Прочие аксессуары
-    Belt,           // Пояса
-    Cloak           // Плащи, накидки
+    Shield,         // Щит
+    Ring,           // Кольцо
+    Amulet,         // Амулет
+    Accessory,      // Аксессуар
+    Belt,           // Пояс
+    Cloak           // Плащ
 }

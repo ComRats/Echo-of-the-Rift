@@ -1,29 +1,57 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
+/// <summary>
+/// Управляет набором членов команды в UI инвентаря.
+/// </summary>
 public class InventoryTeam : MonoBehaviour
 {
-    [SerializeField] private List<Member> members;
-    [SerializeField] private Member member;
+    [SerializeField] private GameObject _memberPrefab;
+    [SerializeField] private Transform _membersContainer;
+    
+    private readonly List<Member> _members = new List<Member>();
+    
+    /// <summary>
+    /// Возвращает список текущих членов команды только для чтения.
+    /// </summary>
+    public IReadOnlyList<Member> Members => _members;
 
-    private void Awake()
+    private DiContainer _container;
+
+    [Inject]
+    private void Construct(DiContainer container)
     {
-        if (members == null)
-            members = new List<Member>();
+        _container = container;
     }
 
     private void Start()
     {
-        AddMember();
+        // Пример: добавляем члена команды по умолчанию при старте
+        if (_memberPrefab != null && _membersContainer != null)
+        {
+            AddMember();
+        }
     }
 
-    private void AddMember()
+    /// <summary>
+    /// Создает нового члена команды из префаба и добавляет его в команду.
+    /// </summary>
+    public void AddMember()
     {
-        GameObject newMemberObj = Instantiate(member.gameObject, this.transform);
+        if (_memberPrefab == null) return;
 
-        Member currentMember = newMemberObj.GetComponent<Member>();
-        members.Add(currentMember);
+        var memberInstance = _container.InstantiatePrefab(_memberPrefab, _membersContainer);
+        var newMember = memberInstance.GetComponent<Member>();
 
+        if (newMember != null)
+        {
+            _members.Add(newMember);
+        }
+        else
+        {
+            Debug.LogError("[InventoryTeam] The instantiated member prefab does not have a 'Member' component.");
+            Destroy(memberInstance);
+        }
     }
-
 }

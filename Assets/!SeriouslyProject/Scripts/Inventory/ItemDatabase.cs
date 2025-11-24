@@ -1,42 +1,23 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// База данных всех предметов в игре
-/// Должна находиться в папке Resources для доступа через Resources.Load
+/// ScriptableObject, служащий центральной базой данных для всех предметов в игре.
 /// </summary>
-[CreateAssetMenu(fileName = "ItemDatabase", menuName = "Inventory/Item Database")]
+[CreateAssetMenu(fileName = "База данных предметов", menuName = "Инвентарь/База данных предметов")]
 public class ItemDatabase : ScriptableObject
 {
-    [SerializeField] private List<Item> _allItems = new List<Item>();
-    private Dictionary<int, Item> _itemLookup;
+    [SerializeField] private List<Item> _items = new List<Item>();
 
-    private static ItemDatabase _instance;
+    private Dictionary<int, Item> _itemLookup;
+    private Dictionary<ItemType, List<Item>> _itemsByType;
+    private Dictionary<ItemRarity, List<Item>> _itemsByRarity;
     
     /// <summary>
-    /// Singleton instance доступная из любого места
+    /// Возвращает список всех предметов только для чтения.
     /// </summary>
-    public static ItemDatabase Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = Resources.Load<ItemDatabase>("ItemDatabase");
-                if (_instance == null)
-                {
-                    Debug.LogError("ItemDatabase not found in Resources folder! " +
-                                 "Create it via: Assets → Create → Inventory → Item Database " +
-                                 "and place it in Resources folder.");
-                }
-                else
-                {
-                    _instance.Initialize();
-                }
-            }
-            return _instance;
-        }
-    }
+    public IReadOnlyList<Item> AllItems => _items;
 
     private void OnEnable()
     {
@@ -44,36 +25,49 @@ public class ItemDatabase : ScriptableObject
     }
 
     /// <summary>
-    /// Инициализирует словарь для быстрого поиска предметов по ID
+    /// Инициализирует базу данных, создавая словари для быстрого доступа.
     /// </summary>
-    private void Initialize()
+    public void Initialize()
     {
         _itemLookup = new Dictionary<int, Item>();
-        
-        foreach (var item in _allItems)
+        _itemsByType = new Dictionary<ItemType, List<Item>>();
+        _itemsByRarity = new Dictionary<ItemRarity, List<Item>>();
+
+        foreach (var item in _items)
         {
-            if (item != null)
+            if (item == null) continue;
+
+            // Initialize lookup by ID
+            if (_itemLookup.ContainsKey(item.Id))
             {
-                if (_itemLookup.ContainsKey(item.ID))
-                {
-                    Debug.LogWarning($"Duplicate item ID found: {item.ID} for item {item.ItemName}. " +
-                                   "This may cause issues with save/load system!");
-                }
-                else
-                {
-                    _itemLookup[item.ID] = item;
-                }
+                Debug.LogWarning($"[База данных] Найден дубликат ID '{item.Id}' для предмета '{item.ItemName}'.");
             }
+            else
+            {
+                _itemLookup[item.Id] = item;
+            }
+
+            // Initialize lookup by type
+            if (!_itemsByType.ContainsKey(item.ItemType))
+            {
+                _itemsByType[item.ItemType] = new List<Item>();
+            }
+            _itemsByType[item.ItemType].Add(item);
+
+            // Initialize lookup by rarity
+            if (!_itemsByRarity.ContainsKey(item.Rarity))
+            {
+                _itemsByRarity[item.Rarity] = new List<Item>();
+            }
+            _itemsByRarity[item.Rarity].Add(item);
         }
         
-        Debug.Log($"ItemDatabase initialized with {_itemLookup.Count} items");
+        Debug.Log($"[База данных] Инициализировано {_itemLookup.Count} уникальных предметов.");
     }
 
     /// <summary>
-    /// Получить предмет по ID
+    /// Получает предмет из базы данных по его ID.
     /// </summary>
-    /// <param name="id">Уникальный идентификатор предмета</param>
-    /// <returns>Предмет или null если не найден</returns>
     public Item GetItemById(int id)
     {
         if (_itemLookup == null)
@@ -85,313 +79,46 @@ public class ItemDatabase : ScriptableObject
         
         if (item == null)
         {
-            Debug.LogWarning($"Item with ID {id} not found in ItemDatabase!");
+            Debug.LogWarning($"[База данных] Предмет с ID {id} не найден!");
         }
         
         return item;
     }
 
     /// <summary>
-    /// Получить все предметы определенного типа
+    /// Получает все предметы указанного типа.
     /// </summary>
-    public List<Item> GetItemsByType(ItemType itemType)
+    public IReadOnlyList<Item> GetItemsByType(ItemType itemType)
     {
-        var result = new List<Item>();
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.ItemType == itemType)
-            {
-                result.Add(item);
-            }
-        }
-        return result;
+        if (_itemsByType == null) Initialize();
+        
+        return _itemsByType.TryGetValue(itemType, out var items) ? items : new List<Item>();
     }
 
     /// <summary>
-    /// Получить все предметы определенной редкости
+    /// Получает все предметы указанной редкости.
     /// </summary>
-    public List<Item> GetItemsByRarity(ItemRarity rarity)
+    public IReadOnlyList<Item> GetItemsByRarity(ItemRarity rarity)
     {
-        var result = new List<Item>();
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.Rarity == rarity)
-            {
-                result.Add(item);
-            }
-        }
-        return result;
-    }
+        if (_itemsByRarity == null) Initialize();
 
-    /// <summary>
-    /// Получить все предметы экипировки определенного подтипа
-    /// </summary>
-    public List<Item> GetItemsByEquipmentSubtype(EquipmentSubtype subtype)
-    {
-        var result = new List<Item>();
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.EquipmentSubtype == subtype)
-            {
-                result.Add(item);
-            }
-        }
-        return result;
-    }
-
-    /// <summary>
-    /// Проверить существование предмета по ID
-    /// </summary>
-    public bool HasItem(int id)
-    {
-        if (_itemLookup == null)
-        {
-            Initialize();
-        }
-        return _itemLookup.ContainsKey(id);
-    }
-
-    /// <summary>
-    /// Получить все предметы
-    /// </summary>
-    public List<Item> GetAllItems()
-    {
-        return new List<Item>(_allItems);
-    }
-
-    /// <summary>
-    /// Получить количество предметов в базе
-    /// </summary>
-    public int GetItemCount()
-    {
-        return _allItems.Count;
-    }
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// Добавить новый предмет в базу данных (только в редакторе)
-    /// </summary>
-    public void AddItem(Item item)
-    {
-        if (item == null)
-        {
-            Debug.LogWarning("Cannot add null item to database!");
-            return;
-        }
-        
-        if (_itemLookup != null && _itemLookup.ContainsKey(item.ID))
-        {
-            Debug.LogWarning($"Item with ID {item.ID} already exists in database!");
-            return;
-        }
-        
-        _allItems.Add(item);
-        
-        if (_itemLookup != null)
-        {
-            _itemLookup[item.ID] = item;
-        }
-        
-        UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Added item {item.ItemName} (ID: {item.ID}) to database");
-    }
-
-    /// <summary>
-    /// Удалить предмет из базы данных (только в редакторе)
-    /// </summary>
-    public void RemoveItem(Item item)
-    {
-        if (item == null) return;
-        
-        _allItems.Remove(item);
-        
-        if (_itemLookup != null && _itemLookup.ContainsKey(item.ID))
-        {
-            _itemLookup.Remove(item.ID);
-        }
-        
-        UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Removed item {item.ItemName} from database");
-    }
-
-    /// <summary>
-    /// Автоматически найти все предметы в проекте (только в редакторе)
-    /// </summary>
-    [ContextMenu("Auto-populate from project")]
-    public void AutoPopulateFromProject()
-    {
-        _allItems.Clear();
-        
-        string[] guids = UnityEditor.AssetDatabase.FindAssets("t:Item");
-        foreach (string guid in guids)
-        {
-            string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guid);
-            Item item = UnityEditor.AssetDatabase.LoadAssetAtPath<Item>(path);
-            if (item != null)
-            {
-                _allItems.Add(item);
-            }
-        }
-        
-        Initialize();
-        UnityEditor.EditorUtility.SetDirty(this);
-        Debug.Log($"Found and added {_allItems.Count} items to database");
+        return _itemsByRarity.TryGetValue(rarity, out var items) ? items : new List<Item>();
     }
     
     /// <summary>
-    /// Проверить на дублирующиеся ID
+    /// Получает все предметы, совместимые с указанным подтипом экипировки.
     /// </summary>
-    [ContextMenu("Check for duplicate IDs")]
-    public void CheckForDuplicateIDs()
+    public IEnumerable<Item> GetItemsByEquipmentSubtype(EquipmentSubtype subtype)
     {
-        var idSet = new HashSet<int>();
-        var duplicates = new List<Item>();
-        
-        foreach (var item in _allItems)
-        {
-            if (item != null)
-            {
-                if (idSet.Contains(item.ID))
-                {
-                    duplicates.Add(item);
-                }
-                else
-                {
-                    idSet.Add(item.ID);
-                }
-            }
-        }
-        
-        if (duplicates.Count > 0)
-        {
-            Debug.LogWarning($"Found {duplicates.Count} items with duplicate IDs:");
-            foreach (var item in duplicates)
-            {
-                Debug.LogWarning($"- {item.ItemName} (ID: {item.ID})");
-            }
-        }
-        else
-        {
-            Debug.Log("✓ No duplicate IDs found!");
-        }
+        return _items.Where(item => item != null && item.EquipmentSubtype == subtype);
     }
 
     /// <summary>
-    /// Проверить на пустые ID (ID = 0)
+    /// Проверяет, существует ли предмет с указанным ID.
     /// </summary>
-    [ContextMenu("Check for empty IDs")]
-    public void CheckForEmptyIDs()
+    public bool HasItem(int id)
     {
-        var emptyIdItems = new List<Item>();
-        
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.ID == 0)
-            {
-                emptyIdItems.Add(item);
-            }
-        }
-        
-        if (emptyIdItems.Count > 0)
-        {
-            Debug.LogWarning($"Found {emptyIdItems.Count} items with ID = 0:");
-            foreach (var item in emptyIdItems)
-            {
-                Debug.LogWarning($"- {item.ItemName}");
-            }
-        }
-        else
-        {
-            Debug.Log("✓ No items with empty IDs found!");
-        }
+        if (_itemLookup == null) Initialize();
+        return _itemLookup.ContainsKey(id);
     }
-
-    /// <summary>
-    /// Автоматически назначить уникальные ID всем предметам
-    /// </summary>
-    [ContextMenu("Auto-assign unique IDs")]
-    public void AutoAssignUniqueIDs()
-    {
-        int nextId = 1;
-        var usedIds = new HashSet<int>();
-        
-        // Собираем уже используемые ID
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.ID > 0)
-            {
-                usedIds.Add(item.ID);
-            }
-        }
-        
-        // Назначаем ID предметам, у которых их нет
-        foreach (var item in _allItems)
-        {
-            if (item != null && item.ID == 0)
-            {
-                // Находим первый свободный ID
-                while (usedIds.Contains(nextId))
-                {
-                    nextId++;
-                }
-                
-                // Используем SetEditorData для установки ID
-                var serializedObject = new UnityEditor.SerializedObject(item);
-                serializedObject.FindProperty("_id").intValue = nextId;
-                serializedObject.ApplyModifiedProperties();
-                
-                usedIds.Add(nextId);
-                Debug.Log($"Assigned ID {nextId} to {item.ItemName}");
-                nextId++;
-            }
-        }
-        
-        Initialize();
-        UnityEditor.EditorUtility.SetDirty(this);
-        UnityEditor.AssetDatabase.SaveAssets();
-        Debug.Log("✓ Unique IDs assigned successfully!");
-    }
-
-    /// <summary>
-    /// Показать статистику базы данных
-    /// </summary>
-    [ContextMenu("Show Database Statistics")]
-    public void ShowStatistics()
-    {
-        if (_allItems.Count == 0)
-        {
-            Debug.Log("Database is empty!");
-            return;
-        }
-        
-        var typeCount = new Dictionary<ItemType, int>();
-        var rarityCount = new Dictionary<ItemRarity, int>();
-        
-        foreach (var item in _allItems)
-        {
-            if (item == null) continue;
-            
-            if (!typeCount.ContainsKey(item.ItemType))
-                typeCount[item.ItemType] = 0;
-            typeCount[item.ItemType]++;
-            
-            if (!rarityCount.ContainsKey(item.Rarity))
-                rarityCount[item.Rarity] = 0;
-            rarityCount[item.Rarity]++;
-        }
-        
-        Debug.Log("=== Item Database Statistics ===");
-        Debug.Log($"Total items: {_allItems.Count}");
-        Debug.Log("\nBy Type:");
-        foreach (var kvp in typeCount)
-        {
-            Debug.Log($"  {kvp.Key}: {kvp.Value}");
-        }
-        Debug.Log("\nBy Rarity:");
-        foreach (var kvp in rarityCount)
-        {
-            Debug.Log($"  {kvp.Key}: {kvp.Value}");
-        }
-    }
-#endif
 }
