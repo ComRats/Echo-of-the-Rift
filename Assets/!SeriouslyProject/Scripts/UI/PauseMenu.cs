@@ -6,7 +6,7 @@ using Zenject;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] private string sceneToLoadWhenExit;
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject pauseMenu;
@@ -77,7 +77,8 @@ public class PauseMenu : MonoBehaviour
 
             ResetValues();
 
-            GlobalLoader.Instance.LoadToScene(sceneToLoadWhenExit, new Vector3(255f, 255f, 0f));
+            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+            sceneLoader.LoadAsync();
         });
     }
 
@@ -85,7 +86,6 @@ public class PauseMenu : MonoBehaviour
     {
         PauseGame();
         pauseMenu.SetActive(false);
-        GlobalLoader.Instance.Hide();
         //_playerInstance.movement.canMove = false;
         //_mainUIInstance.canOpenUI = false;
         //_mainUIInstance.gameObject.SetActive(false);

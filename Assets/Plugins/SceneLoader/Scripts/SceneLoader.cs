@@ -13,11 +13,13 @@ public class SceneLoader : MonoBehaviour
     [SerializeField] bool _preloadOnStart;
     [SerializeField] LoadSceneMode _loadSceneMode = LoadSceneMode.Single;
     [SerializeField] bool _useSceneManager = false;
+    [SerializeField] bool _destroyOnLoad = true;
 
     [Header("Events")]
     public UnityEvent _onSceneLoaded;
     public UnityEvent _onSceneActivated;
     public UnityEvent _onSceneUnloaded;
+    public UnityEvent _onLoadingSceneLoad;
 
     private const string LoadingScene = "LoadingScene";
     private AsyncOperation _asyncLoadOperation;
@@ -123,6 +125,8 @@ public class SceneLoader : MonoBehaviour
         while (!loadingOp.isDone)
             yield return null;
 
+        _onLoadingSceneLoad?.Invoke();
+
         if (loadingSlider == null)
             loadingSlider = FindObjectOfType<Slider>();
 
@@ -137,7 +141,7 @@ public class SceneLoader : MonoBehaviour
         {
             fakeProgress = Mathf.MoveTowards(fakeProgress, _asyncLoadOperation.progress, _loadingSpeed * Time.unscaledDeltaTime);
 
-                loadingSlider.value = fakeProgress;
+            loadingSlider.value = fakeProgress;
 
             yield return null;
         }
@@ -167,7 +171,8 @@ public class SceneLoader : MonoBehaviour
         _onSceneLoaded?.Invoke();
         _asyncLoadOperation = null;
 
-        Destroy(gameObject);
+        if (_destroyOnLoad)
+            Destroy(gameObject);
     }
 
     public async void PreLoadAsync()

@@ -51,4 +51,9 @@ public class TestMovement : MonoBehaviour, ISceneLoader
     {
         rigidbody.constraints = RigidbodyConstraints2D.None;
     }
+
+    public void SetPlayerPosition(Vector3 nextPos)
+    {
+        gameObject.transform.position = nextPos;
+    }
 }

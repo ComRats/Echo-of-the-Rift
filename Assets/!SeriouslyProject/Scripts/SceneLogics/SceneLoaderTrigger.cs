@@ -4,14 +4,16 @@ using UnityEngine;
 [ExecuteAlways, RequireComponent(typeof(Collider2D))]
 public class SceneLoaderTrigger : MonoBehaviour, IColliderDebugDrawable2D
 {
-    [SerializeField] string nextSceneToLoad;
-    [SerializeField] Vector3 nextPositionToLoad;
+    [SerializeField] private Vector3 nextScenePosition;
+    [SerializeField] private SceneLoader sceneLoader;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out var sceneLoader))
+        if (collision.TryGetComponent<Player>(out var player))
         {
-            GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
+            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+            sceneLoader._onSceneActivated.AddListener(() => player.movement.SetPlayerPosition(nextScenePosition));
+            sceneLoader.LoadAsync();
         }
     }
 

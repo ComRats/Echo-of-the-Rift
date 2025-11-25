@@ -2667,6 +2667,86 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: -3888481672020999207, guid: ef49137e830e4eb439469b424644e93a, type: 3}
   m_PrefabInstance: {fileID: 1876637957}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &123303392
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 123303393}
+  - component: {fileID: 123303395}
+  - component: {fileID: 123303394}
+  m_Layer: 0
+  m_Name: FightSceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &123303393
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123303392}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491519932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &123303394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123303392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8e5e0369ba6e24e98fdf81f63eafe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isShow: 0
+  isHide: 1
+--- !u!114 &123303395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123303392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd365665b7127cd4f976e9a586967674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializableScene:
+    Scene: {fileID: 102900000, guid: 27c91897e6b225b4b89a430d6f14a966, type: 3}
+    SceneName: TestScene
+    _sceneIndexInBuildSettings: 2
+    _isSceneEnabledInBuildSettings: 1
+  _loadingSpeed: 0.5
+  _preloadOnStart: 0
+  _loadSceneMode: 0
+  _useSceneManager: 0
+  _onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneUnloaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onLoadingSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &124252568
 GameObject:
   m_ObjectHideFlags: 0
@@ -6723,13 +6803,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c872a3338425429256d1ae9799e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneToLoad: TestScene
-  nextPositionToLoad: {x: 100, y: 100, z: 0}
+  sceneLoader: {fileID: 123303395}
   enemies:
   - useEnemyData: 0
     enemyDataName: Bull
     enemyData: {fileID: 11400000, guid: 01c47300ae9f96349b99023f0fd58728, type: 2}
-    name: 
+    name: Bull
     description: 
     _damage: 3
     _priority: 5
@@ -8697,7 +8776,7 @@ GameObject:
   - component: {fileID: 453355856}
   - component: {fileID: 453355855}
   m_Layer: 0
-  m_Name: Trigger
+  m_Name: TriggerToVillageScene_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8730,8 +8809,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27eb7953035b744e8d86a6c81339e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneToLoad: VillageScene_1
-  nextPositionToLoad: {x: -40, y: -4.5, z: 0}
+  nextScenePosition: {x: -41, y: -4.25, z: 0}
+  sceneLoader: {fileID: 952196481}
 --- !u!61 &453355856
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9602,6 +9681,39 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &491519931
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 491519932}
+  m_Layer: 0
+  m_Name: SceneLoaders
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &491519932
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 491519931}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 123303393}
+  - {fileID: 952196479}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &500640067
 GameObject:
   m_ObjectHideFlags: 0
@@ -17509,6 +17621,86 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &952196478
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 952196479}
+  - component: {fileID: 952196481}
+  - component: {fileID: 952196480}
+  m_Layer: 0
+  m_Name: VillageScene_1Loader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &952196479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952196478}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 491519932}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &952196480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952196478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8e5e0369ba6e24e98fdf81f63eafe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isShow: 1
+  isHide: 0
+--- !u!114 &952196481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 952196478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd365665b7127cd4f976e9a586967674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializableScene:
+    Scene: {fileID: 102900000, guid: a528bf3a65804084b8df8f26577f7eff, type: 3}
+    SceneName: VillageScene_1
+    _sceneIndexInBuildSettings: 6
+    _isSceneEnabledInBuildSettings: 1
+  _loadingSpeed: 0.5
+  _preloadOnStart: 0
+  _loadSceneMode: 0
+  _useSceneManager: 0
+  _onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneUnloaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onLoadingSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &953207283
 GameObject:
   m_ObjectHideFlags: 0
@@ -32210,11 +32402,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3775381742513332411, guid: adee99153c0d85244983b65cecff41f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 30.47
+      value: 30.6
       objectReference: {fileID: 0}
     - target: {fileID: 3775381742513332411, guid: adee99153c0d85244983b65cecff41f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.0065
+      value: 11.27
       objectReference: {fileID: 0}
     - target: {fileID: 3775381742513332411, guid: adee99153c0d85244983b65cecff41f5, type: 3}
       propertyPath: m_LocalPosition.z
@@ -32251,6 +32443,10 @@ PrefabInstance:
     - target: {fileID: 6914706331971320673, guid: adee99153c0d85244983b65cecff41f5, type: 3}
       propertyPath: m_FlipX
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6914706331971320673, guid: adee99153c0d85244983b65cecff41f5, type: 3}
+      propertyPath: m_SpriteSortPoint
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -35459,37 +35655,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &1968731847
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1968731848}
-  m_Layer: 0
-  m_Name: QuestSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1968731848
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1968731847}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -6.4, y: 3.52, z: 0.20902574}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1975685600
 GameObject:
   m_ObjectHideFlags: 0
@@ -35650,15 +35815,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514789528182437103, guid: 51cab785fa7b1024394d1a56c434a53f, type: 3}
       propertyPath: m_SortingLayer
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 2514789528182437103, guid: 51cab785fa7b1024394d1a56c434a53f, type: 3}
-      propertyPath: m_SortingOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2514789528182437103, guid: 51cab785fa7b1024394d1a56c434a53f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2514789528182437103, guid: 51cab785fa7b1024394d1a56c434a53f, type: 3}
       propertyPath: m_SortingLayerID
-      value: -423682559
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5293826005849632565, guid: 51cab785fa7b1024394d1a56c434a53f, type: 3}
       propertyPath: m_LocalScale.x
@@ -38991,6 +39156,6 @@ SceneRoots:
   - {fileID: 1230448926}
   - {fileID: 324813457802276373}
   - {fileID: 1821092290}
-  - {fileID: 1968731848}
+  - {fileID: 491519932}
   - {fileID: 1569256094}
   - {fileID: 560831612}

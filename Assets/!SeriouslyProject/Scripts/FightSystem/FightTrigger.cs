@@ -11,8 +11,8 @@ using EchoRift;
 public class FightTrigger : MonoBehaviour
 {
     [Header("OtherSettings")]
-    [SerializeField] private string nextSceneToLoad = "TestScene";
-    [SerializeField] private Vector3 nextPositionToLoad;
+    [SerializeField] private SceneLoader sceneLoader;
+    //[SerializeField] private Vector3 nextPositionToLoad;
 
     [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
@@ -31,7 +31,12 @@ public class FightTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out var player))
         {
             characters = collision.GetComponent<Team>().characters;
+
+            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+
             EnterTrigger();
+
+            sceneLoader.LoadAsync();
         }
     }
 
@@ -39,10 +44,6 @@ public class FightTrigger : MonoBehaviour
     {
         SaveEnemiesToFile();
         SaveCharactersToFile();
-
-        //Убирать UI и Игрока
-
-        GlobalLoader.Instance.LoadToScene(nextSceneToLoad, nextPositionToLoad);
     }
 
     [Button("Сохранить врагов в файл")]
