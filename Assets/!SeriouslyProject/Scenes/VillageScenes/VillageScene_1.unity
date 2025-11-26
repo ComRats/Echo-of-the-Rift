@@ -12842,7 +12842,7 @@ Transform:
   m_GameObject: {fileID: 626195360}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: -29.43, y: -3.66, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19232,7 +19232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a27eb7953035b744e8d86a6c81339e47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScenePosition: {x: -12, y: -4, z: 0}
+  nextScenePosition: {x: -13, y: -4, z: 0}
   sceneLoader: {fileID: 1775523291}
 --- !u!61 &927589902
 BoxCollider2D:
@@ -31387,7 +31387,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -30.9, y: 2.9159, z: 0.3984665}
-  m_LocalScale: {x: 0.3316, y: 0.33249533, z: 0.3316}
+  m_LocalScale: {x: 0.36383155, y: 0.3648139, z: 0.36383155}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 480574763}
@@ -34203,7 +34203,7 @@ GameObject:
   - component: {fileID: 1775523291}
   - component: {fileID: 1775523290}
   m_Layer: 0
-  m_Name: VillageScene_2
+  m_Name: VillageScene_2 Loader
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34238,6 +34238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isShow: 1
   isHide: 0
+  isCameraInit: 0
 --- !u!114 &1775523291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34259,6 +34260,7 @@ MonoBehaviour:
   _preloadOnStart: 0
   _loadSceneMode: 0
   _useSceneManager: 0
+  _destroyOnLoad: 1
   _onSceneLoaded:
     m_PersistentCalls:
       m_Calls: []
@@ -36250,6 +36252,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1720836046}
     m_Modifications:
+    - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7871556540511652807, guid: 0952ef55d54b0b742b5654663d866e2b, type: 3}
       propertyPath: m_Color.b
       value: 0.5529412

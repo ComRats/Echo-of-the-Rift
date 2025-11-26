@@ -1,4 +1,5 @@
 ﻿using Cinemachine;
+using EchoRift;
 using UnityEngine;
 
 public class CameraSettings : MonoBehaviour
@@ -24,6 +25,7 @@ public class CameraSettings : MonoBehaviour
         }
 
         GameObject borderObj = GameObject.FindGameObjectWithTag(colliderTag);
+
         if (borderObj == null)
         {
             //Debug.LogWarning("Объект с тегом " + colliderTag + " не найден!");

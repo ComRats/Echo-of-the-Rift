@@ -1,6 +1,5 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(SceneLoader))]
 public class SceneLoaderBridge : MonoBehaviour
@@ -17,7 +16,8 @@ public class SceneLoaderBridge : MonoBehaviour
     [OnValueChanged("SetHide")]
     [SerializeField] private bool isHide = false;
 
-    //[SerializeField] private UnityEvent actionBeforeNextScene;
+    [Header("CameraSettingsInitialize")]
+    [SerializeField] private bool isCameraInit = false;
 
     private SceneLoader sceneLoader;
 
@@ -33,6 +33,15 @@ public class SceneLoaderBridge : MonoBehaviour
             sceneLoader._onSceneActivated.AddListener(ShowOnHandleSceneActivated);
         else if (isHide)
             sceneLoader._onSceneActivated.AddListener(HideOnHandleSceneActivated);
+
+        if (isCameraInit)
+        {
+            Debug.LogWarning("Trying to Camera init");
+            sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
+        }
+
+        sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
+        sceneLoader._onSceneLoaded.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
     }
 
     private void OnDisable()
@@ -41,6 +50,12 @@ public class SceneLoaderBridge : MonoBehaviour
             sceneLoader._onSceneActivated.RemoveListener(ShowOnHandleSceneActivated);
         else if (isHide)
             sceneLoader._onSceneActivated.RemoveListener(HideOnHandleSceneActivated);
+
+        if (isCameraInit)
+            sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.CameraSettingsInitialize);
+
+        sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
+        sceneLoader._onSceneLoaded.RemoveListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
     }
 
     private void ShowOnHandleSceneActivated()

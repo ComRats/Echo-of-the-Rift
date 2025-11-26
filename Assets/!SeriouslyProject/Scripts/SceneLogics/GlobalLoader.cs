@@ -14,8 +14,8 @@ public class GlobalLoader : MonoBehaviour
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
 
-    [Inject] private Player playerInstance;
-    [Inject] private MainUI mainUI;
+    [Inject] public Player playerInstance;
+    [Inject] public MainUI mainUI;
 
     private Vector3? overridePosition = null;
     private bool isStart;
@@ -72,11 +72,9 @@ public class GlobalLoader : MonoBehaviour
     {
         LoadPlayer();
 
-        if (playerInstance.cameraSettings != null)
-            playerInstance.cameraSettings.Initialize();
-        else
-            Debug.LogWarning("CameraSettings не найден у Player!");
+        CameraSettingsInitialize();
     }
+
 
     public void SavePlayer()
     {
@@ -189,6 +187,12 @@ public class GlobalLoader : MonoBehaviour
         SaveGlobal();
     }
 #endif
+
+    public void CameraSettingsInitialize()
+    {
+        if (playerInstance.cameraSettings != null)
+            playerInstance.cameraSettings.Initialize();
+    }
 
     [Serializable]
     private class PlayerData

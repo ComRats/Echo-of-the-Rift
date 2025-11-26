@@ -6,6 +6,7 @@ public class MainUI : MonoBehaviour
     public PlayerUI playerUI;
     public InventoryTester inventoryTester;
     public Canvas canvas;
+    public ScreenFader screenFader;
 
     public bool canOpenUI = true;
 
