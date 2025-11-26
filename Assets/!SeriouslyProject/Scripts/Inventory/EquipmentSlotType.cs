@@ -1,34 +1,38 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Определяет тип и ограничения для слота экипировки.
+/// </summary>
 public class EquipmentSlotType : MonoBehaviour
 {
-    [Header("Slot Configuration")]
+    [Header("Настройки слота")]
     [SerializeField] private EquipmentSlotCategory _slotType = EquipmentSlotCategory.Any;
-    [SerializeField] private string _slotName = "Equipment Slot";
+    [SerializeField] private string _slotName = "Слот экипировки";
     [SerializeField] private Sprite _slotIcon; // Иконка-подсказка для пустого слота
-    
-    [Header("Visual Settings")]
-    [SerializeField] private Image _backgroundHint; // Фоновая иконка для пустого слота
+
+    [Header("Визуальные настройки")]
+    [SerializeField] private Image _backgroundHint; // Иконка фона для пустого слота
     [SerializeField] private Color _slotColor = Color.white;
-    [SerializeField] private Color _validDropColor = new Color(0.8f, 1f, 0.8f, 0.5f); // Зеленоватый
-    [SerializeField] private Color _invalidDropColor = new Color(1f, 0.8f, 0.8f, 0.3f); // Красноватый
-    
+    [SerializeField] private Color _validDropColor = new Color(0.8f, 1f, 0.8f, 0.5f);
+    [SerializeField] private Color _invalidDropColor = new Color(1f, 0.8f, 0.8f, 0.3f);
+
     private InventorySlotUI _slotUI;
     private Color _originalHintColor;
-    
+
     public EquipmentSlotCategory SlotType => _slotType;
     public string SlotName => _slotName;
-    
+
     private void Awake()
     {
         _slotUI = GetComponent<InventorySlotUI>();
+        if (_slotUI == null) Debug.LogWarning($"[EquipmentSlotType] InventorySlotUI not found on {gameObject.name}");
+        
         SetupSlotAppearance();
     }
-    
+
     private void SetupSlotAppearance()
     {
-        // Устанавливаем фоновую иконку для подсказки
         if (_backgroundHint != null && _slotIcon != null)
         {
             _backgroundHint.sprite = _slotIcon;
@@ -36,116 +40,31 @@ public class EquipmentSlotType : MonoBehaviour
             _backgroundHint.color = _originalHintColor;
         }
     }
-    
-    // Проверяет, может ли данный предмет быть экипирован в этот слот
-   public bool CanEquipItem(Item item)
+
+    /// <summary>
+    /// Проверяет, можно ли экипировать предмет в этот слот.
+    /// </summary>
+    public bool CanEquipItem(Item item)
     {
-        if (item == null) return false;
-        
-        // Проверяем общую совместимость типов
-        if (!IsItemEquippable(item)) return false;
-        
-        // Используем новый метод из класса Item для проверки совместимости
-        return item.IsCompatibleWithSlotCategory(_slotType);
-    }
-    
-    // Более гибкая проверка совместимости с конкретным типом слота
-    private bool CheckSpecificSlotCompatibility(Item item)
-    {
-        switch (_slotType)
+        if (item == null)
         {
-            case EquipmentSlotCategory.Helmet:
-                return IsHelmetItem(item);
-                        
-            case EquipmentSlotCategory.Chest:
-                return IsChestItem(item);
-                        
-            case EquipmentSlotCategory.Legs:
-                return IsLegsItem(item);
-                        
-            case EquipmentSlotCategory.Weapon:
-                return item.ItemType == ItemType.Weapon;
-                
-            case EquipmentSlotCategory.Shield:
-                return IsShieldItem(item);
-                       
-            case EquipmentSlotCategory.Accessory:
-                return IsAccessoryItem(item);
-                        
-            default:
-                return IsItemEquippable(item);
+            return false;
         }
-    }
-    
-    // Методы для проверки конкретных типов предметов
-    private bool IsHelmetItem(Item item)
-    {
-        if (item.ItemType != ItemType.Armor) return false;
+
+        // Логика совместимости делегируется самому предмету.
+        bool isCompatible = item.IsCompatibleWithSlotCategory(_slotType);
         
-        string itemName = item.ItemName.ToLower();
-        return itemName.Contains("helmet") || 
-               itemName.Contains("hat") ||
-               itemName.Contains("cap") ||
-               itemName.Contains("hood") ||
-               itemName.Contains("crown");
+        if (!isCompatible)
+        {
+            Debug.Log($"Предмет '{item.ItemName}' несовместим со слотом '{_slotName}'.");
+        }
+
+        return isCompatible;
     }
-    
-    private bool IsChestItem(Item item)
-    {
-        if (item.ItemType != ItemType.Armor) return false;
-        
-        string itemName = item.ItemName.ToLower();
-        return itemName.Contains("chest") || 
-               itemName.Contains("armor") ||
-               itemName.Contains("shirt") ||
-               itemName.Contains("tunic") ||
-               itemName.Contains("robe") ||
-               itemName.Contains("vest");
-    }
-    
-    private bool IsLegsItem(Item item)
-    {
-        if (item.ItemType != ItemType.Armor) return false;
-        
-        string itemName = item.ItemName.ToLower();
-        return itemName.Contains("legs") || 
-               itemName.Contains("pants") ||
-               itemName.Contains("boots") ||
-               itemName.Contains("shoes") ||
-               itemName.Contains("greaves") ||
-               itemName.Contains("trousers");
-    }
-    
-    private bool IsShieldItem(Item item)
-    {
-        if (item.ItemType != ItemType.Equipment) return false;
-        
-        string itemName = item.ItemName.ToLower();
-        return itemName.Contains("shield") ||
-               itemName.Contains("buckler");
-    }
-    
-    private bool IsAccessoryItem(Item item)
-    {
-        if (item.ItemType != ItemType.Equipment) return false;
-        
-        string itemName = item.ItemName.ToLower();
-        return itemName.Contains("ring") || 
-               itemName.Contains("amulet") ||
-               itemName.Contains("necklace") ||
-               itemName.Contains("pendant") ||
-               itemName.Contains("charm") ||
-               itemName.Contains("bracelet");
-    }
-    
-    private bool IsItemEquippable(Item item)
-    {
-        return item.ItemType == ItemType.Equipment || 
-               item.ItemType == ItemType.Weapon || 
-               item.ItemType == ItemType.Armor;
-    }
-    
-    // Показывает/скрывает фоновую подсказку
+
+    /// <summary>
+    /// Показывает или скрывает подсказку на фоне.
+    /// </summary>
     public void ShowSlotHint(bool show)
     {
         if (_backgroundHint != null)
@@ -153,90 +72,85 @@ public class EquipmentSlotType : MonoBehaviour
             _backgroundHint.gameObject.SetActive(show);
         }
     }
-    
-    // Улучшенный метод для подсветки совместимых слотов при перетаскивании
+
+    /// <summary>
+    /// Подсвечивает слот во время перетаскивания предмета.
+    /// </summary>
     public void HighlightForItem(Item item, bool highlight)
     {
         if (_backgroundHint == null) return;
-        
+
         if (!highlight)
         {
-            // Сбрасываем к исходному цвету
             _backgroundHint.color = _originalHintColor;
             return;
         }
         
-        // Определяем цвет подсветки на основе совместимости
         if (item != null && CanEquipItem(item))
         {
-            _backgroundHint.color = _validDropColor; // Зеленоватый для совместимых
-            Debug.Log($"Slot {_slotName} highlighted GREEN for {item.ItemName} - compatible");
+            _backgroundHint.color = _validDropColor;
         }
         else
         {
-            _backgroundHint.color = _invalidDropColor; // Красноватый для несовместимых
-            if (item != null)
-            {
-                Debug.Log($"Slot {_slotName} highlighted RED for {item.ItemName} - incompatible");
-            }
+            _backgroundHint.color = _invalidDropColor;
         }
     }
-    
-    // Метод для получения описания требований слота
+
+    /// <summary>
+    /// Возвращает описание требований слота.
+    /// </summary>
     public string GetSlotRequirements()
     {
         switch (_slotType)
         {
             case EquipmentSlotCategory.Any:
-                return "Accepts any equippable item";
+                return "Любой экипируемый предмет";
             case EquipmentSlotCategory.Helmet:
-                return "Accepts helmets, hats, and headgear";
+                return "Шлемы, шляпы и другие головные уборы";
             case EquipmentSlotCategory.Chest:
-                return "Accepts chest armor, shirts, and torso equipment";
+                return "Нагрудная броня, рубашки и другая экипировка для торса";
             case EquipmentSlotCategory.Legs:
-                return "Accepts leg armor, pants, boots, and footwear";
+                return "Ножная броня, штаны, ботинки и другая обувь";
             case EquipmentSlotCategory.Weapon:
-                return "Accepts weapons only";
+                return "Только оружие";
             case EquipmentSlotCategory.Shield:
-                return "Accepts shields and bucklers";
+                return "Щиты и баклеры";
             case EquipmentSlotCategory.Accessory:
-                return "Accepts rings, amulets, and accessories";
+                return "Кольца, амулеты и аксессуары";
             default:
-                return "Equipment slot";
+                return "Слот для экипировки";
         }
     }
-    
-    // Метод для отладки совместимости
+
+    /// <summary>
+    /// Отлаживает совместимость предмета со слотом.
+    /// </summary>
     [System.Diagnostics.Conditional("UNITY_EDITOR")]
     public void DebugCompatibility(Item item)
     {
         if (item == null)
         {
-            Debug.Log($"Slot {_slotName} ({_slotType}): No item to check");
+            Debug.Log($"[EquipmentSlot] Slot '{_slotName}' ({_slotType}): No item to check.");
             return;
         }
-        
-        bool generalCompatible = IsItemEquippable(item);
-        bool specificCompatible = CanEquipItem(item);
-        
-        Debug.Log($"=== COMPATIBILITY CHECK ===");
-        Debug.Log($"Slot: {_slotName} ({_slotType})");
-        Debug.Log($"Item: {item.ItemName} ({item.ItemType})");
-        Debug.Log($"General compatibility: {generalCompatible}");
-        Debug.Log($"Specific compatibility: {specificCompatible}");
-        Debug.Log($"Requirements: {GetSlotRequirements()}");
-        Debug.Log("============================");
+
+        bool isCompatible = CanEquipItem(item);
+
+        Debug.Log($"[EquipmentSlot] Compatibility for '{item.ItemName}' in slot '{_slotName}': {isCompatible}. Requirements: {GetSlotRequirements()}");
     }
 }
 
+/// <summary>
+/// Категории слотов для экипировки.
+/// </summary>
 [System.Serializable]
 public enum EquipmentSlotCategory
 {
-    Any,        // Любой экипируемый предмет
-    Helmet,     // Шлемы, шапки
-    Chest,      // Нагрудники, рубашки
-    Legs,       // Штаны, ботинки
+    Any,        // Любая экипировка
+    Helmet,     // Шлем
+    Chest,      // Нагрудник
+    Legs,       // Ноги
     Weapon,     // Оружие
-    Shield,     // Щиты
-    Accessory   // Кольца, амулеты
+    Shield,     // Щит
+    Accessory   // Аксессуар
 }

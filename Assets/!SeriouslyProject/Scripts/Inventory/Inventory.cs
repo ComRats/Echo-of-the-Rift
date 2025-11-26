@@ -1,31 +1,46 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.IO;
 
-
 /// <summary>
-/// Система инвентаря с обычными слотами и слотами экипировки
+/// Управляет инвентарем игрока, включая обычные слоты и слоты экипировки.
 /// </summary>
 public class Inventory : MonoBehaviour
 {
-    [Header("Inventory Settings")]
-    [SerializeField] private int _inventorySize = 36;         // обычные слоты для предметов
-    [SerializeField] private int _equipmentSize = 4;          // слоты экипировки (шлем, броня, оружие, ботинки)
+    [Header("Настройки инвентаря")]
+    [SerializeField] private int _inventorySize = 36;
+    [SerializeField] private int _equipmentSize = 4;
 
-    private InventorySlot[] _slots;           // массив обычных слотов
-    private InventorySlot[] _equipmentSlots;  // массив слотов экипировки
+    private InventorySlot[] _slots;           // Array of regular slots
+    private InventorySlot[] _equipmentSlots;  // Array of equipment slots
 
-    // События для уведомления UI об изменениях
+    /// <summary>
+    /// Вызывается при изменении содержимого слота. Параметр - индекс слота.
+    /// </summary>
     public event Action<int> OnSlotChanged;
+    /// <summary>
+    /// Вызывается при любом изменении в инвентаре.
+    /// </summary>
     public event Action OnInventoryChanged;
 
+    /// <summary>
+    /// Количество обычных слотов.
+    /// </summary>
     public int Size => _inventorySize;
+    /// <summary>
+    /// Количество слотов экипировки.
+    /// </summary>
     public int EquipmentSize => _equipmentSize;
 
-    public InventorySlot[] Slots => _slots;
-    public InventorySlot[] EquipmentSlots => _equipmentSlots;
+    /// <summary>
+    /// Доступ только для чтения к основным слотам инвентаря.
+    /// </summary>
+    public IReadOnlyList<InventorySlot> Slots => _slots;
+    /// <summary>
+    /// Доступ только для чтения к слотам экипировки.
+    /// </summary>
+    public IReadOnlyList<InventorySlot> EquipmentSlots => _equipmentSlots;
 
     private void Awake()
     {
@@ -33,25 +48,27 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Создает все слоты инвентаря при запуске
+    /// Создает все слоты инвентаря при запуске.
     /// </summary>
     private void InitializeInventory()
     {
-        // Создаем обычные слоты
         _slots = new InventorySlot[_inventorySize];
         for (int i = 0; i < _inventorySize; i++)
+        {
             _slots[i] = new InventorySlot();
+        }
 
-        // Создаем слоты экипировки
         _equipmentSlots = new InventorySlot[_equipmentSize];
         for (int i = 0; i < _equipmentSize; i++)
+        {
             _equipmentSlots[i] = new InventorySlot();
-
-        Debug.Log($"Inventory initialized with {_inventorySize} slots + {_equipmentSize} equipment slots");
+        }
+        
+        Debug.Log($"[Inventory] Initialized with {_inventorySize} regular slots and {_equipmentSize} equipment slots.");
     }
 
     /// <summary>
-    /// Получить обычный слот по индексу
+    /// Возвращает обычный слот инвентаря по индексу.
     /// </summary>
     public InventorySlot GetSlot(int index)
     {
@@ -64,7 +81,7 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Получить слот экипировки по индексу
+    /// Возвращает слот экипировки по индексу.
     /// </summary>
     public InventorySlot GetEquipmentSlot(int index)
     {
@@ -77,57 +94,73 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Добавляет предмет в инвентарь. Сначала пытается добавить в существующие стаки, затем в пустые слоты
+    /// Добавляет предмет в инвентарь.
     /// </summary>
     public bool AddItem(Item item, int quantity = 1)
     {
-        if (item == null || quantity <= 0) return false;
+        if (item == null || quantity <= 0)
+        {
+            Debug.LogWarning($"[Inventory] AddItem: Invalid item or quantity.");
+            return false;
+        }
+
         int remainingQuantity = quantity;
 
-        // Если предмет можно складывать в стаки, ищем существующие стаки
+        // First, try to stack with existing items.
         if (item.IsStackable)
         {
-            for (int i = 0; i < _inventorySize; i++)
+            foreach (var slot in _slots)
             {
-                if (!_slots[i].IsEmpty() && _slots[i].Item == item)
+                if (slot.CanAddItem(item))
                 {
-                    remainingQuantity = _slots[i].AddItem(item, remainingQuantity);
-                    NotifySlotChanged(i);
-                    if (remainingQuantity <= 0)
-                    {
-                        NotifyInventoryChanged();
-                        return true;
-                    }
+                    remainingQuantity = slot.AddItem(item, remainingQuantity);
+                    if (remainingQuantity <= 0) break;
                 }
             }
         }
-
-        // Если остались предметы, кладем в пустые слоты
-        for (int i = 0; i < _inventorySize; i++)
+        
+        // If items still remain, try to place them in empty slots.
+        if (remainingQuantity > 0)
         {
-            if (_slots[i].IsEmpty())
+            foreach (var slot in _slots)
             {
-                remainingQuantity = _slots[i].AddItem(item, remainingQuantity);
-                NotifySlotChanged(i);
-                if (remainingQuantity <= 0)
+                if (slot.IsEmpty())
                 {
-                    NotifyInventoryChanged();
-                    return true;
+                    remainingQuantity = slot.AddItem(item, remainingQuantity);
+                    if (remainingQuantity <= 0) break;
                 }
             }
         }
 
-        NotifyInventoryChanged();
-        return remainingQuantity < quantity; // вернет true, если хотя бы часть добавилась
+        bool itemsAdded = remainingQuantity < quantity;
+        if (itemsAdded)
+        {
+            Debug.Log($"[Inventory] Added {quantity - remainingQuantity} of '{item.ItemName}'.");
+            NotifyInventoryChanged();
+        }
+        else
+        {
+            Debug.LogWarning($"[Inventory] Failed to add '{item.ItemName}'. Inventory may be full.");
+        }
+
+        return itemsAdded;
     }
 
     /// <summary>
-    /// Экипирует предмет в указанный слот экипировки
+    /// Экипирует предмет в указанный слот.
     /// </summary>
     public bool EquipItem(int equipmentIndex, Item item)
     {
-        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
-        if (item == null) return false;
+        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize)
+        {
+            Debug.LogWarning($"[Inventory] EquipItem: Invalid equipment index: {equipmentIndex}");
+            return false;
+        }
+        if (item == null)
+        {
+            Debug.LogWarning("[Inventory] EquipItem: Item is null.");
+            return false;
+        }
 
         _equipmentSlots[equipmentIndex].Clear();
         _equipmentSlots[equipmentIndex].AddItem(item, 1);
@@ -137,25 +170,33 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Снимает экипировку и возвращает ее в обычный инвентарь
+    /// Снимает предмет со слота экипировки.
     /// </summary>
     public bool UnequipItem(int equipmentIndex)
     {
-        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize) return false;
+        if (equipmentIndex < 0 || equipmentIndex >= _equipmentSize)
+        {
+            Debug.LogWarning($"[Inventory] UnequipItem: Invalid equipment index: {equipmentIndex}");
+            return false;
+        }
 
         var slot = _equipmentSlots[equipmentIndex];
-        if (slot.IsEmpty()) return false;
+        if (slot.IsEmpty())
+        {
+            return false;
+        }
 
+        Debug.Log($"[Inventory] Unequipping '{slot.Item.ItemName}' from slot {equipmentIndex}.");
         Item item = slot.Item;
         slot.Clear();
 
-        AddItem(item, 1); // возвращаем предмет в инвентарь
+        AddItem(item, 1); // Return the item to inventory
         NotifyInventoryChanged();
         return true;
     }
 
     /// <summary>
-    /// Удаляет указанное количество предметов из конкретного слота
+    /// Удаляет указанное количество предметов из определенного слота.
     /// </summary>
     public bool RemoveItem(int slotIndex, int quantity = 1)
     {
@@ -175,7 +216,7 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Удаляет указанное количество определенного предмета из всего инвентаря
+    /// Удаляет указанное количество определенного предмета из всего инвентаря.
     /// </summary>
     public bool RemoveItem(Item item, int quantity = 1)
     {
@@ -199,16 +240,16 @@ public class Inventory : MonoBehaviour
         }
 
         NotifyInventoryChanged();
-        return remaining < quantity; // true, если хотя бы что-то удалили
+        return remaining < quantity; // True if at least some were removed
     }
 
     /// <summary>
-    /// Проверяет, есть ли в инвентаре нужное количество предмета
+    /// Проверяет, содержит ли инвентарь определенное количество предмета.
     /// </summary>
     public bool Contains(Item item, int quantity = 1) => CountItem(item) >= quantity;
 
     /// <summary>
-    /// Подсчитывает общее количество определенного предмета в инвентаре
+    /// Подсчитывает общее количество определенного предмета в инвентаре.
     /// </summary>
     public int CountItem(Item item)
     {
@@ -222,96 +263,106 @@ public class Inventory : MonoBehaviour
     }
 
     /// <summary>
-    /// Очищает весь инвентарь и экипировку
+    /// Очищает весь инвентарь.
     /// </summary>
     public void ClearInventory()
     {
-        // Очищаем обычные слоты
+        // Clear regular slots
         for (int i = 0; i < _inventorySize; i++)
         {
             _slots[i].Clear();
             NotifySlotChanged(i);
         }
 
-        // Очищаем слоты экипировки
+        // Clear equipment slots
         for (int i = 0; i < _equipmentSize; i++)
             _equipmentSlots[i].Clear();
 
         NotifyInventoryChanged();
     }
 
-    // Методы для уведомления подписчиков об изменениях
+    // Methods to notify subscribers of changes
     private void NotifySlotChanged(int slotIndex) => OnSlotChanged?.Invoke(slotIndex);
     private void NotifyInventoryChanged() => OnInventoryChanged?.Invoke();
 
     #region SAVE / LOAD
 
-    // Сохранение инвентаря
-    public void SaveInventory()
+    /// <summary>
+    /// Сохраняет текущее состояние инвентаря в файл.
+    /// </summary>
+    public void SaveInventory(string saveFileName)
     {
-        var data = new InventoryData
-        {
-            slots = new List<InventorySlotData>(),
-            equipmentSlots = new List<InventorySlotData>()
-        };
+        Debug.Log($"[Inventory] Saving inventory to '{saveFileName}'...");
+        var inventoryData = new InventoryData();
 
-        // обычные слоты
         foreach (var slot in _slots)
-            data.slots.Add(!slot.IsEmpty() ? new InventorySlotData { itemId = slot.Item.Id, quantity = slot.Quantity } : null);
+        {
+            inventoryData.slots.Add(slot.IsEmpty() ? null : new InventorySlotData(slot.Item.Id, slot.Quantity));
+        }
 
-        // слоты экипировки
         foreach (var slot in _equipmentSlots)
-            data.equipmentSlots.Add(!slot.IsEmpty() ? new InventorySlotData { itemId = slot.Item.Id, quantity = slot.Quantity } : null);
+        {
+            inventoryData.equipmentSlots.Add(slot.IsEmpty() ? null : new InventorySlotData(slot.Item.Id, slot.Quantity));
+        }
 
-        string fileName = $"inventorySave_{SceneManager.GetActiveScene().name}";
-        SaveLoadSystem.Save(fileName, data);
-
-        Debug.Log("Inventory saved!");
+        SaveLoadSystem.Save(saveFileName, inventoryData);
+        Debug.Log("[Inventory] Inventory saved successfully.");
     }
 
-    // Загрузка инвентаря
-    public void LoadInventory(ItemDatabase itemDatabase)
+    /// <summary>
+    /// Загружает состояние инвентаря из файла.
+    /// </summary>
+    public void LoadInventory(string saveFileName, ItemDatabase itemDatabase)
     {
-        string fileName = $"inventorySave_{SceneManager.GetActiveScene().name}";
-        var data = SaveLoadSystem.Load<InventoryData>(fileName);
-        if (data == null)
+        Debug.Log($"[Inventory] Loading inventory from '{saveFileName}'...");
+        var inventoryData = SaveLoadSystem.Load<InventoryData>(saveFileName);
+
+        if (inventoryData == null)
         {
-            Debug.LogWarning("No inventory save found!");
+            Debug.LogWarning($"[Inventory] No save file found named '{saveFileName}'. Initializing empty inventory.");
+            InitializeInventory(); // Ensure inventory is fresh if no data is loaded
             return;
         }
 
-        // загружаем обычные слоты
-        for (int i = 0; i < _slots.Length; i++)
+        // Load regular slots
+        for (int i = 0; i < _slots.Length && i < inventoryData.slots.Count; i++)
         {
             _slots[i].Clear();
-            if (i < data.slots.Count && data.slots[i] != null)
+            var slotData = inventoryData.slots[i];
+            if (slotData != null)
             {
-                Item item = itemDatabase.GetItemById(data.slots[i].itemId);
+                Item item = itemDatabase.GetItemById(slotData.itemId);
                 if (item != null)
-                    _slots[i].AddItem(item, data.slots[i].quantity);
+                {
+                    _slots[i].AddItem(item, slotData.quantity);
+                }
             }
         }
 
-        // загружаем слоты экипировки
-        for (int i = 0; i < _equipmentSlots.Length; i++)
+        // Load equipment slots
+        for (int i = 0; i < _equipmentSlots.Length && i < inventoryData.equipmentSlots.Count; i++)
         {
             _equipmentSlots[i].Clear();
-            if (i < data.equipmentSlots.Count && data.equipmentSlots[i] != null)
+            var slotData = inventoryData.equipmentSlots[i];
+            if (slotData != null)
             {
-                Item item = itemDatabase.GetItemById(data.equipmentSlots[i].itemId);
+                Item item = itemDatabase.GetItemById(slotData.itemId);
                 if (item != null)
-                    _equipmentSlots[i].AddItem(item, data.equipmentSlots[i].quantity);
+                {
+                    _equipmentSlots[i].AddItem(item, slotData.quantity);
+                }
             }
         }
 
-        Debug.Log("Inventory loaded!");
+        Debug.Log("[Inventory] Inventory loaded successfully.");
+        NotifyInventoryChanged();
     }
 
     [Serializable]
     private class InventoryData
     {
-        public List<InventorySlotData> slots;
-        public List<InventorySlotData> equipmentSlots;
+        public List<InventorySlotData> slots = new List<InventorySlotData>();
+        public List<InventorySlotData> equipmentSlots = new List<InventorySlotData>();
     }
 
     [Serializable]
@@ -319,9 +370,13 @@ public class Inventory : MonoBehaviour
     {
         public int itemId;
         public int quantity;
+
+        public InventorySlotData(int id, int qty)
+        {
+            itemId = id;
+            quantity = qty;
+        }
     }
 
     #endregion
-
-    
 }

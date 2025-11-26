@@ -1,59 +1,47 @@
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
+using System;
 
+/// <summary>
+/// Представляет члена команды, хранит его основные характеристики.
+/// </summary>
 public class Member : MonoBehaviour
 {
-    public int health;
-    public int xp;
-    public int level;
-    public int mana;
-    public int maxHealth;
-    public int maxMana;
+    [Header("Характеристики")]
+    [SerializeField] private int _health = 100;
+    [SerializeField] private int _mana = 50;
+    [SerializeField] private int _level = 1;
+    [SerializeField] private int _xp = 0;
 
+    [Header("Максимумы")]
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _maxMana = 50;
 
-    public Slider healthSlider;
-    public Slider manaSlider;
-    public Image icon;
-    public TextMeshProUGUI healthText;
-    public TextMeshProUGUI levelText;
-    public TextMeshProUGUI manaText;
+    public event Action OnStatsChanged;
 
-    public Member(int health, int xp, int level, int mana, int maxHealth, int maxMana, Slider healthSlider, Slider manaSlider, Image icon,
-    TextMeshProUGUI healthText, TextMeshProUGUI levelText, TextMeshProUGUI manaText)
+    public int Health => _health;
+    public int Mana => _mana;
+    public int Level => _level;
+    public int XP => _xp;
+    public int MaxHealth => _maxHealth;
+    public int MaxMana => _maxMana;
+
+    /// <summary>
+    /// Устанавливает здоровье члена команды в пределах от 0 до максимума.
+    /// </summary>
+    public void SetHealth(int value)
     {
-        this.health = health;
-        this.xp = xp;
-        this.level = level;
-        this.mana = mana;
-        this.maxHealth = maxHealth;
-        this.maxMana = maxMana;
-
-        this.healthSlider = healthSlider;
-        this.manaSlider = manaSlider;
-        this.icon = icon;
-        this.healthText = healthText;
-        this.levelText = levelText;
-        this.manaText = manaText;
-
-        UpdateUI();
+        _health = Mathf.Clamp(value, 0, _maxHealth);
+        OnStatsChanged?.Invoke();
     }
 
-    public void UpdateUI()
+    /// <summary>
+    /// Устанавливает ману члена команды в пределах от 0 до максимума.
+    /// </summary>
+    public void SetMana(int value)
     {
-        healthSlider.value = health;
-        manaSlider.value = mana;
-
-        healthSlider.maxValue = maxHealth;
-        manaSlider.maxValue = maxMana;
-
-        healthText.text = $"{health}/{maxHealth}";
-        manaText.text = $"{mana}/{maxMana}";
-        levelText.text = $"lvl {level}";
+        _mana = Mathf.Clamp(value, 0, _maxMana);
+        OnStatsChanged?.Invoke();
     }
     
-    private void OnValidate()
-    {
-        UpdateUI();
-    }
+    // Здесь можно добавить другие методы для изменения характеристик, например, AddXP, SetLevel и т.д.
 }
