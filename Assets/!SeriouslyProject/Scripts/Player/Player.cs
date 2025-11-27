@@ -16,7 +16,7 @@ namespace EchoRift
 
         public void Hide()
         {
-            Debug.LogWarning("Hide player");
+            //Debug.LogWarning("Hide player");
 
             spriteRenderer.enabled = false;
             movement.enabled = false;
@@ -26,7 +26,7 @@ namespace EchoRift
 
         public void Show()
         {
-            Debug.LogWarning("Show player");
+            //Debug.LogWarning("Show player");
 
             spriteRenderer.enabled = true;
             movement.enabled = true;

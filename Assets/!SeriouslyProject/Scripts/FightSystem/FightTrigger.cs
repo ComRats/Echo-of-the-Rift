@@ -16,7 +16,7 @@ public class FightTrigger : MonoBehaviour
 
     [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
-    [SerializeField] private List<EnemyesSettings> enemies = new List<EnemyesSettings>();
+    [SerializeField] private List<EnemiesSettings> enemies = new List<EnemiesSettings>();
 
     private const string EnemySavePath = "enemies_data";
 
@@ -69,7 +69,7 @@ public class FightTrigger : MonoBehaviour
 }
 
 [Serializable]
-public class EnemyesSettings
+public class EnemiesSettings : IData
 {
     [Space(1)]
     [LabelWidth(200)]

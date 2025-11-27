@@ -36,7 +36,7 @@ public class SceneLoaderBridge : MonoBehaviour
 
         if (isCameraInit)
         {
-            Debug.LogWarning("Trying to Camera init");
+            //Debug.LogWarning("Trying to Camera init");
             sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
         }
 

@@ -28,7 +28,8 @@ public class InventorySlotUI : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     
     private InventorySlot _assignedSlot;
     private int _slotIndex;
-    private bool _isSelected = false;
+    //Never used
+    //private bool _isSelected = false;
     private bool _isEquipmentSlot = false;
 
     public System.Action<int> OnSlotClicked;

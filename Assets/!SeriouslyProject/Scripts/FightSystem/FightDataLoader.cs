@@ -67,7 +67,7 @@ public class FightDataLoader : MonoBehaviour
 [System.Serializable]
 public class FightData
 {
-    public List<EnemyesSettings> enemies = new();
+    public List<EnemiesSettings> enemies = new();
 }
 
 [System.Serializable]

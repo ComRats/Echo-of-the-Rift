@@ -37,7 +37,7 @@ namespace FightSystem.Enemy
 
         }
 
-        public void InitializeFromSettings(EnemyesSettings settings)
+        public void InitializeFromSettings(EnemiesSettings settings)
         {
             if (settings.useEnemyData)
             {
