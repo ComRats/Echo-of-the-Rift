@@ -14,15 +14,8 @@ public class InventoryTester : MonoBehaviour
     [SerializeField] private KeyCode _addRandomItemKey = KeyCode.Q;
     [SerializeField] private KeyCode _clearInventoryKey = KeyCode.C;
 
-    private Inventory _inventory;
-    private InventoryUI _inventoryUI;
-
-    [Inject]
-    private void Construct(Inventory inventory, InventoryUI inventoryUI)
-    {
-        _inventory = inventory;
-        _inventoryUI = inventoryUI;
-    }
+    [SerializeField] private Inventory _inventory;
+    [SerializeField] private InventoryUI _inventoryUI;
 
     private void Start()
     {

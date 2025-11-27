@@ -5,6 +5,7 @@ public class MainUI : MonoBehaviour
     public PauseMenu pauseMenu;
     public PlayerUI playerUI;
     public InventoryTester inventoryTester;
+    public Inventory inventory;
     public Canvas canvas;
     public ScreenFader screenFader;
 

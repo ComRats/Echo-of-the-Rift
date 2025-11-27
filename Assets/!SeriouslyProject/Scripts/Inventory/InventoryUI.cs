@@ -21,7 +21,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private float _openAnimationDuration = 0.3f;
     [SerializeField] private float _closeAnimationDuration = 0.2f;
 
-    private Inventory _inventory;
+    [SerializeField] private Inventory inventory;
     private List<InventorySlotUI> _slotUIElements = new List<InventorySlotUI>();
     private List<InventorySlotUI> _equipmentSlotUIElements = new List<InventorySlotUI>();
     
@@ -33,12 +33,6 @@ public class InventoryUI : MonoBehaviour
     /// Открыто ли окно инвентаря.
     /// </summary>
     public bool IsOpen => _isOpen;
-
-    [Inject]
-    private void Construct(Inventory inventory)
-    {
-        _inventory = inventory;
-    }
 
     private void Awake()
     {
@@ -59,12 +53,12 @@ public class InventoryUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _inventory.OnInventoryChanged += RefreshAllSlots;
+        inventory.OnInventoryChanged += RefreshAllSlots;
     }
 
     private void OnDisable()
     {
-        _inventory.OnInventoryChanged -= RefreshAllSlots;
+        inventory.OnInventoryChanged -= RefreshAllSlots;
     }
 
     private void Start()
@@ -87,9 +81,9 @@ public class InventoryUI : MonoBehaviour
         if (_inventorySlotsParent == null) return;
         
         var preMadeSlots = _inventorySlotsParent.GetComponentsInChildren<InventorySlotUI>();
-        for (int i = 0; i < preMadeSlots.Length && i < _inventory.Size; i++)
+        for (int i = 0; i < preMadeSlots.Length && i < inventory.Size; i++)
         {
-            preMadeSlots[i].Initialize(i, _inventory.GetSlot(i), false);
+            preMadeSlots[i].Initialize(i, inventory.GetSlot(i), false);
             _slotUIElements.Add(preMadeSlots[i]);
         }
     }
@@ -99,9 +93,9 @@ public class InventoryUI : MonoBehaviour
         if (_equipmentSlotsParent == null) return;
 
         var preMadeSlots = _equipmentSlotsParent.GetComponentsInChildren<InventorySlotUI>();
-        for (int i = 0; i < preMadeSlots.Length && i < _inventory.EquipmentSize; i++)
+        for (int i = 0; i < preMadeSlots.Length && i < inventory.EquipmentSize; i++)
         {
-            preMadeSlots[i].Initialize(i, _inventory.GetEquipmentSlot(i), true);
+            preMadeSlots[i].Initialize(i, inventory.GetEquipmentSlot(i), true);
             _equipmentSlotUIElements.Add(preMadeSlots[i]);
         }
     }

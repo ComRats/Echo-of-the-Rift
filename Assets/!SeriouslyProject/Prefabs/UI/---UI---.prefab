@@ -9527,8 +9527,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86d7b08737581b4598cea194c535cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  members: []
-  member: {fileID: -675667588721681903, guid: 39806f81cc5f0e44694c7a6de462b0b2, type: 3}
+  _memberPrefab: {fileID: 0}
+  _membersContainer: {fileID: 0}
 --- !u!1 &4276741043020345224
 GameObject:
   m_ObjectHideFlags: 0
@@ -12638,6 +12638,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 1220888064643448117}
   playerUI: {fileID: 2469614738324408511}
   inventoryTester: {fileID: 5148840519358986816}
+  inventory: {fileID: 4544928127551711520}
   canvas: {fileID: 8350040842568991320}
   screenFader: {fileID: 3719960247391686594}
   canOpenUI: 1
@@ -16090,40 +16091,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _closeButton: {fileID: 0}
   _inventoryPanel: {fileID: 913231780073741287}
-  _inventorySlots:
-  - {fileID: 5991487517716657569}
-  - {fileID: 2200979199920249582}
-  - {fileID: 5782117863560071129}
-  - {fileID: 259414785699243423}
-  - {fileID: 3691149185393519906}
-  - {fileID: 4154396058564031360}
-  - {fileID: 121578162839075050}
-  - {fileID: 5808413880185126225}
-  - {fileID: 7931202864869616680}
-  - {fileID: 117465876945325661}
-  - {fileID: 4170674851031305365}
-  - {fileID: 2114216707737159838}
-  - {fileID: 6204618172496203648}
-  - {fileID: 5875979060858426660}
-  - {fileID: 7803439325793677890}
-  - {fileID: 4327654499560757568}
-  - {fileID: 7880539030162621261}
-  - {fileID: 1446265946563037425}
-  - {fileID: 2039253989814215858}
-  - {fileID: 3842896230548584276}
-  - {fileID: 992118104753690110}
-  - {fileID: 5299033641061700409}
-  - {fileID: 5057415632653273598}
-  - {fileID: 4904367950160002862}
-  _equipmentSlots:
-  - {fileID: 2590221572590249404}
-  - {fileID: 8155055949240755421}
-  - {fileID: 6844454866220004}
-  - {fileID: 8158954731819965061}
-  - {fileID: 3640836486643585544}
-  - {fileID: 4524544769894457241}
+  _inventorySlotsParent: {fileID: 0}
+  _equipmentSlotsParent: {fileID: 0}
   _openAnimationDuration: 0.3
   _closeAnimationDuration: 0.2
+  inventory: {fileID: 4544928127551711520}
 --- !u!1 &7153940959095467445
 GameObject:
   m_ObjectHideFlags: 0
@@ -20269,13 +20241,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5e0aa736c14b9144f91062c8857104e0, type: 2}
   - {fileID: 11400000, guid: 185a70344d6526a4f97607843bacce6c, type: 2}
   - {fileID: 11400000, guid: eb42bd66f73c45340a5a7b99c62401a3, type: 2}
-  _inventory: {fileID: 4544928127551711520}
-  _inventoryUI: {fileID: 4848245980129253275}
   _toggleInventoryKey: 0
   _addRandomItemKey: 113
   _clearInventoryKey: 99
-  _debugKey: 282
-  _pigKey: 106
+  _inventory: {fileID: 4544928127551711520}
+  _inventoryUI: {fileID: 4848245980129253275}
 --- !u!114 &6892952002544769126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20288,17 +20258,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5014ccc23423194d8002bef67cb068e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _addEquippableItemKey: 0
-  _addWeaponKey: 0
-  _addArmorKey: 0
+  _addEquippableItemKey: 101
+  _addWeaponKey: 119
+  _addArmorKey: 114
   _debugDragDropKey: 283
-  _testWeapons:
-  - {fileID: 11400000, guid: 185a70344d6526a4f97607843bacce6c, type: 2}
+  _testWeapons: []
   _testArmor: []
-  _testEquipment:
-  - {fileID: 11400000, guid: eb42bd66f73c45340a5a7b99c62401a3, type: 2}
-  _inventory: {fileID: 4544928127551711520}
-  _inventoryUI: {fileID: 4848245980129253275}
+  _testEquipment: []
+  inventory: {fileID: 4544928127551711520}
 --- !u!1 &8790197022366376731
 GameObject:
   m_ObjectHideFlags: 0

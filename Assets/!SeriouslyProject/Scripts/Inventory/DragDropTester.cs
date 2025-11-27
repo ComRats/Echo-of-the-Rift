@@ -17,15 +17,7 @@ public class DragDropTester : MonoBehaviour
     [SerializeField] private Item[] _testArmor;
     [SerializeField] private Item[] _testEquipment;
 
-    private Inventory _inventory;
-    private InventoryUI _inventoryUI;
-
-    [Inject]
-    private void Construct(Inventory inventory, InventoryUI inventoryUI)
-    {
-        _inventory = inventory;
-        _inventoryUI = inventoryUI;
-    }
+    [SerializeField] private Inventory inventory;
 
     private void Update()
     {
@@ -55,7 +47,7 @@ public class DragDropTester : MonoBehaviour
         if (_testEquipment == null || _testEquipment.Length == 0) return;
         
         Item randomEquipment = _testEquipment[Random.Range(0, _testEquipment.Length)];
-        _inventory.AddItem(randomEquipment, 1);
+        inventory.AddItem(randomEquipment, 1);
     }
     
     private void AddRandomWeapon()
@@ -63,7 +55,7 @@ public class DragDropTester : MonoBehaviour
         if (_testWeapons == null || _testWeapons.Length == 0) return;
         
         Item randomWeapon = _testWeapons[Random.Range(0, _testWeapons.Length)];
-        _inventory.AddItem(randomWeapon, 1);
+        inventory.AddItem(randomWeapon, 1);
     }
     
     private void AddRandomArmor()
@@ -71,7 +63,7 @@ public class DragDropTester : MonoBehaviour
         if (_testArmor == null || _testArmor.Length == 0) return;
         
         Item randomArmor = _testArmor[Random.Range(0, _testArmor.Length)];
-        _inventory.AddItem(randomArmor, 1);
+        inventory.AddItem(randomArmor, 1);
     }
     
     private void DebugDragDropState()
