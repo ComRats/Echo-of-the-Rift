@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -21,35 +22,40 @@ public class Base : MonoBehaviour, IData
     [Header("TextPrefab")]
     public GameObject textPrefab;
 
+    [HideLabel]
+    [InlineProperty]
+    [SerializeField]
+    private EntityStats stats = new EntityStats();
+
     public bool IsBlinking { get; set; } = true;
 
-    public string Name { get; set; }
-    public string Description { get; set; }
+    public string Name { get => stats.Name; set => stats.Name = value; }
+    public string Description { get => stats.Description; set => stats.Description = value; }
     public Image Sprite { get; set; }
+    public int Damage { get => stats.Damage; set => stats.Damage = value; }
+    public int Priority { get => stats.Priority; set => stats.Priority = value; }
+    public int MaxMana { get => stats.MaxMana; set => stats.MaxMana = value; }
+    public int Mana { get => stats.Mana; set => stats.Mana = value; }
+    public int MaxHealth { get => stats.MaxHealth; set => stats.MaxHealth = value; }
+    public int Health { get => stats.Health; set => stats.Health = value; }
+    public int Heal { get => stats.Heal; set => stats.Heal = value; }
+    public int Armor { get => stats.Armor; set => stats.Armor = value; }
+    public int Lucky { get => stats.Lucky; set => stats.Lucky = value; }
+    public int CreteChance { get => stats.CreteChance; set => stats.CreteChance = value; }
+    public int Level { get => stats.Level; set => stats.Level = value; }
+    public int CurrentXP { get => stats.CurrentXP; set => stats.CurrentXP = value; }
+    public int MaxXP { get => stats.MaxXP; set => stats.MaxXP = value; }
+    public int XpReward { get => stats.XpReward; set => stats.XpReward = value; }
 
-    public int Damage { get; set; }
-    public int Priority { get; set; }
-    public int MaxMana { get; set; }
-    public int Mana { get; set; }
-    public int MaxHealth { get; set; }
-    public int Health { get; set; }
-    public int Heal { get; set; }
-    public int Armor { get; set; }
-    public int Lucky { get; set; } = 0;
-    public int CreteChance { get; set; } = 0;
-
-    public int Level { get; set; } = 1;
-    public int CurrentXP { get; set; } = 0;
-    public int MaxXP { get; set; } = 100;
-    public int XpReward { get; set; } = 30;
-
-    public int DamagePerLevel { get; set; } = 1;
-    public int MaxHealthPerLevel { get; set; } = 1;
-    public int HealPerLevel { get; set; } = 1;
-    public int ArmorPerLevel { get; set; } = 1;
-    public int MaxManaPerLevel { get; set; } = 1;
-    public int XpRewardPerLevel { get; set; } = 1;
+    public int DamagePerLevel { get => stats.DamagePerLevel; set => stats.DamagePerLevel = value; }
+    public int MaxHealthPerLevel { get => stats.MaxHealthPerLevel; set => stats.MaxHealthPerLevel = value; }
+    public int HealPerLevel { get => stats.HealPerLevel; set => stats.HealPerLevel = value; }
+    public int ArmorPerLevel { get => stats.ArmorPerLevel; set => stats.ArmorPerLevel = value; }
+    public int MaxManaPerLevel { get => stats.MaxManaPerLevel; set => stats.MaxManaPerLevel = value; }
+    public int XpRewardPerLevel { get => stats.XpRewardPerLevel; set => stats.XpRewardPerLevel = value; }
     Sprite IData.Sprite { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+    private void OnValidate() => stats.RecalculateStats();
 
     private IData data;
 

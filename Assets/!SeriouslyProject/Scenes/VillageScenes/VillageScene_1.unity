@@ -34238,7 +34238,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isShow: 1
   isHide: 0
-  isCameraInit: 0
+  isCameraInit: 1
 --- !u!114 &1775523291
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class SceneLoaderBridge : MonoBehaviour
             sceneLoader = GetComponent<SceneLoader>();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         if (isShow)
             sceneLoader._onSceneActivated.AddListener(ShowOnHandleSceneActivated);
@@ -36,15 +36,14 @@ public class SceneLoaderBridge : MonoBehaviour
 
         if (isCameraInit)
         {
-            //Debug.LogWarning("Trying to Camera init");
-            sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
+            sceneLoader._onSceneActivated.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
         }
 
         sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
         sceneLoader._onSceneLoaded.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         if (isShow)
             sceneLoader._onSceneActivated.RemoveListener(ShowOnHandleSceneActivated);

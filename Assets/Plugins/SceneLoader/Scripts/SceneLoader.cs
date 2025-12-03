@@ -72,6 +72,7 @@ public class SceneLoader : MonoBehaviour
 
     public async void LoadAsync()
     {
+        transform.parent = null;
         DontDestroyOnLoad(gameObject);
 
         if (_serializableScene == null || !_serializableScene.IsValid())

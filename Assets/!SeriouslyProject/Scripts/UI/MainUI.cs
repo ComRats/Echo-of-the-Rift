@@ -13,7 +13,7 @@ public class MainUI : MonoBehaviour
 
     public void Hide()
     {
-        Debug.LogWarning("Hide UI");
+        //Debug.LogWarning("Hide UI");
 
         canvas.enabled = false;
         pauseMenu.enabled = false;
@@ -23,7 +23,7 @@ public class MainUI : MonoBehaviour
 
     public void Show()
     {
-        Debug.LogWarning("Show IU");
+        //Debug.LogWarning("Show IU");
 
         canvas.enabled = true;
         pauseMenu.enabled = true;
