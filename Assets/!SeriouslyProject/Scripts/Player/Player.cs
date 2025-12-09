@@ -1,3 +1,4 @@
+using Cinemachine;
 using FightSystem.Data;
 using UnityEngine;
 

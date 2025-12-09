@@ -6,22 +6,26 @@ public class CameraSettings : MonoBehaviour
 {
     [SerializeField] private string colliderTag = "cameraBorder";
 
-    private CinemachineVirtualCamera _vCam;
-
-    private void Awake()
+    private void OnEnable()
     {
-        _vCam = GetComponent<CinemachineVirtualCamera>();
+        Initialize();
     }
 
     public void Initialize()
     {
+        Debug.LogWarning("CameraInit");
         CinemachineConfiner cam = GetComponent<CinemachineConfiner>();
+        CinemachineVirtualCamera virtCam = GetComponent<CinemachineVirtualCamera>();
 
-        if (cam == null)
+        if (cam == null && virtCam != null)
         {
             Debug.LogWarning("CinemachineConfiner не найден!");
+            Debug.LogWarning("CinemachineVirtualCamera не найден!");
             return;
         }
+
+        virtCam.ForceCameraPosition(transform.parent.position, Quaternion.identity);
+        cam.InvalidatePathCache();
 
         GameObject borderObj = GameObject.FindGameObjectWithTag(colliderTag);
         if (borderObj != null)
@@ -33,26 +37,6 @@ public class CameraSettings : MonoBehaviour
                 cam.InvalidatePathCache();
                 Debug.Log("Конфайнер успешно привязан к " + borderObj.name);
             }
-        }
-
-        SnapCameraToTarget();
-    }
-
-    private void SnapCameraToTarget()
-    {
-        if (_vCam == null) _vCam = GetComponent<CinemachineVirtualCamera>();
-
-        if (_vCam != null && _vCam.Follow != null)
-        {
-            _vCam.PreviousStateIsValid = false;
-
-            Vector3 targetPos = _vCam.Follow.position;
-            targetPos.z = transform.position.z;
-            transform.position = targetPos;
-        }
-        else
-        {
-            Debug.LogWarning("Virtual Camera или Follow target не установлены!");
         }
     }
 }

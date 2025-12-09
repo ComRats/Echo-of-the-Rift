@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,18 +14,32 @@ public class ScreenFader : MonoBehaviour
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    public void FadeIn()
+    public async Task FadeInAsync()
     {
+        Debug.LogWarning("FadeInAsync");
+
         _canvasGroup.blocksRaycasts = true;
-        _canvasGroup.DOFade(1f, fadeDuration).SetUpdate(true);
+
+        await _canvasGroup
+            .DOFade(1f, fadeDuration)
+            .SetUpdate(true)
+            .SetLink(gameObject)
+            .AsyncWaitForCompletion();
     }
 
-    public void FadeOut()
+    public async Task FadeOutAsync()
     {
-        _canvasGroup.DOFade(0f, fadeDuration).SetUpdate(true).OnComplete(() =>
-        {
-            _canvasGroup.blocksRaycasts = false;
-        });
+        Debug.LogWarning("FadeOutAsync");
+
+        _canvasGroup.blocksRaycasts = true;
+
+        await _canvasGroup
+            .DOFade(0f, fadeDuration)
+            .SetUpdate(true)
+            .SetLink(gameObject)
+            .AsyncWaitForCompletion();
+
+        _canvasGroup.blocksRaycasts = false;
     }
 
     public void SetAlpha(float alpha)

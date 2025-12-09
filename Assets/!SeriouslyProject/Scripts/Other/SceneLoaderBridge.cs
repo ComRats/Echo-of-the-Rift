@@ -25,46 +25,37 @@ public class SceneLoaderBridge : MonoBehaviour
     {
         if (sceneLoader == null)
             sceneLoader = GetComponent<SceneLoader>();
-    }
 
-    private void Start()
-    {
         if (isShow)
-            sceneLoader._onSceneActivated.AddListener(ShowOnHandleSceneActivated);
+            sceneLoader._onSceneActivated.AddListener(() => GlobalLoader.Instance.Show());
         else if (isHide)
-            sceneLoader._onSceneActivated.AddListener(HideOnHandleSceneActivated);
+            sceneLoader._onSceneActivated.AddListener(() => GlobalLoader.Instance.Hide());
 
         if (isCameraInit)
         {
-            sceneLoader._onSceneActivated.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
+            //sceneLoader._onSceneActivated.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
         }
 
-        sceneLoader._onLoadingSceneLoad.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
-        sceneLoader._onSceneLoaded.AddListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
+        sceneLoader._onSceneActivated.AddListener(async () =>
+        {
+            await GlobalLoader.Instance.mainUI.screenFader.FadeOutAsync();
+        });
     }
 
     private void OnDestroy()
     {
         if (isShow)
-            sceneLoader._onSceneActivated.RemoveListener(ShowOnHandleSceneActivated);
+            sceneLoader._onSceneActivated.RemoveListener(() => GlobalLoader.Instance.Show());
         else if (isHide)
-            sceneLoader._onSceneActivated.RemoveListener(HideOnHandleSceneActivated);
+            sceneLoader._onSceneActivated.RemoveListener(() => GlobalLoader.Instance.Hide());
 
         if (isCameraInit)
-            sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.CameraSettingsInitialize);
+            //sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.CameraSettingsInitialize);
 
-        sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
-        sceneLoader._onSceneLoaded.RemoveListener(GlobalLoader.Instance.mainUI.screenFader.FadeOut);
-    }
-
-    private void ShowOnHandleSceneActivated()
-    {
-        GlobalLoader.Instance.Show();
-    }
-
-    private void HideOnHandleSceneActivated()
-    {
-        GlobalLoader.Instance.Hide();
+        sceneLoader._onSceneActivated.RemoveListener(async () =>
+        {
+            await GlobalLoader.Instance.mainUI.screenFader.FadeOutAsync();
+        });
     }
 
     private void SetShow()

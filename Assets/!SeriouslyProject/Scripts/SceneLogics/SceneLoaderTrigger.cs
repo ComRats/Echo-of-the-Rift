@@ -7,10 +7,12 @@ public class SceneLoaderTrigger : MonoBehaviour, IColliderDebugDrawable2D
     [SerializeField] private Vector3 nextScenePosition;
     [SerializeField] private SceneLoader sceneLoader;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private async void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out var player))
         {
+            await GlobalLoader.Instance.mainUI.screenFader.FadeInAsync();
+
             sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
             sceneLoader._onSceneActivated.AddListener(() => player.movement.SetPlayerPosition(nextScenePosition));
             sceneLoader.LoadAsync();

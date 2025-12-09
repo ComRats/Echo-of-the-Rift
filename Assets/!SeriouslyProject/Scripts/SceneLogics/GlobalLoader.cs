@@ -47,19 +47,8 @@ public class GlobalLoader : MonoBehaviour
 
     public void Show()
     {
-        //foreach (var s in notShowScene)
-        //{
-        //    Debug.LogWarning("Текущая сцена: " + SceneManager.GetActiveScene().name);
-        //    Debug.LogWarning("Сцена: " + s.SceneName);
-        //    Debug.LogWarning("SceneManager.GetActiveScene().name != s.SceneName " + SceneManager.GetActiveScene().name == s.SceneName);
-
-        //    if (SceneManager.GetActiveScene().name == s.SceneName)
-        //    {
         playerInstance.Show();
         mainUI.Show();
-        //}
-
-        //}
     }
 
     public void Hide()
@@ -71,7 +60,6 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-
         CameraSettingsInitialize();
     }
 
