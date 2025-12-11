@@ -16,7 +16,7 @@ public class ScreenFader : MonoBehaviour
 
     public async Task FadeInAsync()
     {
-        Debug.LogWarning("FadeInAsync");
+        //Debug.LogWarning("FadeInAsync");
 
         _canvasGroup.blocksRaycasts = true;
 
@@ -29,7 +29,7 @@ public class ScreenFader : MonoBehaviour
 
     public async Task FadeOutAsync()
     {
-        Debug.LogWarning("FadeOutAsync");
+        //Debug.LogWarning("FadeOutAsync");
 
         _canvasGroup.blocksRaycasts = true;
 

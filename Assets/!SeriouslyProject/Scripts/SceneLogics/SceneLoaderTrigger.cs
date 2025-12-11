@@ -11,11 +11,13 @@ public class SceneLoaderTrigger : MonoBehaviour, IColliderDebugDrawable2D
     {
         if (collision.TryGetComponent<Player>(out var player))
         {
+            player.movement.canMove = false;
             await GlobalLoader.Instance.mainUI.screenFader.FadeInAsync();
 
             sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
             sceneLoader._onSceneActivated.AddListener(() => player.movement.SetPlayerPosition(nextScenePosition));
             sceneLoader.LoadAsync();
+            player.movement.canMove = true;
         }
     }
 

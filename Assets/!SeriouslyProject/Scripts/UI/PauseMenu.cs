@@ -86,9 +86,6 @@ public class PauseMenu : MonoBehaviour
     {
         PauseGame();
         pauseMenu.SetActive(false);
-        //_playerInstance.movement.canMove = false;
-        //_mainUIInstance.canOpenUI = false;
-        //_mainUIInstance.gameObject.SetActive(false);
     }
 
     public void PauseGame()

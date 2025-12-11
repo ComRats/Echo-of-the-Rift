@@ -4,7 +4,6 @@ using FightSystem.Data;
 using UnityEngine;
 using System;
 using System.IO;
-using Zenject;
 using EchoRift;
 
 [RequireComponent(typeof(Collider2D))]
@@ -12,7 +11,6 @@ public class FightTrigger : MonoBehaviour
 {
     [Header("OtherSettings")]
     [SerializeField] private SceneLoader sceneLoader;
-    //[SerializeField] private Vector3 nextPositionToLoad;
 
     [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
