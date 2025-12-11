@@ -5,10 +5,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Zenject;
+using static UnityEngine.Rendering.DebugUI;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
+    [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private List<SerializableScene> notShowScene;
 
     public static GlobalLoader Instance => instance;
@@ -155,10 +157,10 @@ public class GlobalLoader : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    public void LoadToScene(int sceneToLoad, Vector3 positionToLoad)
+    public void LoadToScene(string sceneToLoad/*, Vector3 positionToLoad*/)
     {
-        overridePosition = positionToLoad;
-        SceneManager.LoadScene(sceneToLoad);
+        //overridePosition = positionToLoad;
+        sceneLoader.LoadAsync(sceneToLoad);
     }
 
     //private void OnDestroy()

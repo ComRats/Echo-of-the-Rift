@@ -13,7 +13,7 @@ public class CameraSettings : MonoBehaviour
 
     public void Initialize()
     {
-        Debug.LogWarning("CameraInit");
+        //Debug.LogWarning("CameraInit");
         CinemachineConfiner cam = GetComponent<CinemachineConfiner>();
         CinemachineVirtualCamera virtCam = GetComponent<CinemachineVirtualCamera>();
 
