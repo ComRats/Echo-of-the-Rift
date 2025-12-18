@@ -1278,7 +1278,7 @@ MonoBehaviour:
         value: "\u041F... \u041F\u043E\u0433\u043E\u0434\u0438, \u0442\u044B \u043D\u0435
           \u0441\u043E\u043B\u0434\u0430\u0442, \u044F \u043F\u043E\u043C\u043D\u044E
           \u0442\u0435\u0431\u044F, \u0442\u044B \u0443\u0447\u0435\u043D\u0438\u043A
-          \u043A\u0443\u0437\u043D\u0438\u0446\u0430? \u0422\u0430\u043A \u0432\u0435\u0434\u044C.
+          \u043A\u0443\u0437\u043D\u0435\u0446\u0430? \u0422\u0430\u043A \u0432\u0435\u0434\u044C.
           \u041F\u0440\u043E\u0448\u0443 \u043F\u043E\u043C\u043E\u0433\u0438 \u043C\u043D\u0435,
           \u043F\u043E\u0432\u0435\u0440\u044C \u044F \u0432 \u0434\u043E\u043B\u0433\u0443
           \u043D\u0435 \u043E\u0441\u0442\u0430\u043D\u0443\u0441\u044C, \u0442\u043E\u043B\u044C\u043A\u043E
@@ -2372,7 +2372,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 61.392906, y: 36.31758}
+    canvasScrollPosition: {x: 30.905052, y: 0}
     canvasZoom: 0.8199997
   syncInfo:
     syncActors: 0
