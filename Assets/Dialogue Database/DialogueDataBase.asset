@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: FirstLocationDataBase
+  m_Name: DialogueDataBase
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -54,29 +54,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: 8fbfa1bc77a0388499f83f32b410eea3, type: 3}
-    alternatePortraits: []
-    spritePortraits: []
-  - id: 2
-    fields:
-    - title: Name
-      value: "\u0414\u0435\u0434"
-      type: 0
-      typeString: 
-    - title: Pictures
-      value: '[]'
-      type: 3
-      typeString: CustomFieldType_Files
-    - title: Description
-      value: 
-      type: 0
-      typeString: CustomFieldType_Text
-    - title: IsPlayer
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: 05ecdff584d31b14cb4b47a3540b2d05, type: 3}
+    spritePortrait: {fileID: 21300000, guid: c9235e1fdc3982844a02eb9c804fc720, type: 3}
     alternatePortraits: []
     spritePortraits: []
   - id: 3
@@ -165,21 +143,6 @@ MonoBehaviour:
       typeString: CustomFieldType_Text
   locations: []
   variables:
-  - id: 2
-    fields:
-    - title: Name
-      value: Weapon
-      type: 0
-      typeString: 
-    - title: Initial Value
-      value: False
-      type: 2
-      typeString: CustomFieldType_Boolean
-    - title: Description
-      value: "\u0415\u0441\u0442\u044C \u043B\u0438 \u043E\u0440\u0443\u0436\u0438\u0435
-        \u0443 \u0438\u0433\u0440\u043E\u043A\u0430"
-      type: 0
-      typeString: 
   - id: 3
     fields:
     - title: Name
@@ -187,11 +150,12 @@ MonoBehaviour:
       type: 0
       typeString: 
     - title: Initial Value
-      value: False
+      value: True
       type: 2
       typeString: CustomFieldType_Boolean
     - title: Description
-      value: "\u0423\u0431\u0438\u043B \u043B\u0438 \u0431\u044B\u043A\u0430?"
+      value: "\u0416\u0438\u0432 \u043B\u0438 \u0431\u044B\u043A, \u043A\u043E\u0442\u043E\u0440\u043E\u0433\u043E
+        \u043D\u0443\u0436\u043D\u043E \u0443\u0431\u0438\u0442\u044C?"
       type: 0
       typeString: 
   conversations:
@@ -1021,6 +985,12 @@ MonoBehaviour:
         originDialogueID: 0
         destinationConversationID: 2
         destinationDialogueID: 18
+        isConnector: 0
+        priority: 2
+      - originConversationID: 2
+        originDialogueID: 0
+        destinationConversationID: 2
+        destinationDialogueID: 21
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2016,9 +1986,9 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: "SetQuestState(\"SafeMan_0\", \"active\");\nShowAlert(\"\u041D\u043E\u0432\u043E\u0435
-        \u0437\u0430\u0434\u0430\u043D\u0438\u0435. \u0423\u0431\u0435\u0439\u0442\u0435
-        \u0431\u044B\u043A\u0430\")"
+      userScript: "SetQuestState(\"SafeMan_0\", \"active\");\nVariable[\"Alert\"]
+        = \"\u041D\u043E\u0432\u043E\u0435 \u0437\u0430\u0434\u0430\u043D\u0438\u0435.
+        \u0423\u0431\u0435\u0439\u0442\u0435 \u0431\u044B\u043A\u0430\""
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2184,7 +2154,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: SetQuestState("SafeMan_0", "failure")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2205,7 +2175,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 2
+        value: 3
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
@@ -2303,19 +2273,7 @@ MonoBehaviour:
       userScript: 
       onExecute:
         m_PersistentCalls:
-          m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: 
-            m_MethodName: 
-            m_Mode: 1
-            m_Arguments:
-              m_ObjectArgument: {fileID: 0}
-              m_ObjectArgumentAssemblyTypeName: 
-              m_IntArgument: 0
-              m_FloatArgument: 0
-              m_StringArgument: 
-              m_BoolArgument: 0
-            m_CallState: 2
+          m_Calls: []
       canvasRect:
         serializedVersion: 2
         x: 178.27884
@@ -2337,7 +2295,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 2
+        value: -1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -2371,9 +2329,59 @@ MonoBehaviour:
         y: 220.71422
         width: 160
         height: 30
+    - id: 21
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: 
+      - title: Description
+        value: 
+        type: 0
+        typeString: 
+      - title: Actor
+        value: 3
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: 
+      - title: Dialogue Text
+        value: "\u041F\u043E\u0436\u0430\u043B\u0443\u0439\u0441\u0442\u0430 \u043D\u0435
+          \u0441\u0434\u0430\u0432\u0430\u0439 \u043C\u0435\u043D\u044F"
+        type: 0
+        typeString: 
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: 
+      conversationID: 2
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks: []
+      conditionsString: CurrentQuestState("SafeMan_0") == "failure"
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 773.74615
+        y: 137.18484
+        width: 160
+        height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 30.905052, y: 0}
-    canvasZoom: 0.8199997
+    canvasScrollPosition: {x: 188.30032, y: 11.029434}
+    canvasZoom: 1.3599992
   syncInfo:
     syncActors: 0
     syncItems: 0

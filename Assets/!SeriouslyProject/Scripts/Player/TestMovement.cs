@@ -44,12 +44,12 @@ public class TestMovement : MonoBehaviour, ISceneLoader
 
     public void FrezeMoving()
     {
-        rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        canMove = false;
     }
 
     public void UnFrezeMoving()
     {
-        rigidbody.constraints = RigidbodyConstraints2D.None;
+        canMove = true;
     }
 
     public void SetPlayerPosition(Vector3 nextPos)

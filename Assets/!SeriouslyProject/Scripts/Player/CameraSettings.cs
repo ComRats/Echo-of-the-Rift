@@ -35,7 +35,7 @@ public class CameraSettings : MonoBehaviour
             {
                 cam.m_BoundingShape2D = cameraBorder;
                 cam.InvalidatePathCache();
-                Debug.Log("Конфайнер успешно привязан к " + borderObj.name);
+                //Debug.Log("Конфайнер успешно привязан к " + borderObj.name);
             }
         }
     }

@@ -3,20 +3,6 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.Events;
 
-[System.Serializable]
-public struct QuestChange
-{
-    public string questCode;
-    public QuestState questState;
-}
-
-public enum FightResult
-{
-    None,
-    Win,
-    Lose,
-    Escape
-}
 
 public class FightNPC : MonoBehaviour
 {
@@ -55,4 +41,19 @@ public class FightNPC : MonoBehaviour
             Debug.Log($" вест {quest.questCode} изменЄн на {quest.questState}");
         }
     }
+}
+
+[System.Serializable]
+public struct QuestChange
+{
+    public string questCode;
+    public QuestState questState;
+}
+
+public enum FightResult
+{
+    None,
+    Win,
+    Lose,
+    Escape
 }
