@@ -4,7 +4,7 @@ using Zenject;
 public class PressableButtons : MonoBehaviour
 {
     [SerializeField] private KeyCode openInventoryKey = KeyCode.E;
-    [SerializeField] private KeyCode openPauseMenuKey = KeyCode.Escape;
+    //[SerializeField] private KeyCode openPauseMenuKey = KeyCode.Escape;
 
     [Inject] private PlayerUI playerUI;
 

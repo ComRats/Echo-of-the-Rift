@@ -96,6 +96,10 @@ public static class GameMassage
         });
 
         var group = activeAlert.GetComponent<CanvasGroup>() ?? activeAlert.gameObject.AddComponent<CanvasGroup>();
+
+        activeAlert.transform.DOKill();
+        group.DOKill();
+
         group.alpha = 0f;
         group.DOFade(1f, 0.4f);
 

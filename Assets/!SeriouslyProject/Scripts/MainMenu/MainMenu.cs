@@ -9,13 +9,9 @@ public class MainMenu : MonoBehaviour
 
     private GlobalLoader.GlobalData globalData;
 
-    //[Inject] private GameSettings gameSettings;
-    //[Inject] private Player _playerInstance;
-    //[Inject] private MainUI _mainUIInstance;
-
     private void Start()
     {
-        if (!SaveLoadSystem.Exists("globalSave"))
+        if (!SaveLoadSystem.Exists("globalSave") || SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex <= 1)
         {
             LoadButton.SetActive(false);
         }
@@ -45,14 +41,6 @@ public class MainMenu : MonoBehaviour
     {
         globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave");
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
-
-        //if (_playerInstance != null)
-        //{
-        //    GameTimer.ResumeGame();
-        //    _playerInstance.movement.canMove = true;
-        //    _mainUIInstance.canOpenUI = true;
-        //    _mainUIInstance.gameObject.SetActive(true);
-        //}
     }
 
     public void Quit()
