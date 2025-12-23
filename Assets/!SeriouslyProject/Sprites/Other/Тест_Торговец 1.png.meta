@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c3e5c5c8a4e5f984698717e1bcdbbe12
+guid: 67fb871ddb54da3458aa3743bd1c5616
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -46,8 +46,8 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
-  alignment: 9
-  spritePivot: {x: 0.48373193, y: 0.14698236}
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
@@ -121,18 +121,62 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "\u0422\u0435\u0441\u0442_\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446_0"
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 259
+        width: 174
+        height: 134
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cee9407296c7d54e9090aed346d45c8
+      internalID: -1824965792
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u0422\u0435\u0441\u0442_\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446_1"
+      rect:
+        serializedVersion: 2
+        x: 37
+        y: 5
+        width: 226
+        height: 253
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 840daeb8acfe0e645ba03145e623e6de
+      internalID: -985550355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      "\u0422\u0435\u0441\u0442_\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446_0": -1824965792
+      "\u0422\u0435\u0441\u0442_\u0422\u043E\u0440\u0433\u043E\u0432\u0435\u0446_1": -985550355
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
