@@ -1,17 +1,19 @@
-﻿using EchoRift;
-using FightSystem.Data;
-using System;
+﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using AudioManager.Locator;
+using AudioManager.Provider;
+using FightSystem.Data;
+using EchoRift;
+using System;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
-using static UnityEngine.Rendering.DebugUI;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
     [SerializeField] private SceneLoader sceneLoader;
     [SerializeField] private List<SerializableScene> notShowScene;
+    [SerializeField] private AudioManagerSettings settings;
 
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
@@ -162,13 +164,6 @@ public class GlobalLoader : MonoBehaviour
         //overridePosition = positionToLoad;
         sceneLoader.LoadAsync(sceneToLoad);
     }
-
-    //private void OnDestroy()
-    //{
-    //    SceneManager.sceneLoaded -= OnSceneLoaded;
-    //    SavePlayer();
-    //    SaveGlobal();
-    //}
 
 #if !UNITY_EDITOR
     private void OnApplicationQuit()

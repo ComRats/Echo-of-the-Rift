@@ -1,0 +1,17 @@
+{
+    "name": "AudioManager.Helper",
+    "rootNamespace": "",
+    "references": [
+        "GUID:2510443271ef8f74ba27a53daf582389",
+        "GUID:e39e53512fd032c49a37a82b0dd59be0"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
