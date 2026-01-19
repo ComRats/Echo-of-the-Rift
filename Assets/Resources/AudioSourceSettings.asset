@@ -12,16 +12,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1181d19d27babe34c99c6d27f76dfa9d, type: 3}
   m_Name: AudioSourceSettings
   m_EditorClassIdentifier: 
-  soundName: ButtonClick1
-  audioClip: {fileID: 8300000, guid: 9c285986b4a0dd147a4f27df1f2ac3cb, type: 3}
-  mixerGroup: {fileID: 0}
-  loop: 0
-  volume: 0.1
-  pitch: 0.75
-  spatialBlend: 0
-  dopplerLevel: 1
-  spreadAngle: 0
-  volumeRolloff: 0
-  minDistance: 1
-  maxDistance: 500
-  source: {fileID: 0}
+  audioClips:
+  - soundName: ButtonClick1
+    audioClip: {fileID: 8300000, guid: 9c285986b4a0dd147a4f27df1f2ac3cb, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.5
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: TheSpace
+    audioClip: {fileID: 8300000, guid: c5a6af7adb029df4ba0967bc4de9e7ac, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

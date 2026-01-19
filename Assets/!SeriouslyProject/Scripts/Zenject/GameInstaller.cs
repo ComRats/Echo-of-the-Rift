@@ -38,7 +38,7 @@ public class GameInstaller : MonoInstaller
         playerInstance.Hide();
         mainUIInstance.Hide();
 
-        Debug.Log("Succeful Binding GameInstaller");
+        //Debug.Log("Succeful Binding GameInstaller");
 
     }
 

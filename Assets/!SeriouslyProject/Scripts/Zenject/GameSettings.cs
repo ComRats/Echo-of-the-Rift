@@ -11,6 +11,6 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
     public override void InstallBindings()
     {
         Container.Bind<GameSettings>().FromInstance(this).AsSingle();
-        Debug.Log("Succeful Binding GameSettings");
+        //Debug.Log("Succeful Binding GameSettings");
     }
 }

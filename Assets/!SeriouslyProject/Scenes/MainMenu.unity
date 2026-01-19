@@ -1689,7 +1689,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de704f7504eb6d040bcc9b6a4c423633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSoundName: ButtonClick1
+  clickSoundName: TheSpace
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -4327,7 +4327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   customHideFlags: 0
-  loggingLevel: 0
+  loggingLevel: 1
   settings:
   - {fileID: 11400000, guid: 4cc33996a852eb7478e52829bbd46654, type: 2}
 --- !u!1 &1841652098

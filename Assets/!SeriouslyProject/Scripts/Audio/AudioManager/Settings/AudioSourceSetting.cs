@@ -1,64 +1,67 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using Sirenix.OdinInspector;
 
-namespace AudioManager.Settings {
+namespace AudioManager.Settings
+{
     [CreateAssetMenu(fileName = "AudioSourceSettings", menuName = "AudioManager/AudioSourceSettings", order = 1)]
-    public class AudioSourceSetting : ScriptableObject {
-        [Tooltip("Sets the name we can later access this objects AudioSource in the AudioManager with.")]
+    public class AudioSourceSetting : ScriptableObject
+    {
+
+        [ListDrawerSettings(ShowIndexLabels = true)]
+        [Searchable]
+        public List<AudioClips> audioClips = new List<AudioClips>();
+    }
+
+    [System.Serializable]
+    public class AudioClips
+    {
+        [TitleGroup("Base Settings")]
         public string soundName;
-        [Tooltip("The AudioClip asset played by the AudioSource.")]
         public AudioClip audioClip;
 
-        [Space(15)]
-
-        [Tooltip("Sets wheter the sound should play through an AudioMixer first or directly to the AudioListener.")]
+        [BoxGroup("Mixer & Playback")]
         public AudioMixerGroup mixerGroup;
-        [Tooltip("Set the source to loop once it is finished.")]
+        [BoxGroup("Mixer & Playback")]
         public bool loop = false;
 
-        [Space(15)]
-
-        [Tooltip("Sets the overall volume of the sound.")]
+        [BoxGroup("Audio Properties")]
         [Range(0f, 1f)]
         public float volume = 1f;
-        [Tooltip("Sets the frequency of the sound. Use this to slow down or speed up the sounds.")]
+
+        [BoxGroup("Audio Properties")]
         [Range(-3f, 3f)]
         public float pitch = 1f;
 
-        [Space(15)]
-
+        [Space(10)]
+        [Title("Spatial Settings (3D)")]
         [Range(0f, 1f)]
-        [Tooltip("Sets how much the AudioSource is treated as a 3D source. 3D sources are effected by spatial position and spreadAngle. If 3D Pan Level is 0, all spatial attenuation is ignored.")]
         public float spatialBlend = 0f;
 
-        [Space(15)]
+        // --- Исправленные атрибуты Odin ---
+        // Используем полное имя Sirenix.OdinInspector.ShowIf, чтобы избежать конфликта с AudioManager
 
-#if UNITY_EDITOR
-        [ShowIfAttribute(ActionOnConditionFail.DO_NOT_DRAW, ConditionOperator.AND, nameof(spatialBlend))]
-#endif // UNITY_EDITOR
-        [Tooltip("Sets how much the pitch is changed based on the relative velocity between AudioListener and AudioSource.")]
+        [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
+        [BoxGroup("3D Parameters")]
         [Range(0f, 5f)]
         public float dopplerLevel = 1f;
-#if UNITY_EDITOR
-        [ShowIfAttribute(ActionOnConditionFail.DO_NOT_DRAW, ConditionOperator.AND, nameof(spatialBlend))]
-#endif // UNITY_EDITOR
-        [Tooltip("Sets the angle of the spread of a 3D sound relative to the speaker position.")]
+
+        [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
+        [BoxGroup("3D Parameters")]
         [Range(0f, 360f)]
         public float spreadAngle = 0f;
-#if UNITY_EDITOR
-        [ShowIfAttribute(ActionOnConditionFail.DO_NOT_DRAW, ConditionOperator.AND, nameof(spatialBlend))]
-#endif // UNITY_EDITOR
-        [Tooltip("Sets the type of rollof curve to use.")]
+
+        [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
+        [BoxGroup("3D Parameters")]
         public AudioRolloffMode volumeRolloff = AudioRolloffMode.Logarithmic;
-#if UNITY_EDITOR
-        [ShowIfAttribute(ActionOnConditionFail.DO_NOT_DRAW, ConditionOperator.AND, nameof(spatialBlend))]
-#endif // UNITY_EDITOR
-        [Tooltip("Sets the minDistance, where the volume will stay at the loudest possible. Outside of this minDistance it will begin to attenuate.")]
+
+        [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
+        [BoxGroup("3D Parameters")]
         public float minDistance = 1f;
-#if UNITY_EDITOR
-        [ShowIfAttribute(ActionOnConditionFail.DO_NOT_DRAW, ConditionOperator.AND, nameof(spatialBlend))]
-#endif // UNITY_EDITOR
-        [Tooltip("Sets the maxDistance, where a sound stops attenuating at.")]
+
+        [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
+        [BoxGroup("3D Parameters")]
         public float maxDistance = 500f;
 
         [HideInInspector]

@@ -18,40 +18,54 @@ namespace AudioManager.Settings {
 
         public override void OnInspectorGUI() {
             base.OnInspectorGUI();
+            AudioSourceSetting script = (AudioSourceSetting)target;
 
-            EditorGUI.BeginDisabledGroup(serializedObject.isEditingMultipleObjects);
-            EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(new GUIContent("Play", "Will begin playback of an AudioSource with the given settings."))) {
-                CopySettingsAndPlay((AudioSourceSetting)target);
+            if (script.audioClips == null || script.audioClips.Count == 0) return;
+
+            EditorGUILayout.Space(10);
+            EditorGUILayout.LabelField("Preview Controls", EditorStyles.boldLabel);
+
+            for (int i = 0; i < script.audioClips.Count; i++)
+            {
+                var clipData = script.audioClips[i];
+                string displayName = string.IsNullOrEmpty(clipData.soundName) ? $"Element {i}" : clipData.soundName;
+
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.LabelField(displayName);
+
+                if (GUILayout.Button("Play"))
+                {
+                    PlayClip(clipData);
+                }
+
+                if (GUILayout.Button("Stop"))
+                {
+                    Stop();
+                }
+                EditorGUILayout.EndHorizontal();
             }
-            else if (GUILayout.Button(new GUIContent("Stop", "Will stop the playback of the created AudioSource."))) {
-                Stop();
-            }
-            EditorGUILayout.EndHorizontal();
-            EditorGUI.EndDisabledGroup();
         }
 
-        private void CopySettingsAndPlay(AudioSourceSetting setting) {
-            if (setting == null) {
-                return;
-            }
+        private void PlayClip(AudioClips data) {
+            if (data == null || data.audioClip == null) return;
 
-            preview.clip = setting.audioClip;
-            preview.outputAudioMixerGroup = setting.mixerGroup;
-            preview.loop = setting.loop;
-            preview.volume = setting.volume;
-            preview.pitch = setting.pitch;
-            preview.spatialBlend = setting.spatialBlend;
-            preview.dopplerLevel = setting.dopplerLevel;
-            preview.spread = setting.spreadAngle;
-            preview.rolloffMode = setting.volumeRolloff;
-            preview.minDistance = setting.minDistance;
-            preview.maxDistance = setting.maxDistance;
+            preview.clip = data.audioClip;
+            preview.outputAudioMixerGroup = data.mixerGroup;
+            preview.loop = data.loop;
+            preview.volume = data.volume;
+            preview.pitch = data.pitch;
+            preview.spatialBlend = data.spatialBlend;
+            preview.dopplerLevel = data.dopplerLevel;
+            preview.spread = data.spreadAngle;
+            preview.rolloffMode = data.volumeRolloff;
+            preview.minDistance = data.minDistance;
+            preview.maxDistance = data.maxDistance;
             preview.Play();
         }
 
-        private void Stop() {
-            preview.Stop();
+        private void Stop()
+        {
+            if (preview != null) preview.Stop();
         }
     }
 }
