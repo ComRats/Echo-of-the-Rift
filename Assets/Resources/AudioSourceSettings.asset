@@ -39,3 +39,16 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: Trollheim
+    audioClip: {fileID: 8300000, guid: 56a415e063aba7e49b55ff750df85a94, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
