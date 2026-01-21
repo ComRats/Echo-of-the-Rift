@@ -7,6 +7,7 @@ using EchoRift;
 using System;
 using UnityEngine;
 using Zenject;
+using EchoRift.SaveLoadSystem;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour

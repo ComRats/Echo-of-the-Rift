@@ -5,6 +5,7 @@ using UnityEngine;
 using System;
 using System.IO;
 using EchoRift;
+using EchoRift.SaveLoadSystem;
 
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour

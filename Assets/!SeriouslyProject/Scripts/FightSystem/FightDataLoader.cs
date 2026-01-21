@@ -3,6 +3,7 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using FightSystem.Enemy;
 using FightSystem.Character;
+using EchoRift.SaveLoadSystem;
 
 public class FightDataLoader : MonoBehaviour
 {

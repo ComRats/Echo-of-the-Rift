@@ -15,6 +15,7 @@ namespace AudioManager.Helper
             {
                 return;
             }
+
             CreateAndRegisterSound(sounds, settings, gameObject);
         }
 
@@ -22,12 +23,8 @@ namespace AudioManager.Helper
         {
             foreach (var settingGroup in settings)
             {
-                if (settingGroup is null || settingGroup.audioClips is null)
-                {
-                    continue;
-                }
+                if (settingGroup is null || settingGroup.audioClips is null) continue;
 
-                // Теперь мы перебираем список ВНУТРИ каждого ассета
                 foreach (var clipData in settingGroup.audioClips)
                 {
                     if (clipData is null) continue;
@@ -44,7 +41,12 @@ namespace AudioManager.Helper
             {
                 return;
             }
-            RegisterSound(sounds, (setting.soundName, new AudioSourceWrapper(setting.source)));
+
+            AudioSourceWrapper wrapper = new AudioSourceWrapper(setting.source);
+
+            wrapper.soundTypeIndex = (int)setting.type;
+
+            RegisterSound(sounds, (setting.soundName, wrapper));
         }
 
         public static bool IsSoundRegistered(IDictionary<string, AudioSourceWrapper> sounds, string soundName)

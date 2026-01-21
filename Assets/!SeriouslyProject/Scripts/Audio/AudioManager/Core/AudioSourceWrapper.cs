@@ -44,6 +44,10 @@ namespace AudioManager.Core {
             m_childrenDictionary = new Dictionary<ChildType, AudioSource>();
         }
 
+        public int soundTypeIndex;
+        public float lastTypeVolume = 1f;
+        public float lerpAlpha = 1f;
+
         public ICollection<AudioSource> GetChildren() {
             return m_childrenDictionary.Values;
         }
@@ -196,6 +200,19 @@ namespace AudioManager.Core {
         private bool HasSameValue<T>(T newValue, T currValue) {
             bool? result = currValue?.Equals(newValue);
             return result ?? newValue is null;
+        }
+
+        public void SetChildrenVolume(float volume)
+        {
+            if (m_childrenDictionary == null) return;
+
+            foreach (var child in m_childrenDictionary.Values)
+            {
+                if (child != null)
+                {
+                    child.volume = volume;
+                }
+            }
         }
     }
 }

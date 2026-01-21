@@ -466,5 +466,26 @@ namespace AudioManager.Logger {
 
             m_logger?.Log(string.Join(" ", baselogMessage, "successfull"), LoggingLevel.INTERMEDIATE, LoggingType.NORMAL, m_logContext);
         }
+
+        public void SetTypeVolume(int typeIndex, float volume)
+        {
+            const string enterLogBase = "Attempting to set volume for sound type index";
+            const string exitLogBase = "Setting volume for sound type index";
+
+            OnMethodEnter(enterLogBase, typeIndex.ToString());
+            m_wrappedInstance?.SetTypeVolume(typeIndex, volume);
+            OnMethodExit(exitLogBase, AudioError.OK);
+        }
+
+        public float GetTypeVolume(int typeIndex)
+        {
+            const string enterLogBase = "Attempting to get volume for sound type index";
+            const string exitLogBase = "Getting volume for sound type index";
+
+            OnMethodEnter(enterLogBase, typeIndex.ToString());
+            float value = m_wrappedInstance?.GetTypeVolume(typeIndex) ?? 0f;
+            OnMethodExit(exitLogBase, AudioError.OK);
+            return value;
+        }
     }
 }

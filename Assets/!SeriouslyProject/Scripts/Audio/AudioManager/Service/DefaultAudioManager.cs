@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace AudioManager.Service {
-    public class DefaultAudioManager : IAudioManager {
+namespace AudioManager.Service
+{
+    public class DefaultAudioManager : IAudioManager
+    {
         // Readonly private member variables.
         private readonly GameObject m_parentGameObject;
         private readonly MonoBehaviour m_parentBehaviour;
@@ -15,12 +17,15 @@ namespace AudioManager.Service {
         // Private member variables.
         private readonly IDictionary<string, IDictionary<float, Coroutine>> m_soundProgressDictionary;
         private readonly IDictionary<string, AudioSourceWrapper> m_soundDictionary;
+        private Dictionary<int, float> _typeVolumes = new Dictionary<int, float>();
 
-        public DefaultAudioManager(IDictionary<string, AudioSourceWrapper> sounds, GameObject parentGameObject) {
+        public DefaultAudioManager(IDictionary<string, AudioSourceWrapper> sounds, GameObject parentGameObject)
+        {
             m_soundProgressDictionary = new Dictionary<string, IDictionary<float, Coroutine>>();
             m_soundDictionary = new Dictionary<string, AudioSourceWrapper>();
 
-            if (sounds is object) {
+            if (sounds is object)
+            {
                 m_soundDictionary = sounds;
             }
 
@@ -30,33 +35,36 @@ namespace AudioManager.Service {
             RegisterUpdateChildren();
         }
 
-        public AudioError AddSoundFromPath(string name, string path, float volume, float pitch, bool loop, AudioSource source, AudioMixerGroup mixerGroup) {
+        public AudioError AddSoundFromPath(string name, string path, float volume, float pitch, bool loop, AudioSource source, AudioMixerGroup mixerGroup)
+        {
             AudioError error = AudioHelper.LoadAudioClipFromPath(path, out AudioClip clip);
 
-            if (error != AudioError.OK) {
-                return error;
-            }
-            else if (!m_parentGameObject) {
-                return AudioError.MISSING_PARENT;
-            }
-            else if (!source) {
+            if (error != AudioError.OK) return error;
+            if (!m_parentGameObject) return AudioError.MISSING_PARENT;
+
+            if (!source)
+            {
                 AudioHelper.AddAudioSourceComponent(m_parentGameObject, out source);
             }
 
             source.Set2DAudioOptions(clip, mixerGroup, loop, volume, pitch);
-            error = RegisterAudioSource(name, source);
-            return error;
+
+            RegisterSound(name, source, 0);
+            return AudioError.OK;
         }
 
-        public IEnumerable<string> GetEnumerator() {
+        public IEnumerable<string> GetEnumerator()
+        {
             return m_soundDictionary.Keys;
         }
 
-        public AudioError Play(string name, ChildType child) {
+        public AudioError Play(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -64,20 +72,24 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError PlayAtTimeStamp(string name, float startTime, ChildType child) {
+        public AudioError PlayAtTimeStamp(string name, float startTime, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!m_parentBehaviour) {
+            else if (!m_parentBehaviour)
+            {
                 error = AudioError.MISSING_PARENT;
                 return error;
             }
 
             error = SetStartTime(name, startTime, child);
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -87,11 +99,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError GetPlaybackPosition(string name, out float time, ChildType child) {
+        public AudioError GetPlaybackPosition(string name, out float time, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 time = Constants.F_NULL_VALUE;
                 return error;
             }
@@ -100,34 +114,41 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError SetPlaybackDirection(string name, float pitch, ChildType child) {
+        public AudioError SetPlaybackDirection(string name, float pitch, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
-            error = source.InvokeChild(child, (s) => {
+            error = source.InvokeChild(child, (s) =>
+            {
                 s.SetPitch(pitch);
                 s.SetTimeFromCurrentPitch();
             });
             return error;
         }
 
-        public AudioError RegisterChildAt3DPos(string name, Vector3 position, out ChildType child) {
+        public AudioError RegisterChildAt3DPos(string name, Vector3 position, out ChildType child)
+        {
             AudioError error = TryGetSource(name, out var parentSource);
             child = ChildType.AT_3D_POS;
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (parentSource.Source.IsSound2D()) {
+            else if (parentSource.Source.IsSound2D())
+            {
                 error = AudioError.CAN_NOT_BE_3D;
                 return error;
             }
-            else if (!m_parentTransform) {
+            else if (!m_parentTransform)
+            {
                 error = AudioError.INVALID_PARENT;
                 return error;
             }
@@ -136,19 +157,23 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError RegisterChildAttachedToGo(string name, GameObject attachGameObject, out ChildType child) {
+        public AudioError RegisterChildAttachedToGo(string name, GameObject attachGameObject, out ChildType child)
+        {
             AudioError error = TryGetSource(name, out var parentSource);
             child = ChildType.ATTCHD_TO_GO;
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (parentSource.Source.IsSound2D()) {
+            else if (parentSource.Source.IsSound2D())
+            {
                 error = AudioError.CAN_NOT_BE_3D;
                 return error;
             }
-            else if (!attachGameObject) {
+            else if (!attachGameObject)
+            {
                 error = AudioError.INVALID_PARENT;
                 return error;
             }
@@ -157,16 +182,19 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError DeregisterChild(string name, ChildType child) {
+        public AudioError DeregisterChild(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var parentSource);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
             // Check if all children should be deregistered instead.
-            if (child == ChildType.ALL) {
+            if (child == ChildType.ALL)
+            {
                 parentSource.DeregisterChildren();
                 return error;
             }
@@ -175,11 +203,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError PlayDelayed(string name, float delay, ChildType child) {
+        public AudioError PlayDelayed(string name, float delay, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -187,11 +217,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError PlayOneShot(string name, ChildType child) {
+        public AudioError PlayOneShot(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -199,17 +231,20 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError ChangePitch(string name, float minPitch, float maxPitch, ChildType child) {
+        public AudioError ChangePitch(string name, float minPitch, float maxPitch, ChildType child)
+        {
             float pitch = Random.Range(minPitch, maxPitch);
             return SetPlaybackDirection(name, pitch, child);
         }
 
-        public AudioError GetClipLength(string name, out double length, ChildType child) {
+        public AudioError GetClipLength(string name, out double length, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
             length = Constants.D_NULL_VALUE;
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -217,11 +252,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError PlayScheduled(string name, double time, ChildType child) {
+        public AudioError PlayScheduled(string name, double time, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -230,11 +267,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError Stop(string name, ChildType child) {
+        public AudioError Stop(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -242,11 +281,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError ToggleMute(string name, ChildType child) {
+        public AudioError ToggleMute(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -254,11 +295,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError TogglePause(string name, ChildType child) {
+        public AudioError TogglePause(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -266,11 +309,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError SubscribeSourceChanged(string name, SourceChangedCallback callback) {
+        public AudioError SubscribeSourceChanged(string name, SourceChangedCallback callback)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -278,11 +323,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError UnsubscribeSourceChanged(string name, SourceChangedCallback callback) {
+        public AudioError UnsubscribeSourceChanged(string name, SourceChangedCallback callback)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -290,18 +337,22 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError SubscribeProgressCoroutine(string name, float progress, ProgressCoroutineCallback callback) {
+        public AudioError SubscribeProgressCoroutine(string name, float progress, ProgressCoroutineCallback callback)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!m_parentBehaviour) {
+            else if (!m_parentBehaviour)
+            {
                 error = AudioError.MISSING_PARENT;
                 return error;
             }
-            else if (!source.Source.IsProgressValid(progress)) {
+            else if (!source.Source.IsProgressValid(progress))
+            {
                 error = AudioError.INVALID_PROGRESS;
                 return error;
             }
@@ -310,23 +361,28 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError UnsubscribeProgressCoroutine(string name, float progress) {
+        public AudioError UnsubscribeProgressCoroutine(string name, float progress)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!m_parentBehaviour) {
+            else if (!m_parentBehaviour)
+            {
                 error = AudioError.MISSING_PARENT;
                 return error;
             }
-            else if (!source.Source.IsProgressValid(progress)) {
+            else if (!source.Source.IsProgressValid(progress))
+            {
                 error = AudioError.INVALID_PROGRESS;
                 return error;
             }
 
-            if (!IsProgressRegistered(name, progress, out var coroutineDictionary)) {
+            if (!IsProgressRegistered(name, progress, out var coroutineDictionary))
+            {
                 error = AudioError.NOT_SUBSCRIBED;
                 return error;
             }
@@ -335,12 +391,14 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError GetProgress(string name, out float progress, ChildType child) {
+        public AudioError GetProgress(string name, out float progress, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
             progress = Constants.F_NULL_VALUE;
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -348,10 +406,12 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError TryGetSource(string name, out AudioSourceWrapper source) {
+        public AudioError TryGetSource(string name, out AudioSourceWrapper source)
+        {
             AudioError error = AudioError.OK;
 
-            if (!TryGetRegisteredAudioSource(name, out source)) {
+            if (!TryGetRegisteredAudioSource(name, out source))
+            {
                 error = AudioError.DOES_NOT_EXIST;
                 return error;
             }
@@ -360,29 +420,36 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError LerpPitch(string name, float endValue, float duration, ChildType child) {
+        public AudioError LerpPitch(string name, float endValue, float duration, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (source.Source.IsSamePitch(endValue)) {
+            else if (source.Source.IsSamePitch(endValue))
+            {
                 error = AudioError.INVALID_END_VALUE;
                 return error;
             }
-            else if (!m_parentBehaviour) {
+            else if (!m_parentBehaviour)
+            {
                 error = AudioError.MISSING_PARENT;
                 return error;
             }
 
             error = source.GetChildSource(child, out var childSource);
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
-            SetCallback<float> cb = (x, s) => {
-                if (childSource is null) {
+            SetCallback<float> cb = (x, s) =>
+            {
+                if (childSource is null)
+                {
                     s.Pitch = x;
                     return;
                 }
@@ -393,47 +460,50 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError LerpVolume(string name, float endValue, float duration, ChildType child) {
+        public AudioError LerpVolume(string name, float endValue, float duration, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
-            // Couldn't find source.
-            if (error != AudioError.OK) {
-                return error;
-            }
-            else if (source.Source.IsSameVolume(endValue)) {
-                error = AudioError.INVALID_END_VALUE;
-                return error;
-            }
-            else if (!m_parentBehaviour) {
-                error = AudioError.MISSING_PARENT;
-                return error;
-            }
-             
-            error = source.GetChildSource(child, out var childSource);
-            if (error != AudioError.OK) {
-                return error;
-            }
+            if (error != AudioError.OK) return error;
+            if (!m_parentBehaviour) return AudioError.MISSING_PARENT;
 
-            SetCallback<float> cb = (x, s) => {
-                if (childSource is null) {
-                    s.Volume = x;
-                    return;
+            error = source.GetChildSource(child, out var childSource);
+            if (error != AudioError.OK) return error;
+
+            float typeVol = GetTypeVolume(source.soundTypeIndex);
+
+            SetCallback<float> cb = (alpha, s) =>
+            {
+                s.lerpAlpha = alpha;
+
+                float finalVolume = alpha * GetTypeVolume(s.soundTypeIndex);
+
+                if (childSource is null)
+                {
+                    s.Volume = finalVolume;
                 }
-                childSource.volume = x;
+                else
+                {
+                    childSource.volume = finalVolume;
+                }
             };
 
-            m_parentBehaviour.StartCoroutine(source.LerpValueCoroutine(source.Volume, endValue, duration, cb));
+            m_parentBehaviour.StartCoroutine(source.LerpValueCoroutine(source.lerpAlpha, endValue, duration, cb));
+
             return error;
         }
 
-        public AudioError ChangeGroupValue(string name, string exposedParameterName, float newValue) {
+        public AudioError ChangeGroupValue(string name, string exposedParameterName, float newValue)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!source.Source.IsAudioMixerGroupValid()) {
+            else if (!source.Source.IsAudioMixerGroupValid())
+            {
                 error = AudioError.MISSING_MIXER_GROUP;
                 return error;
             }
@@ -442,15 +512,18 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError GetGroupValue(string name, string exposedParameterName, out float currentValue) {
+        public AudioError GetGroupValue(string name, string exposedParameterName, out float currentValue)
+        {
             AudioError error = TryGetSource(name, out var source);
             currentValue = Constants.F_NULL_VALUE;
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!source.Source.IsAudioMixerGroupValid()) {
+            else if (!source.Source.IsAudioMixerGroupValid())
+            {
                 error = AudioError.MISSING_MIXER_GROUP;
                 return error;
             }
@@ -459,14 +532,17 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError ResetGroupValue(string name, string exposedParameterName) {
+        public AudioError ResetGroupValue(string name, string exposedParameterName)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!source.Source.IsAudioMixerGroupValid()) {
+            else if (!source.Source.IsAudioMixerGroupValid())
+            {
                 error = AudioError.MISSING_MIXER_GROUP;
                 return error;
             }
@@ -475,27 +551,33 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError LerpGroupValue(string name, string exposedParameterName, float endValue, float duration) {
+        public AudioError LerpGroupValue(string name, string exposedParameterName, float endValue, float duration)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!source.Source.IsAudioMixerGroupValid()) {
+            else if (!source.Source.IsAudioMixerGroupValid())
+            {
                 error = AudioError.MISSING_MIXER_GROUP;
                 return error;
             }
-            else if (!m_parentBehaviour) {
+            else if (!m_parentBehaviour)
+            {
                 error = AudioError.MISSING_PARENT;
                 return error;
             }
 
             error = source.TryGetGroupValue(exposedParameterName, out float currentValue);
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!AudioHelper.IsEndValueValid(currentValue, endValue)) {
+            else if (!AudioHelper.IsEndValueValid(currentValue, endValue))
+            {
                 error = AudioError.INVALID_END_VALUE;
             }
 
@@ -503,11 +585,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError RemoveGroup(string name, ChildType child) {
+        public AudioError RemoveGroup(string name, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -515,11 +599,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError AddGroup(string name, AudioMixerGroup mixerGroup, ChildType child) {
+        public AudioError AddGroup(string name, AudioMixerGroup mixerGroup, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -527,18 +613,22 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError RemoveSound(string name) {
+        public AudioError RemoveSound(string name)
+        {
             return DeregisterSound(name);
         }
 
-        public AudioError Set3DAudioOptions(string name, float minDistance, float maxDistance, ChildType child, float spatialBlend, float spreadAngle, float dopplerLevel, AudioRolloffMode rolloffMode) {
+        public AudioError Set3DAudioOptions(string name, float minDistance, float maxDistance, ChildType child, float spatialBlend, float spreadAngle, float dopplerLevel, AudioRolloffMode rolloffMode)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (AudioHelper.IsSound2D(spatialBlend)) {
+            else if (AudioHelper.IsSound2D(spatialBlend))
+            {
                 error = AudioError.CAN_NOT_BE_3D;
                 return error;
             }
@@ -547,14 +637,17 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError SetStartTime(string name, float startTime, ChildType child) {
+        public AudioError SetStartTime(string name, float startTime, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
-            else if (!source.Source.IsLengthValid(startTime)) {
+            else if (!source.Source.IsLengthValid(startTime))
+            {
                 error = AudioError.INVALID_TIME;
                 return error;
             }
@@ -563,11 +656,13 @@ namespace AudioManager.Service {
             return error;
         }
 
-        public AudioError SkipTime(string name, float time, ChildType child) {
+        public AudioError SkipTime(string name, float time, ChildType child)
+        {
             AudioError error = TryGetSource(name, out var source);
 
             // Couldn't find source.
-            if (error != AudioError.OK) {
+            if (error != AudioError.OK)
+            {
                 return error;
             }
 
@@ -579,16 +674,20 @@ namespace AudioManager.Service {
         // Private Section
         //************************************************************************************************************************
 
-        private void RegisterUpdateChildren() {
-            foreach (var name in m_soundDictionary.Keys) {
+        private void RegisterUpdateChildren()
+        {
+            foreach (var name in m_soundDictionary.Keys)
+            {
                 SubscribeSourceChanged(name, UpdateChildren);
             }
         }
 
-        private AudioError RegisterAudioSource(string name, AudioSource source) {
+        private AudioError RegisterAudioSource(string name, AudioSource source)
+        {
             AudioError error = AudioError.OK;
 
-            if (IsSoundRegistered(name)) {
+            if (IsSoundRegistered(name))
+            {
                 error = AudioError.ALREADY_EXISTS;
                 return error;
             }
@@ -597,18 +696,22 @@ namespace AudioManager.Service {
             return error;
         }
 
-        private IEnumerator DetectCurrentProgressCoroutine(AudioSourceWrapper source, float progress, string name, ProgressCoroutineCallback callback) {
+        private IEnumerator DetectCurrentProgressCoroutine(AudioSourceWrapper source, float progress, string name, ProgressCoroutineCallback callback)
+        {
             // Cache WaitUntil, done to ensure we don't needlessly allocate a new WaitUntil with the same value each time.
             var waitUntilProgressAchieved = new WaitUntil(() => DetectProgressAchieved(source, progress));
             yield return waitUntilProgressAchieved;
             yield return ResubscribeProgressCoroutine(source, progress, name, callback);
         }
 
-        private bool DetectProgressAchieved(AudioSourceWrapper source, float progress) {
+        private bool DetectProgressAchieved(AudioSourceWrapper source, float progress)
+        {
             bool progressAchieved = source.Source.ProgressAchieved(progress);
 
-            foreach (var pair in source) {
-                if (!pair.Value.ProgressAchieved(progress)) {
+            foreach (var pair in source)
+            {
+                if (!pair.Value.ProgressAchieved(progress))
+                {
                     continue;
                 }
 
@@ -618,11 +721,14 @@ namespace AudioManager.Service {
             return progressAchieved;
         }
 
-        private void DetectChildType(AudioSourceWrapper source, float progress, out ChildType child) {
+        private void DetectChildType(AudioSourceWrapper source, float progress, out ChildType child)
+        {
             child = ChildType.PARENT;
 
-            foreach (var pair in source) {
-                if (!pair.Value.ProgressAchieved(progress)) {
+            foreach (var pair in source)
+            {
+                if (!pair.Value.ProgressAchieved(progress))
+                {
                     continue;
                 }
 
@@ -631,8 +737,10 @@ namespace AudioManager.Service {
             }
         }
 
-        private IEnumerator ResubscribeProgressCoroutine(AudioSourceWrapper source, float progress, string name, ProgressCoroutineCallback callback) {
-            if (!IsProgressRegistered(name, progress, out var coroutineDictionary)) {
+        private IEnumerator ResubscribeProgressCoroutine(AudioSourceWrapper source, float progress, string name, ProgressCoroutineCallback callback)
+        {
+            if (!IsProgressRegistered(name, progress, out var coroutineDictionary))
+            {
                 yield break;
             }
 
@@ -641,10 +749,12 @@ namespace AudioManager.Service {
             yield return HandleProgressResponse(coroutineDictionary, source, name, callback, response, progress);
         }
 
-        private IEnumerator HandleProgressResponse(IDictionary<float, Coroutine> coroutineDictionary, AudioSourceWrapper source, string name, ProgressCoroutineCallback callback, ProgressResponse response, float progress) {
+        private IEnumerator HandleProgressResponse(IDictionary<float, Coroutine> coroutineDictionary, AudioSourceWrapper source, string name, ProgressCoroutineCallback callback, ProgressResponse response, float progress)
+        {
             var waitForClipRemainingTime = new WaitForSeconds(source.Source.GetClipRemainingTime());
 
-            switch (response) {
+            switch (response)
+            {
                 case ProgressResponse.UNSUB:
                     DeregisterCoroutine(coroutineDictionary, progress);
                     break;
@@ -660,13 +770,21 @@ namespace AudioManager.Service {
             }
         }
 
-        private void RegisterSound(string name, AudioSource source) {
-            m_soundDictionary.Add(name, new AudioSourceWrapper(source));
+        private void RegisterSound(string name, AudioSource source, int soundTypeIndex = 0)
+        {
+            var wrapper = new AudioSourceWrapper(source);
+            wrapper.soundTypeIndex = soundTypeIndex;
+
+            wrapper.Volume = source.volume * GetTypeVolume(soundTypeIndex);
+
+            m_soundDictionary.Add(name, wrapper);
         }
 
-        private AudioError DeregisterSound(string name) {
+        private AudioError DeregisterSound(string name)
+        {
             AudioError error = AudioError.OK;
-            if (!m_soundDictionary.TryGetValue(name, out var source)) {
+            if (!m_soundDictionary.TryGetValue(name, out var source))
+            {
                 error = AudioError.DOES_NOT_EXIST;
                 return error;
             }
@@ -676,136 +794,185 @@ namespace AudioManager.Service {
             return error;
         }
 
-        private void DeregisterChildren(AudioSourceWrapper source) {
+        private void DeregisterChildren(AudioSourceWrapper source)
+        {
             source.DeregisterChildren();
         }
 
-        private void DestroySound(string name, AudioSource source) {
+        private void DestroySound(string name, AudioSource source)
+        {
             Object.Destroy(source);
             m_soundDictionary.Remove(name);
         }
 
-        private bool TryGetRegisteredAudioSource(string name, out AudioSourceWrapper sourceWrapper) {
+        private bool TryGetRegisteredAudioSource(string name, out AudioSourceWrapper sourceWrapper)
+        {
             return m_soundDictionary.TryGetValue(name, out sourceWrapper);
         }
 
-        private bool IsSoundRegistered(string name) {
+        private bool IsSoundRegistered(string name)
+        {
             return m_soundDictionary.ContainsKey(name);
         }
 
-        private bool TryGetRegisteredCoroutines(string name, out IDictionary<float, Coroutine> coroutineDictionary) {
+        private bool TryGetRegisteredCoroutines(string name, out IDictionary<float, Coroutine> coroutineDictionary)
+        {
             return m_soundProgressDictionary.TryGetValue(name, out coroutineDictionary);
         }
 
-        private IDictionary<float, Coroutine> CreateNewCoroutine(float progress, Coroutine coroutine) {
+        private IDictionary<float, Coroutine> CreateNewCoroutine(float progress, Coroutine coroutine)
+        {
             return new Dictionary<float, Coroutine>() { { progress, coroutine } };
         }
 
-        private void RegisterNewCoroutines(string name, IDictionary<float, Coroutine> coroutineDictionary) {
+        private void RegisterNewCoroutines(string name, IDictionary<float, Coroutine> coroutineDictionary)
+        {
             m_soundProgressDictionary.Add(name, coroutineDictionary);
         }
 
-        private bool TryGetRegisteredCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress, out Coroutine coroutine) {
+        private bool TryGetRegisteredCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress, out Coroutine coroutine)
+        {
             return coroutineDictionary.TryGetValue(progress, out coroutine);
         }
 
-        private bool IsProgressRegistered(string name, float progress, out IDictionary<float, Coroutine> coroutineDictionary) {
+        private bool IsProgressRegistered(string name, float progress, out IDictionary<float, Coroutine> coroutineDictionary)
+        {
             return TryGetRegisteredCoroutines(name, out coroutineDictionary) && IsCoroutineRegistered(coroutineDictionary, progress);
         }
 
-        private bool IsCoroutineRegistered(IDictionary<float, Coroutine> coroutineDictionary, float progress) {
+        private bool IsCoroutineRegistered(IDictionary<float, Coroutine> coroutineDictionary, float progress)
+        {
             return coroutineDictionary.ContainsKey(progress);
         }
 
-        private bool DeregisterCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress) {
+        private bool DeregisterCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress)
+        {
             return coroutineDictionary.Remove(progress);
         }
 
-        private void RegisterNewCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress, Coroutine coroutine) {
+        private void RegisterNewCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress, Coroutine coroutine)
+        {
             coroutineDictionary.Add(progress, coroutine);
         }
 
-        private void CreateNewCoroutines(string name, float progress, Coroutine coroutine) {
+        private void CreateNewCoroutines(string name, float progress, Coroutine coroutine)
+        {
             var newCoroutineDictionary = CreateNewCoroutine(progress, coroutine);
             RegisterNewCoroutines(name, newCoroutineDictionary);
         }
 
-        private void UpdateChildPosition(AudioSource parentSource, Vector3 position, AudioSource childSource) {
+        private void UpdateChildPosition(AudioSource parentSource, Vector3 position, AudioSource childSource)
+        {
             childSource.CopySettingsAndPosition(position, parentSource);
         }
 
-        private void CreateNewChild(AudioSourceWrapper parentSource, Vector3 position, ChildType child) {
+        private void CreateNewChild(AudioSourceWrapper parentSource, Vector3 position, ChildType child)
+        {
             parentSource.Source.CreateEmptyGameObject(position, m_parentTransform, out AudioSource newChildSource);
             parentSource.RegisterNewChild(child, newChildSource);
         }
 
-        private void UpdateChildGameObject(AudioSource parentSource, GameObject parent, AudioSource childSource) {
+        private void UpdateChildGameObject(AudioSource parentSource, GameObject parent, AudioSource childSource)
+        {
             childSource.CopySettingsAndGameObject(parent, parentSource);
         }
 
-        private void CreateNewChild(AudioSourceWrapper parentSource, GameObject parent, ChildType child) {
+        private void CreateNewChild(AudioSourceWrapper parentSource, GameObject parent, ChildType child)
+        {
             parentSource.Source.AttachAudioSource(out AudioSource newChildSource, parent);
             parentSource.RegisterNewChild(child, newChildSource);
         }
 
-        private void RegisterAt3DPosition(AudioSourceWrapper parentSource, Vector3 position, ChildType child) {
-            if (parentSource.TryGetRegisteredChild(child, out var childSource)) {
+        private void RegisterAt3DPosition(AudioSourceWrapper parentSource, Vector3 position, ChildType child)
+        {
+            if (parentSource.TryGetRegisteredChild(child, out var childSource))
+            {
                 UpdateChildPosition(parentSource.Source, position, childSource);
                 return;
             }
             CreateNewChild(parentSource, position, child);
         }
 
-        private void RegisterAttachedToGameObject(AudioSourceWrapper parentSource, GameObject gameObject, ChildType child) {
-            if (parentSource.TryGetRegisteredChild(child, out var childSource)) {
+        private void RegisterAttachedToGameObject(AudioSourceWrapper parentSource, GameObject gameObject, ChildType child)
+        {
+            if (parentSource.TryGetRegisteredChild(child, out var childSource))
+            {
                 UpdateChildGameObject(parentSource.Source, gameObject, childSource);
                 return;
             }
             CreateNewChild(parentSource, gameObject, child);
         }
 
-        private AudioError RegisterProgressCoroutine(string name, AudioSourceWrapper source, float progress, ProgressCoroutineCallback callback) {
+        private AudioError RegisterProgressCoroutine(string name, AudioSourceWrapper source, float progress, ProgressCoroutineCallback callback)
+        {
             AudioError error = AudioError.OK;
 
-            if (IsProgressRegistered(name, progress, out var coroutineDictionary)) {
+            if (IsProgressRegistered(name, progress, out var coroutineDictionary))
+            {
                 error = AudioError.ALREADY_SUBSCRIBED;
                 return error;
             }
 
             Coroutine coroutine = m_parentBehaviour.StartCoroutine(DetectCurrentProgressCoroutine(source, progress, name, callback));
-            if (coroutineDictionary is object) {
+            if (coroutineDictionary is object)
+            {
                 RegisterNewCoroutine(coroutineDictionary, progress, coroutine);
             }
-            else {
+            else
+            {
                 CreateNewCoroutines(name, progress, coroutine);
             }
 
             return error;
         }
 
-        private void DeregisterProgressCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress) {
+        private void DeregisterProgressCoroutine(IDictionary<float, Coroutine> coroutineDictionary, float progress)
+        {
             TryGetRegisteredCoroutine(coroutineDictionary, progress, out Coroutine coroutine);
             m_parentBehaviour.StopCoroutine(coroutine);
             DeregisterCoroutine(coroutineDictionary, progress);
         }
 
-        private ProgressResponse ResetStartTime(string name, float progress, ChildType child) {
+        private ProgressResponse ResetStartTime(string name, float progress, ChildType child)
+        {
             TryGetSource(name, out var source);
             // Stop the sound if it isn't set to looping,
             // this is done to ensure the sound doesn't replay,
             // when it is not set to looping.
             AudioError error = source.InvokeChild(child, (s) => s.loop, out bool looping);
-            if (error == AudioError.OK && !looping) {
-                Stop(name, child); 
+            if (error == AudioError.OK && !looping)
+            {
+                Stop(name, child);
             }
             SetStartTime(name, 0f, child);
             return ProgressResponse.UNSUB;
         }
 
-        private void UpdateChildren(AudioSourceWrapper changedSource) {
-            foreach (var childSource in changedSource.GetChildren()) {
+        private void UpdateChildren(AudioSourceWrapper changedSource)
+        {
+            foreach (var childSource in changedSource.GetChildren())
+            {
                 childSource.CopyAudioSourceSettings(changedSource.Source);
             }
+        }
+
+        public void SetTypeVolume(int typeIndex, float volume)
+        {
+            _typeVolumes[typeIndex] = volume;
+
+            foreach (var wrapper in m_soundDictionary.Values)
+            {
+                if (wrapper.soundTypeIndex == typeIndex)
+                {
+                    wrapper.Volume = volume * wrapper.lerpAlpha;
+                    wrapper.SetChildrenVolume(volume * wrapper.lerpAlpha);
+                }
+            }
+        }
+
+        public float GetTypeVolume(int typeIndex)
+        {
+            return _typeVolumes.ContainsKey(typeIndex) ? _typeVolumes[typeIndex] : 1f;
         }
     }
 }

@@ -154,5 +154,14 @@ namespace AudioManager.Locator {
         public AudioError SkipTime(string name, float time, ChildType child) {
             return AudioError.NOT_INITIALIZED;
         }
+
+        public void SetTypeVolume(int typeIndex, float volume)
+        {
+        }
+
+        public float GetTypeVolume(int typeIndex)
+        {
+            return 0f;
+        }
     }
 }

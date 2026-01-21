@@ -337,5 +337,18 @@ namespace AudioManager.Core {
         /// <param name="child">Child that we want to call this method on.</param>
         /// <returns><see cref="AudioError"/>, showing wheter and how skipping forward or backward the current time failed.</returns>
         public AudioError SkipTime(string name, float time, ChildType child = Constants.DEFAULT_CHILD_TYPE);
+
+        /// <summary>
+        /// Sets the global volume multiplier for a specific sound type (SFX, Music, etc).
+        /// This affects all currently playing sounds of this type and future ones.
+        /// </summary>
+        /// <param name="type">The category of sounds to change (e.g., SoundType.Music).</param>
+        /// <param name="volume">Target volume (0.0 to 1.0).</param>
+        void SetTypeVolume(int typeIndex, float volume);
+
+        /// <summary>
+        /// Gets the current global volume setting for a specific sound type.
+        /// </summary>
+        float GetTypeVolume(int typeIndex);
     }
 }

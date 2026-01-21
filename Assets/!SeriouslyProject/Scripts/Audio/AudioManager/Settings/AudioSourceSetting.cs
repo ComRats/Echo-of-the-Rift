@@ -5,10 +5,15 @@ using Sirenix.OdinInspector;
 
 namespace AudioManager.Settings
 {
+    public enum SoundType
+    {
+        SFX,
+        Music,
+    }
+
     [CreateAssetMenu(fileName = "AudioSourceSettings", menuName = "AudioManager/AudioSourceSettings", order = 1)]
     public class AudioSourceSetting : ScriptableObject
     {
-
         [ListDrawerSettings(ShowIndexLabels = true)]
         [Searchable]
         public List<AudioClips> audioClips = new List<AudioClips>();
@@ -19,6 +24,10 @@ namespace AudioManager.Settings
     {
         [TitleGroup("Base Settings")]
         public string soundName;
+
+        [EnumToggleButtons]
+        public SoundType type = SoundType.SFX;
+
         public AudioClip audioClip;
 
         [BoxGroup("Mixer & Playback")]
@@ -38,9 +47,6 @@ namespace AudioManager.Settings
         [Title("Spatial Settings (3D)")]
         [Range(0f, 1f)]
         public float spatialBlend = 0f;
-
-        // --- Исправленные атрибуты Odin ---
-        // Используем полное имя Sirenix.OdinInspector.ShowIf, чтобы избежать конфликта с AudioManager
 
         [Sirenix.OdinInspector.ShowIf("@this.spatialBlend > 0")]
         [BoxGroup("3D Parameters")]

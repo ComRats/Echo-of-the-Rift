@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using EchoRift.SaveLoadSystem;
 
 /// <summary>
 /// Управляет инвентарем игрока, включая обычные слоты и слоты экипировки.

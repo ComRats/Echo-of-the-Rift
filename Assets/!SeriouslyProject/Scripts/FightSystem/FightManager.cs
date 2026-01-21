@@ -7,6 +7,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
 using EchoRift;
+using EchoRift.SaveLoadSystem;
 
 public class FightManager : MonoBehaviour
 {
