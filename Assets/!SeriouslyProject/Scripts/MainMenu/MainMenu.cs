@@ -16,6 +16,9 @@ public class MainMenu : MonoBehaviour
         {
             LoadButton.SetActive(false);
         }
+
+        Animator animator = GetComponent<Animator>();
+        animator.SetTrigger("Show");
     }
 
     public void TryPlay()
