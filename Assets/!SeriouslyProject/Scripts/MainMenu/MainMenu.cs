@@ -24,7 +24,7 @@ public class MainMenu : MonoBehaviour
     public void TryPlay()
     {
         if (SaveLoadSystem.Exists("globalSave"))
-            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", Play, "Нет", GameMassage.CloseAlert, 1f, Color.black);
+            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
         else
             Play();
     }

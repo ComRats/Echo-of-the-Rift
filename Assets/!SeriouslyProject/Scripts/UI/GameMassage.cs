@@ -107,6 +107,49 @@ public static class GameMassage
         activeAlert.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
     }
 
+    public static void GameAlert(
+        GameAlert alertPrefab,
+        string message,
+        string leftButtonText, System.Action leftButtonAction,
+        string rightButtonText, System.Action rightButtonAction,
+        float duration)
+    {
+        if (activeAlert != null) return;
+
+        activeAlert = Object.Instantiate(alertPrefab, FindCanvas().transform);
+        activeAlert.name = "GameAlert";
+        activeAlert.transform.SetAsLastSibling();
+
+        activeAlert.mainText.text = message;
+
+        activeAlert.leftButtonText.text = leftButtonText;
+        activeAlert.leftButton.onClick.RemoveAllListeners();
+        activeAlert.leftButton.onClick.AddListener(() =>
+        {
+            leftButtonAction?.Invoke();
+            CloseAlert();
+        });
+
+        activeAlert.rightButtonText.text = rightButtonText;
+        activeAlert.rightButton.onClick.RemoveAllListeners();
+        activeAlert.rightButton.onClick.AddListener(() =>
+        {
+            rightButtonAction?.Invoke();
+            CloseAlert();
+        });
+
+        var group = activeAlert.GetComponent<CanvasGroup>() ?? activeAlert.gameObject.AddComponent<CanvasGroup>();
+
+        activeAlert.transform.DOKill();
+        group.DOKill();
+
+        group.alpha = 0f;
+        group.DOFade(1f, 0.4f);
+
+        activeAlert.transform.localScale = Vector3.zero;
+        activeAlert.transform.DOScale(1f, 0.4f).SetEase(Ease.OutBack);
+    }
+
     private static Canvas FindCanvas()
     {
         Canvas targetCanvas = null;
