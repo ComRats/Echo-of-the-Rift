@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "SeriouslyProject.sln"
+    "dotnet.defaultSolution": "Echo-of-the-Rift.sln"
 }

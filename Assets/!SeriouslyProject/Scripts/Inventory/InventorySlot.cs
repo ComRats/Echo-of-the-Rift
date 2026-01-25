@@ -1,108 +1,102 @@
-using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-/// <summary>
-/// Представляет один слот в инвентаре.
-/// </summary>
-[Serializable]
-public class InventorySlot
+public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    [SerializeField] private Item _item;
-    [SerializeField] private int _quantity;
+    public ItemType allowedType = ItemType.Generic;
 
-    public Item Item => _item;
-    public int Quantity => _quantity;
+    [SerializeField] private InventoryManager inventoryManager;
 
-    public InventorySlot()
+    public void OnDrop(PointerEventData eventData)
     {
-        Clear();
-    }
-
-    public InventorySlot(Item item, int quantity)
-    {
-        this._item = item;
-        this._quantity = quantity;
-    }
-
-    /// <summary>
-    /// Проверяет, пуст ли слот.
-    /// </summary>
-    public bool IsEmpty() => _item == null || _quantity <= 0;
-
-    /// <summary>
-    /// Проверяет, можно ли добавить предмет в этот слот.
-    /// </summary>
-    public bool CanAddItem(Item itemToAdd)
-    {
-        if (IsEmpty())
-            return true;
-
-        return _item == itemToAdd && _item.IsStackable && _quantity < _item.MaxStackSize;
-    }
-
-    /// <summary>
-    /// Добавляет предмет в слот.
-    /// </summary>
-    /// <returns>Остаток, который не удалось добавить.</returns>
-    public int AddItem(Item itemToAdd, int quantityToAdd)
-    {
-        if (itemToAdd == null)
+        if (inventoryManager == null)
         {
-            Debug.LogWarning("[InventorySlot] Attempted to add a null item.");
-            return quantityToAdd;
+            Debug.LogWarning("InventoryManager не назначен в InventorySlot!");
+            return;
         }
 
-        if (IsEmpty())
-        {
-            _item = itemToAdd;
-        }
-        else if (_item != itemToAdd)
-        {
-            Debug.LogWarning($"[InventorySlot] Cannot add item '{itemToAdd.ItemName}'. The slot already contains '{_item.ItemName}'.");
-            return quantityToAdd;
-        }
-
-        int spaceLeft = _item.MaxStackSize - _quantity;
-        int amountToAdd = Mathf.Min(quantityToAdd, spaceLeft);
-
-        _quantity += amountToAdd;
+        GameObject dropped = eventData.pointerDrag;
+        DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
         
-        return quantityToAdd - amountToAdd;
-    }
+        if (draggableItem == null || !IsTypeAllowed(draggableItem)) return;
 
-    /// <summary>
-    /// Удаляет предмет из слота.
-    /// </summary>
-    /// <returns>Количество удаленных предметов.</returns>
-    public int RemoveItem(int quantityToRemove)
-    {
-        if (IsEmpty()) return 0;
-
-        int removedAmount = Mathf.Min(quantityToRemove, _quantity);
-        _quantity -= removedAmount;
-
-        if (_quantity <= 0)
+        if (transform.childCount == 0)
         {
-            Clear();
+            draggableItem.parentAfterDrag = transform;
         }
+        else
+        {
+            DraggableItem currentItem = transform.GetComponentInChildren<DraggableItem>();
 
-        return removedAmount;
+            if (CanStackItems(draggableItem, currentItem))
+            {
+                ProcessStackItems(currentItem, draggableItem);
+                return;
+            }
+
+            SwapItems(draggableItem, currentItem);
+        }
     }
 
-    /// <summary>
-    /// Полностью очищает слот.
-    /// </summary>
-    public void Clear()
+    private bool IsTypeAllowed(DraggableItem item)
     {
-        _item = null;
-        _quantity = 0;
+        if (allowedType == ItemType.Generic) return true;
+        return item.itemData.itemType == allowedType;
     }
 
-    /// <summary>
-    /// Создает копию этого слота.
-    /// </summary>
-    public InventorySlot Clone()
+    private bool CanStackItems(DraggableItem item1, DraggableItem item2)
     {
-        return new InventorySlot(_item, _quantity);
+        return item1.itemData == item2.itemData &&
+               item1.itemData.isStackable &&
+               item1.itemData.maxStackSize > item2.count;
+    }
+
+    private void ProcessStackItems(DraggableItem currentItem, DraggableItem newItem)
+    {
+        int total = currentItem.count + newItem.count;
+        int maxStack = currentItem.itemData.maxStackSize;
+        
+        if (total <= maxStack)
+        {
+            currentItem.count = total;
+            currentItem.RefreshCount();
+            Destroy(newItem.gameObject);
+        }
+        else
+        {
+            currentItem.count = maxStack;
+            currentItem.RefreshCount();
+            newItem.count = total - maxStack;
+            newItem.RefreshCount();
+            TryMoveItemToEmptySlot(newItem);
+        }
+    }
+    
+    private void TryMoveItemToEmptySlot(DraggableItem item)
+    {
+        if (inventoryManager == null) return;
+        
+        foreach (InventorySlot slot in inventoryManager.inventorySlots)
+        {
+            if (slot.transform.childCount == 0)
+            {
+                item.parentAfterDrag = slot.transform;
+                item.transform.SetParent(slot.transform);
+                item.transform.localPosition = Vector3.zero;
+                return;
+            }
+        }
+    }
+
+    private void SwapItems(DraggableItem newItem, DraggableItem oldItem)
+    {
+        Transform newItemOriginalParent = newItem.parentAfterDrag;
+        Transform oldItemOriginalParent = oldItem.transform.parent;
+
+        newItem.parentAfterDrag = oldItemOriginalParent;
+        oldItem.parentAfterDrag = newItemOriginalParent;
+        
+        oldItem.transform.SetParent(newItemOriginalParent);
+        oldItem.transform.localPosition = Vector3.zero;
     }
 }
