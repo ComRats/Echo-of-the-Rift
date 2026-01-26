@@ -10,16 +10,22 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private TextMeshProUGUI title;
     [SerializeField] private GameObject settingsPanel;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenuBackGround;
     [SerializeField] private ButtonSettings[] buttons;
 
     [Inject] private GameSettings gameSettings;
     [Inject] private Player _playerInstance;
     [Inject] private MainUI _mainUIInstance;
 
+    private Animator settingsAnimator;
+    private AnimatorStateInfo stateInfo;
+
     private void Awake()
     {
         GameTimer.OnGamePaused += OnGamePaused;
         GameTimer.OnGameResumed += OnGameResumed;
+
+        settingsAnimator = settingsPanel.GetComponent<Animator>();
 
         ButtonInitialize();
     }
@@ -34,10 +40,12 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(gameSettings.openPauseMenuKey))
         {
-            if (settingsPanel.activeSelf && _mainUIInstance.canOpenUI)
+            stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+
+            if (stateInfo.IsName("ShowSettings") && _mainUIInstance.canOpenUI)
             {
-                settingsPanel.SetActive(false);
-                pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
+                settingsAnimator.SetTrigger("HideSettings");
+                pauseMenuBackGround.SetActive(true);
                 return;
             }
 
@@ -50,8 +58,12 @@ public class PauseMenu : MonoBehaviour
             {
                 GameTimer.PauseGame();
                 pauseMenu.SetActive(true);
-                settingsPanel.SetActive(false);
-                pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
+                pauseMenuBackGround.SetActive(true);
+
+                if (stateInfo.IsName("ShowSettings"))
+                {
+                    settingsAnimator.SetTrigger("HideSettings");
+                }
             }
         }
     }

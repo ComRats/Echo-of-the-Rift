@@ -1,40 +1,66 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using AudioManager.Locator;
 using EchoRift.SaveLoadSystem;
 
 public class AudioSettingsUI : MonoBehaviour
 {
-    [Header("Настройки")]
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
+    private const string AudioSaveKey = "audio_settings";
     private const int SFX_INDEX = 0;
     private const int MUSIC_INDEX = 1;
-    private const string AudioSaveKey = "audio_settings";
 
-    private void Start()
+    private void Awake()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        RefreshAllSettings();
+    }
+
+    public void RefreshAllSettings()
     {
         var am = ServiceLocator.GetService();
         if (am == null) return;
 
-        var savedData = SaveLoadSystem.Load<AudioSaveData>(AudioSaveKey);
+        var savedData = SaveLoadSystem.Load<AudioSaveData>(AudioSaveKey) ?? new AudioSaveData();
 
-        sfxSlider.value = savedData.sfxVolume;
-        am.SetTypeVolume(SFX_INDEX, sfxSlider.value);
-        sfxSlider.onValueChanged.AddListener(val => am.SetTypeVolume(SFX_INDEX, val));
-
-        musicSlider.value = savedData.musicVolume;
-        am.SetTypeVolume(MUSIC_INDEX, musicSlider.value);
-        musicSlider.onValueChanged.AddListener(val => am.SetTypeVolume(MUSIC_INDEX, val));
+        Configure(sfxSlider, savedData.sfxVolume, SFX_INDEX);
+        Configure(musicSlider, savedData.musicVolume, MUSIC_INDEX);
     }
 
-    public void CloseSettingsMenu()
+    private void Configure(Slider slider, float volume, int typeIndex)
     {
-        AudioSaveData data = new AudioSaveData();
-        data.musicVolume = musicSlider.value;
-        data.sfxVolume = sfxSlider.value;
+        slider.onValueChanged.RemoveAllListeners();
+        slider.value = volume;
 
+        var am = ServiceLocator.GetService();
+        am?.SetTypeVolume(typeIndex, volume);
+
+        slider.onValueChanged.AddListener(val =>
+        {
+            ServiceLocator.GetService()?.SetTypeVolume(typeIndex, val);
+            SaveCurrentState();
+        });
+    }
+
+    private void SaveCurrentState()
+    {
+        AudioSaveData data = new AudioSaveData
+        {
+            musicVolume = musicSlider.value,
+            sfxVolume = sfxSlider.value
+        };
         SaveLoadSystem.Save(AudioSaveKey, data);
     }
 
