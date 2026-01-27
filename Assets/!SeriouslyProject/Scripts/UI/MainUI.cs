@@ -8,6 +8,7 @@ public class MainUI : MonoBehaviour
     public ScreenFader screenFader;
     public GameObject starPanel;
     public SpriteCollection spriteCollection;
+    public InventoryManager inventoryManager;
 
     public bool canOpenUI = true;
 
