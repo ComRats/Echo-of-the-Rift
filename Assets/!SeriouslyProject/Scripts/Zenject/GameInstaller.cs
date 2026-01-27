@@ -11,9 +11,11 @@ public class GameInstaller : MonoInstaller
     {
         var existingPlayer = Object.FindObjectOfType<Player>(true);
         var existingMainUI = Object.FindObjectOfType<MainUI>(true);
+        var existingInventoryManager = Object.FindObjectOfType<InventoryManager>(true);
 
         var playerInstance = existingPlayer ?? Instantiate(player);
         var mainUIInstance = existingMainUI ?? Instantiate(mainUI);
+        var inventoryManagerInstance = existingInventoryManager ?? Object.FindObjectOfType<InventoryManager>();
 
         var playerUI = mainUIInstance.playerUI;
 
@@ -32,6 +34,12 @@ public class GameInstaller : MonoInstaller
         if (!Container.HasBinding<PlayerUI>())
             Container.BindInstance(playerUI).AsSingle();
 
+        // Ğ ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ¸Ñ€ÑƒĞµĞ¼ InventoryManager, ĞµÑĞ»Ğ¸ Ğ¾Ğ½ ÑÑƒÑ‰ĞµÑÑ‚Ğ²ÑƒĞµÑ‚ Ğ½Ğ° ÑÑ†ĞµĞ½Ğµ
+        if (inventoryManagerInstance != null && !Container.HasBinding<InventoryManager>())
+        {
+            Container.BindInstance(inventoryManagerInstance).AsSingle();
+        }
+
         Container.InjectGameObject(playerInstance.gameObject);
         Container.InjectGameObject(mainUIInstance.gameObject);
 
@@ -42,7 +50,7 @@ public class GameInstaller : MonoInstaller
 
     }
 
-    //ÌÅØÀ ÑÎÌÍÈÒÅËÜ, ÏÅĞÅÏÈÑÀÒÜ
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     //private void HidePlayerAndMenu(Player playerInst, MainMenu mainMenuInst)
     //{
     //    playerInst.Hide();

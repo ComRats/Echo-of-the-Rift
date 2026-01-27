@@ -21,6 +21,7 @@ public class GlobalLoader : MonoBehaviour
 
     [Inject] public Player playerInstance;
     [Inject] public MainUI mainUI;
+    [Inject] private InventoryManager inventoryManager;
 
     private Vector3? overridePosition = null;
     private bool isStart;
@@ -81,6 +82,11 @@ public class GlobalLoader : MonoBehaviour
 
         SaveLoadSystem.Save($"playerSave_{SceneManager.GetActiveScene().name}", data);
         SaveLoadSystem.Save("playerData", playerInstance.playerSaver);
+        
+        if (inventoryManager != null)
+        {
+            inventoryManager.SaveInventory();
+        }
     }
 
     private void LoadPlayerData()
@@ -145,6 +151,11 @@ public class GlobalLoader : MonoBehaviour
             sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
         SaveLoadSystem.Save("globalSave", data);
+        
+        if (inventoryManager != null)
+        {
+            inventoryManager.SaveInventory();
+        }
     }
 
     private void LoadGlobal()
@@ -171,6 +182,11 @@ public class GlobalLoader : MonoBehaviour
     {
         SavePlayer();
         SaveGlobal();
+        
+        if (inventoryManager != null)
+        {
+            inventoryManager.SaveInventory();
+        }
     }
 #endif
 
@@ -178,6 +194,14 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance.cameraSettings != null)
             playerInstance.cameraSettings.Initialize();
+    }
+    
+    public void SaveInventory()
+    {
+        if (inventoryManager != null)
+        {
+            inventoryManager.SaveInventory();
+        }
     }
 
     [Serializable]

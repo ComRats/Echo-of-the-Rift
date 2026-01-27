@@ -8,7 +8,7 @@ namespace Fishing2
     public class Fishing : MonoBehaviour
     {
         [Header("Компоненты")]
-        private Inventory playerInventory;
+        //private Inventory playerInventory;
         private FishingUI fishingUI;
         private TestMovement playerMovement;
         private FishingTrigger currentFishingTrigger;
@@ -23,8 +23,8 @@ namespace Fishing2
         [SerializeField] private float maxWaitTime = 15f;
         [SerializeField] private float biteWindow = 1f;
 
-        [Header("Рыба")]
-        [SerializeField] private List<Item> fishPrefabs;
+        //[Header("Рыба")]
+        //[SerializeField] private List<Item> fishPrefabs;
 
         public bool IsFishing { get; private set; } = false;
 
@@ -122,26 +122,26 @@ namespace Fishing2
 
         private void CatchRandomFish()
         {
-            if (playerInventory == null)
-            {
-                playerInventory = FindObjectOfType<Inventory>(true);
-                if (playerInventory == null)
-                {
-                    Debug.LogWarning("Инвентарь не найден. Невозможно добавить рыбу.");
-                    return;
-                }
-            }
+            // if (playerInventory == null)
+            // {
+            //     playerInventory = FindObjectOfType<Inventory>(true);
+            //     if (playerInventory == null)
+            //     {
+            //         Debug.LogWarning("Инвентарь не найден. Невозможно добавить рыбу.");
+            //         return;
+            //     }
+            // }
             
-            if (fishPrefabs != null && fishPrefabs.Count > 0)
-            {
-                Item randomFish = fishPrefabs[Random.Range(0, fishPrefabs.Count)];
-                playerInventory.AddItem(randomFish);
-                Debug.Log($"Поймана рыба: {randomFish.name}!");
-            }
-            else
-            {
-                Debug.LogWarning("Список рыб пуст. Невозможно добавить рыбу.");
-            }
+            // if (fishPrefabs != null && fishPrefabs.Count > 0)
+            // {
+            //     Item randomFish = fishPrefabs[Random.Range(0, fishPrefabs.Count)];
+            //     playerInventory.AddItem(randomFish);
+            //     Debug.Log($"Поймана рыба: {randomFish.name}!");
+            // }
+            // else
+            // {
+            //     Debug.LogWarning("Список рыб пуст. Невозможно добавить рыбу.");
+            // }
         }
 
         public void EndFishing()

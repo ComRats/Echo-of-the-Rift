@@ -80,12 +80,14 @@ public class PauseMenu : MonoBehaviour
         {
             GlobalLoader.Instance.SavePlayer();
             GlobalLoader.Instance.SaveGlobal();
+            GlobalLoader.Instance.SaveInventory();
         });
 
         buttons[3]._button.onClick.AddListener(() =>
         {
             GlobalLoader.Instance.SavePlayer();
             GlobalLoader.Instance.SaveGlobal();
+            GlobalLoader.Instance.SaveInventory();
 
             ResetValues();
 

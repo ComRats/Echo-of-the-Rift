@@ -3,6 +3,7 @@ using Sirenix.OdinInspector;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 [RequireComponent(typeof(Collider2D))]
 public class StarTrigger : MonoBehaviour
@@ -12,12 +13,16 @@ public class StarTrigger : MonoBehaviour
     [SerializeField, Range(0, 30)] private int spriteIndex;
 
     [ValueDropdown("GetSpriteNames")]
-    [SerializeField] private SpriteCollection sprites;//Inject in future
+    [SerializeField] private SpriteCollection sprites;
+
     private bool playerInside = false;
+    [Inject] private MainUI mainUI;
+
 
     private void Start()
     {
-        sprites = FindObjectOfType<SpriteCollection>();
+        sprites = mainUI.spriteCollection;
+        backPanel = mainUI.starPanel.GetComponent<Image>();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
