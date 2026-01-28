@@ -49,14 +49,14 @@ public class FightTrigger : MonoBehaviour
     private void SaveEnemiesToFile()
     {
         FightData data = new FightData { enemies = this.enemies };
-        SaveLoadSystem.Save(EnemySavePath, data);
+        SaveLoadSystem.Save(EnemySavePath, data, GlobalLoader.GAME_DIRECTORY);
         Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
-        SaveLoadSystem.Save(CharacterSavePath, data);
+        SaveLoadSystem.Save(CharacterSavePath, data, GlobalLoader.GAME_DIRECTORY);
         Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
     }
 

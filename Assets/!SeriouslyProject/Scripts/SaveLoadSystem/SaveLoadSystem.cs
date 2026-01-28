@@ -13,6 +13,23 @@ namespace EchoRift.SaveLoadSystem
             return Path.Combine(Application.persistentDataPath, $"{fileName}.json");
         }
 
+        public static string GetPath(string fileName, string folderName = "")
+        {
+            string root = Application.persistentDataPath;
+
+            if (!string.IsNullOrEmpty(folderName))
+            {
+                root = Path.Combine(root, folderName);
+
+                if (!Directory.Exists(root))
+                {
+                    Directory.CreateDirectory(root);
+                }
+            }
+
+            return Path.Combine(root, $"{fileName}.json");
+        }
+
         /// <summary>
         /// Универсальное сохранение любых данных в JSON.
         /// Обновляет кеш и файл.
@@ -24,6 +41,17 @@ namespace EchoRift.SaveLoadSystem
             File.WriteAllText(path, json);
 
             cache[fileName] = data; // обновляем кеш
+        }
+
+        public static void Save<T>(string fileName, T data, string folderName = "")
+        {
+            string path = GetPath(fileName, folderName);
+            string json = JsonUtility.ToJson(data, true);
+            File.WriteAllText(path, json);
+
+            // Кешируем с учетом папки в ключе, чтобы имена файлов не конфликтовали
+            string cacheKey = string.IsNullOrEmpty(folderName) ? fileName : $"{folderName}/{fileName}";
+            cache[cacheKey] = data;
         }
 
         /// <summary>
@@ -53,12 +81,42 @@ namespace EchoRift.SaveLoadSystem
             return data;
         }
 
+        public static T Load<T>(string fileName, string folderName = "") where T : new()
+        {
+            string cacheKey = string.IsNullOrEmpty(folderName) ? fileName : $"{folderName}/{fileName}";
+
+            if (cache.TryGetValue(cacheKey, out object cached) && cached is T cachedData)
+            {
+                return cachedData;
+            }
+
+            string path = GetPath(fileName, folderName);
+
+            if (!File.Exists(path))
+            {
+                var newData = new T();
+                cache[cacheKey] = newData;
+                return newData;
+            }
+
+            string json = File.ReadAllText(path);
+            T data = JsonUtility.FromJson<T>(json);
+
+            cache[cacheKey] = data;
+            return data;
+        }
+
         /// <summary>
         /// Проверка существования файла сохранения.
         /// </summary>
         public static bool Exists(string fileName)
         {
             return File.Exists(GetPath(fileName));
+        }
+
+        public static bool Exists(string fileName, string folderName = "")
+        {
+            return File.Exists(GetPath(fileName, folderName));
         }
 
         /// <summary>
@@ -92,6 +150,31 @@ namespace EchoRift.SaveLoadSystem
             if (Directory.Exists(dir))
             {
                 foreach (string file in Directory.GetFiles(dir, "*.json"))
+                {
+                    try
+                    {
+                        File.Delete(file);
+                    }
+                    catch (IOException e)
+                    {
+                        Debug.LogWarning($"Не удалось удалить {file}: {e.Message}");
+                    }
+                }
+            }
+
+            ClearCache();
+        }
+
+        public static void ClearAllSaves(string folderName = "")
+        {
+            string dir = string.IsNullOrEmpty(folderName)
+                ? Application.persistentDataPath
+                : Path.Combine(Application.persistentDataPath, folderName);
+
+            if (Directory.Exists(dir))
+            {
+                string[] files = Directory.GetFiles(dir, "*.json");
+                foreach (string file in files)
                 {
                     try
                     {

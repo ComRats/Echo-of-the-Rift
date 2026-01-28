@@ -22,6 +22,8 @@ public class GlobalLoader : MonoBehaviour
     [Inject, HideInInspector] public Player playerInstance;
     [Inject, HideInInspector] public MainUI mainUI;
 
+    public const string GAME_DIRECTORY = "GameProcess";
+
     private Vector3? overridePosition = null;
     private bool isStart;
 
@@ -79,25 +81,25 @@ public class GlobalLoader : MonoBehaviour
             Rotation = playerInstance.transform.rotation
         };
 
-        SaveLoadSystem.Save($"playerSave_{SceneManager.GetActiveScene().name}", data);
-        SaveLoadSystem.Save("playerData", playerInstance.playerSaver);
-        
+        SaveLoadSystem.Save($"playerSave_{SceneManager.GetActiveScene().name}", data, GAME_DIRECTORY);
+        SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
+
         mainUI.inventoryManager.SaveInventory();
     }
 
     private void LoadPlayerData()
     {
-        if (SaveLoadSystem.Exists("playerData"))
+        if (SaveLoadSystem.Exists("playerData", GAME_DIRECTORY))
         {
             //Debug.LogWarning(playerInstance);
-            playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData");
+            playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData", GAME_DIRECTORY);
         }
         else
         {
             var characterData = Resources.Load<CharacterData>("CharacterData/Human");
             playerInstance.playerSaver = new Player.PlayerSaver();
             playerInstance.playerSaver.LoadFrom(characterData);
-            SaveLoadSystem.Save("playerData", playerInstance.playerSaver);
+            SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
         }
     }
 
@@ -113,15 +115,15 @@ public class GlobalLoader : MonoBehaviour
         }
 
         string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
-        string filePath = SaveLoadSystem.GetPath(fileName);
+        string filePath = SaveLoadSystem.GetPath(fileName, GAME_DIRECTORY);
 
-        if (!SaveLoadSystem.Exists(fileName))
+        if (!SaveLoadSystem.Exists(fileName, GAME_DIRECTORY))
         {
             ResetPlayerTransform();
             return;
         }
 
-        var data = SaveLoadSystem.Load<PlayerData>(fileName);
+        var data = SaveLoadSystem.Load<PlayerData>(fileName, GAME_DIRECTORY);
 
         if (data == null || isStart)
         {
@@ -130,7 +132,7 @@ public class GlobalLoader : MonoBehaviour
         }
 
         playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
-        Debug.LogError(SaveLoadSystem.GetPath(fileName));
+        Debug.LogError(SaveLoadSystem.GetPath(fileName, GAME_DIRECTORY));
     }
 
     private void ResetPlayerTransform()
@@ -146,14 +148,15 @@ public class GlobalLoader : MonoBehaviour
             selectedTongueIndex = selectedTongueIndex,
             sceneIndex = SceneManager.GetActiveScene().buildIndex
         };
-        SaveLoadSystem.Save("globalSave", data);
-        
+        if (data.sceneIndex != 0 && data.sceneIndex != 1)
+            SaveLoadSystem.Save("globalSave", data, GAME_DIRECTORY);
+
         mainUI.inventoryManager.SaveInventory();
     }
 
     private void LoadGlobal()
     {
-        var data = SaveLoadSystem.Load<GlobalData>("globalSave");
+        var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
         selectedTongueIndex = data.selectedTongueIndex;
         isStart = data.isStart;
     }
@@ -188,10 +191,10 @@ public class GlobalLoader : MonoBehaviour
         if (playerInstance.cameraSettings != null)
             playerInstance.cameraSettings.Initialize();
     }
-    
+
     public void SaveInventory()
     {
-       mainUI.inventoryManager.SaveInventory();     
+        mainUI.inventoryManager.SaveInventory();
     }
 
     [Serializable]

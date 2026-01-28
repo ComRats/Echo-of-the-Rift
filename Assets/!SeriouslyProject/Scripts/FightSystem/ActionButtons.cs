@@ -220,7 +220,7 @@ public class ActionButtons : MonoBehaviour
         {
             Player.Result = FightResult.Escape;
             //Добавить переменную для сцены и логику
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").SceneIndex);
+            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
         }
     }
 

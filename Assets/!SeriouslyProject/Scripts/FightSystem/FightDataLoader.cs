@@ -27,7 +27,7 @@ public class FightDataLoader : MonoBehaviour
     [Button("Загрузить врагов")]
     private void LoadFightData()
     {
-        FightData fightData = SaveLoadSystem.Load<FightData>(EnemySaveFile);
+        FightData fightData = SaveLoadSystem.Load<FightData>(EnemySaveFile, GlobalLoader.GAME_DIRECTORY);
 
         if (fightData?.enemies == null || fightData.enemies.Count == 0)
         {
@@ -47,7 +47,7 @@ public class FightDataLoader : MonoBehaviour
     [Button("Загрузить персонажей")]
     private void LoadCharactersData()
     {
-        CharacterDataWrapper characterData = SaveLoadSystem.Load<CharacterDataWrapper>(CharacterSaveFile);
+        CharacterDataWrapper characterData = SaveLoadSystem.Load<CharacterDataWrapper>(CharacterSaveFile, GlobalLoader.GAME_DIRECTORY);
 
         if (characterData?.characters == null || characterData.characters.Count == 0)
         {

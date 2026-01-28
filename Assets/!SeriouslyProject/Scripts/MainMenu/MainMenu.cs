@@ -7,23 +7,29 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameAlert gameAlertPrefab;
     [SerializeField] private SceneLoader startSceneLoader;
     [SerializeField] private SceneLoader loadSceneLoader;
+    [SerializeField] private AudioSettingsUI audioSettings;
 
     private GlobalLoader.GlobalData globalData;
 
     private void Start()
     {
-        if (!SaveLoadSystem.Exists("globalSave") || SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").sceneIndex <= 1)
+        Animator animator = GetComponent<Animator>();
+
+        if (!SaveLoadSystem.Exists("globalSave", GlobalLoader.GAME_DIRECTORY) || SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).sceneIndex <= 1)
         {
             LoadButton.SetActive(false);
+            animator.SetTrigger("ButtonsShowLoad");
+        }
+        else
+        {
+            animator.SetTrigger("Show");
         }
 
-        Animator animator = GetComponent<Animator>();
-        animator.SetTrigger("Show");
     }
 
     public void TryPlay()
     {
-        if (SaveLoadSystem.Exists("globalSave"))
+        if (SaveLoadSystem.Exists("globalSave", GlobalLoader.GAME_DIRECTORY))
             GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
         else
             Play();
@@ -31,12 +37,13 @@ public class MainMenu : MonoBehaviour
 
     private void Play()
     {
-        SaveLoadSystem.ClearAllSaves();
+        SaveLoadSystem.ClearAllSaves(GlobalLoader.GAME_DIRECTORY);
         var data = new GlobalLoader.GlobalData
         {
             isStart = true
         };
-        SaveLoadSystem.Save("globalSave", data);
+        SaveLoadSystem.Save("globalSave", data, GlobalLoader.GAME_DIRECTORY);
+        //SaveLoadSystem.Save(AudioSettingsUI.AudioSaveKey, AudioSettingsUI.AudioSaveData.);
 
         startSceneLoader.LoadAsync();
     }
@@ -52,5 +59,5 @@ public class MainMenu : MonoBehaviour
         GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f, Color.black);
     }
 
-   
+
 }

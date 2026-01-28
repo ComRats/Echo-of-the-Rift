@@ -9,7 +9,7 @@ public class AudioSettingsUI : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
-    private const string AudioSaveKey = "audio_settings";
+    public const string AudioSaveKey = "audio_settings";
     private const int SFX_INDEX = 0;
     private const int MUSIC_INDEX = 1;
 

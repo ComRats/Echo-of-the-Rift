@@ -504,9 +504,9 @@ RectTransform:
   - {fileID: 1452349727}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -72.168}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 119.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296335340
@@ -733,9 +733,9 @@ RectTransform:
   - {fileID: 1175441122}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -568.127}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 88.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329980030
@@ -914,7 +914,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 563306626}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
   m_Name: 
@@ -945,10 +945,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acd866da46a3ffe4f8516e4c5b6cb873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LoadButton: {fileID: 704416836}
+  LoadButton: {fileID: 1222918468}
   gameAlertPrefab: {fileID: 7490771056175563970, guid: e4f3045de98221d43bd381cd2da8045f, type: 3}
   startSceneLoader: {fileID: 50756310}
   loadSceneLoader: {fileID: 58026911}
+  audioSettings: {fileID: 0}
 --- !u!95 &563306632
 Animator:
   serializedVersion: 5
@@ -1065,7 +1066,7 @@ GameObject:
   - component: {fileID: 704416838}
   - component: {fileID: 704416841}
   m_Layer: 5
-  m_Name: LoadButton
+  m_Name: SettingsButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1086,9 +1087,9 @@ RectTransform:
   - {fileID: 1658785948}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -326.635}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 88.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &704416838
@@ -1595,7 +1596,7 @@ GameObject:
   - component: {fileID: 1222918470}
   - component: {fileID: 1222918473}
   m_Layer: 5
-  m_Name: SettingsButton
+  m_Name: LoadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1616,9 +1617,9 @@ RectTransform:
   - {fileID: 1878208905}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -207.069}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 100.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1222918470
@@ -1905,9 +1906,9 @@ RectTransform:
   - {fileID: 1841652099}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 350, y: -447.381}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 102.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1520412145

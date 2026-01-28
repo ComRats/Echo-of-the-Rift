@@ -80,7 +80,7 @@ public class FightManager : MonoBehaviour
 
             //Показывать UI и Игрока
 
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").SceneIndex);
+            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -96,7 +96,7 @@ public class FightManager : MonoBehaviour
 
             //Показывать UI и Игрока
 
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave").SceneIndex);
+            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
 
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))

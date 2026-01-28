@@ -154,7 +154,7 @@ public class InventoryManager : MonoBehaviour
             }
         }
         
-        SaveLoadSystem.Save("inventoryData", saver);
+        SaveLoadSystem.Save("inventoryData", saver, GlobalLoader.GAME_DIRECTORY);
     }
     
     public void LoadInventory()
@@ -164,7 +164,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         
-        InventorySaver saver = SaveLoadSystem.Load<InventorySaver>("inventoryData");
+        InventorySaver saver = SaveLoadSystem.Load<InventorySaver>("inventoryData", GlobalLoader.GAME_DIRECTORY);
 
         ClearInventory();
 
