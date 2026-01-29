@@ -1044,8 +1044,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 0
-  isHide: 1
-  isCameraInit: 0
 --- !u!1 &2693783669045925167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2117,7 +2115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de704f7504eb6d040bcc9b6a4c423633, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clickSoundName: ClickSound
+  clickSoundName: ButtonClick1
 --- !u!1 &3683880206345274193
 GameObject:
   m_ObjectHideFlags: 0

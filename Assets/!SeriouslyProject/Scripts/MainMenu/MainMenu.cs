@@ -7,7 +7,6 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameAlert gameAlertPrefab;
     [SerializeField] private SceneLoader startSceneLoader;
     [SerializeField] private SceneLoader loadSceneLoader;
-    [SerializeField] private AudioSettingsUI audioSettings;
 
     private GlobalLoader.GlobalData globalData;
 
@@ -43,14 +42,13 @@ public class MainMenu : MonoBehaviour
             isStart = true
         };
         SaveLoadSystem.Save("globalSave", data, GlobalLoader.GAME_DIRECTORY);
-        //SaveLoadSystem.Save(AudioSettingsUI.AudioSaveKey, AudioSettingsUI.AudioSaveData.);
 
         startSceneLoader.LoadAsync();
     }
 
     public void Load()
     {
-        globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave");
+        globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
     }
 

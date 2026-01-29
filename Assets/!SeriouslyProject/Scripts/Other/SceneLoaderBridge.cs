@@ -1,72 +1,41 @@
-using Sirenix.OdinInspector;
 using UnityEngine;
+using System.Threading.Tasks;
 
-[RequireComponent(typeof(SceneLoader))]
 public class SceneLoaderBridge : MonoBehaviour
 {
-    [Header("ShowPlayer&UI")]
-    [HorizontalGroup("Toggle")]
-    [ToggleLeft]
-    [OnValueChanged("SetShow")]
     [SerializeField] private bool isShow = true;
-
-    [Header("HidePlayer&UI")]
-    [HorizontalGroup("Toggle")]
-    [ToggleLeft]
-    [OnValueChanged("SetHide")]
-    [SerializeField] private bool isHide = false;
-
-    [Header("CameraSettingsInitialize")]
-    [SerializeField] private bool isCameraInit = false;
-
-    private SceneLoader sceneLoader;
+    private SceneLoader _sceneLoader;
 
     private void Awake()
     {
-        if (sceneLoader == null)
-            sceneLoader = GetComponent<SceneLoader>();
+        _sceneLoader = GetComponent<SceneLoader>();
+        _sceneLoader._onLoadingSceneLoad.AddListener(OnPreloadLogic);
+        _sceneLoader._onSceneActivated.AddListener(OnActivatedLogic);
+    }
 
-        if (isShow)
-            sceneLoader._onSceneActivated.AddListener(() => GlobalLoader.Instance.Show());
-        else if (isHide)
-            sceneLoader._onSceneActivated.AddListener(() => GlobalLoader.Instance.Hide());
-
-        if (isCameraInit)
+    private void OnPreloadLogic()
+    {
+        var player = GlobalLoader.Instance.playerInstance;
+        if (player != null && SceneTransitionData.NextPosition.HasValue)
         {
-            //sceneLoader._onSceneActivated.AddListener(GlobalLoader.Instance.CameraSettingsInitialize);
+            player.movement.SetPlayerPosition(SceneTransitionData.NextPosition.Value);
+            player.cameraSettings.Initialize();
         }
-
-        sceneLoader._onSceneActivated.AddListener(async () =>
-        {
-            await GlobalLoader.Instance.mainUI.screenFader.FadeOutAsync();
-        });
     }
 
-    private void OnDestroy()
+    private async void OnActivatedLogic()
     {
-        if (isShow)
-            sceneLoader._onSceneActivated.RemoveListener(() => GlobalLoader.Instance.Show());
-        else if (isHide)
-            sceneLoader._onSceneActivated.RemoveListener(() => GlobalLoader.Instance.Hide());
+        if (this == null) return;
 
-        if (isCameraInit)
-            //sceneLoader._onLoadingSceneLoad.RemoveListener(GlobalLoader.Instance.CameraSettingsInitialize);
+        if (isShow) GlobalLoader.Instance.Show();
 
-        sceneLoader._onSceneActivated.RemoveListener(async () =>
-        {
-            await GlobalLoader.Instance.mainUI.screenFader.FadeOutAsync();
-        });
-    }
+        await Task.Yield();
 
-    private void SetShow()
-    {
-        if (isShow)
-            isHide = false;
-    }
+        GlobalLoader.Instance.playerInstance?.cameraSettings.Initialize();
 
-    private void SetHide()
-    {
-        if (isHide)
-            isShow = false;
+        await GlobalLoader.Instance.mainUI.screenFader.FadeOutAsync();
+
+        if (GlobalLoader.Instance.playerInstance != null)
+            GlobalLoader.Instance.playerInstance.movement.canMove = true;
     }
 }

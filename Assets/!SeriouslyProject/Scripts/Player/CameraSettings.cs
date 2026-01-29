@@ -1,42 +1,33 @@
 ﻿using Cinemachine;
-using EchoRift;
 using UnityEngine;
 
 public class CameraSettings : MonoBehaviour
 {
     [SerializeField] private string colliderTag = "cameraBorder";
+    private CinemachineVirtualCamera _virtCam;
+    private CinemachineConfiner _confiner;
 
-    private void OnEnable()
+    private void Awake()
     {
-        Initialize();
+        _virtCam = GetComponent<CinemachineVirtualCamera>();
+        _confiner = GetComponent<CinemachineConfiner>();
     }
 
     public void Initialize()
     {
-        //Debug.LogWarning("CameraInit");
-        CinemachineConfiner cam = GetComponent<CinemachineConfiner>();
-        CinemachineVirtualCamera virtCam = GetComponent<CinemachineVirtualCamera>();
-
-        if (cam == null && virtCam != null)
-        {
-            Debug.LogWarning("CinemachineConfiner не найден!");
-            Debug.LogWarning("CinemachineVirtualCamera не найден!");
-            return;
-        }
-
-        virtCam.ForceCameraPosition(transform.parent.position, Quaternion.identity);
-        cam.InvalidatePathCache();
+        if (_virtCam == null || _confiner == null) return;
 
         GameObject borderObj = GameObject.FindGameObjectWithTag(colliderTag);
         if (borderObj != null)
         {
-            PolygonCollider2D cameraBorder = borderObj.GetComponent<PolygonCollider2D>();
-            if (cameraBorder != null)
-            {
-                cam.m_BoundingShape2D = cameraBorder;
-                cam.InvalidatePathCache();
-                //Debug.Log("Конфайнер успешно привязан к " + borderObj.name);
-            }
+            _confiner.m_BoundingShape2D = borderObj.GetComponent<PolygonCollider2D>();
+            _confiner.InvalidatePathCache();
         }
+
+        transform.position = transform.parent.position;
+
+        _virtCam.OnTargetObjectWarped(_virtCam.Follow, transform.parent.position - transform.position);
+        _virtCam.ForceCameraPosition(transform.parent.position, Quaternion.identity);
+        _virtCam.InternalUpdateCameraState(Vector3.up, -1);
     }
 }
