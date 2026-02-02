@@ -468,8 +468,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 1
-  isHide: 0
-  isCameraInit: 1
 --- !u!1 &296335338
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,7 +947,6 @@ MonoBehaviour:
   gameAlertPrefab: {fileID: 7490771056175563970, guid: e4f3045de98221d43bd381cd2da8045f, type: 3}
   startSceneLoader: {fileID: 50756310}
   loadSceneLoader: {fileID: 58026911}
-  audioSettings: {fileID: 0}
 --- !u!95 &563306632
 Animator:
   serializedVersion: 5
@@ -1736,8 +1733,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 1
-  isHide: 0
-  isCameraInit: 0
 --- !u!1 &1452349726
 GameObject:
   m_ObjectHideFlags: 0

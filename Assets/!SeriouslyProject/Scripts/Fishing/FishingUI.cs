@@ -1,0 +1,39 @@
+using TMPro;
+using UnityEngine;
+
+public class FishingUI : MonoBehaviour
+{
+    [SerializeField] private TextMeshProUGUI fishingStatusText;
+    [SerializeField] private TextMeshProUGUI fishingHelpText;
+
+
+    public void ShowWaitingForBite()
+    {
+        fishingStatusText.text = "Ожидание поклевки...";
+        fishingHelpText.text = "Нажмите F чтобы вытянуть удочку";
+    }
+
+    public void ShowBite()
+    {
+        fishingStatusText.text = "Клюёт!";
+        fishingHelpText.text = "Нажмите F чтобы подсечь!";
+    }
+
+    public void ShowCatchResult(string fishName)
+    {
+        fishingStatusText.text = $"Вы поймали {fishName}!";
+        fishingHelpText.text = "";
+    }
+
+    public void ShowMissed()
+    {
+        fishingStatusText.text = "Упустил!";
+        fishingHelpText.text = "";
+    }
+
+    public void HideText()
+    {
+        fishingStatusText.text = "";
+        fishingHelpText.text = "";
+    }
+}

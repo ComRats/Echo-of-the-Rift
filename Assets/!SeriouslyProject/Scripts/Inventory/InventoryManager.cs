@@ -69,7 +69,22 @@ public class InventoryManager : MonoBehaviour
     //     SaveInventory();
     // }
 
-    public bool AddItem(ItemData item, int amount = 1)
+    #region Inventory
+
+    public bool AddItem(string itemName, int amount = 1)
+    {
+        ItemData item = FindItemDataByName(itemName);
+        
+        if (item == null)
+        {
+            Debug.LogWarning($"Предмет с именем '{itemName}' не найден в Resources/Items!");
+            return false;
+        }
+        
+        return AddItemInternal(item, amount);
+    }
+
+    private bool AddItemInternal(ItemData item, int amount = 1)
     {
         if (item.isStackable)
         {
@@ -121,6 +136,25 @@ public class InventoryManager : MonoBehaviour
         DraggableItem draggable = newItemGo.GetComponent<DraggableItem>();
         draggable.InitialiseItem(item, amount);
     }
+
+    private ItemData FindItemDataByName(string itemName)
+    {
+        ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
+        
+        foreach (ItemData item in allItems)
+        {
+            if (item != null && item.itemName == itemName)
+            {
+                return item;
+            }
+        }
+        
+        return null;
+    }
+
+    #endregion
+
+    #region Save/Load
 
     public void SaveInventory()
     {
@@ -180,6 +214,10 @@ public class InventoryManager : MonoBehaviour
                     {
                         SpawnItemInSlot(itemData, inventorySlots[i], saver.inventorySlots[i].count);
                     }
+                    else
+                    {
+                        Debug.LogWarning($"Предмет '{saver.inventorySlots[i].itemName}' не найден при загрузке!");
+                    }
                 }
             }
         }
@@ -195,6 +233,10 @@ public class InventoryManager : MonoBehaviour
                     if (itemData != null)
                     {
                         SpawnItemInSlot(itemData, equipmentSlots[i], saver.equipmentSlots[i].count);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Предмет '{saver.equipmentSlots[i].itemName}' не найден при загрузке!");
                     }
                 }
             }
@@ -223,20 +265,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
     }
-    
-    private ItemData FindItemDataByName(string itemName)
-    {
-        ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
-        
-        foreach (ItemData item in allItems)
-        {
-            if (item != null && item.itemName == itemName)
-            {
-                return item;
-            }
-        }
-        
-        Debug.LogWarning($"ItemData с именем '{itemName}' не найден!");
-        return null;
-    }
+
+    #endregion
 }

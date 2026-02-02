@@ -9,6 +9,7 @@ public class MainUI : MonoBehaviour
     public GameObject starPanel;
     public SpriteCollection spriteCollection;
     public InventoryManager inventoryManager;
+    public FishingUI fishingUI;
 
     public bool canOpenUI = true;
 

@@ -3013,8 +3013,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 0
-  isHide: 1
-  isCameraInit: 0
 --- !u!114 &123303395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19857,8 +19855,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 1
-  isHide: 0
-  isCameraInit: 1
 --- !u!114 &952196481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22052,10 +22048,9 @@ MonoBehaviour:
   minWaitTime: 5
   maxWaitTime: 15
   biteWindow: 1
-  fishPrefabs:
-  - {fileID: 11400000, guid: 5e0aa736c14b9144f91062c8857104e0, type: 2}
-  - {fileID: 11400000, guid: eb42bd66f73c45340a5a7b99c62401a3, type: 2}
-  - {fileID: 11400000, guid: 185a70344d6526a4f97607843bacce6c, type: 2}
+  fishList:
+  - karas
+  - pig
 --- !u!114 &1037867733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -32305,7 +32300,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1657620535}
   m_HandleRect: {fileID: 1657620533}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
