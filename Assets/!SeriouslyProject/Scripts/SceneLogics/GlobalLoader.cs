@@ -107,6 +107,8 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance == null) return;
 
+        overridePosition = SceneTransitionData.NextPosition;
+
         if (overridePosition.HasValue)
         {
             playerInstance.transform.position = overridePosition.Value;
