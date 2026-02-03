@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 935899b62f48ae5498594680ed17d133, type: 3}
-  m_Name: DialogueDataBase
+  m_Name: DialogueDataBase (Auto-Backup)
   m_EditorClassIdentifier: 
   version: 
   author: 
@@ -891,7 +891,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 134.11978}
+    canvasScrollPosition: {x: 0, y: 123.11054}
     canvasZoom: 1.0899999
   - id: 2
     fields:
@@ -2245,7 +2245,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 396.7778
+        x: 397.74863
         y: 136.93547
         width: 160
         height: 30
@@ -2402,7 +2402,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 166.01947, y: 44.88806}
+    canvasScrollPosition: {x: 33.98059, y: 721.5875}
     canvasZoom: 1.0299995
   - id: 3
     fields:

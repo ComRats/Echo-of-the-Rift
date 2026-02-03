@@ -9,27 +9,30 @@ public class FightNPC : MonoBehaviour
     [Header("Quest Settings")]
     [SerializeField] private QuestChange[] quests;
 
-    [SerializeField] private UnityEvent onFightWin;
-    [SerializeField] private UnityEvent onFightLose;
-    [SerializeField] private UnityEvent onFightEscape;
+    private FightResult result;
 
     private void Start()
     {
-        switch (Player.Result)
+        result = Player.Result;
+
+        foreach (var quest in quests)
         {
-            case FightResult.Win:
-                onFightWin?.Invoke();
-                break;
+            switch (result)
+            {
+                case FightResult.Win:
+                    quest.onFightWin?.Invoke();
+                    break;
 
-            case FightResult.Lose:
-                onFightLose?.Invoke();
-                break;
+                case FightResult.Lose:
+                    quest.onFightLose?.Invoke();
+                    break;
 
-            case FightResult.Escape:
-                onFightEscape?.Invoke();
-                break;
+                case FightResult.Escape:
+                    quest.onFightEscape?.Invoke();
+                    break;
+            }
+
         }
-
         Player.Result = FightResult.None;
     }
 
@@ -37,8 +40,28 @@ public class FightNPC : MonoBehaviour
     {
         foreach (var quest in quests)
         {
-            QuestLog.SetQuestState(quest.questCode, quest.questState);
-            Debug.Log($" вест {quest.questCode} изменЄн на {quest.questState}");
+            QuestState stateToApply;
+
+            switch (result)
+            {
+                case FightResult.Win:
+                    stateToApply = quest.questState_Win;
+                    break;
+
+                case FightResult.Lose:
+                    stateToApply = quest.questState_Lose;
+                    break;
+
+                case FightResult.Escape:
+                    stateToApply = quest.questState_Escape;
+                    break;
+
+                default:
+                    continue;
+            }
+
+            QuestLog.SetQuestState(quest.questCode, stateToApply);
+            Debug.Log($" вест {quest.questCode} изменЄн на {stateToApply}");
         }
     }
 }
@@ -47,7 +70,16 @@ public class FightNPC : MonoBehaviour
 public struct QuestChange
 {
     public string questCode;
-    public QuestState questState;
+
+    public QuestState questState_Win;
+    public UnityEvent onFightWin;
+
+    public QuestState questState_Lose;
+    public UnityEvent onFightLose;
+
+    public QuestState questState_Escape;
+    public UnityEvent onFightEscape;
+
 }
 
 public enum FightResult

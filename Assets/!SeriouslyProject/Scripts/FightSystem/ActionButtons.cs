@@ -70,7 +70,7 @@ public class ActionButtons : MonoBehaviour
                 var activeChar = fightManager.ActiveCharacter;
                 if (activeChar == null)
                 {
-                    Debug.LogWarning("No active character (fightManager.ActiveCharacter == null).");
+                    Debug.Log("No active character");
                     return;
                 }
 

@@ -8,7 +8,7 @@ public class SetPlayerToDialogue : MonoBehaviour
     {
         DialogueSystemTriggerInitialize();
         DialogueSystemEventsInitialize("start");
-        DialogueSystemEventsInitialize("end");
+        DialogueSystemEventsInitialize("end"); 
     }
 
     private void DialogueSystemTriggerInitialize()
