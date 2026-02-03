@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7202662827033892417}
   - component: {fileID: 8961349734262135694}
   - component: {fileID: 966796179055672587}
-  - component: {fileID: 4128013187878158389}
+  - component: {fileID: -405372636244250813}
   m_Layer: 5
-  m_Name: AmuletSlot
+  m_Name: HelmetSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,9 +104,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c121d47e51f76754fb605f856887ee99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  allowedType: 3
+  allowedType: 4
   inventoryManager: {fileID: 0}
---- !u!114 &4128013187878158389
+--- !u!114 &-405372636244250813
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,5 +126,5 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 063d3064596e1854ba65a88b0a904de7, type: 3}
+  m_Sprite: {fileID: 3286163911610860551, guid: d4409556e6f7dba4e9b482f5c587bbd3, type: 3}
   m_PreserveAspect: 0
