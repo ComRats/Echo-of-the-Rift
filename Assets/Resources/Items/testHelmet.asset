@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: testHelmet
   m_EditorClassIdentifier: 
   itemName: testHelmet
+  itemGameName: "\u0422\u0435\u0441\u0442 \u0428\u043B\u0435\u043C"
   icon: {fileID: 21300000, guid: 48e5880343ce0324cbf22b6ba4d5d1d4, type: 3}
-  itemType: 4
+  itemType: 32
   isStackable: 0
   maxStackSize: 10

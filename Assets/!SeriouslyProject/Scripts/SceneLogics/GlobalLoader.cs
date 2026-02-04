@@ -67,7 +67,7 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-        CameraSettingsInitialize();
+        // CameraSettingsInitialize();
     }
 
 
@@ -188,11 +188,11 @@ public class GlobalLoader : MonoBehaviour
     }
 #endif
 
-    public void CameraSettingsInitialize()
-    {
-        if (playerInstance.cameraSettings != null)
-            playerInstance.cameraSettings.Initialize();
-    }
+    // public void CameraSettingsInitialize()
+    // {
+    //     if (playerInstance.cameraSettings != null)
+    //         playerInstance.cameraSettings.Initialize();
+    // }
 
     public void SaveInventory()
     {

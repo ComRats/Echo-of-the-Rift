@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
-  m_Name: testArmor
+  m_Name: skatina
   m_EditorClassIdentifier: 
-  itemName: testArmor
-  itemGameName: "\u0422\u0435\u0441\u0442 \u0410\u0440\u043C\u043E\u0440"
-  icon: {fileID: 21300000, guid: 4586250277f74fd48ace146085fd80f3, type: 3}
-  itemType: 8
+  itemName: skatina
+  itemGameName: "\u0421\u043A\u0430\u0442\u0438\u043D\u0430"
+  icon: {fileID: -1471494679, guid: 26bc0f092e037b140bdc193d26c67f49, type: 3}
+  itemType: 1
   isStackable: 0
   maxStackSize: 10

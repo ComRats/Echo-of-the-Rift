@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: pig
   m_EditorClassIdentifier: 
   itemName: pig
+  itemGameName: "\u0421\u0432\u0438\u043D"
   icon: {fileID: 21300000, guid: e0a4ef7cc13112043b6881413c182b66, type: 3}
-  itemType: 0
+  itemType: 1
   isStackable: 1
   maxStackSize: 10

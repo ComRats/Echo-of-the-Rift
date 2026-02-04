@@ -84,6 +84,112 @@ public class InventoryManager : MonoBehaviour
         return AddItemInternal(item, amount);
     }
 
+    public bool RemoveItem(string itemName, int amount = 1)
+    {
+        if (amount <= 0)
+        {
+            Debug.LogWarning("Количество для удаления должно быть больше 0!");
+            return false;
+        }
+
+        int remainingToRemove = amount;
+
+        // Проходим по всем слотам инвентаря
+        for (int i = 0; i < inventorySlots.Length; i++)
+        {
+            InventorySlot slot = inventorySlots[i];
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
+            {
+                if (itemInSlot.count >= remainingToRemove)
+                {
+                    // В этом слоте достаточно предметов
+                    itemInSlot.count -= remainingToRemove;
+                    
+                    if (itemInSlot.count <= 0)
+                    {
+                        Destroy(itemInSlot.gameObject);
+                    }
+                    else
+                    {
+                        itemInSlot.RefreshCount();
+                    }
+                    
+                    return true;
+                }
+                else
+                {
+                    // Забираем все предметы из этого слота и продолжаем искать
+                    remainingToRemove -= itemInSlot.count;
+                    Destroy(itemInSlot.gameObject);
+                }
+            }
+        }
+
+        // Проверяем слоты экипировки
+        for (int i = 0; i < equipmentSlots.Length; i++)
+        {
+            InventorySlot slot = equipmentSlots[i];
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+
+            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
+            {
+                if (itemInSlot.count >= remainingToRemove)
+                {
+                    itemInSlot.count -= remainingToRemove;
+                    
+                    if (itemInSlot.count <= 0)
+                    {
+                        Destroy(itemInSlot.gameObject);
+                    }
+                    else
+                    {
+                        itemInSlot.RefreshCount();
+                    }
+                    
+                    return true;
+                }
+                else
+                {
+                    remainingToRemove -= itemInSlot.count;
+                    Destroy(itemInSlot.gameObject);
+                }
+            }
+        }
+
+        // Если мы здесь, значит не хватило предметов
+        Debug.LogWarning($"Недостаточно предметов '{itemName}' для удаления. Требуется: {amount}, не хватает: {remainingToRemove}");
+        return false;
+    }
+
+    public int GetItemCount(string itemName)
+    {
+        int totalCount = 0;
+
+        // Считаем в инвентаре
+        foreach (InventorySlot slot in inventorySlots)
+        {
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
+            {
+                totalCount += itemInSlot.count;
+            }
+        }
+
+        // Считаем в экипировке
+        foreach (InventorySlot slot in equipmentSlots)
+        {
+            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
+            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
+            {
+                totalCount += itemInSlot.count;
+            }
+        }
+
+        return totalCount;
+    }
+
     private bool AddItemInternal(ItemData item, int amount = 1)
     {
         if (item.isStackable)

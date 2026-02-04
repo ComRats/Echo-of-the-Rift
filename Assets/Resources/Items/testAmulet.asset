@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: testAmulet
   m_EditorClassIdentifier: 
   itemName: testAmulet
+  itemGameName: "\u0422\u0435\u0441\u0442 \u0410\u043C\u0443\u043B\u0435\u0442"
   icon: {fileID: 21300000, guid: 5ca79b281c0f64c429979d43d36b09ff, type: 3}
-  itemType: 3
+  itemType: 16
   isStackable: 0
   maxStackSize: 10

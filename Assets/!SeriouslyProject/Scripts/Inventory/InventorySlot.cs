@@ -3,7 +3,9 @@ using UnityEngine.EventSystems;
 
 public class InventorySlot : MonoBehaviour, IDropHandler
 {
-    public ItemType allowedType = ItemType.Generic;
+    public const ItemType AllTypes = ItemType.Food | ItemType.Potion | ItemType.Weapon | ItemType.Armor | ItemType.Amulet | ItemType.Helmet;
+
+    public ItemType allowedType = AllTypes;
 
     [SerializeField] private InventoryManager inventoryManager;
 
@@ -38,10 +40,9 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         }
     }
 
-    private bool IsTypeAllowed(DraggableItem item)
+    public bool IsTypeAllowed(DraggableItem item)
     {
-        if (allowedType == ItemType.Generic) return true;
-        return item.itemData.itemType == allowedType;
+        return (allowedType & item.itemData.itemType) != 0;
     }
 
     private bool CanStackItems(DraggableItem item1, DraggableItem item2)
@@ -78,7 +79,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
         
         foreach (InventorySlot slot in inventoryManager.inventorySlots)
         {
-            if (slot.transform.childCount == 0)
+            if (slot.transform.childCount == 0 && slot.IsTypeAllowed(item))
             {
                 item.parentAfterDrag = slot.transform;
                 item.transform.SetParent(slot.transform);
@@ -92,6 +93,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         Transform newItemOriginalParent = newItem.parentAfterDrag;
         Transform oldItemOriginalParent = oldItem.transform.parent;
+
+        InventorySlot originalSlot = newItemOriginalParent.GetComponent<InventorySlot>();
+        if (originalSlot != null && !originalSlot.IsTypeAllowed(oldItem))
+        {
+            return;
+        }
 
         newItem.parentAfterDrag = oldItemOriginalParent;
         oldItem.parentAfterDrag = newItemOriginalParent;

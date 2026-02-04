@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [Header("UI")]
     public Image image;
@@ -14,6 +14,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public int count = 1;
 
     private InventoryManager inventoryManager;
+    private InventoryContextMenu contextMenu;
 
     private float snapDistance = 70f;
     private float snapDistanceSqr;
@@ -22,6 +23,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (inventoryManager == null)
             inventoryManager = FindObjectOfType<InventoryManager>();
+            
+        if (contextMenu == null)
+            contextMenu = FindObjectOfType<InventoryContextMenu>();
     }
 
     private void Start()
@@ -35,6 +39,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.sprite = newItem.icon;
         count = amount;
         RefreshCount();
+        
+        // Инициализируем parentAfterDrag текущим родителем
+        parentAfterDrag = transform.parent;
     }
 
     public void RefreshCount()
@@ -44,8 +51,35 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         countText.gameObject.SetActive(textActive);
     }
 
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        // Проверяем клик правой кнопкой мыши
+        if (eventData.button == PointerEventData.InputButton.Right)
+        {
+            OpenContextMenu(eventData.position);
+        }
+    }
+
+    private void OpenContextMenu(Vector2 position)
+    {
+        if (contextMenu != null)
+        {
+            contextMenu.Show(this, position);
+        }
+        else
+        {
+            Debug.LogWarning("InventoryContextMenu не найдено в сцене!");
+        }
+    }
+
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // Закрываем контекстное меню при начале перетаскивания
+        if (contextMenu != null)
+        {
+            contextMenu.Hide();
+        }
+        
         parentAfterDrag = transform.parent;
         
         Transform canvasTransform = GetComponentInParent<Canvas>().transform;

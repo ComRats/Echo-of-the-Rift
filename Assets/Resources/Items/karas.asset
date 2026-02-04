@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: karas
   m_EditorClassIdentifier: 
   itemName: karas
+  itemGameName: "\u041A\u0430\u0440\u0430\u0441\u044C"
   icon: {fileID: 21300000, guid: 69610a98dd10cab489d7c2fde3c2c7e5, type: 3}
-  itemType: 0
-  isStackable: 1
+  itemType: 5
+  isStackable: 0
   maxStackSize: 16
