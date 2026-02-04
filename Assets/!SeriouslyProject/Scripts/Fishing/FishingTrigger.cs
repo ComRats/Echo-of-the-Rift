@@ -2,6 +2,7 @@ using System.Linq;
 using EchoRift;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Zenject;
 
 public class FishingTrigger : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class FishingTrigger : MonoBehaviour
     [SerializeField, Range(0, 30)] private int spriteIndex;
     [ValueDropdown("GetSpriteNames")]
     [SerializeField] private SpriteCollection sprites;
+
+    [Inject] private MainUI mainUI;
+    [Inject] private GameSettings gameSettings;
     
     private Player currentPlayer;
     private bool playerInside = false;
@@ -17,7 +21,7 @@ public class FishingTrigger : MonoBehaviour
 
     private void Start()
     {
-        sprites = FindObjectOfType<SpriteCollection>();
+        sprites = mainUI.spriteCollection;
 
         if (transform.childCount > 0)
             buttonUI = transform.GetChild(0).gameObject;
@@ -44,7 +48,7 @@ public class FishingTrigger : MonoBehaviour
 
     private void Update()
     {
-        if (playerInside && Input.GetKeyDown(KeyCode.F) && fishing != null && !fishing.IsFishing)
+        if (playerInside && Input.GetKeyDown(gameSettings.useButton) && fishing != null && !fishing.IsFishing)
         {
             Debug.Log("Рыбалка началась");
 

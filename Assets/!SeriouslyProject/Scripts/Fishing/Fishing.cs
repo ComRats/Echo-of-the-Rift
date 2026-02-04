@@ -31,7 +31,7 @@ public class Fishing : MonoBehaviour
     {
         fishingUI = _mainUI.fishingUI;
         inventoryManager = _mainUI.inventoryManager;
-        playerMovement = FindObjectOfType<TestMovement>();
+        playerMovement = FindObjectOfType<TestMovement>(); // замени на Inject player.movement
     }
 
     public void StartFishingProcess(FishingTrigger trigger)

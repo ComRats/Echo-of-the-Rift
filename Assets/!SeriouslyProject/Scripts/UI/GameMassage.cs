@@ -34,6 +34,53 @@ public static class GameMassage
         }
     }
 
+    public static void ButtonMassageWithText(
+            GameObject target,
+            bool isShow,
+            Sprite sprite,
+            string hintText,
+            Vector3 iconOffset = default,
+            Vector3 textOffset = default,
+            float textSize = 3f,
+            Color? textColor = null)
+    {
+        if (isShow)
+        {
+            if (newMessage != null) return; 
+
+            newMessage = new GameObject("KeyMassage");
+            newMessage.transform.SetParent(target.transform);
+            newMessage.transform.position = target.transform.position + iconOffset;
+            newMessage.transform.localScale = new Vector3(2f, 2f, 1f);
+
+            var sr = newMessage.AddComponent<SpriteRenderer>();
+            sr.sprite = sprite;
+            sr.sortingLayerName = "Player";
+            sr.sortingOrder = 500;
+
+            var textObj = new GameObject("HintText");
+            textObj.transform.SetParent(newMessage.transform);
+            textObj.transform.localPosition = textOffset;
+
+            var tmp = textObj.AddComponent<TextMeshPro>();
+            tmp.text = hintText;
+            tmp.fontSize = textSize;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color = textColor ?? Color.white;
+
+            tmp.sortingLayerID = sr.sortingLayerID;
+            tmp.sortingOrder = sr.sortingOrder + 1;
+        }
+        else
+        {
+            if (newMessage != null)
+            {
+                Object.Destroy(newMessage);
+                newMessage = null;
+            }
+        }
+    }
+
     public static void WarningMassage(GameObject textPrefab, string massage, float duration, Color textColor)
     {
         GameObject textObj = Object.Instantiate(textPrefab, FindCanvas().transform);

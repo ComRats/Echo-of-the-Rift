@@ -17,6 +17,7 @@ MonoBehaviour:
     - a0cfa9f672ed7c645b1f52851442d6fd
     - 27c91897e6b225b4b89a430d6f14a966
     - e23bbaaae50e37f41aaa380c10111b10
+    - a528bf3a65804084b8df8f26577f7eff
     values:
     - goDatas_byGlobalId:
         keys:
@@ -32,6 +33,14 @@ MonoBehaviour:
     - goDatas_byGlobalId:
         keys: []
         values: []
+    - goDatas_byGlobalId:
+        keys:
+        - globalObjectIdString: GlobalObjectId_V1-2-a528bf3a65804084b8df8f26577f7eff-1161224118-0
+        values:
+        - colorIndex: 3
+          iconNameOrGuid: PreMatQuad
+          isIconRecursive: 0
+          isColorRecursive: 0
   bookmarks: []
   bookmarkedScenePaths:
   - Assets/!SeriouslyProject/Scenes/TestScene.unity
