@@ -36,9 +36,14 @@ MonoBehaviour:
     - goDatas_byGlobalId:
         keys:
         - globalObjectIdString: GlobalObjectId_V1-2-a528bf3a65804084b8df8f26577f7eff-1161224118-0
+        - globalObjectIdString: GlobalObjectId_V1-2-a528bf3a65804084b8df8f26577f7eff-1704133299-0
         values:
         - colorIndex: 3
           iconNameOrGuid: PreMatQuad
+          isIconRecursive: 0
+          isColorRecursive: 0
+        - colorIndex: 3
+          iconNameOrGuid: 
           isIconRecursive: 0
           isColorRecursive: 0
   bookmarks: []
