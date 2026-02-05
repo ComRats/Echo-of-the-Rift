@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeb3f24b1c8bae6429c0f05361d02463, type: 3}
+  m_Name: InventoryData
+  m_EditorClassIdentifier: 
+  inventorySlots:
+  - itemName: pig
+    count: 4
+  - itemName: karas
+    count: 1
+  - itemName: karas
+    count: 1
+  - itemName: karas
+    count: 1
+  - itemName: axe
+    count: 1
+  - itemName: karas
+    count: 1
+  - itemName: testAmulet
+    count: 1
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  equipmentSlots:
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0

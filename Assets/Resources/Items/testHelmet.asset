@@ -12,9 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: testHelmet
   m_EditorClassIdentifier: 
-  itemName: testHelmet
-  itemGameName: "\u0422\u0435\u0441\u0442 \u0428\u043B\u0435\u043C"
   icon: {fileID: 21300000, guid: 48e5880343ce0324cbf22b6ba4d5d1d4, type: 3}
-  itemType: 32
+  itemName: brokeHelmet
+  itemGameName: "\u041F\u043E\u0434\u0431\u0438\u0442\u044B\u0439 \u0448\u043B\u0435\u043C"
+  itemType: 64
+  description: "\u041F\u043E\u043C\u044F\u0442\u044B\u0439 \u0443\u0434\u0430\u0440\u0430\u043C\u0438, 
+    \u043D\u043E \u0432 \u0446\u0435\u043B\u043E\u043C \u0447\u0443\u0442\u044C \u043B\u0443\u0447\u0448\u0435
+    \u0447\u0435\u043C \u043D\u0438\u0447\u0435\u0433\u043E. "
   isStackable: 0
   maxStackSize: 10

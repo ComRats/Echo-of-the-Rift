@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: skatina
   m_EditorClassIdentifier: 
+  icon: {fileID: -1471494679, guid: 26bc0f092e037b140bdc193d26c67f49, type: 3}
   itemName: skatina
   itemGameName: "\u0421\u043A\u0430\u0442\u0438\u043D\u0430"
-  icon: {fileID: -1471494679, guid: 26bc0f092e037b140bdc193d26c67f49, type: 3}
   itemType: 1
-  isStackable: 0
-  maxStackSize: 10
+  description: 
+  isStackable: 1
+  maxStackSize: 9

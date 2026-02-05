@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: axe
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: b43cb73d0d1299b4abb0c82eb73f1723, type: 3}
   itemName: axe
   itemGameName: "\u0422\u043E\u043F\u043E\u0440"
-  icon: {fileID: 21300000, guid: b43cb73d0d1299b4abb0c82eb73f1723, type: 3}
-  itemType: 4
+  itemType: 8
+  description: 
   isStackable: 0
   maxStackSize: 10

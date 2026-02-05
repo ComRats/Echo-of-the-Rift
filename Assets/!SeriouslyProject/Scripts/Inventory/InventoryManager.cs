@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using System.Collections.Generic;
 using EchoRift.SaveLoadSystem;
 
 [Serializable]
@@ -9,24 +8,18 @@ public class InventorySaver
     public InventorySlotData[] inventorySlots;
     public InventorySlotData[] equipmentSlots;
 
-    public InventorySaver()
-    {
-        // Конструктор по умолчанию для сериализации
-    }
+    public InventorySaver() { }
 
     public InventorySaver(int inventoryCount, int equipmentCount)
     {
         inventorySlots = new InventorySlotData[inventoryCount];
-        for (int i = 0; i < inventoryCount; i++)
-        {
-            inventorySlots[i] = new InventorySlotData();
-        }
-        
         equipmentSlots = new InventorySlotData[equipmentCount];
+
+        for (int i = 0; i < inventoryCount; i++)
+            inventorySlots[i] = new InventorySlotData();
+
         for (int i = 0; i < equipmentCount; i++)
-        {
             equipmentSlots[i] = new InventorySlotData();
-        }
     }
 }
 
@@ -35,13 +28,13 @@ public class InventorySlotData
 {
     public string itemName;
     public int count;
-    
+
     public InventorySlotData()
     {
         itemName = "";
         count = 0;
     }
-    
+
     public InventorySlotData(string name, int itemCount)
     {
         itemName = name;
@@ -51,210 +44,254 @@ public class InventorySlotData
 
 public class InventoryManager : MonoBehaviour
 {
-    [Header("Inventory")]
+    [Header("Data")]
+    [SerializeField] private InventoryData inventoryData;
+
+    [Header("Inventory UI")]
     public InventorySlot[] inventorySlots;
-    
-    [Header("Equipment")]
+
+    [Header("Equipment UI")]
     public InventorySlot[] equipmentSlots;
-    
+
+    [Header("Prefab")]
     public GameObject inventoryItemPrefab;
+
+    public InventoryData Data => inventoryData;
 
     private void Start()
     {
+        InitializeData();
         LoadInventory();
     }
 
-    // private void OnDestroy()
-    // {
-    //     SaveInventory();
-    // }
+    private void InitializeData()
+    {
+        if (inventoryData == null)
+        {
+            Debug.LogError("InventoryData не назначен!");
+            return;
+        }
 
-    #region Inventory
+        inventoryData.Initialize(inventorySlots.Length, equipmentSlots.Length);
+    }
+
+    #region Public API
 
     public bool AddItem(string itemName, int amount = 1)
     {
         ItemData item = FindItemDataByName(itemName);
-        
         if (item == null)
         {
-            Debug.LogWarning($"Предмет с именем '{itemName}' не найден в Resources/Items!");
+            Debug.LogWarning($"Предмет '{itemName}' не найден в Resources/Items!");
             return false;
         }
-        
+
         return AddItemInternal(item, amount);
     }
 
     public bool RemoveItem(string itemName, int amount = 1)
     {
-        if (amount <= 0)
+        if (amount <= 0) return false;
+
+        int remaining = amount;
+
+        remaining = RemoveFromSlots(inventorySlots, itemName, remaining, true);
+        if (remaining <= 0) return true;
+
+        remaining = RemoveFromSlots(equipmentSlots, itemName, remaining, false);
+
+        if (remaining > 0)
         {
-            Debug.LogWarning("Количество для удаления должно быть больше 0!");
+            Debug.LogWarning($"Недостаточно '{itemName}'. Не хватает: {remaining}");
             return false;
         }
 
-        int remainingToRemove = amount;
-
-        // Проходим по всем слотам инвентаря
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            InventorySlot slot = inventorySlots[i];
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
-
-            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
-            {
-                if (itemInSlot.count >= remainingToRemove)
-                {
-                    // В этом слоте достаточно предметов
-                    itemInSlot.count -= remainingToRemove;
-                    
-                    if (itemInSlot.count <= 0)
-                    {
-                        Destroy(itemInSlot.gameObject);
-                    }
-                    else
-                    {
-                        itemInSlot.RefreshCount();
-                    }
-                    
-                    return true;
-                }
-                else
-                {
-                    // Забираем все предметы из этого слота и продолжаем искать
-                    remainingToRemove -= itemInSlot.count;
-                    Destroy(itemInSlot.gameObject);
-                }
-            }
-        }
-
-        // Проверяем слоты экипировки
-        for (int i = 0; i < equipmentSlots.Length; i++)
-        {
-            InventorySlot slot = equipmentSlots[i];
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
-
-            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
-            {
-                if (itemInSlot.count >= remainingToRemove)
-                {
-                    itemInSlot.count -= remainingToRemove;
-                    
-                    if (itemInSlot.count <= 0)
-                    {
-                        Destroy(itemInSlot.gameObject);
-                    }
-                    else
-                    {
-                        itemInSlot.RefreshCount();
-                    }
-                    
-                    return true;
-                }
-                else
-                {
-                    remainingToRemove -= itemInSlot.count;
-                    Destroy(itemInSlot.gameObject);
-                }
-            }
-        }
-
-        // Если мы здесь, значит не хватило предметов
-        Debug.LogWarning($"Недостаточно предметов '{itemName}' для удаления. Требуется: {amount}, не хватает: {remainingToRemove}");
-        return false;
+        return true;
     }
 
     public int GetItemCount(string itemName)
     {
-        int totalCount = 0;
-
-        // Считаем в инвентаре
-        foreach (InventorySlot slot in inventorySlots)
-        {
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
-            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
-            {
-                totalCount += itemInSlot.count;
-            }
-        }
-
-        // Считаем в экипировке
-        foreach (InventorySlot slot in equipmentSlots)
-        {
-            DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
-            if (itemInSlot != null && itemInSlot.itemData.itemName == itemName)
-            {
-                totalCount += itemInSlot.count;
-            }
-        }
-
-        return totalCount;
+        return inventoryData.GetItemCount(itemName);
     }
 
-    private bool AddItemInternal(ItemData item, int amount = 1)
+    public int FindItem(string itemName)
     {
+        return inventoryData.FindItem(itemName);
+    }
+
+    public bool HasItem(string itemName)
+    {
+        return inventoryData.HasItem(itemName);
+    }
+
+    public bool HasItem(string itemName, int requiredAmount)
+    {
+        return inventoryData.GetItemCount(itemName) >= requiredAmount;
+    }
+
+    public void SyncFromUI()
+    {
+        SyncSlotsToData(inventorySlots, true);
+        SyncSlotsToData(equipmentSlots, false);
+    }
+
+    public void SyncInventorySlot(int index)
+    {
+        if (index < 0 || index >= inventorySlots.Length) return;
+
+        var item = inventorySlots[index].GetComponentInChildren<DraggableItem>();
+        if (item != null && item.itemData != null)
+            inventoryData.SetInventorySlot(index, item.itemData.itemName, item.count);
+        else
+            inventoryData.ClearInventorySlot(index);
+    }
+
+    public void SyncEquipmentSlot(int index)
+    {
+        if (index < 0 || index >= equipmentSlots.Length) return;
+
+        var item = equipmentSlots[index].GetComponentInChildren<DraggableItem>();
+        if (item != null && item.itemData != null)
+            inventoryData.SetEquipmentSlot(index, item.itemData.itemName, item.count);
+        else
+            inventoryData.ClearEquipmentSlot(index);
+    }
+
+    #endregion
+
+    #region Internal Logic
+
+    private bool AddItemInternal(ItemData item, int amount)
+    {
+        int remaining = amount;
+
         if (item.isStackable)
         {
-            for (int i = 0; i < inventorySlots.Length; i++)
-            {
-                InventorySlot slot = inventorySlots[i];
-                DraggableItem itemInSlot = slot.GetComponentInChildren<DraggableItem>();
-
-                if (itemInSlot != null &&
-                    itemInSlot.itemData == item &&
-                    itemInSlot.count < item.maxStackSize)
-                {
-                    int spaceAvailable = item.maxStackSize - itemInSlot.count;
-                    
-                    int addedAmount = Mathf.Min(amount, spaceAvailable);
-                    
-                    itemInSlot.count += addedAmount;
-                    itemInSlot.RefreshCount();
-                    
-                    amount -= addedAmount;
-                    
-                    if (amount <= 0) return true;
-                }
-            }
+            remaining = AddToExistingStacks(item, remaining);
+            if (remaining <= 0) return true;
         }
 
-        for (int i = 0; i < inventorySlots.Length; i++)
+        remaining = AddToEmptySlots(item, remaining);
+
+        if (remaining > 0)
         {
-            InventorySlot slot = inventorySlots[i];
-            
-            if (slot.transform.childCount == 0)
+            Debug.Log("Инвентарь полон!");
+            return false;
+        }
+
+        return true;
+    }
+
+    private int AddToExistingStacks(ItemData item, int amount)
+    {
+        for (int i = 0; i < inventorySlots.Length && amount > 0; i++)
+        {
+            var slotItem = inventorySlots[i].GetComponentInChildren<DraggableItem>();
+            if (slotItem == null || slotItem.itemData != item) continue;
+            if (slotItem.count >= item.maxStackSize) continue;
+
+            int space = item.maxStackSize - slotItem.count;
+            int toAdd = Mathf.Min(amount, space);
+
+            slotItem.count += toAdd;
+            slotItem.RefreshCount();
+            inventoryData.SetInventorySlot(i, item.itemName, slotItem.count);
+
+            amount -= toAdd;
+        }
+
+        return amount;
+    }
+
+    private int AddToEmptySlots(ItemData item, int amount)
+    {
+        for (int i = 0; i < inventorySlots.Length && amount > 0; i++)
+        {
+            if (inventorySlots[i].transform.childCount > 0) continue;
+
+            int toAdd = item.isStackable ? Mathf.Min(amount, item.maxStackSize) : 1;
+            SpawnItemInSlot(item, inventorySlots[i], toAdd);
+            inventoryData.SetInventorySlot(i, item.itemName, toAdd);
+
+            amount -= toAdd;
+        }
+
+        return amount;
+    }
+
+    private int RemoveFromSlots(InventorySlot[] slots, string itemName, int amount, bool isInventory)
+    {
+        for (int i = 0; i < slots.Length && amount > 0; i++)
+        {
+            var item = slots[i].GetComponentInChildren<DraggableItem>();
+            if (item == null || item.itemData.itemName != itemName) continue;
+
+            if (item.count <= amount)
             {
-                int spawnAmount = item.isStackable ? Mathf.Min(amount, item.maxStackSize) : 1;
-                SpawnItemInSlot(item, slot, spawnAmount);
-                
-                amount -= spawnAmount;
-                
-                if (amount <= 0) return true;
+                amount -= item.count;
+                Destroy(item.gameObject);
+
+                if (isInventory)
+                    inventoryData.ClearInventorySlot(i);
+                else
+                    inventoryData.ClearEquipmentSlot(i);
+            }
+            else
+            {
+                item.count -= amount;
+                item.RefreshCount();
+
+                if (isInventory)
+                    inventoryData.SetInventorySlot(i, itemName, item.count);
+                else
+                    inventoryData.SetEquipmentSlot(i, itemName, item.count);
+
+                amount = 0;
             }
         }
 
-        Debug.Log("Инвентарь полон!");
-        return false;
+        return amount;
+    }
+
+    private void SyncSlotsToData(InventorySlot[] slots, bool isInventory)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            var item = slots[i].GetComponentInChildren<DraggableItem>();
+
+            if (item != null && item.itemData != null)
+            {
+                if (isInventory)
+                    inventoryData.SetInventorySlot(i, item.itemData.itemName, item.count);
+                else
+                    inventoryData.SetEquipmentSlot(i, item.itemData.itemName, item.count);
+            }
+            else
+            {
+                if (isInventory)
+                    inventoryData.ClearInventorySlot(i);
+                else
+                    inventoryData.ClearEquipmentSlot(i);
+            }
+        }
     }
 
     private void SpawnItemInSlot(ItemData item, InventorySlot slot, int amount)
     {
-        GameObject newItemGo = Instantiate(inventoryItemPrefab, slot.transform);
-        DraggableItem draggable = newItemGo.GetComponent<DraggableItem>();
-        draggable.InitialiseItem(item, amount);
+        GameObject newItem = Instantiate(inventoryItemPrefab, slot.transform);
+        newItem.GetComponent<DraggableItem>().InitialiseItem(item, amount);
     }
 
     private ItemData FindItemDataByName(string itemName)
     {
         ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
-        
+
         foreach (ItemData item in allItems)
         {
             if (item != null && item.itemName == itemName)
-            {
                 return item;
-            }
         }
-        
+
         return null;
     }
 
@@ -264,111 +301,74 @@ public class InventoryManager : MonoBehaviour
 
     public void SaveInventory()
     {
-        InventorySaver saver = new InventorySaver(inventorySlots.Length, equipmentSlots.Length);
-        
-        // Сохраняем инвентарь
-        for (int i = 0; i < inventorySlots.Length; i++)
-        {
-            DraggableItem itemInSlot = inventorySlots[i].GetComponentInChildren<DraggableItem>();
-            if (itemInSlot != null)
-            {
-                saver.inventorySlots[i] = new InventorySlotData(itemInSlot.itemData.itemName, itemInSlot.count);
-            }
-            else
-            {
-                saver.inventorySlots[i] = new InventorySlotData("", 0);
-            }
-        }
-        
-        // Сохраняем экипировку
-        for (int i = 0; i < equipmentSlots.Length; i++)
-        {
-            DraggableItem itemInSlot = equipmentSlots[i].GetComponentInChildren<DraggableItem>();
-            if (itemInSlot != null)
-            {
-                saver.equipmentSlots[i] = new InventorySlotData(itemInSlot.itemData.itemName, itemInSlot.count);
-            }
-            else
-            {
-                saver.equipmentSlots[i] = new InventorySlotData("", 0);
-            }
-        }
-        
+        SyncFromUI();
+
+        InventorySaver saver = inventoryData.CreateSaveData();
         SaveLoadSystem.Save("inventoryData", saver, GlobalLoader.GAME_DIRECTORY);
+
+        Debug.Log("Инвентарь сохранён");
     }
-    
+
     public void LoadInventory()
     {
-        if (!SaveLoadSystem.Exists("inventoryData"))
+        // Добавь GlobalLoader.GAME_DIRECTORY
+        if (!SaveLoadSystem.Exists("inventoryData", GlobalLoader.GAME_DIRECTORY))
         {
+            Debug.Log("Сохранение инвентаря не найдено");
             return;
         }
-        
         InventorySaver saver = SaveLoadSystem.Load<InventorySaver>("inventoryData", GlobalLoader.GAME_DIRECTORY);
-
-        ClearInventory();
-
-        // Загружаем инвентарь
-        if (saver.inventorySlots != null)
+        if (saver == null)
         {
-            for (int i = 0; i < inventorySlots.Length && i < saver.inventorySlots.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(saver.inventorySlots[i].itemName) && saver.inventorySlots[i].count > 0)
-                {
-                    ItemData itemData = FindItemDataByName(saver.inventorySlots[i].itemName);
-                    if (itemData != null)
-                    {
-                        SpawnItemInSlot(itemData, inventorySlots[i], saver.inventorySlots[i].count);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Предмет '{saver.inventorySlots[i].itemName}' не найден при загрузке!");
-                    }
-                }
-            }
+            Debug.LogWarning("Не удалось загрузить данные инвентаря");
+            return;
         }
-        
-        // Загружаем экипировку
-        if (saver.equipmentSlots != null)
+        inventoryData.LoadFromSaveData(saver);
+        RefreshUI();
+        Debug.Log("Инвентарь загружен");
+    }
+
+    private void RefreshUI()
+    {
+        ClearAllSlots();
+
+        var invSlots = inventoryData.InventorySlots;
+        for (int i = 0; i < inventorySlots.Length && i < invSlots.Count; i++)
         {
-            for (int i = 0; i < equipmentSlots.Length && i < saver.equipmentSlots.Length; i++)
-            {
-                if (!string.IsNullOrEmpty(saver.equipmentSlots[i].itemName) && saver.equipmentSlots[i].count > 0)
-                {
-                    ItemData itemData = FindItemDataByName(saver.equipmentSlots[i].itemName);
-                    if (itemData != null)
-                    {
-                        SpawnItemInSlot(itemData, equipmentSlots[i], saver.equipmentSlots[i].count);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"Предмет '{saver.equipmentSlots[i].itemName}' не найден при загрузке!");
-                    }
-                }
-            }
+            if (string.IsNullOrEmpty(invSlots[i].itemName) || invSlots[i].count <= 0) continue;
+
+            ItemData itemData = FindItemDataByName(invSlots[i].itemName);
+            if (itemData != null)
+                SpawnItemInSlot(itemData, inventorySlots[i], invSlots[i].count);
+            else
+                Debug.LogWarning($"Предмет '{invSlots[i].itemName}' не найден!");
+        }
+
+        var eqSlots = inventoryData.EquipmentSlots;
+        for (int i = 0; i < equipmentSlots.Length && i < eqSlots.Count; i++)
+        {
+            if (string.IsNullOrEmpty(eqSlots[i].itemName) || eqSlots[i].count <= 0) continue;
+
+            ItemData itemData = FindItemDataByName(eqSlots[i].itemName);
+            if (itemData != null)
+                SpawnItemInSlot(itemData, equipmentSlots[i], eqSlots[i].count);
+            else
+                Debug.LogWarning($"Предмет '{eqSlots[i].itemName}' не найден!");
         }
     }
-    
-    private void ClearInventory()
+
+    private void ClearAllSlots()
     {
-        // Очищаем инвентарь
-        foreach (InventorySlot slot in inventorySlots)
+        foreach (var slot in inventorySlots)
         {
             if (slot.transform.childCount > 0)
-            {
-                Transform child = slot.transform.GetChild(0);
-                Destroy(child.gameObject);
-            }
+                Destroy(slot.transform.GetChild(0).gameObject);
         }
-        
-        // Очищаем экипировку
-        foreach (InventorySlot slot in equipmentSlots)
+
+        foreach (var slot in equipmentSlots)
         {
             if (slot.transform.childCount > 0)
-            {
-                Transform child = slot.transform.GetChild(0);
-                Destroy(child.gameObject);
-            }
+                Destroy(slot.transform.GetChild(0).gameObject);
         }
     }
 

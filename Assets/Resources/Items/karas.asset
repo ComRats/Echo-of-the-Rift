@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: karas
   m_EditorClassIdentifier: 
+  icon: {fileID: 21300000, guid: 69610a98dd10cab489d7c2fde3c2c7e5, type: 3}
   itemName: karas
   itemGameName: "\u041A\u0430\u0440\u0430\u0441\u044C"
-  icon: {fileID: 21300000, guid: 69610a98dd10cab489d7c2fde3c2c7e5, type: 3}
-  itemType: 5
+  itemType: 10
+  description: 
   isStackable: 0
   maxStackSize: 16

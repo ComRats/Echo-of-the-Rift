@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class InventorySlot : MonoBehaviour, IDropHandler
+public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public const ItemType AllTypes = ItemType.Food | ItemType.Potion | ItemType.Weapon | ItemType.Armor | ItemType.Amulet | ItemType.Helmet;
 
     public ItemType allowedType = AllTypes;
 
     [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private ItemDescriptionDisplay descriptionDisplay;
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -19,7 +20,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
         GameObject dropped = eventData.pointerDrag;
         DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
-        
+
         if (draggableItem == null || !IsTypeAllowed(draggableItem)) return;
 
         if (transform.childCount == 0)
@@ -33,11 +34,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             if (CanStackItems(draggableItem, currentItem))
             {
                 ProcessStackItems(currentItem, draggableItem);
+                SyncAfterChange();
                 return;
             }
 
             SwapItems(draggableItem, currentItem);
         }
+
+        SyncAfterChange();
     }
 
     public bool IsTypeAllowed(DraggableItem item)
@@ -56,7 +60,7 @@ public class InventorySlot : MonoBehaviour, IDropHandler
     {
         int total = currentItem.count + newItem.count;
         int maxStack = currentItem.itemData.maxStackSize;
-        
+
         if (total <= maxStack)
         {
             currentItem.count = total;
@@ -72,11 +76,11 @@ public class InventorySlot : MonoBehaviour, IDropHandler
             TryMoveItemToEmptySlot(newItem);
         }
     }
-    
+
     private void TryMoveItemToEmptySlot(DraggableItem item)
     {
         if (inventoryManager == null) return;
-        
+
         foreach (InventorySlot slot in inventoryManager.inventorySlots)
         {
             if (slot.transform.childCount == 0 && slot.IsTypeAllowed(item))
@@ -102,8 +106,41 @@ public class InventorySlot : MonoBehaviour, IDropHandler
 
         newItem.parentAfterDrag = oldItemOriginalParent;
         oldItem.parentAfterDrag = newItemOriginalParent;
-        
+
         oldItem.transform.SetParent(newItemOriginalParent);
         oldItem.transform.localPosition = Vector3.zero;
+    }
+
+    private void SyncAfterChange()
+    {
+        if (inventoryManager != null)
+        {
+            Invoke(nameof(DoSync), 0.1f);
+        }
+    }
+
+    private void DoSync()
+    {
+        inventoryManager.SyncFromUI();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (descriptionDisplay == null) return;
+
+        DraggableItem item = GetComponentInChildren<DraggableItem>();
+
+        if (item != null && item.itemData != null)
+        {
+            descriptionDisplay.ShowItem(item);
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (descriptionDisplay != null)
+        {
+            descriptionDisplay.Hide();
+        }
     }
 }

@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: Turnip
   m_EditorClassIdentifier: 
-  itemName: Turnip
   icon: {fileID: 21300000, guid: 5c09481414f302c429319ca41aba4adb, type: 3}
-  itemType: 0
+  itemName: Turnip
+  itemGameName: "\u0421\u0432\u0435\u043A\u043E\u043B\u043A\u0430"
+  itemType: 2
+  description: "\u0412\u044B \u0432\u0435\u0434\u044C \u0437\u043D\u0430\u0435\u0442\u0435,
+    \u0447\u0442\u043E \u043D\u0435\u043B\u044C\u0437\u044F \u0432\u043E\u0440\u043E\u0432\u0430\u0442\u044C
+    \u0443 \u0441\u0442\u0430\u0440\u043E\u0441\u0442\u0438? \u0412\u0430\u043C \u0442\u0430\u043A
+    \u043D\u0443\u0436\u0435\u043D \u044D\u0442\u043E\u0442 \u043A\u043E\u0440\u043D\u0435\u043F\u043B\u043E\u0434? "
   isStackable: 1
   maxStackSize: 10

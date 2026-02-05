@@ -23,7 +23,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         if (inventoryManager == null)
             inventoryManager = FindObjectOfType<InventoryManager>();
-            
+
         if (contextMenu == null)
             contextMenu = FindObjectOfType<InventoryContextMenu>();
     }
@@ -39,8 +39,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         image.sprite = newItem.icon;
         count = amount;
         RefreshCount();
-        
-        // Инициализируем parentAfterDrag текущим родителем
+
         parentAfterDrag = transform.parent;
     }
 
@@ -53,7 +52,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        // Проверяем клик правой кнопкой мыши
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             OpenContextMenu(eventData.position);
@@ -74,18 +72,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Закрываем контекстное меню при начале перетаскивания
         if (contextMenu != null)
         {
             contextMenu.Hide();
         }
-        
+
         parentAfterDrag = transform.parent;
-        
+
         Transform canvasTransform = GetComponentInParent<Canvas>().transform;
         transform.SetParent(canvasTransform);
         transform.SetAsLastSibling();
-        
+
         image.raycastTarget = false;
     }
 
@@ -100,11 +97,17 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if (transform.parent == GetComponentInParent<Canvas>().transform)
         {
-             CheckForNearbySlot(eventData);
+            CheckForNearbySlot(eventData);
         }
 
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
+
+        // Синхронизируем после перетаскивания
+        if (inventoryManager != null)
+        {
+            inventoryManager.SyncFromUI();
+        }
     }
 
     private void CheckForNearbySlot(PointerEventData eventData)
@@ -114,22 +117,35 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         InventorySlot closestSlot = null;
         float minDistanceSqr = float.MaxValue;
 
-        for (int i = 0; i < inventoryManager.inventorySlots.Length; i++)
+        // Проверяем слоты инвентаря
+        foreach (InventorySlot slot in inventoryManager.inventorySlots)
         {
-            InventorySlot slot = inventoryManager.inventorySlots[i];
-            Vector3 direction = transform.position - slot.transform.position;
-            float distanceSqr = direction.sqrMagnitude;
-            
-            if (distanceSqr < minDistanceSqr)
+            float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
+            if (distSqr < minDistanceSqr)
             {
-                minDistanceSqr = distanceSqr;
+                minDistanceSqr = distSqr;
                 closestSlot = slot;
             }
         }
 
+        // Проверяем слоты экипировки
+        foreach (InventorySlot slot in inventoryManager.equipmentSlots)
+        {
+            float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
+            if (distSqr < minDistanceSqr)
+            {
+                minDistanceSqr = distSqr;
+                closestSlot = slot;
+            }
+        }
+
+        // Если нашли близкий слот и тип подходит - дропаем
         if (closestSlot != null && minDistanceSqr <= snapDistanceSqr)
         {
-            closestSlot.OnDrop(eventData);
+            if (closestSlot.IsTypeAllowed(this))
+            {
+                closestSlot.OnDrop(eventData);
+            }
         }
     }
 }
