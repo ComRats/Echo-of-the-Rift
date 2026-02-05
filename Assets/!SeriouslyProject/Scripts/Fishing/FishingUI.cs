@@ -1,11 +1,13 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class FishingUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI fishingStatusText;
     [SerializeField] private TextMeshProUGUI fishingHelpText;
 
+    public ClickBarUI clickBar;
 
     public void ShowWaitingForBite()
     {
