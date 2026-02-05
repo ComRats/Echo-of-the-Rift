@@ -15,6 +15,12 @@ public class CollectTrigger : BaseTrigger
         [BoxGroup("General")] public QuestState needQuestState = QuestState.Active;
         [BoxGroup("General")] public string itemNameToCollect;
         [BoxGroup("General")] public string collectTextHelper;
+        [BoxGroup("General")] public string getItemText = "Вы получили: ";
+        [BoxGroup("General")] public float textVisibleDelay = 2.5f;
+
+        [BoxGroup("Inventory Requirement")] public string itemNameToHas;
+        [ShowIf("@!string.IsNullOrEmpty(itemNameToHas)"), BoxGroup("Inventory Requirement")]
+        public bool removeItemAfterStep = true;
 
         [Space, GUIColor(0.4f, 0.8f, 1f)]
         public bool isMinigame;
@@ -25,6 +31,8 @@ public class CollectTrigger : BaseTrigger
         public float clickPower = 0.1f;
         [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
         public float drainSpeed = 0.05f;
+        [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
+        public string minigameStartText = "Быстро нажимай ЛКМ!";
     }
 
     [SerializeField, BoxGroup("View")] private Vector3 keyMassageOffset;
@@ -40,6 +48,7 @@ public class CollectTrigger : BaseTrigger
 
     private SpriteCollection sprites;
     private ClickBarUI clickBar;
+    private FishingUI fishingUI;
 
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
@@ -48,6 +57,7 @@ public class CollectTrigger : BaseTrigger
     {
         sprites = mainUI.spriteCollection;
         clickBar = mainUI.fishingUI.clickBar;
+        fishingUI = mainUI.fishingUI;
     }
 
     private void Update()
@@ -82,6 +92,7 @@ public class CollectTrigger : BaseTrigger
     {
         minigameActive = true;
         ShowButtonPrompt(false, "");
+        fishingUI.ShowMinigameHint(ev.minigameStartText);
         clickBar.Setup(ev.startFill, ev.drainSpeed, FinishCurrentStep);
     }
 
@@ -91,7 +102,20 @@ public class CollectTrigger : BaseTrigger
         var ev = eventQueue[currentStepIndex];
 
         if (!string.IsNullOrEmpty(ev.itemNameToCollect))
+        {
+            string message = ev.getItemText + ev.itemNameToCollect;
+            fishingUI.ShowMinigameHint(message, ev.textVisibleDelay);
             mainUI.inventoryManager?.AddItem(ev.itemNameToCollect);
+        }
+        else
+        {
+            fishingUI.HideText();
+        }
+
+        if (!string.IsNullOrEmpty(ev.itemNameToHas) && ev.removeItemAfterStep)
+        {
+            mainUI.inventoryManager?.RemoveItem(ev.itemNameToHas);
+        }
 
         currentStepIndex++;
 
@@ -100,13 +124,21 @@ public class CollectTrigger : BaseTrigger
             ShowButtonPrompt(false, "");
             if (autoDestroingAfterAll) gameObject.SetActive(false);
         }
-        else UpdatePrompt();
+        else
+        {
+            UpdatePrompt();
+        }
 
         DialogueManager.SendUpdateTracker();
     }
 
-    private bool CanExecute(CollectEvent ev) =>
-        string.IsNullOrEmpty(ev.questCode) || QuestLog.GetQuestState(ev.questCode) == ev.needQuestState;
+    private bool CanExecute(CollectEvent ev)
+    {
+        bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) || QuestLog.GetQuestState(ev.questCode) == ev.needQuestState;
+        bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) || (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
+
+        return questConditionsMet && inventoryConditionsMet;
+    }
 
     private void UpdatePrompt()
     {
@@ -122,7 +154,13 @@ public class CollectTrigger : BaseTrigger
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out _)) { playerInside = false; minigameActive = false; clickBar.Hide(); ShowButtonPrompt(false, ""); }
+        if (collision.TryGetComponent<Player>(out _)) 
+        { 
+            playerInside = false; 
+            minigameActive = false; 
+            clickBar.Hide(); 
+            ShowButtonPrompt(false, "");
+        }
     }
 
     private void ShowButtonPrompt(bool show, string text)

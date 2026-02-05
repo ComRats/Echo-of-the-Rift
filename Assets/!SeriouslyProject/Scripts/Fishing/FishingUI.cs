@@ -12,7 +12,7 @@ public class FishingUI : MonoBehaviour
     public void ShowWaitingForBite()
     {
         fishingStatusText.text = "Ожидание поклевки...";
-        fishingHelpText.text = "Нажмите F чтобы вытянуть удочку";
+        fishingHelpText.text = "Нажмите F чтобы вытянуть удочку"; 
     }
 
     public void ShowBite()
@@ -25,6 +25,18 @@ public class FishingUI : MonoBehaviour
     {
         fishingStatusText.text = $"Вы поймали {fishName}!";
         fishingHelpText.text = "";
+    }
+
+    public void ShowMinigameHint(string hintText)
+    {
+        fishingStatusText.text = "";
+        fishingHelpText.text = hintText;
+    }
+
+    public void ShowMinigameHint(string hintText, float delay)
+    {
+        ShowMinigameHint(hintText);
+        Invoke(nameof(HideText), delay);
     }
 
     public void ShowMissed()
