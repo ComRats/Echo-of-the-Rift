@@ -410,10 +410,25 @@ namespace AudioManager.Service
         {
             AudioError error = AudioError.OK;
 
+            // 1. ѕытаемс€ найти запись в словаре
             if (!TryGetRegisteredAudioSource(name, out source))
             {
                 error = AudioError.DOES_NOT_EXIST;
                 return error;
+            }
+
+            if (source == null || source.Source == null)
+            {
+                m_soundDictionary.Remove(name);
+
+                if (m_soundProgressDictionary.ContainsKey(name))
+                {
+                    m_soundProgressDictionary.Remove(name);
+                }
+
+                source = null;
+                Debug.LogWarning($"[AudioManager] ќбнаружен и удален уничтоженный AudioSource: {name}");
+                return AudioError.DOES_NOT_EXIST;
             }
 
             error = source.IsSoundValid();

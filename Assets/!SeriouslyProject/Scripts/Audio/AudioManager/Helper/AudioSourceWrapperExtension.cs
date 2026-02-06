@@ -193,7 +193,7 @@ namespace AudioManager.Helper {
             if (source is null) {
                 error = AudioError.MISSING_WRAPPER;
             }
-            else if (source.Source is null) {
+            else if (source.Source == null) {
                 error = AudioError.MISSING_SOURCE;
             }
             else if (source.Source.clip is null) {
