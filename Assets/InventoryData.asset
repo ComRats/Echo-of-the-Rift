@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: InventoryData
   m_EditorClassIdentifier: 
   inventorySlots:
-  - itemName: pig
-    count: 4
-  - itemName: karas
-    count: 1
-  - itemName: karas
-    count: 1
-  - itemName: karas
-    count: 1
-  - itemName: axe
-    count: 1
-  - itemName: karas
-    count: 1
-  - itemName: testAmulet
-    count: 1
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
+  - itemName: 
+    count: 0
   - itemName: 
     count: 0
   - itemName: 

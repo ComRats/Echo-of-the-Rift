@@ -45,7 +45,7 @@ MonoBehaviour:
     type: 1
     audioClip: {fileID: 8300000, guid: 56a415e063aba7e49b55ff750df85a94, type: 3}
     mixerGroup: {fileID: 0}
-    loop: 0
+    loop: 1
     volume: 1
     pitch: 1
     spatialBlend: 0.5
@@ -58,6 +58,20 @@ MonoBehaviour:
   - soundName: Rhonaven
     type: 1
     audioClip: {fileID: 8300000, guid: 5406921151c17624890a09e9c99c2c42, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Slap1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 8e4a73a9275eb5b4291ed69118c8643d, type: 3}
     mixerGroup: {fileID: 0}
     loop: 0
     volume: 1

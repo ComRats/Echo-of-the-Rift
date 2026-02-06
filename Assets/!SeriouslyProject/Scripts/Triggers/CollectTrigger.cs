@@ -18,6 +18,8 @@ public class CollectTrigger : BaseTrigger
         [BoxGroup("General")] public string collectTextHelper;
         [BoxGroup("General")] public string getItemText = "Вы получили: ";
         [BoxGroup("General")] public float textVisibleDelay = 2.5f;
+        [BoxGroup("Logic")] public bool removeEventAfterStep = true;
+        [BoxGroup("Logic")] public bool isRepeatable = false;
 
         [BoxGroup("Inventory Requirement")] public string itemNameToHas;
         [ShowIf("@!string.IsNullOrEmpty(itemNameToHas)"), BoxGroup("Inventory Requirement")]
@@ -40,7 +42,6 @@ public class CollectTrigger : BaseTrigger
     [SerializeField, BoxGroup("View")] private Vector3 textMassageOffset;
     [SerializeField, BoxGroup("View"), Range(0, 30)] private int spriteIndex = 14;
 
-    [SerializeField, Space] private bool autoDestroingAfterAll;
     [SerializeField] private List<CollectEvent> eventQueue = new List<CollectEvent>();
 
     private int currentStepIndex;
@@ -54,23 +55,14 @@ public class CollectTrigger : BaseTrigger
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
 
-    public void RunTest()
-    {
-        DialogueManager.PlaySequence("MoveTo(Дед_ГГ, WomenPoint1, 2)");
-        DialogueManager.PlaySequence("SetPosition(Дед_ГГ, WomenPoint1)");
-        DialogueManager.PlaySequence("SetActive(Дед_ГГ, false)");
-            
-    }
-
     private void Start()
     {
         sprites = mainUI.spriteCollection;
-        clickBar = mainUI.fishingUI.clickBar; 
+        clickBar = mainUI.fishingUI.clickBar;
         fishingUI = mainUI.fishingUI;
-        RunTest();
     }
 
-    private void Update() 
+    private void Update()
     {
         if (!playerInside) return;
 
@@ -113,7 +105,7 @@ public class CollectTrigger : BaseTrigger
 
         if (!string.IsNullOrEmpty(ev.itemNameToCollect))
         {
-            string message = ev.getItemText + ev.itemNameToCollect;
+            string message = ev.getItemText + mainUI.inventoryManager.FindItemDataByName(ev.itemNameToCollect).itemGameName;
             fishingUI.ShowMinigameHint(message, ev.textVisibleDelay);
             mainUI.inventoryManager?.AddItem(ev.itemNameToCollect);
         }
@@ -132,13 +124,19 @@ public class CollectTrigger : BaseTrigger
             QuestLog.SetQuestState(ev.questCode, ev.setStateAfterStep);
         }
 
+        if (ev.removeEventAfterStep && !ev.isRepeatable)
+        {
+            eventQueue.RemoveAt(currentStepIndex);
+        }
+        else
+        {
+            currentStepIndex++;
+        }
 
-        currentStepIndex++;
 
         if (currentStepIndex >= eventQueue.Count)
         {
             ShowButtonPrompt(false, "");
-            if (autoDestroingAfterAll) gameObject.SetActive(false);
         }
         else
         {
@@ -170,11 +168,11 @@ public class CollectTrigger : BaseTrigger
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out _)) 
-        { 
-            playerInside = false; 
-            minigameActive = false; 
-            clickBar.Hide(); 
+        if (collision.TryGetComponent<Player>(out _))
+        {
+            playerInside = false;
+            minigameActive = false;
+            clickBar.Hide();
             ShowButtonPrompt(false, "");
         }
     }

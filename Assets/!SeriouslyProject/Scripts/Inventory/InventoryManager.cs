@@ -288,7 +288,7 @@ public class InventoryManager : MonoBehaviour
         newItem.GetComponent<DraggableItem>().InitialiseItem(item, amount);
     }
 
-    private ItemData FindItemDataByName(string itemName)
+    public ItemData FindItemDataByName(string itemName)
     {
         ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 21300000, guid: 5c09481414f302c429319ca41aba4adb, type: 3}
   itemName: Turnip
-  itemGameName: "\u0421\u0432\u0435\u043A\u043E\u043B\u043A\u0430"
+  itemGameName: "\u0420\u0435\u043F\u0430"
   itemType: 2
   itemPrice: 0
   description: "\u0412\u044B \u0432\u0435\u0434\u044C \u0437\u043D\u0430\u0435\u0442\u0435,
