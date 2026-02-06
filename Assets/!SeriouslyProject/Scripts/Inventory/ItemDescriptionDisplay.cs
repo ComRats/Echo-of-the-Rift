@@ -2,8 +2,8 @@ using UnityEngine;
 using TMPro;
 
 /// <summary>
-/// Компонент на TextMeshProUGUI, который отображает информацию о предметах.
-/// Вешается на TextMeshProUGUI.
+/// РљРѕРјРїРѕРЅРµРЅС‚ РЅР° TextMeshProUGUI, РєРѕС‚РѕСЂС‹Р№ РїРѕРєР°Р·С‹РІР°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРµРґРјРµС‚Р°С….
+/// Р’РµС€Р°РµС‚СЃСЏ РЅР° TextMeshProUGUI.
 /// </summary>
 public class ItemDescriptionDisplay : MonoBehaviour
 {
@@ -15,7 +15,7 @@ public class ItemDescriptionDisplay : MonoBehaviour
 
         if (descriptionText == null)
         {
-            Debug.LogError("[ItemDescriptionDisplay] Компонент должен быть на объекте с TextMeshProUGUI!");
+            Debug.LogError("[ItemDescriptionDisplay] РљРѕРјРїРѕРЅРµРЅС‚ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РЅР° РѕР±СЉРµРєС‚Рµ СЃ TextMeshProUGUI!");
             enabled = false;
             return;
         }
@@ -24,7 +24,7 @@ public class ItemDescriptionDisplay : MonoBehaviour
     }
 
     /// <summary>
-    /// Показывает информацию о предмете
+    /// РџРѕРєР°Р·С‹РІР°РµС‚ РёРЅС„РѕСЂРјР°С†РёСЋ Рѕ РїСЂРµРґРјРµС‚Рµ (РѕР±С‹С‡РЅС‹Р№ СЂРµР¶РёРј)
     /// </summary>
     public void ShowItem(DraggableItem item)
     {
@@ -40,12 +40,54 @@ public class ItemDescriptionDisplay : MonoBehaviour
         string itemType = GetRussianItemType(itemData.itemType);
         string description = itemData.description;
 
-        descriptionText.text = $"Название: {itemName}\nТип: {itemType}\nОписание:\n{description}";
+        descriptionText.text = $"РќР°Р·РІР°РЅРёРµ: {itemName}\nРўРёРї: {itemType}\nРћРїРёСЃР°РЅРёРµ:\n{description}";
         descriptionText.enabled = true;
     }
 
     /// <summary>
-    /// Скрывает описание
+    /// РџРѕРєР°Р·С‹РІР°РµС‚ РїСЂРµРґРјРµС‚ РёР· РјР°РіР°Р·РёРЅР° СЃ С†РµРЅРѕР№ РїРѕРєСѓРїРєРё
+    /// </summary>
+    public void ShowShopItem(ItemData itemData)
+    {
+        if (descriptionText == null || itemData == null)
+        {
+            HideDescription();
+            return;
+        }
+
+        string itemName = itemData.itemGameName;
+        string itemType = GetRussianItemType(itemData.itemType);
+        string description = itemData.description;
+        int price = itemData.itemPrice;
+
+        descriptionText.text = $"РќР°Р·РІР°РЅРёРµ: {itemName}\nРўРёРї: {itemType}\nР¦РµРЅР°: {price} РјРѕРЅРµС‚\nРћРїРёСЃР°РЅРёРµ:\n{description}";
+        descriptionText.enabled = true;
+    }
+
+    /// <summary>
+    /// РџРѕРєР°Р·С‹РІР°РµС‚ РїСЂРµРґРјРµС‚ РёРіСЂРѕРєР° СЃ С†РµРЅРѕР№ РїСЂРѕРґР°Р¶Рё
+    /// </summary>
+    public void ShowPlayerItem(DraggableItem item)
+    {
+        if (descriptionText == null || item == null || item.itemData == null)
+        {
+            HideDescription();
+            return;
+        }
+
+        ItemData itemData = item.itemData;
+
+        string itemName = itemData.itemGameName;
+        string itemType = GetRussianItemType(itemData.itemType);
+        string description = itemData.description;
+        int sellPrice = CalculateSellPrice(itemData.itemPrice);
+
+        descriptionText.text = $"РќР°Р·РІР°РЅРёРµ: {itemName}\nРўРёРї: {itemType}\nР¦РµРЅР° РїСЂРѕРґР°Р¶Рё: {sellPrice} РјРѕРЅРµС‚\nРћРїРёСЃР°РЅРёРµ:\n{description}";
+        descriptionText.enabled = true;
+    }
+
+    /// <summary>
+    /// РЎРєСЂС‹РІР°РµС‚ РѕРїРёСЃР°РЅРёРµ
     /// </summary>
     public void Hide()
     {
@@ -65,27 +107,32 @@ public class ItemDescriptionDisplay : MonoBehaviour
         }
     }
 
+    private int CalculateSellPrice(int buyPrice)
+    {
+        return Mathf.Max(1, buyPrice / 2);
+    }
+
     private string GetRussianItemType(ItemType type)
     {
         if ((type & ItemType.Food) != 0)
-            return "Еда";
+            return "Р•РґР°";
 
         if ((type & ItemType.Potion) != 0)
-            return "Зелье";
+            return "Р—РµР»СЊРµ";
 
         if ((type & ItemType.Weapon) != 0)
-            return "Оружие";
+            return "РћСЂСѓР¶РёРµ";
 
         if ((type & ItemType.Armor) != 0)
-            return "Броня";
+            return "Р‘СЂРѕРЅСЏ";
 
         if ((type & ItemType.Amulet) != 0)
-            return "Амулет";
+            return "РђРјСѓР»РµС‚";
 
         if ((type & ItemType.Helmet) != 0)
-            return "Шлем";
+            return "РЁР»РµРј";
 
-        return "Неизвестный предмет";
+        return "РќРµРёР·РІРµСЃС‚РЅС‹Р№ РїСЂРµРґРјРµС‚";
     }
 
     private void OnDisable()

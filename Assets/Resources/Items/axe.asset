@@ -16,6 +16,7 @@ MonoBehaviour:
   itemName: axe
   itemGameName: "\u0422\u043E\u043F\u043E\u0440"
   itemType: 8
+  itemPrice: 20
   description: 
   isStackable: 0
   maxStackSize: 10

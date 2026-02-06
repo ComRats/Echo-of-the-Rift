@@ -7,6 +7,7 @@ public class InventorySaver
 {
     public InventorySlotData[] inventorySlots;
     public InventorySlotData[] equipmentSlots;
+    public int coins;
 
     public InventorySaver() { }
 
@@ -14,6 +15,7 @@ public class InventorySaver
     {
         inventorySlots = new InventorySlotData[inventoryCount];
         equipmentSlots = new InventorySlotData[equipmentCount];
+        coins = 0;
 
         for (int i = 0; i < inventoryCount; i++)
             inventorySlots[i] = new InventorySlotData();
@@ -53,10 +55,14 @@ public class InventoryManager : MonoBehaviour
     [Header("Equipment UI")]
     public InventorySlot[] equipmentSlots;
 
+    [Header("Wallet UI")]
+    [SerializeField] private PlayerWallet playerWallet;
+
     [Header("Prefab")]
     public GameObject inventoryItemPrefab;
 
     public InventoryData Data => inventoryData;
+    public PlayerWallet Wallet => playerWallet;
 
     private void Start()
     {
@@ -304,9 +310,20 @@ public class InventoryManager : MonoBehaviour
         SyncFromUI();
 
         InventorySaver saver = inventoryData.CreateSaveData();
+        
+        // Сохраняем монеты
+        if (playerWallet != null)
+        {
+            saver.coins = playerWallet.Coins;
+            Debug.Log($"Инвентарь сохранён. Монет: {playerWallet.Coins}");
+        }
+        else
+        {
+            Debug.LogWarning("PlayerWallet не назначен! Монеты не сохранены.");
+            saver.coins = 0;
+        }
+        
         SaveLoadSystem.Save("inventoryData", saver, GlobalLoader.GAME_DIRECTORY);
-
-        Debug.Log("Инвентарь сохранён");
     }
 
     public void LoadInventory()
@@ -324,8 +341,32 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         inventoryData.LoadFromSaveData(saver);
+        
+        // Загружаем монеты
+        LoadCoins(saver.coins);
+        
         RefreshUI();
-        Debug.Log("Инвентарь загружен");
+        Debug.Log($"Инвентарь загружен. Монет: {saver.coins}");
+    }
+
+    private void LoadCoins(int coins)
+    {
+        if (playerWallet != null)
+        {
+            playerWallet.SetCoins(coins);
+            Debug.Log($"Монеты загружены: {coins}");
+        }
+        else
+        {
+            Debug.LogWarning("PlayerWallet не назначен! Монеты не загружены. Назначь PlayerWallet в InventoryManager.");
+            // Попробуем найти автоматически
+            playerWallet = FindObjectOfType<PlayerWallet>();
+            if (playerWallet != null)
+            {
+                playerWallet.SetCoins(coins);
+                Debug.Log($"PlayerWallet найден автоматически. Монеты загружены: {coins}");
+            }
+        }
     }
 
     private void RefreshUI()

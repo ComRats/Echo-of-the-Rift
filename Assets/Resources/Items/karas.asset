@@ -15,7 +15,8 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 69610a98dd10cab489d7c2fde3c2c7e5, type: 3}
   itemName: karas
   itemGameName: "\u041A\u0430\u0440\u0430\u0441\u044C"
-  itemType: 10
+  itemType: 2
+  itemPrice: 5
   description: 
   isStackable: 0
   maxStackSize: 16

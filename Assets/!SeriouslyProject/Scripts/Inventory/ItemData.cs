@@ -44,7 +44,13 @@ public class ItemData : ScriptableObject
     [LabelWidth(120)]
     [EnumToggleButtons]
     public ItemType itemType;
-    
+
+    [VerticalGroup("Стоимость продажи предмета")]
+    [PropertySpace(10)]
+    [LabelText("Стоимость предмета")]
+    [LabelWidth(180)]
+    public int itemPrice;
+
     [TitleGroup("Описание")]
     [HideLabel]
     [TextArea(4, 12)]
