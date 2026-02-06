@@ -13,6 +13,7 @@ public class CollectTrigger : BaseTrigger
     {
         [BoxGroup("General")] public string questCode;
         [BoxGroup("General")] public QuestState needQuestState = QuestState.Active;
+        [BoxGroup("General")] public QuestState setStateAfterStep = (QuestState)0;
         [BoxGroup("General")] public string itemNameToCollect;
         [BoxGroup("General")] public string collectTextHelper;
         [BoxGroup("General")] public string getItemText = "Вы получили: ";
@@ -53,14 +54,23 @@ public class CollectTrigger : BaseTrigger
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
 
+    public void RunTest()
+    {
+        DialogueManager.PlaySequence("MoveTo(Дед_ГГ, WomenPoint1, 2)");
+        DialogueManager.PlaySequence("SetPosition(Дед_ГГ, WomenPoint1)");
+        DialogueManager.PlaySequence("SetActive(Дед_ГГ, false)");
+            
+    }
+
     private void Start()
     {
         sprites = mainUI.spriteCollection;
-        clickBar = mainUI.fishingUI.clickBar;
+        clickBar = mainUI.fishingUI.clickBar; 
         fishingUI = mainUI.fishingUI;
+        RunTest();
     }
 
-    private void Update()
+    private void Update() 
     {
         if (!playerInside) return;
 
@@ -116,6 +126,12 @@ public class CollectTrigger : BaseTrigger
         {
             mainUI.inventoryManager?.RemoveItem(ev.itemNameToHas);
         }
+
+        if (!string.IsNullOrEmpty(ev.questCode) && ev.setStateAfterStep != (QuestState)0)
+        {
+            QuestLog.SetQuestState(ev.questCode, ev.setStateAfterStep);
+        }
+
 
         currentStepIndex++;
 
