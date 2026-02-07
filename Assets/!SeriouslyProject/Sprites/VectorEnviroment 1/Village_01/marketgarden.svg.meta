@@ -39,16 +39,16 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: 
+      name: marketgarden
       originalName: 
-      pivot: {x: 0, y: 0}
+      pivot: {x: 1.9768339, y: 1.9805195}
       alignment: 0
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 0
-        height: 0
+        width: 259
+        height: 154
       spriteID: 1608fe60b5f2eaa41800181706cf19cf
     PhysicsOutlines: []

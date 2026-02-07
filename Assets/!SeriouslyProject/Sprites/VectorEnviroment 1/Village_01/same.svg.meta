@@ -39,9 +39,9 @@ ScriptedImporter:
   spriteData:
     TessellationDetail: 0
     SpriteRect:
-      name: sameSprite
+      name: same
       originalName: 
-      pivot: {x: 0.5, y: 0.05}
+      pivot: {x: 1.0427351, y: 0.104276985}
       alignment: 9
       border: {x: 0, y: 0, z: 0, w: 0}
       rect:
@@ -49,6 +49,6 @@ ScriptedImporter:
         x: 0
         y: 0
         width: 351
-        height: 490
+        height: 491
       spriteID: dfb32c57dbe86e8448abbc93384ede6b
     PhysicsOutlines: []
