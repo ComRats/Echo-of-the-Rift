@@ -87,7 +87,7 @@ MonoBehaviour:
     type: 1
     audioClip: {fileID: 8300000, guid: 569a7094548395f4ea1199e2af4be54d, type: 3}
     mixerGroup: {fileID: 0}
-    loop: 0
+    loop: 1
     volume: 1
     pitch: 1
     spatialBlend: 0.5
@@ -101,7 +101,7 @@ MonoBehaviour:
     type: 1
     audioClip: {fileID: 8300000, guid: 661d3a546d8303f4b89785b758a96dd1, type: 3}
     mixerGroup: {fileID: 0}
-    loop: 0
+    loop: 1
     volume: 1
     pitch: 1
     spatialBlend: 0.5

@@ -29,9 +29,16 @@ public class MainMenu : MonoBehaviour
     public void TryPlay()
     {
         if (SaveLoadSystem.Exists("globalSave", GlobalLoader.GAME_DIRECTORY))
-            GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру?", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
-        else
-            Play();
+        {
+            var data = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
+
+            if (data != null && data.HasGameProgress)
+            {
+                GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру? Прогресс будет удален.", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
+                return;
+            }
+        }
+        Play();
     }
 
     private void Play()

@@ -181,9 +181,9 @@ public class GlobalLoader : MonoBehaviour
         SavePlayer();
         SaveGlobal();
         
-        if (inventoryManager != null)
+        if (mainUI.inventoryManager != null)
         {
-            inventoryManager.SaveInventory();
+            mainUI.inventoryManager.SaveInventory();
         }
     }
 #endif
@@ -219,6 +219,8 @@ public class GlobalLoader : MonoBehaviour
                 sceneIndex = SceneUtility.GetBuildIndexByScenePath(value);
             }
         }
+
+        public bool HasGameProgress => sceneIndex > 1;
 
         public bool isStart;
     }
