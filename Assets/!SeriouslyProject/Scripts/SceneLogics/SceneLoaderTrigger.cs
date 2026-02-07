@@ -27,4 +27,5 @@ public class SceneLoaderTrigger : MonoBehaviour
 public static class SceneTransitionData
 {
     public static Vector3? NextPosition = null;
+    public static string NextSceneName = string.Empty;
 }

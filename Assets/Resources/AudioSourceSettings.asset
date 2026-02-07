@@ -83,3 +83,31 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: MainMenu1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 569a7094548395f4ea1199e2af4be54d, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Village1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 661d3a546d8303f4b89785b758a96dd1, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

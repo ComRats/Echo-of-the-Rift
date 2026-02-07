@@ -49,6 +49,7 @@ public class MainMenu : MonoBehaviour
     public void Load()
     {
         globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
+        SceneTransitionData.NextSceneName = globalData.SceneIndex;
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
     }
 
@@ -56,6 +57,4 @@ public class MainMenu : MonoBehaviour
     {
         GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f);
     }
-
-
 }
