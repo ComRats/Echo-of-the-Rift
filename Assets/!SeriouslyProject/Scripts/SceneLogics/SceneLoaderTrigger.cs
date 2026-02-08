@@ -19,6 +19,9 @@ public class SceneLoaderTrigger : MonoBehaviour
             await GlobalLoader.Instance.mainUI.screenFader.FadeInAsync();
 
             SceneTransitionData.NextPosition = nextScenePosition;
+
+            GlobalLoader.Instance.Hide();
+
             sceneLoader.LoadAsync();
         }
     }

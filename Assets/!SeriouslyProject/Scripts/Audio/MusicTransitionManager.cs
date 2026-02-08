@@ -25,6 +25,7 @@ public class MusicTransitionManager : MonoBehaviour
 
     private void Awake()
     {
+        // Если ты уверен, что объект один, DontDestroyOnLoad достаточно
         DontDestroyOnLoad(gameObject);
     }
 
@@ -41,7 +42,6 @@ public class MusicTransitionManager : MonoBehaviour
     private void Start()
     {
         _am = ServiceLocator.GetService();
-
         HandleMusicChange(SceneManager.GetActiveScene().name);
     }
 
@@ -57,41 +57,52 @@ public class MusicTransitionManager : MonoBehaviour
 
         string targetMusic = GetMusicForScene(sceneName);
 
+        // ИСПРАВЛЕНИЕ 1: Если для сцены (например, LoadingScene) музыка не прописана, 
+        // мы просто выходим и оставляем играть то, что играло.
         if (string.IsNullOrEmpty(targetMusic))
         {
-            if (!string.IsNullOrEmpty(_currentMusicName))
-            {
-                _am.LerpVolume(_currentMusicName, 0f, fadeDuration);
-                _currentMusicName = null;
-            }
             return;
         }
 
+        // ИСПРАВЛЕНИЕ 2: Если музыка та же самая
         if (targetMusic == _currentMusicName)
         {
-            _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
-        }
-        else
-        {
-            if (!string.IsNullOrEmpty(_currentMusicName))
-            {
-                _am.LerpVolume(_currentMusicName, 0f, fadeDuration);
-            }
-
-            _currentMusicName = targetMusic;
-            _am.Play(_currentMusicName);
-
+            // Проверяем, играет ли она физически (через Wrapper источника)
             if (_am.TryGetSource(_currentMusicName, out var wrapper) == AudioError.OK)
             {
-                wrapper.Source.volume = 0f;
+                if (wrapper.Source.isPlaying)
+                {
+                    // Если уже играет — просто плавно возвращаем громкость, если она была занижена
+                    _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
+                    return; // ВАЖНО: не идем дальше, чтобы не вызвать Play()
+                }
             }
-
-            _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
         }
+
+        // Если мы здесь, значит музыка ДЕЙСТВИТЕЛЬНО сменилась
+
+        // 1. Затухание старой музыки
+        if (!string.IsNullOrEmpty(_currentMusicName))
+        {
+            _am.LerpVolume(_currentMusicName, 0f, fadeDuration);
+        }
+
+        // 2. Запуск новой
+        _currentMusicName = targetMusic;
+        _am.Play(_currentMusicName);
+
+        // Устанавливаем громкость в 0 перед началом затухания (Fade In)
+        if (_am.TryGetSource(_currentMusicName, out var newWrapper) == AudioError.OK)
+        {
+            newWrapper.Source.volume = 0f;
+        }
+
+        _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
     }
 
     private string GetMusicForScene(string sceneName)
     {
+        // Ищем конфиг для конкретной сцены
         var config = sceneMusicSettings.FirstOrDefault(s => s.scene != null && s.scene.SceneName == sceneName);
         return config?.musicName;
     }
