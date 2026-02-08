@@ -1,6 +1,7 @@
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public static class GameMassage
 {
@@ -142,6 +143,9 @@ public static class GameMassage
             CloseAlert();
         });
 
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(activeAlert.leftButton.gameObject);
+
         var group = activeAlert.GetComponent<CanvasGroup>() ?? activeAlert.gameObject.AddComponent<CanvasGroup>();
 
         activeAlert.transform.DOKill();
@@ -184,6 +188,9 @@ public static class GameMassage
             rightButtonAction?.Invoke();
             CloseAlert();
         });
+
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(activeAlert.leftButton.gameObject);
 
         var group = activeAlert.GetComponent<CanvasGroup>() ?? activeAlert.gameObject.AddComponent<CanvasGroup>();
 
