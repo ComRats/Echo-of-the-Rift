@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 public class PlayerWallet : MonoBehaviour
@@ -6,7 +6,7 @@ public class PlayerWallet : MonoBehaviour
     [SerializeField] private int coins = 100;
 
     public int Coins => coins;
-    
+
     public event Action<int> OnCoinsChanged;
 
     public bool HasEnoughCoins(int amount)

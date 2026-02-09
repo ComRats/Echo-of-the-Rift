@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u0412\u0430\u0448 \u0418\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u044C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7154c8c9536d85441be8a8256b20adef, type: 2}
   m_sharedMaterial: {fileID: -5526089158424628337, guid: 7154c8c9536d85441be8a8256b20adef, type: 2}
@@ -2433,7 +2433,7 @@ GameObject:
   - component: {fileID: 5359581867519249791}
   - component: {fileID: 1979945657100220229}
   - component: {fileID: 8993772828120170924}
-  - component: {fileID: 158062277142479348}
+  - component: {fileID: 7094627163202907554}
   m_Layer: 0
   m_Name: InventoryManager
   m_TagString: Untagged
@@ -2502,7 +2502,7 @@ MonoBehaviour:
   - {fileID: 7865145794209317045}
   - {fileID: 4722266909164552340}
   - {fileID: 2769845309014719486}
-  playerWallet: {fileID: 158062277142479348}
+  playerWallet: {fileID: 0}
   inventoryItemPrefab: {fileID: 1068034338426748895, guid: 74758fc318e782b49a474b1c623d4565, type: 3}
 --- !u!114 &8993772828120170924
 MonoBehaviour:
@@ -2517,7 +2517,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryManager: {fileID: 1979945657100220229}
---- !u!114 &158062277142479348
+--- !u!114 &7094627163202907554
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4390,7 +4390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc84b37800f497c47894f9339f13a79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWallet: {fileID: 158062277142479348}
+  playerWallet: {fileID: 7094627163202907554}
   prefix: 
   coinText: {fileID: 3661465760770461088}
 --- !u!1 &4758094790926707216
@@ -4939,7 +4939,7 @@ MonoBehaviour:
   shopDescriptionText: {fileID: 0}
   playerCoinsText: {fileID: 3661465760770461088}
   inventoryManager: {fileID: 1979945657100220229}
-  playerWallet: {fileID: 158062277142479348}
+  playerWallet: {fileID: 7094627163202907554}
 --- !u!1 &5114504596500820402
 GameObject:
   m_ObjectHideFlags: 0
@@ -6421,7 +6421,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc84b37800f497c47894f9339f13a79c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerWallet: {fileID: 158062277142479348}
+  playerWallet: {fileID: 7094627163202907554}
   prefix: 
   coinText: {fileID: 7413558261320294700}
 --- !u!1 &6598203480609421591
@@ -8110,7 +8110,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\u041B\u0430\u0432\u043A\u0430"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7154c8c9536d85441be8a8256b20adef, type: 2}
   m_sharedMaterial: {fileID: -5526089158424628337, guid: 7154c8c9536d85441be8a8256b20adef, type: 2}
