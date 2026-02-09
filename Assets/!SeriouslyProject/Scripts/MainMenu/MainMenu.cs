@@ -7,6 +7,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameAlert gameAlertPrefab;
     [SerializeField] private SceneLoader startSceneLoader;
     [SerializeField] private SceneLoader loadSceneLoader;
+    [SerializeField] private InventoryData inventoryData;
 
     private GlobalLoader.GlobalData globalData;
 
@@ -34,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
             if (data != null && data.HasGameProgress)
             {
-                GameMassage.GameAlert(gameAlertPrefab, "Начать новую игру? Прогресс будет удален.", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
+                GameMassage.GameAlert(gameAlertPrefab, "пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ? пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.", "пїЅпїЅ", Play, "пїЅпїЅпїЅ", GameMassage.CloseAlert, 1f);
                 return;
             }
         }
@@ -44,6 +45,18 @@ public class MainMenu : MonoBehaviour
     private void Play()
     {
         SaveLoadSystem.ClearAllSaves(GlobalLoader.GAME_DIRECTORY);
+        
+        // РћС‡РёС‰Р°РµРј ScriptableObject РёРЅРІРµРЅС‚Р°СЂСЏ РїСЂРё РЅРѕРІРѕР№ РёРіСЂРµ
+        if (inventoryData != null)
+        {
+            inventoryData.Clear();
+            Debug.Log("РРЅРІРµРЅС‚Р°СЂСЊ РѕС‡РёС‰РµРЅ РґР»СЏ РЅРѕРІРѕР№ РёРіСЂС‹");
+        }
+        else
+        {
+            Debug.LogWarning("InventoryData РЅРµ РЅР°Р·РЅР°С‡РµРЅ РІ MainMenu!");
+        }
+        
         var data = new GlobalLoader.GlobalData
         {
             isStart = true
@@ -62,6 +75,6 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
-        GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f);
+        GameMassage.GameAlert(gameAlertPrefab, "пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ?", "пїЅпїЅ", Application.Quit, "пїЅпїЅпїЅ", GameMassage.CloseAlert, 1f);
     }
 }

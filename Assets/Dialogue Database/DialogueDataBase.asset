@@ -2603,7 +2603,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SetActive(DealerDialogueTrigger, false)
         type: 0
         typeString: 
       conversationID: 3
@@ -2626,8 +2626,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
-    canvasZoom: 1
+    canvasScrollPosition: {x: 43.898026, y: 16.739124}
+    canvasZoom: 1.1499999
   - id: 4
     fields:
     - title: Title

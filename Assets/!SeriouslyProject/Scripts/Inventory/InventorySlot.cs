@@ -10,6 +10,13 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private ItemDescriptionDisplay descriptionDisplay;
 
+    private ShopManager shopManager;
+
+    private void Start()
+    {
+        shopManager = FindObjectOfType<ShopManager>();
+    }
+
     public void OnDrop(PointerEventData eventData)
     {
         if (inventoryManager == null)
@@ -126,11 +133,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (descriptionDisplay == null) return;
-
         DraggableItem item = GetComponentInChildren<DraggableItem>();
+        if (item == null || item.itemData == null) return;
 
-        if (item != null && item.itemData != null)
+        // Если магазин открыт - показываем цену продажи
+        if (shopManager != null && shopManager.IsOpen)
+        {
+            shopManager.ShowPlayerItemDescription(item.itemData);
+            return;
+        }
+
+        // Иначе - обычное описание
+        if (descriptionDisplay != null)
         {
             descriptionDisplay.ShowItem(item);
         }
@@ -138,6 +152,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (shopManager != null && shopManager.IsOpen)
+        {
+            shopManager.HideItemDescription();
+            return;
+        }
+
         if (descriptionDisplay != null)
         {
             descriptionDisplay.Hide();

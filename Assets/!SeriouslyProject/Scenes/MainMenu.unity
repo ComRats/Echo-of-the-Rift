@@ -502,9 +502,9 @@ RectTransform:
   - {fileID: 1452349727}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -72.168}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 119.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &296335340
@@ -730,9 +730,9 @@ RectTransform:
   - {fileID: 1175441122}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -568.127}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 88.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &329980030
@@ -916,6 +916,7 @@ MonoBehaviour:
   gameAlertPrefab: {fileID: 7490771056175563970, guid: e4f3045de98221d43bd381cd2da8045f, type: 3}
   startSceneLoader: {fileID: 50756310}
   loadSceneLoader: {fileID: 58026911}
+  inventoryData: {fileID: 11400000, guid: 18c9b7cc0f723cf428542796180d4061, type: 2}
 --- !u!95 &563306632
 Animator:
   serializedVersion: 5
@@ -1053,9 +1054,9 @@ RectTransform:
   - {fileID: 1658785948}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -326.635}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 88.66}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &704416838
@@ -1595,9 +1596,9 @@ RectTransform:
   - {fileID: 1878208905}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -207.069}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 100.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1222918470
@@ -1882,9 +1883,9 @@ RectTransform:
   - {fileID: 1841652099}
   m_Father: {fileID: 563306627}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: -447.381}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 286.6, y: 102.82}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1520412145
