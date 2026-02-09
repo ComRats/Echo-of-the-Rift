@@ -15,8 +15,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private InventoryManager inventoryManager;
     private InventoryContextMenu contextMenu;
-    private ShopManager shopManager;
-    private ShopContextMenu shopContextMenu;
 
     private float snapDistance = 70f;
     private float snapDistanceSqr;
@@ -28,12 +26,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if (contextMenu == null)
             contextMenu = FindObjectOfType<InventoryContextMenu>();
-
-        if (shopManager == null)
-            shopManager = FindObjectOfType<ShopManager>();
-
-        if (shopContextMenu == null)
-            shopContextMenu = FindObjectOfType<ShopContextMenu>();
     }
 
     private void Start()
@@ -68,17 +60,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void OpenContextMenu(Vector2 position)
     {
-        // Если магазин открыт - показываем меню продажи
-        if (shopManager != null && shopManager.IsOpen)
-        {
-            if (shopContextMenu != null)
-            {
-                shopContextMenu.ShowSellMenu(this, position);
-            }
-            return;
-        }
-
-        // Иначе - обычное контекстное меню
         if (contextMenu != null)
         {
             contextMenu.Show(this, position);
@@ -91,15 +72,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Разрешаем перетаскивание только левой кнопкой мыши
-        if (eventData.button != PointerEventData.InputButton.Left)
-            return;
-
         if (contextMenu != null)
+        {
             contextMenu.Hide();
-
-        if (shopContextMenu != null)
-            shopContextMenu.Hide();
+        }
 
         parentAfterDrag = transform.parent;
 
@@ -112,19 +88,11 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Перетаскивание только левой кнопкой мыши
-        if (eventData.button != PointerEventData.InputButton.Left)
-            return;
-
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Завершение перетаскивания только для левой кнопки мыши
-        if (eventData.button != PointerEventData.InputButton.Left)
-            return;
-
         image.raycastTarget = true;
 
         if (transform.parent == GetComponentInParent<Canvas>().transform)
@@ -135,6 +103,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
 
+        // Синхронизируем после перетаскивания
         if (inventoryManager != null)
         {
             inventoryManager.SyncFromUI();
@@ -148,6 +117,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         InventorySlot closestSlot = null;
         float minDistanceSqr = float.MaxValue;
 
+        // Проверяем слоты инвентаря
         foreach (InventorySlot slot in inventoryManager.inventorySlots)
         {
             float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
@@ -158,6 +128,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
         }
 
+        // Проверяем слоты экипировки
         foreach (InventorySlot slot in inventoryManager.equipmentSlots)
         {
             float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
@@ -168,6 +139,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
         }
 
+        // Если нашли близкий слот и тип подходит - дропаем
         if (closestSlot != null && minDistanceSqr <= snapDistanceSqr)
         {
             if (closestSlot.IsTypeAllowed(this))

@@ -1,0 +1,335 @@
+using UnityEngine;
+using TMPro;
+using EchoRift.Shop;
+
+/// <summary>
+/// UI панель магазина с двумя инвентарями
+/// </summary>
+public class ShopUI : MonoBehaviour
+{
+    [Header("Panels")]
+    [SerializeField] private GameObject shopPanel;
+    [SerializeField] private GameObject merchantInventoryPanel;
+    [SerializeField] private GameObject playerInventoryPanel;
+
+    [Header("Merchant Inventory")]
+    [SerializeField] private InventorySlot[] merchantSlots;
+    [SerializeField] private GameObject merchantItemPrefab;
+
+    [Header("Player Inventory")]
+    [SerializeField] private InventorySlot[] playerSlots;
+
+    [Header("UI Elements")]
+    [SerializeField] private TextMeshProUGUI shopNameText;
+    [SerializeField] private TextMeshProUGUI shopDescriptionText;
+    [SerializeField] private TextMeshProUGUI playerCoinsText;
+
+    [Header("References")]
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private PlayerWallet playerWallet;
+
+    private ShopData currentShopData;
+    private bool isShopMode = false;
+    private ShopManager shopManager;
+
+    public bool IsShopMode => isShopMode;
+    public InventorySlot[] MerchantSlots => merchantSlots;
+    public ShopManager ShopManager => shopManager;
+
+    private void Awake()
+    {
+        Debug.Log("[ShopUI] Awake вызван");
+        
+        // Создаём ShopManager если его нет
+        if (shopManager == null)
+        {
+            GameObject managerObj = new GameObject("ShopManager");
+            shopManager = managerObj.AddComponent<ShopManager>();
+            managerObj.transform.SetParent(transform);
+            Debug.Log("[ShopUI] ShopManager создан автоматически");
+        }
+        
+        // Автопоиск компонентов если не назначены
+        if (inventoryManager == null)
+        {
+            inventoryManager = FindObjectOfType<InventoryManager>();
+            Debug.Log($"[ShopUI] InventoryManager найден автоматически: {inventoryManager != null}");
+        }
+        
+        if (playerWallet == null && inventoryManager != null)
+        {
+            playerWallet = inventoryManager.Wallet;
+            Debug.Log($"[ShopUI] PlayerWallet получен из InventoryManager: {playerWallet != null}");
+        }
+        
+        // Инициализируем ShopManager
+        if (shopManager != null && inventoryManager != null && playerWallet != null)
+        {
+            shopManager.Initialize(inventoryManager, playerWallet);
+            Debug.Log("[ShopUI] ShopManager инициализирован");
+        }
+        
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(false);
+            Debug.Log("[ShopUI] shopPanel скрыт при инициализации");
+        }
+        else
+        {
+            Debug.LogError("[ShopUI] shopPanel не назначен в инспекторе!");
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (playerWallet != null)
+        {
+            playerWallet.OnCoinsChanged += UpdateCoinsDisplay;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (playerWallet != null)
+        {
+            playerWallet.OnCoinsChanged -= UpdateCoinsDisplay;
+        }
+    }
+
+    /// <summary>
+    /// Открыть магазин с указанными данными
+    /// </summary>
+    public void OpenShop(ShopData shopData)
+    {
+        Debug.Log($"[ShopUI] OpenShop вызван для: {(shopData != null ? shopData.shopName : "NULL")}");
+        
+        if (shopData == null)
+        {
+            Debug.LogError("[ShopUI] ShopData is null!");
+            return;
+        }
+
+        if (shopManager == null)
+        {
+            Debug.LogError("[ShopUI] ShopManager не инициализирован!");
+            return;
+        }
+
+        // ВАЖНО: Синхронизируем основной инвентарь перед открытием магазина
+        if (inventoryManager != null)
+        {
+            inventoryManager.SyncFromUI();
+            Debug.Log("[ShopUI] Основной инвентарь синхронизирован перед открытием магазина");
+        }
+
+        // Открываем магазин через ShopManager
+        shopManager.OpenShop(shopData);
+        
+        currentShopData = shopData;
+        isShopMode = true;
+
+        // Обновляем UI магазина
+        if (shopNameText != null)
+        {
+            shopNameText.text = shopData.shopName;
+            Debug.Log($"[ShopUI] Название магазина установлено: {shopData.shopName}");
+        }
+
+        if (shopDescriptionText != null)
+        {
+            shopDescriptionText.text = shopData.shopDescription;
+        }
+
+        // Загружаем товары торговца
+        Debug.Log($"[ShopUI] Загрузка товаров торговца. Количество товаров: {shopData.items.Count}");
+        LoadMerchantInventory(shopData);
+
+        // Синхронизируем инвентарь игрока
+        Debug.Log("[ShopUI] Синхронизация инвентаря игрока");
+        SyncPlayerInventory();
+
+        // Обновляем отображение монет
+        if (playerWallet != null)
+        {
+            UpdateCoinsDisplay(playerWallet.Coins);
+            Debug.Log($"[ShopUI] Монеты обновлены: {playerWallet.Coins}");
+        }
+
+        // Показываем панель
+        if (shopPanel != null)
+        {
+            shopPanel.SetActive(true);
+            Debug.Log("[ShopUI] shopPanel активирован");
+        }
+        else
+        {
+            Debug.LogError("[ShopUI] shopPanel не назначен! Магазин не может быть показан!");
+        }
+
+        Debug.Log($"[ShopUI] Магазин открыт: {shopData.shopName}");
+    }
+
+    /// <summary>
+    /// Закрыть магазин
+    /// </summary>
+    public void CloseShop()
+    {
+        Debug.Log("[ShopUI] CloseShop вызван");
+        
+        if (shopManager != null)
+        {
+            shopManager.CloseShop();
+        }
+        
+        isShopMode = false;
+        currentShopData = null;
+
+        // Очищаем инвентарь торговца
+        ClearMerchantInventory();
+
+        // Скрываем панель
+        if (shopPanel != null)
+            shopPanel.SetActive(false);
+
+        // Обновляем инвентарь игрока из данных
+        if (inventoryManager != null)
+            inventoryManager.RefreshUIFromData();
+
+        Debug.Log("[ShopUI] Магазин закрыт");
+    }
+
+    /// <summary>
+    /// Обновить UI после покупки
+    /// </summary>
+    public void OnItemTransactionComplete()
+    {
+        Debug.Log("[ShopUI] Транзакция завершена, обновление UI");
+        
+        // Обновляем UI торговца
+        RefreshMerchantInventory();
+        
+        // Обновляем UI игрока
+        SyncPlayerInventory();
+    }
+
+    private void LoadMerchantInventory(ShopData shopData)
+    {
+        ClearMerchantInventory();
+
+        for (int i = 0; i < merchantSlots.Length && i < shopData.items.Count; i++)
+        {
+            ShopItem shopItem = shopData.items[i];
+            if (shopItem.item == null) continue;
+
+            // Показываем только товары в наличии (или с бесконечным запасом)
+            if (!shopItem.infiniteStock && shopItem.quantity <= 0)
+                continue;
+
+            SpawnMerchantItem(shopItem, merchantSlots[i]);
+        }
+    }
+
+    private void RefreshMerchantInventory()
+    {
+        if (currentShopData == null) return;
+        LoadMerchantInventory(currentShopData);
+    }
+
+    private void SpawnMerchantItem(ShopItem shopItem, InventorySlot slot)
+    {
+        GameObject itemObj = Instantiate(merchantItemPrefab, slot.transform);
+        DraggableItem draggableItem = itemObj.GetComponent<DraggableItem>();
+
+        if (draggableItem != null)
+        {
+            int displayCount = shopItem.infiniteStock ? 999 : shopItem.quantity;
+            draggableItem.InitialiseItem(shopItem.item, displayCount);
+            
+            // Отключаем перетаскивание для товаров торговца
+            draggableItem.enabled = false;
+        }
+    }
+
+    private void ClearMerchantInventory()
+    {
+        foreach (var slot in merchantSlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                Destroy(slot.transform.GetChild(0).gameObject);
+            }
+        }
+    }
+
+    private void SyncPlayerInventory()
+    {
+        if (inventoryManager == null) return;
+
+        Debug.Log("[ShopUI] SyncPlayerInventory начат");
+
+        // Очищаем слоты игрока в магазине
+        foreach (var slot in playerSlots)
+        {
+            if (slot.transform.childCount > 0)
+            {
+                Destroy(slot.transform.GetChild(0).gameObject);
+            }
+        }
+
+        // Загружаем предметы из InventoryData
+        var invSlots = inventoryManager.Data.InventorySlots;
+        Debug.Log($"[ShopUI] Загрузка {invSlots.Count} слотов из InventoryData");
+        
+        for (int i = 0; i < playerSlots.Length && i < invSlots.Count; i++)
+        {
+            if (string.IsNullOrEmpty(invSlots[i].itemName) || invSlots[i].count <= 0)
+                continue;
+
+            ItemData itemData = inventoryManager.FindItemDataByName(invSlots[i].itemName);
+            if (itemData != null)
+            {
+                Debug.Log($"[ShopUI] Добавление предмета в слот {i}: {invSlots[i].itemName} x{invSlots[i].count}");
+                GameObject itemObj = Instantiate(inventoryManager.inventoryItemPrefab, playerSlots[i].transform);
+                DraggableItem draggableItem = itemObj.GetComponent<DraggableItem>();
+                if (draggableItem != null)
+                {
+                    draggableItem.InitialiseItem(itemData, invSlots[i].count);
+                    // Отключаем перетаскивание в режиме магазина
+                    draggableItem.enabled = false;
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[ShopUI] Не найден ItemData для: {invSlots[i].itemName}");
+            }
+        }
+        
+        Debug.Log("[ShopUI] SyncPlayerInventory завершён");
+    }
+
+    private void UpdateCoinsDisplay(int coins)
+    {
+        if (playerCoinsText != null)
+        {
+            playerCoinsText.text = $"{coins}";
+        }
+    }
+
+
+
+    /// <summary>
+    /// Проверяет, является ли слот слотом торговца
+    /// </summary>
+    public bool IsMerchantSlot(InventorySlot slot)
+    {
+        return System.Array.IndexOf(merchantSlots, slot) >= 0;
+    }
+
+    /// <summary>
+    /// Проверяет, является ли слот слотом игрока в магазине
+    /// </summary>
+    public bool IsPlayerShopSlot(InventorySlot slot)
+    {
+        return System.Array.IndexOf(playerSlots, slot) >= 0;
+    }
+}

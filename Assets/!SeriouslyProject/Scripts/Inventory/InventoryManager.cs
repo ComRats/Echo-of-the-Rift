@@ -135,6 +135,122 @@ public class InventoryManager : MonoBehaviour
         return inventoryData.GetItemCount(itemName) >= requiredAmount;
     }
 
+    /// <summary>
+    /// Проверяет, полностью ли заполнен инвентарь (нет пустых слотов)
+    /// </summary>
+    public bool IsInventoryFull()
+    {
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.transform.childCount == 0)
+                return false;
+        }
+        return true;
+    }
+
+    /// <summary>
+    /// Проверяет, можно ли добавить указанное количество предмета
+    /// </summary>
+    public bool CanAddItem(string itemName, int amount = 1)
+    {
+        ItemData item = FindItemDataByName(itemName);
+        if (item == null)
+            return false;
+
+        return HasSpaceForItem(item, amount);
+    }
+
+    /// <summary>
+    /// Проверяет, есть ли место для добавления предмета
+    /// </summary>
+    public bool HasSpaceForItem(ItemData item, int amount)
+    {
+        if (item == null || amount <= 0)
+            return false;
+
+        int remaining = amount;
+
+        // Проверяем существующие стаки
+        if (item.isStackable)
+        {
+            foreach (var slot in inventorySlots)
+            {
+                var slotItem = slot.GetComponentInChildren<DraggableItem>();
+                if (slotItem != null && slotItem.itemData == item && slotItem.count < item.maxStackSize)
+                {
+                    int space = item.maxStackSize - slotItem.count;
+                    remaining -= space;
+                    if (remaining <= 0)
+                        return true;
+                }
+            }
+        }
+
+        // Проверяем пустые слоты
+        int emptySlots = 0;
+        foreach (var slot in inventorySlots)
+        {
+            if (slot.transform.childCount == 0)
+                emptySlots++;
+        }
+
+        if (item.isStackable)
+        {
+            int slotsNeeded = Mathf.CeilToInt((float)remaining / item.maxStackSize);
+            return emptySlots >= slotsNeeded;
+        }
+        else
+        {
+            return emptySlots >= remaining;
+        }
+    }
+
+    /// <summary>
+    /// Удаляет предмет из конкретного слота (для исправления бага с использованием)
+    /// </summary>
+    public bool RemoveItemFromSlot(InventorySlot slot, int amount = 1)
+    {
+        if (slot == null || amount <= 0)
+            return false;
+
+        var item = slot.GetComponentInChildren<DraggableItem>();
+        if (item == null)
+            return false;
+
+        string itemName = item.itemData.itemName;
+        int slotIndex = System.Array.IndexOf(inventorySlots, slot);
+        bool isInventorySlot = slotIndex >= 0;
+
+        if (!isInventorySlot)
+        {
+            slotIndex = System.Array.IndexOf(equipmentSlots, slot);
+            if (slotIndex < 0)
+                return false;
+        }
+
+        if (item.count <= amount)
+        {
+            Destroy(item.gameObject);
+
+            if (isInventorySlot)
+                inventoryData.ClearInventorySlot(slotIndex);
+            else
+                inventoryData.ClearEquipmentSlot(slotIndex);
+        }
+        else
+        {
+            item.count -= amount;
+            item.RefreshCount();
+
+            if (isInventorySlot)
+                inventoryData.SetInventorySlot(slotIndex, itemName, item.count);
+            else
+                inventoryData.SetEquipmentSlot(slotIndex, itemName, item.count);
+        }
+
+        return true;
+    }
+
     public void SyncFromUI()
     {
         SyncSlotsToData(inventorySlots, true);

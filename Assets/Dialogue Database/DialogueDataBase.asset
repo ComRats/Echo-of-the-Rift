@@ -2580,11 +2580,11 @@ MonoBehaviour:
       - title: Title
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 4
         type: 5
@@ -2596,16 +2596,16 @@ MonoBehaviour:
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: "\u0417\u0434\u0440\u0430\u0432\u0441\u0442\u0432\u0443\u0439, \u043F\u0443\u0442\u043D\u0438\u043A,
           \u0447\u0435\u0433\u043E \u0436\u0435\u043B\u0430\u0435\u0448\u044C?"
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: SetActive(DealerDialogueTrigger, false)
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -2626,8 +2626,8 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 43.898026, y: 16.739124}
-    canvasZoom: 1.1499999
+    canvasScrollPosition: {x: 59.85969, y: 22.656582}
+    canvasZoom: 1.1799998
   - id: 4
     fields:
     - title: Title

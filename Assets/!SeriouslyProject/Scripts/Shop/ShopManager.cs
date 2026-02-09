@@ -1,459 +1,232 @@
 using UnityEngine;
 using System;
 
-public class ShopManager : MonoBehaviour
+namespace EchoRift.Shop
 {
-    [Header("Data")]
-    [SerializeField] private ShopData shopData;
-    [SerializeField] private InventoryData playerInventoryData;
-
-    [Header("References")]
-    [SerializeField] private InventoryManager inventoryManager;
-    [SerializeField] private PlayerWallet playerWallet;
-    [SerializeField] private ShopContextMenu shopContextMenu;
-    [SerializeField] private ItemDescriptionDisplay descriptionDisplay;
-
-    [Header("Shop UI")]
-    [SerializeField] private GameObject shopPanel;
-    [SerializeField] private ShopSlot[] shopSlots;
-    [SerializeField] private GameObject shopItemPrefab;
-
-    [Header("Player Inventory UI in Shop")]
-    [SerializeField] private PlayerShopSlot[] playerShopSlots;
-    [SerializeField] private GameObject playerShopItemPrefab;
-
-    public ShopData ShopData => shopData;
-    public InventoryData PlayerInventoryData => playerInventoryData;
-    public bool IsOpen { get; private set; }
-
-    public event Action OnShopOpened;
-    public event Action OnShopClosed;
-    public event Action<ItemData> OnItemBought;
-    public event Action<ItemData> OnItemSold;
-
-    private void Awake()
+    /// <summary>
+    /// Менеджер системы магазина
+    /// Управляет транзакциями купли-продажи
+    /// </summary>
+    public class ShopManager : MonoBehaviour
     {
-        if (shopPanel != null)
+        private InventoryManager playerInventory;
+        private PlayerWallet playerWallet;
+        private ShopData currentShop;
+
+        public ShopData CurrentShop => currentShop;
+        public bool IsShopOpen => currentShop != null;
+
+        public event Action<ShopData> OnShopOpened;
+        public event Action OnShopClosed;
+        public event Action<ItemData, int, int> OnItemBought;  // item, quantity, totalPrice
+        public event Action<ItemData, int, int> OnItemSold;    // item, quantity, totalPrice
+
+        public void Initialize(InventoryManager inventory, PlayerWallet wallet)
         {
-            shopPanel.SetActive(false);
-        }
-    }
-
-    private void Start()
-    {
-        if (inventoryManager == null)
-            inventoryManager = FindObjectOfType<InventoryManager>();
-
-        if (playerWallet == null && inventoryManager != null)
-            playerWallet = inventoryManager.Wallet;
-
-        if (playerInventoryData == null && inventoryManager != null)
-            playerInventoryData = inventoryManager.Data;
-    }
-
-    #region Shop Open/Close
-
-    public void OpenShop()
-    {
-        if (IsOpen) return;
-
-        // �������������� ������ ��������� ����� ���������
-        if (inventoryManager != null)
-        {
-            inventoryManager.SyncFromUI();
+            playerInventory = inventory;
+            playerWallet = wallet;
+            Debug.Log($"[ShopManager] Инициализирован. InventoryManager: {(inventory != null ? "OK" : "NULL")}, PlayerWallet: {(wallet != null ? "OK" : "NULL")}");
         }
 
-        IsOpen = true;
-
-        if (shopPanel != null)
+        /// <summary>
+        /// Открыть магазин
+        /// </summary>
+        public void OpenShop(ShopData shopData)
         {
-            shopPanel.SetActive(true);
-        }
-
-        RefreshShopItems();
-        RefreshPlayerItems();
-
-        OnShopOpened?.Invoke();
-        Debug.Log($"������� '{shopData.shopName}' ������");
-    }
-
-    public void CloseShop()
-    {
-        if (!IsOpen) return;
-
-        IsOpen = false;
-
-        if (shopPanel != null)
-        {
-            shopPanel.SetActive(false);
-        }
-
-        if (shopContextMenu != null)
-        {
-            shopContextMenu.Hide();
-        }
-
-        // ��������� UI ��������� ���������
-        if (inventoryManager != null)
-        {
-            inventoryManager.RefreshUIFromData();
-        }
-
-        HideItemDescription();
-        OnShopClosed?.Invoke();
-
-        Debug.Log("������� ������");
-    }
-
-    public void ToggleShop()
-    {
-        if (IsOpen)
-            CloseShop();
-        else
-            OpenShop();
-    }
-
-    #endregion
-
-    #region Buy/Sell
-
-    public bool BuyItem(ShopItem shopItem)
-    {
-        if (shopItem == null || shopItem.ItemData == null)
-        {
-            Debug.LogWarning("��� �������� ��� �������");
-            return false;
-        }
-
-        ItemData item = shopItem.ItemData;
-        int price = shopData.GetBuyPrice(item);
-
-        // ��������� ������
-        if (!playerWallet.HasEnoughCoins(price))
-        {
-            Debug.Log($"������������ ����� ��� ������� {item.itemGameName}. �����: {price}");
-            return false;
-        }
-
-        // ��������� ������� � ��������
-        if (!shopItem.ShopEntry.HasStock)
-        {
-            Debug.Log($"{item.itemGameName} ��� � �������");
-            return false;
-        }
-
-        // ������� �������� � InventoryData
-        if (!TryAddToPlayerInventory(item, 1))
-        {
-            Debug.Log("��������� �����!");
-            return false;
-        }
-
-        // ��������� ������ � ��������� �����
-        playerWallet.TrySpendCoins(price);
-        shopItem.ShopEntry.TryDecreaseStock(1);
-        shopItem.UpdateVisuals();
-
-        // ��������� UI ��������� ������ � ��������
-        RefreshPlayerItems();
-
-        OnItemBought?.Invoke(item);
-        Debug.Log($"������ {item.itemGameName} �� {price} �����");
-
-        return true;
-    }
-
-    public bool SellItem(PlayerShopItem playerItem)
-    {
-        if (playerItem == null || playerItem.ItemData == null)
-        {
-            Debug.LogWarning("��� �������� ��� �������");
-            return false;
-        }
-
-        ItemData item = playerItem.ItemData;
-        int sellPrice = shopData.GetSellPrice(item);
-        int slotIndex = playerItem.SlotIndex;
-
-        // ������� �� InventoryData
-        if (!TryRemoveFromPlayerInventory(slotIndex, 1))
-        {
-            Debug.LogWarning("�� ������� ������� ������� �� ���������");
-            return false;
-        }
-
-        // ��������� ������
-        playerWallet.AddCoins(sellPrice);
-
-        // ��������� UI
-        RefreshPlayerItems();
-
-        OnItemSold?.Invoke(item);
-        Debug.Log($"������ {item.itemGameName} �� {sellPrice} �����");
-
-        return true;
-    }
-
-    public bool SellItemFromInventory(DraggableItem draggableItem)
-    {
-        if (draggableItem == null || draggableItem.itemData == null)
-        {
-            Debug.LogWarning("��� �������� ��� �������");
-            return false;
-        }
-
-        ItemData item = draggableItem.itemData;
-        int sellPrice = shopData.GetSellPrice(item);
-
-        // ������� ������� �� UI ���������
-        if (inventoryManager != null)
-        {
-            // ������� ��������������� � InventoryData
-            inventoryManager.SyncFromUI();
-
-            // ������� ������� �� DraggableItem
-            if (draggableItem.count > 1)
+            Debug.Log($"[ShopManager] OpenShop вызван с shopData: {(shopData != null ? shopData.shopName : "NULL")}");
+            
+            if (shopData == null)
             {
-                draggableItem.count--;
-                draggableItem.RefreshCount();
-            }
-            else
-            {
-                Destroy(draggableItem.gameObject);
+                Debug.LogError("[ShopManager] ShopData is null!");
+                return;
             }
 
-            // ��������� ������
-            playerWallet.AddCoins(sellPrice);
+            if (playerInventory == null)
+            {
+                Debug.LogError("[ShopManager] playerInventory не инициализирован! Вызовите Initialize() перед открытием магазина.");
+                return;
+            }
 
-            // ��������� InventoryData �� UI
-            inventoryManager.SyncFromUI();
+            if (playerWallet == null)
+            {
+                Debug.LogError("[ShopManager] playerWallet не инициализирован! Вызовите Initialize() перед открытием магазина.");
+                return;
+            }
 
-            // ��������� UI �������� ������ � ��������
-            RefreshPlayerItems();
+            currentShop = shopData;
+            Debug.Log($"[ShopManager] Вызов события OnShopOpened. Подписчиков: {(OnShopOpened != null ? OnShopOpened.GetInvocationList().Length : 0)}");
+            OnShopOpened?.Invoke(shopData);
+            Debug.Log($"[ShopManager] Открыт магазин: {shopData.shopName}");
+        }
 
-            OnItemSold?.Invoke(item);
-            Debug.Log($"������ {item.itemGameName} �� {sellPrice} �����");
+        /// <summary>
+        /// Закрыть магазин
+        /// </summary>
+        public void CloseShop()
+        {
+            if (currentShop == null) return;
 
+            Debug.Log($"[ShopManager] Закрыт магазин: {currentShop.shopName}");
+            currentShop = null;
+            OnShopClosed?.Invoke();
+        }
+
+        /// <summary>
+        /// Купить предмет у торговца
+        /// </summary>
+        public bool BuyItem(ItemData item, int quantity = 1)
+        {
+            if (!IsShopOpen)
+            {
+                Debug.LogWarning("[ShopManager] Магазин не открыт!");
+                return false;
+            }
+
+            if (item == null || quantity <= 0)
+            {
+                Debug.LogWarning("[ShopManager] Некорректные параметры покупки!");
+                return false;
+            }
+
+            ShopItem shopItem = currentShop.FindShopItem(item);
+            if (shopItem == null)
+            {
+                Debug.LogWarning($"[ShopManager] Предмет {item.itemName} не продаётся в этом магазине!");
+                return false;
+            }
+
+            // Проверка наличия товара
+            if (!shopItem.infiniteStock && shopItem.quantity < quantity)
+            {
+                Debug.LogWarning($"[ShopManager] Недостаточно товара! Доступно: {shopItem.quantity}");
+                return false;
+            }
+
+            // Проверка места в инвентаре
+            bool canAdd = playerInventory.CanAddItem(item.itemName, quantity);
+            Debug.Log($"[ShopManager] Проверка покупки: {item.itemName} (GameName: {item.itemGameName}). Можно добавить: {canAdd}, Количество: {quantity}");
+            
+            if (!canAdd)
+            {
+                Debug.LogWarning("[ShopManager] Недостаточно места в инвентаре!");
+                return false;
+            }
+
+            // Расчёт стоимости
+            int pricePerItem = shopItem.GetBuyPrice();
+            int totalPrice = pricePerItem * quantity;
+
+            // Проверка денег
+            if (!playerWallet.HasEnoughCoins(totalPrice))
+            {
+                Debug.LogWarning($"[ShopManager] Недостаточно денег! Нужно: {totalPrice}, Есть: {playerWallet.Coins}");
+                return false;
+            }
+
+            // Выполнение транзакции
+            if (!playerWallet.TrySpendCoins(totalPrice))
+            {
+                return false;
+            }
+
+            Debug.Log($"[ShopManager] Добавление предмета: {item.itemName}");
+            if (!playerInventory.AddItem(item.itemName, quantity))
+            {
+                // Откат транзакции
+                playerWallet.AddCoins(totalPrice);
+                Debug.LogError("[ShopManager] Ошибка добавления предмета в инвентарь!");
+                return false;
+            }
+
+            // Уменьшение запаса товара
+            if (!shopItem.infiniteStock)
+            {
+                shopItem.quantity -= quantity;
+            }
+
+            OnItemBought?.Invoke(item, quantity, totalPrice);
+            Debug.Log($"[ShopManager] Куплено: {item.itemName} x{quantity} за {totalPrice} монет");
             return true;
         }
 
-        return false;
-    }
-
-    #endregion
-
-    #region Inventory Data Operations
-
-    private bool TryAddToPlayerInventory(ItemData item, int amount)
-    {
-        if (playerInventoryData == null) return false;
-
-        int remaining = amount;
-
-        // ������� �������� �������� � ������������ �����
-        if (item.isStackable)
+        /// <summary>
+        /// Продать предмет торговцу
+        /// </summary>
+        public bool SellItem(ItemData item, int quantity = 1)
         {
-            var slots = playerInventoryData.InventorySlots;
-            for (int i = 0; i < slots.Count && remaining > 0; i++)
+            if (!IsShopOpen)
             {
-                if (slots[i].itemName == item.itemName && slots[i].count < item.maxStackSize)
-                {
-                    int space = item.maxStackSize - slots[i].count;
-                    int toAdd = Mathf.Min(remaining, space);
-
-                    playerInventoryData.SetInventorySlot(i, item.itemName, slots[i].count + toAdd);
-                    remaining -= toAdd;
-                }
-            }
-        }
-
-        // ����� � ������ �����
-        while (remaining > 0)
-        {
-            int emptyIndex = playerInventoryData.FindEmptyInventorySlot();
-            if (emptyIndex < 0)
-            {
-                return remaining < amount; // �������� ��������
+                Debug.LogWarning("[ShopManager] Магазин не открыт!");
+                return false;
             }
 
-            int toAdd = item.isStackable ? Mathf.Min(remaining, item.maxStackSize) : 1;
-            playerInventoryData.SetInventorySlot(emptyIndex, item.itemName, toAdd);
-            remaining -= toAdd;
-        }
-
-        return true;
-    }
-
-    private bool TryRemoveFromPlayerInventory(int slotIndex, int amount)
-    {
-        if (playerInventoryData == null) return false;
-
-        var slots = playerInventoryData.InventorySlots;
-        if (slotIndex < 0 || slotIndex >= slots.Count) return false;
-
-        var slot = slots[slotIndex];
-        if (string.IsNullOrEmpty(slot.itemName) || slot.count < amount) return false;
-
-        int newCount = slot.count - amount;
-
-        if (newCount <= 0)
-        {
-            playerInventoryData.ClearInventorySlot(slotIndex);
-        }
-        else
-        {
-            playerInventoryData.SetInventorySlot(slotIndex, slot.itemName, newCount);
-        }
-
-        return true;
-    }
-
-    private ItemData FindItemDataByName(string itemName)
-    {
-        if (inventoryManager != null)
-        {
-            return inventoryManager.FindItemDataByName(itemName);
-        }
-
-        // Fallback - ���� � Resources
-        ItemData[] allItems = Resources.LoadAll<ItemData>("Items");
-        foreach (ItemData item in allItems)
-        {
-            if (item != null && item.itemName == itemName)
-                return item;
-        }
-        return null;
-    }
-
-    #endregion
-
-    #region UI Refresh
-
-    public void RefreshShopItems()
-    {
-        if (shopData == null || shopSlots == null) return;
-
-        foreach (ShopSlot slot in shopSlots)
-        {
-            slot.Clear();
-        }
-
-        int slotIndex = 0;
-        foreach (ShopItemEntry entry in shopData.items)
-        {
-            if (slotIndex >= shopSlots.Length) break;
-            if (entry.item == null) continue;
-
-            CreateShopItem(entry, shopSlots[slotIndex]);
-            slotIndex++;
-        }
-    }
-
-    public void RefreshPlayerItems()
-    {
-        if (playerInventoryData == null || playerShopSlots == null) return;
-
-        // ������� ������ ��������
-        foreach (PlayerShopSlot slot in playerShopSlots)
-        {
-            slot.Clear();
-        }
-
-        // ������ �������� �� InventoryData
-        var inventorySlots = playerInventoryData.InventorySlots;
-        int uiSlotIndex = 0;
-
-        for (int i = 0; i < inventorySlots.Count && uiSlotIndex < playerShopSlots.Length; i++)
-        {
-            var slotData = inventorySlots[i];
-
-            if (string.IsNullOrEmpty(slotData.itemName) || slotData.count <= 0)
+            if (item == null || quantity <= 0)
             {
-                uiSlotIndex++;
-                continue;
+                Debug.LogWarning("[ShopManager] Некорректные параметры продажи!");
+                return false;
             }
 
-            ItemData itemData = FindItemDataByName(slotData.itemName);
-            if (itemData != null)
+            if (!currentShop.acceptsPlayerItems)
             {
-                CreatePlayerShopItem(itemData, i, slotData.count, playerShopSlots[uiSlotIndex]);
+                Debug.LogWarning("[ShopManager] Этот торговец не покупает предметы!");
+                return false;
             }
 
-            uiSlotIndex++;
-        }
-    }
+            // Проверка наличия предмета у игрока
+            int availableCount = playerInventory.GetItemCount(item.itemName);
+            Debug.Log($"[ShopManager] Проверка продажи: {item.itemName} (GameName: {item.itemGameName}). Доступно: {availableCount}, Нужно: {quantity}");
+            
+            if (availableCount < quantity)
+            {
+                Debug.LogWarning($"[ShopManager] Недостаточно предметов для продажи! Доступно: {availableCount}, Нужно: {quantity}");
+                return false;
+            }
 
-    private void CreateShopItem(ShopItemEntry entry, ShopSlot slot)
-    {
-        if (shopItemPrefab == null)
+            // Расчёт стоимости
+            int pricePerItem = currentShop.GetSellPriceForItem(item);
+            int totalPrice = pricePerItem * quantity;
+
+            // Удаление предмета из инвентаря
+            Debug.Log($"[ShopManager] Удаление предмета: {item.itemName}");
+            if (!playerInventory.RemoveItem(item.itemName, quantity))
+            {
+                Debug.LogError("[ShopManager] Ошибка удаления предмета из инвентаря!");
+                return false;
+            }
+
+            // Добавление денег игроку
+            playerWallet.AddCoins(totalPrice);
+
+            // Добавление предмета в магазин (если он там продаётся)
+            ShopItem shopItem = currentShop.FindShopItem(item);
+            if (shopItem != null && !shopItem.infiniteStock)
+            {
+                shopItem.quantity += quantity;
+            }
+
+            OnItemSold?.Invoke(item, quantity, totalPrice);
+            Debug.Log($"[ShopManager] Продано: {item.itemName} x{quantity} за {totalPrice} монет");
+            return true;
+        }
+
+        /// <summary>
+        /// Получить цену покупки предмета
+        /// </summary>
+        public int GetBuyPrice(ItemData item)
         {
-            Debug.LogError("Shop Item Prefab �� ��������!");
-            return;
+            if (!IsShopOpen || item == null) return 0;
+
+            ShopItem shopItem = currentShop.FindShopItem(item);
+            return shopItem?.GetBuyPrice() ?? 0;
         }
 
-        GameObject itemObj = Instantiate(shopItemPrefab);
-        ShopItem shopItem = itemObj.GetComponent<ShopItem>();
-
-        if (shopItem != null)
+        /// <summary>
+        /// Получить цену продажи предмета
+        /// </summary>
+        public int GetSellPrice(ItemData item)
         {
-            shopItem.Initialize(entry, this, shopContextMenu);
-            slot.SetItem(shopItem);
+            if (!IsShopOpen || item == null) return 0;
+            return currentShop.GetSellPriceForItem(item);
         }
     }
-
-    private void CreatePlayerShopItem(ItemData itemData, int dataIndex, int count, PlayerShopSlot slot)
-    {
-        if (playerShopItemPrefab == null)
-        {
-            Debug.LogError("Player Shop Item Prefab �� ��������!");
-            return;
-        }
-
-        GameObject itemObj = Instantiate(playerShopItemPrefab);
-        PlayerShopItem playerItem = itemObj.GetComponent<PlayerShopItem>();
-
-        if (playerItem != null)
-        {
-            playerItem.Initialize(itemData, dataIndex, count, this, shopContextMenu);
-            slot.SetItem(playerItem);
-        }
-    }
-
-    #endregion
-
-    #region Description
-
-    public void ShowItemDescription(ItemData item, bool isBuying)
-    {
-        if (descriptionDisplay == null || item == null) return;
-
-        descriptionDisplay.ShowShopItem(item);
-    }
-
-    public void ShowPlayerItemDescription(ItemData item)
-    {
-        if (descriptionDisplay == null || item == null) return;
-
-        // ���������� � ����� �������
-        int sellPrice = shopData.GetSellPrice(item);
-        ShowCustomDescription(item, sellPrice, "���� �������");
-    }
-
-    private void ShowCustomDescription(ItemData item, int price, string priceLabel)
-    {
-        if (descriptionDisplay == null) return;
-
-        // ���������� ������������ ����� ��� ������ ���� �����
-        descriptionDisplay.ShowShopItemWithCustomPrice(item, price, priceLabel);
-    }
-
-    public void HideItemDescription()
-    {
-        if (descriptionDisplay != null)
-        {
-            descriptionDisplay.Hide();
-        }
-    }
-
-    #endregion
 }

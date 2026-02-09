@@ -1,10 +1,6 @@
 using UnityEngine;
 using TMPro;
 
-/// <summary>
-/// Компонент на TextMeshProUGUI, который показывает информацию о предметах.
-/// Вешается на TextMeshProUGUI.
-/// </summary>
 public class ItemDescriptionDisplay : MonoBehaviour
 {
     private TextMeshProUGUI descriptionText;
@@ -24,7 +20,7 @@ public class ItemDescriptionDisplay : MonoBehaviour
     }
 
     /// <summary>
-    /// Показывает информацию о предмете (обычный режим)
+    /// Показывает информацию о предмете
     /// </summary>
     public void ShowItem(DraggableItem item)
     {
@@ -41,48 +37,6 @@ public class ItemDescriptionDisplay : MonoBehaviour
         string description = itemData.description;
 
         descriptionText.text = $"Название: {itemName}\nТип: {itemType}\nОписание:\n{description}";
-        descriptionText.enabled = true;
-    }
-
-    /// <summary>
-    /// Показывает предмет из магазина с ценой покупки
-    /// </summary>
-    public void ShowShopItem(ItemData itemData)
-    {
-        if (descriptionText == null || itemData == null)
-        {
-            HideDescription();
-            return;
-        }
-
-        string itemName = itemData.itemGameName;
-        string itemType = GetRussianItemType(itemData.itemType);
-        string description = itemData.description;
-        int price = itemData.itemPrice;
-
-        descriptionText.text = $"Название: {itemName}\nТип: {itemType}\nЦена: {price} монет\nОписание:\n{description}";
-        descriptionText.enabled = true;
-    }
-
-    /// <summary>
-    /// Показывает предмет игрока с ценой продажи
-    /// </summary>
-    public void ShowPlayerItem(DraggableItem item)
-    {
-        if (descriptionText == null || item == null || item.itemData == null)
-        {
-            HideDescription();
-            return;
-        }
-
-        ItemData itemData = item.itemData;
-
-        string itemName = itemData.itemGameName;
-        string itemType = GetRussianItemType(itemData.itemType);
-        string description = itemData.description;
-        int sellPrice = CalculateSellPrice(itemData.itemPrice);
-
-        descriptionText.text = $"Название: {itemName}\nТип: {itemType}\nЦена продажи: {sellPrice} монет\nОписание:\n{description}";
         descriptionText.enabled = true;
     }
 
@@ -105,11 +59,6 @@ public class ItemDescriptionDisplay : MonoBehaviour
             descriptionText.enabled = false;
             descriptionText.text = string.Empty;
         }
-    }
-
-    private int CalculateSellPrice(int buyPrice)
-    {
-        return Mathf.Max(1, buyPrice / 2);
     }
 
     private string GetRussianItemType(ItemType type)
@@ -138,24 +87,5 @@ public class ItemDescriptionDisplay : MonoBehaviour
     private void OnDisable()
     {
         HideDescription();
-    }
-
-    /// <summary>
-    /// Показывает предмет с кастомной ценой и лейблом
-    /// </summary>
-    public void ShowShopItemWithCustomPrice(ItemData itemData, int price, string priceLabel)
-    {
-        if (descriptionText == null || itemData == null)
-        {
-            HideDescription();
-            return;
-        }
-
-        string itemName = itemData.itemGameName;
-        string itemType = GetRussianItemType(itemData.itemType);
-        string description = itemData.description;
-
-        descriptionText.text = $"Название: {itemName}\nТип: {itemType}\n{priceLabel}: {price} монет\nОписание:\n{description}";
-        descriptionText.enabled = true;
     }
 }

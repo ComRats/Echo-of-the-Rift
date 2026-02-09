@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using EchoRift.Shop;
 
 public class InventoryContextMenu : MonoBehaviour
 {
@@ -9,10 +10,14 @@ public class InventoryContextMenu : MonoBehaviour
     [SerializeField] private GameObject buttonPrefab;
     [SerializeField] private InventoryManager inventoryManager;
 
+    [Header("Shop References")]
+    [SerializeField] private ShopUI shopUI;
+
     [Header("Settings")]
     [SerializeField] private Vector2 offset = new Vector2(10f, -10f);
 
     private DraggableItem currentItem;
+    private InventorySlot currentSlot;
     private List<GameObject> activeButtons = new List<GameObject>();
 
     private void Awake()
@@ -47,10 +52,22 @@ public class InventoryContextMenu : MonoBehaviour
         if (item == null || item.itemData == null) return;
 
         currentItem = item;
+        currentSlot = item.transform.parent?.GetComponent<InventorySlot>();
         ClearButtons();
 
-        // Создаем кнопки в зависимости от типа предмета
-        CreateButtonsForItem(item);
+        // Проверяем, открыт ли магазин
+        bool isShopMode = shopUI != null && shopUI.IsShopMode;
+
+        if (isShopMode && currentSlot != null)
+        {
+            // Режим магазина - создаём кнопки покупки/продажи
+            CreateShopButtons(item, currentSlot);
+        }
+        else
+        {
+            // Обычный режим - создаём стандартные кнопки
+            CreateButtonsForItem(item);
+        }
 
         // Позиционируем меню
         contextMenuPanel.SetActive(true);
@@ -68,6 +85,7 @@ public class InventoryContextMenu : MonoBehaviour
             contextMenuPanel.SetActive(false);
         }
         currentItem = null;
+        currentSlot = null;
         ClearButtons();
     }
 
@@ -96,6 +114,94 @@ public class InventoryContextMenu : MonoBehaviour
 
     }
 
+    private void CreateShopButtons(DraggableItem item, InventorySlot slot)
+    {
+        if (shopUI == null) return;
+
+        // Определяем, в каком инвентаре находится предмет
+        bool isMerchantItem = shopUI.IsMerchantSlot(slot);
+        bool isPlayerItem = shopUI.IsPlayerShopSlot(slot);
+
+        if (isMerchantItem)
+        {
+            // Кнопки покупки
+            CreateBuyButtons(item);
+        }
+        else if (isPlayerItem)
+        {
+            // Кнопки продажи
+            CreateSellButtons(item);
+        }
+    }
+
+    private void CreateBuyButtons(DraggableItem item)
+    {
+        if (shopUI == null || shopUI.ShopManager == null) return;
+        
+        int buyPrice = shopUI.ShopManager.GetBuyPrice(item.itemData);
+
+        // Кнопка "Купить 1"
+        CreateButton($"Купить 1 ({buyPrice} монет)", () => BuyItem(item, 1));
+
+        // Кнопка "Купить 5" (если стакается)
+        if (item.itemData.isStackable && item.count >= 5)
+        {
+            CreateButton($"Купить 5 ({buyPrice * 5} монет)", () => BuyItem(item, 5));
+        }
+
+        // Кнопка "Купить 10" (если стакается)
+        if (item.itemData.isStackable && item.count >= 10)
+        {
+            CreateButton($"Купить 10 ({buyPrice * 10} монет)", () => BuyItem(item, 10));
+        }
+
+        // Кнопка "Купить всё" (если стакается и не бесконечный запас)
+        if (item.itemData.isStackable && item.count > 1 && item.count < 999)
+        {
+            CreateButton($"Купить всё ({buyPrice * item.count} монет)", () => BuyItem(item, item.count));
+        }
+
+        // Кнопка "Информация"
+        CreateButton("Информация", () => ShowItemInfo(item.itemData));
+    }
+
+    private void CreateSellButtons(DraggableItem item)
+    {
+        if (shopUI == null || shopUI.ShopManager == null) return;
+        
+        if (!shopUI.ShopManager.CurrentShop.acceptsPlayerItems)
+        {
+            CreateButton("Торговец не покупает предметы", null);
+            return;
+        }
+
+        int sellPrice = shopUI.ShopManager.GetSellPrice(item.itemData);
+
+        // Кнопка "Продать 1"
+        CreateButton($"Продать 1 ({sellPrice} монет)", () => SellItem(item, 1));
+
+        // Кнопка "Продать 5" (если есть)
+        if (item.count >= 5)
+        {
+            CreateButton($"Продать 5 ({sellPrice * 5} монет)", () => SellItem(item, 5));
+        }
+
+        // Кнопка "Продать 10" (если есть)
+        if (item.count >= 10)
+        {
+            CreateButton($"Продать 10 ({sellPrice * 10} монет)", () => SellItem(item, 10));
+        }
+
+        // Кнопка "Продать всё"
+        if (item.count > 1)
+        {
+            CreateButton($"Продать всё ({sellPrice * item.count} монет)", () => SellItem(item, item.count));
+        }
+
+        // Кнопка "Информация"
+        CreateButton("Информация", () => ShowItemInfo(item.itemData));
+    }
+
     private void CreateButton(string buttonText, System.Action onClick)
     {
         GameObject buttonObj = Instantiate(buttonPrefab, contextMenuPanel.transform);
@@ -103,11 +209,24 @@ public class InventoryContextMenu : MonoBehaviour
 
         if (menuButton != null)
         {
-            menuButton.Initialize(buttonText, () =>
+            // Если onClick == null, делаем кнопку неактивной (для информационных сообщений)
+            if (onClick == null)
             {
-                onClick?.Invoke();
-                Hide();
-            });
+                menuButton.Initialize(buttonText, null);
+                Button button = buttonObj.GetComponent<Button>();
+                if (button != null)
+                {
+                    button.interactable = false;
+                }
+            }
+            else
+            {
+                menuButton.Initialize(buttonText, () =>
+                {
+                    onClick?.Invoke();
+                    Hide();
+                });
+            }
         }
 
         activeButtons.Add(buttonObj);
@@ -165,12 +284,20 @@ public class InventoryContextMenu : MonoBehaviour
         // Применяем эффекты предмета здесь
         // Например: восстановление HP для еды, баффы для зелий и т.д.
 
-        // Удаляем один предмет через InventoryManager
-        if (inventoryManager != null)
+        // Удаляем предмет из конкретного слота, с которым взаимодействовал игрок
+        if (inventoryManager != null && item.parentAfterDrag != null)
         {
-            inventoryManager.RemoveItem(item.itemData.itemName, 1);
+            InventorySlot slot = item.parentAfterDrag.GetComponent<InventorySlot>();
+            if (slot != null)
+            {
+                inventoryManager.RemoveItemFromSlot(slot, 1);
+            }
+            else
+            {
+                // Fallback на старый метод, если слот не найден
+                inventoryManager.RemoveItem(item.itemData.itemName, 1);
+            }
         }
-
     }
 
     private void EquipItem(DraggableItem item)
@@ -271,6 +398,42 @@ public class InventoryContextMenu : MonoBehaviour
         Destroy(item.gameObject);
     }
 
+
+    #endregion
+
+    #region Shop Actions
+
+    private void BuyItem(DraggableItem item, int quantity)
+    {
+        if (item == null || shopUI == null || shopUI.ShopManager == null) return;
+
+        bool success = shopUI.ShopManager.BuyItem(item.itemData, quantity);
+        
+        if (success)
+        {
+            Debug.Log($"Успешно куплено: {item.itemData.itemName} x{quantity}");
+            shopUI.OnItemTransactionComplete();
+        }
+    }
+
+    private void SellItem(DraggableItem item, int quantity)
+    {
+        if (item == null || shopUI == null || shopUI.ShopManager == null) return;
+
+        bool success = shopUI.ShopManager.SellItem(item.itemData, quantity);
+        
+        if (success)
+        {
+            Debug.Log($"Успешно продано: {item.itemData.itemName} x{quantity}");
+            shopUI.OnItemTransactionComplete();
+        }
+    }
+
+    private void ShowItemInfo(ItemData item)
+    {
+        Debug.Log($"=== {item.itemName} ===\n{item.description}\nТип: {item.itemType}\nБазовая цена: {item.itemPrice}");
+        // Здесь можно добавить отдельное окно с информацией о предмете
+    }
 
     #endregion
 

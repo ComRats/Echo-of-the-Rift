@@ -1,76 +1,122 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 
-[System.Serializable]
-public class ShopItemEntry
+namespace EchoRift.Shop
 {
-    public ItemData item;
-    public int stock = -1; // -1 = ����������� �����
-
-    [HideInInspector]
-    public int currentStock;
-
-    public ShopItemEntry()
+    /// <summary>
+    /// Данные о товаре в магазине
+    /// </summary>
+    [System.Serializable]
+    public class ShopItem
     {
-        stock = -1;
-    }
+        [Required("Предмет обязателен!")]
+        [PreviewField(50, ObjectFieldAlignment.Left)]
+        public ItemData item;
 
-    public ShopItemEntry(ItemData item, int stock = -1)
-    {
-        this.item = item;
-        this.stock = stock;
-        this.currentStock = stock;
-    }
+        [MinValue(1)]
+        [LabelText("Количество")]
+        public int quantity = 1;
 
-    public bool HasStock => stock == -1 || currentStock > 0;
+        [MinValue(0)]
+        [LabelText("Цена покупки")]
+        [InfoBox("0 = использовать цену из ItemData")]
+        public int buyPrice = 0;
 
-    public void ResetStock()
-    {
-        currentStock = stock;
-    }
+        [MinValue(0)]
+        [LabelText("Цена продажи")]
+        [InfoBox("0 = 50% от цены покупки")]
+        public int sellPrice = 0;
 
-    public bool TryDecreaseStock(int amount = 1)
-    {
-        if (stock == -1) return true;
+        [LabelText("Бесконечный запас")]
+        public bool infiniteStock = false;
 
-        if (currentStock >= amount)
+        /// <summary>
+        /// Получить цену покупки (игрок покупает у торговца)
+        /// </summary>
+        public int GetBuyPrice()
         {
-            currentStock -= amount;
-            return true;
+            return buyPrice > 0 ? buyPrice : item.itemPrice;
         }
-        return false;
-    }
-}
 
-[CreateAssetMenu(fileName = "New Shop", menuName = "Shop/Shop Data")]
-public class ShopData : ScriptableObject
-{
-    [Header("���������� � ��������")]
-    public string shopName = "�������";
-
-    [Header("������")]
-    public List<ShopItemEntry> items = new List<ShopItemEntry>();
-
-    [Header("��������� ���")]
-    [Range(0.1f, 1f)]
-    [Tooltip("��������� ���� ������� (0.5 = 50% �� ���� �������)")]
-    public float sellPriceMultiplier = 0.5f;
-
-    public int GetBuyPrice(ItemData item)
-    {
-        return item.itemPrice;
-    }
-
-    public int GetSellPrice(ItemData item)
-    {
-        return Mathf.Max(1, Mathf.RoundToInt(item.itemPrice * sellPriceMultiplier));
-    }
-
-    public void ResetAllStock()
-    {
-        foreach (var entry in items)
+        /// <summary>
+        /// Получить цену продажи (игрок продаёт торговцу)
+        /// </summary>
+        public int GetSellPrice()
         {
-            entry.ResetStock();
+            if (sellPrice > 0) return sellPrice;
+            int basePrice = GetBuyPrice();
+            return Mathf.Max(1, basePrice / 2);
+        }
+    }
+
+    /// <summary>
+    /// Конфигурация магазина торговца
+    /// </summary>
+    [CreateAssetMenu(fileName = "New Shop", menuName = "Shop/Shop Data")]
+    public class ShopData : ScriptableObject
+    {
+        [TitleGroup("Информация о магазине")]
+        [LabelText("Название магазина")]
+        public string shopName = "Магазин";
+
+        [TitleGroup("Информация о магазине")]
+        [LabelText("Описание")]
+        [TextArea(2, 4)]
+        public string shopDescription;
+
+        [TitleGroup("Товары")]
+        [ListDrawerSettings(ShowIndexLabels = true, ListElementLabelName = "item")]
+        public List<ShopItem> items = new List<ShopItem>();
+
+        [TitleGroup("Настройки")]
+        [LabelText("Торговец покупает предметы")]
+        [InfoBox("Если выключено, игрок не сможет продавать предметы")]
+        public bool acceptsPlayerItems = true;
+
+        [TitleGroup("Настройки")]
+        [ShowIf("acceptsPlayerItems")]
+        [LabelText("Процент выкупа")]
+        [Range(10, 100)]
+        [InfoBox("Процент от базовой цены предмета при продаже игроком")]
+        public int buybackPercentage = 50;
+
+        /// <summary>
+        /// Найти товар в магазине по ItemData
+        /// </summary>
+        public ShopItem FindShopItem(ItemData itemData)
+        {
+            return items.Find(x => x.item == itemData);
+        }
+
+        /// <summary>
+        /// Проверить, есть ли товар в наличии
+        /// </summary>
+        public bool HasItemInStock(ItemData itemData)
+        {
+            ShopItem shopItem = FindShopItem(itemData);
+            if (shopItem == null) return false;
+            return shopItem.infiniteStock || shopItem.quantity > 0;
+        }
+
+        /// <summary>
+        /// Получить цену продажи для любого предмета (если торговец принимает)
+        /// </summary>
+        public int GetSellPriceForItem(ItemData itemData)
+        {
+            ShopItem shopItem = FindShopItem(itemData);
+            if (shopItem != null)
+            {
+                return shopItem.GetSellPrice();
+            }
+
+            // Если предмета нет в магазине, используем процент выкупа
+            if (acceptsPlayerItems)
+            {
+                return Mathf.Max(1, (itemData.itemPrice * buybackPercentage) / 100);
+            }
+
+            return 0;
         }
     }
 }
