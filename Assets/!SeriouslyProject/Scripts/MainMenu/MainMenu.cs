@@ -1,5 +1,6 @@
 ﻿using EchoRift.SaveLoadSystem;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -70,6 +71,13 @@ public class MainMenu : MonoBehaviour
     {
         globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
         SceneTransitionData.NextSceneName = globalData.SceneIndex;
+
+        string fileName = $"PlayerName";
+        string filePath = SaveLoadSystem.GetPath(fileName, GlobalLoader.GAME_DIRECTORY);
+        var playerName = SaveLoadSystem.Load<ChangeNameDialogueActor.PLayerNameData>(fileName, GlobalLoader.GAME_DIRECTORY);
+        var playerActor = GlobalLoader.Instance.playerInstance.dialogActor;
+
+        loadSceneLoader._onSceneActivated.AddListener(() => playerActor.SaveNameForDialogueActor(playerName.playerDialogueName, true));
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
     }
 

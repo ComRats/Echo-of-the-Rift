@@ -10,6 +10,7 @@ namespace EchoRift
         public PressableButtons pressableButtons;
         public CameraSettings cameraSettings;
         public TestMovement movement;
+        public ChangeNameDialogueActor dialogActor;
         public PlayerSaver playerSaver;
 
         public static FightResult Result = FightResult.None;

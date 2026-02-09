@@ -972,10 +972,10 @@ RectTransform:
   - {fileID: 870794088}
   m_Father: {fileID: 516936603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.107626356, y: 0}
-  m_AnchorMax: {x: 0.892, y: 0.19985214}
-  m_AnchoredPosition: {x: 1.0800781, y: 1.0100098}
-  m_SizeDelta: {x: -1.9799995, y: 2.0200005}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 0.23}
+  m_AnchoredPosition: {x: 2.0800781, y: -15.989929}
+  m_SizeDelta: {x: -427.97998, y: -31.979996}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &275992103
 MonoBehaviour:
@@ -1740,10 +1740,10 @@ RectTransform:
   - {fileID: 2129642458}
   m_Father: {fileID: 516936603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 89.9}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 856.44, y: -437.3}
-  m_SizeDelta: {x: 204.96, y: 206.9}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -103.56, y: 102.70001}
+  m_SizeDelta: {x: 204.95996, y: 206.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &681012209
 MonoBehaviour:
@@ -1856,8 +1856,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 1
-  isHide: 0
-  isCameraInit: 0
 --- !u!1 &688426329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3788,8 +3786,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextSceneLoader: {fileID: 681012212}
+  loaderBridge: {fileID: 0}
   points: {fileID: 76523502}
   descriptionStats: {fileID: 870794089}
+  inputField: {fileID: 2073026256}
   sceneName: PlayerCreating
   nextScene: VillageScene_1
 --- !u!1 &1994713794
@@ -3931,7 +3931,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_CharacterLimit: 10
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []

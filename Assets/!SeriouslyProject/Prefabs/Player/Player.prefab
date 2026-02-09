@@ -313,6 +313,7 @@ MonoBehaviour:
   pressableButtons: {fileID: 6311396538040425498}
   cameraSettings: {fileID: 1086631943437718153}
   movement: {fileID: 1808547916611058563}
+  dialogActor: {fileID: 3241060594297500284}
   playerSaver:
     _name: 
     _description: 
@@ -455,6 +456,7 @@ GameObject:
   - component: {fileID: 6311396538040425498}
   - component: {fileID: 7485701881848595183}
   - component: {fileID: 6738157905227129964}
+  - component: {fileID: 3241060594297500284}
   m_Layer: 0
   m_Name: OtherScripts
   m_TagString: Untagged
@@ -490,7 +492,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openInventoryKey: 101
-  openPauseMenuKey: 27
 --- !u!114 &7485701881848595183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,6 +627,19 @@ MonoBehaviour:
     onDialogueSystemUnpause:
       m_PersistentCalls:
         m_Calls: []
+--- !u!114 &3241060594297500284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4665077642386912197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5439ae06cbb88fb41af0b0fd608cf523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialoguePlayer: {fileID: 7485701881848595183}
 --- !u!1 &5244682795864369976
 GameObject:
   m_ObjectHideFlags: 0

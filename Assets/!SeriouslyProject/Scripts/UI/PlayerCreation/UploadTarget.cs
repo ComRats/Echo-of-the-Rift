@@ -7,8 +7,10 @@ using Zenject;
 public class UploadTarget : MonoBehaviour
 {
     [SerializeField] private SceneLoader nextSceneLoader;
+    [SerializeField] private SceneLoaderBridge loaderBridge;
     [SerializeField] private PointsManager points;
     [SerializeField] private TextMeshProUGUI descriptionStats;
+    [SerializeField] private TMP_InputField inputField;
     [SerializeField] private string sceneName;
     [SerializeField] private string nextScene;
 
@@ -40,15 +42,19 @@ public class UploadTarget : MonoBehaviour
             points.AddPointsToPlayer();
             descriptionStats.text = "Загрузка...";
 
-            transform.SetParent(null);
+            //transform.SetParent(null);
 
-            SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
+            //SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
 
             RestoreValues();
 
             TargetToPlayer();
 
-            nextSceneLoader.LoadAsync();            
+
+            playerInstance.dialogActor.SaveNameForDialogueActor(inputField.text);
+            nextSceneLoader._onSceneActivated.AddListener(() => { playerInstance.dialogActor.ApplyName(); });
+
+            nextSceneLoader.LoadAsync();
         }
         else
         {
