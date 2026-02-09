@@ -139,4 +139,23 @@ public class ItemDescriptionDisplay : MonoBehaviour
     {
         HideDescription();
     }
+
+    /// <summary>
+    /// Показывает предмет с кастомной ценой и лейблом
+    /// </summary>
+    public void ShowShopItemWithCustomPrice(ItemData itemData, int price, string priceLabel)
+    {
+        if (descriptionText == null || itemData == null)
+        {
+            HideDescription();
+            return;
+        }
+
+        string itemName = itemData.itemGameName;
+        string itemType = GetRussianItemType(itemData.itemType);
+        string description = itemData.description;
+
+        descriptionText.text = $"Название: {itemName}\nТип: {itemType}\n{priceLabel}: {price} монет\nОписание:\n{description}";
+        descriptionText.enabled = true;
+    }
 }

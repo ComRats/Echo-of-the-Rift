@@ -163,6 +163,40 @@ public class InventoryManager : MonoBehaviour
             inventoryData.ClearEquipmentSlot(index);
     }
 
+    /// <summary>
+    /// Обновляет UI инвентаря из InventoryData (после закрытия магазина)
+    /// </summary>
+    public void RefreshUIFromData()
+    {
+        ClearAllSlots();
+
+        var invSlots = inventoryData.InventorySlots;
+        for (int i = 0; i < inventorySlots.Length && i < invSlots.Count; i++)
+        {
+            if (string.IsNullOrEmpty(invSlots[i].itemName) || invSlots[i].count <= 0)
+                continue;
+
+            ItemData itemData = FindItemDataByName(invSlots[i].itemName);
+            if (itemData != null)
+            {
+                SpawnItemInSlot(itemData, inventorySlots[i], invSlots[i].count);
+            }
+        }
+
+        var eqSlots = inventoryData.EquipmentSlots;
+        for (int i = 0; i < equipmentSlots.Length && i < eqSlots.Count; i++)
+        {
+            if (string.IsNullOrEmpty(eqSlots[i].itemName) || eqSlots[i].count <= 0)
+                continue;
+
+            ItemData itemData = FindItemDataByName(eqSlots[i].itemName);
+            if (itemData != null)
+            {
+                SpawnItemInSlot(itemData, equipmentSlots[i], eqSlots[i].count);
+            }
+        }
+    }
+
     #endregion
 
     #region Internal Logic
