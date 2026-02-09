@@ -1,4 +1,4 @@
-using EchoRift.SaveLoadSystem;
+﻿using EchoRift.SaveLoadSystem;
 using UnityEngine;
 
 public class MainMenu : MonoBehaviour
@@ -35,7 +35,7 @@ public class MainMenu : MonoBehaviour
 
             if (data != null && data.HasGameProgress)
             {
-                GameMassage.GameAlert(gameAlertPrefab, "������ ����� ����? �������� ����� ������.", "��", Play, "���", GameMassage.CloseAlert, 1f);
+                GameMassage.GameAlert(gameAlertPrefab, "Вы уверенный? Все ваши сохранения удалятся.", "Да", Play, "Нет", GameMassage.CloseAlert, 1f);
                 return;
             }
         }
@@ -75,6 +75,6 @@ public class MainMenu : MonoBehaviour
 
     public void Quit()
     {
-        GameMassage.GameAlert(gameAlertPrefab, "����� �� ����?", "��", Application.Quit, "���", GameMassage.CloseAlert, 1f);
+        GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f);
     }
 }
