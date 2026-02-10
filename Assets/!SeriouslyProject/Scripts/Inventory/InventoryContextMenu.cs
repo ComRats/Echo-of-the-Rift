@@ -176,26 +176,29 @@ public class InventoryContextMenu : MonoBehaviour
         }
 
         int sellPrice = shopUI.ShopManager.GetSellPrice(item.itemData);
+        
+        // Подсчитываем общее количество этого предмета во всех слотах
+        int totalCount = GetTotalItemCount(item.itemData);
 
         // Кнопка "Продать 1"
         CreateButton($"Продать 1 ({sellPrice} монет)", () => SellItem(item, 1));
 
         // Кнопка "Продать 5" (если есть)
-        if (item.count >= 5)
+        if (totalCount >= 5)
         {
             CreateButton($"Продать 5 ({sellPrice * 5} монет)", () => SellItem(item, 5));
         }
 
         // Кнопка "Продать 10" (если есть)
-        if (item.count >= 10)
+        if (totalCount >= 10)
         {
             CreateButton($"Продать 10 ({sellPrice * 10} монет)", () => SellItem(item, 10));
         }
 
-        // Кнопка "Продать всё"
-        if (item.count > 1)
+        // Кнопка "Продать всё" - продаёт ВСЕ экземпляры из всех слотов
+        if (totalCount > 1)
         {
-            CreateButton($"Продать всё ({sellPrice * item.count} монет)", () => SellItem(item, item.count));
+            CreateButton($"Продать всё ({sellPrice * totalCount} монет)", () => SellAllItems(item.itemData, totalCount));
         }
 
         // Кнопка "Информация"
@@ -427,6 +430,56 @@ public class InventoryContextMenu : MonoBehaviour
             Debug.Log($"Успешно продано: {item.itemData.itemName} x{quantity}");
             shopUI.OnItemTransactionComplete();
         }
+    }
+
+    /// <summary>
+    /// Продаёт ВСЕ экземпляры предмета из всех слотов инвентаря
+    /// </summary>
+    private void SellAllItems(ItemData itemData, int totalCount)
+    {
+        if (itemData == null || shopUI == null || shopUI.ShopManager == null) return;
+
+        bool success = shopUI.ShopManager.SellItem(itemData, totalCount);
+        
+        if (success)
+        {
+            Debug.Log($"Успешно продано всё: {itemData.itemName} x{totalCount}");
+            shopUI.OnItemTransactionComplete();
+        }
+    }
+
+    /// <summary>
+    /// Подсчитывает общее количество предмета во всех слотах инвентаря игрока
+    /// </summary>
+    private int GetTotalItemCount(ItemData itemData)
+    {
+        if (itemData == null || shopUI == null) return 0;
+
+        int totalCount = 0;
+
+        // Проходим по всем слотам игрока в магазине
+        foreach (var slot in shopUI.PlayerSlots)
+        {
+            if (slot == null) continue;
+
+            DraggableItem draggableItem = slot.GetComponentInChildren<DraggableItem>();
+            if (draggableItem != null && draggableItem.itemData != null)
+            {
+                // Сравниваем по имени предмета
+                if (draggableItem.itemData.itemName == itemData.itemName)
+                {
+                    totalCount += draggableItem.count;
+                }
+            }
+        }
+
+        // Если ничего не нашли в слотах магазина, проверяем основной инвентарь через InventoryManager
+        if (totalCount == 0 && inventoryManager != null)
+        {
+            totalCount = inventoryManager.GetItemCount(itemData.itemName);
+        }
+
+        return totalCount;
     }
 
     private void ShowItemInfo(ItemData item)

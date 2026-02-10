@@ -28,6 +28,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private PlayerWallet playerWallet;
     [SerializeField] private MainUI mainUI;
+    [SerializeField] private InventoryContextMenu contextMenu;
 
     private ShopData currentShopData;
     private bool isShopMode = false;
@@ -35,6 +36,7 @@ public class ShopUI : MonoBehaviour
 
     public bool IsShopMode => isShopMode;
     public InventorySlot[] MerchantSlots => merchantSlots;
+    public InventorySlot[] PlayerSlots => playerSlots;
     public ShopManager ShopManager => shopManager;
 
     private void Awake()
@@ -70,6 +72,12 @@ public class ShopUI : MonoBehaviour
         {
             mainUI = FindObjectOfType<MainUI>();
             Debug.Log($"[ShopUI] MainUI найден автоматически: {mainUI != null}");
+        }
+
+        if (contextMenu == null)
+        {
+            contextMenu = FindObjectOfType<InventoryContextMenu>();
+            Debug.Log($"[ShopUI] InventoryContextMenu найден автоматически: {contextMenu != null}");
         }
         
         // Инициализируем ShopManager
@@ -230,6 +238,13 @@ public class ShopUI : MonoBehaviour
     public void CloseShop()
     {
         Debug.Log("[ShopUI] CloseShop вызван");
+
+        // Закрываем контекстное меню, если оно открыто
+        if (contextMenu != null)
+        {
+            contextMenu.Hide();
+            Debug.Log("[ShopUI] Контекстное меню закрыто");
+        }
 
         // Разблокируем UI перед закрытием магазина
         if (mainUI != null)

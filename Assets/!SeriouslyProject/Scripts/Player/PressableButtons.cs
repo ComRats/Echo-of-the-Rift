@@ -14,19 +14,29 @@ public class PressableButtons : MonoBehaviour
 
     private void OpenPlayerIU()
     {
+        // Блокируем открытие инвентаря во время паузы
+        if (GameTimer.IsPaused)
+        {
+            return;
+        }
+
         if (Input.GetKeyDown(settings.openInvenoryKey) && mainUI.canOpenUI)
         {
             if (playerUI == null)
             {
-                Debug.LogError("PlayerUI �� ��� ������������ ����� Zenject!");
+                Debug.LogError("PlayerUI �� ��� ������������ ����� Zenject!");
                 return;
             }
 
             GameObject playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
-            playerUIbackGround.SetActive(!playerUIbackGround.activeInHierarchy);
-            //playerUI.OpenPlayerUI();
-            mainUI.isOpenUI = !mainUI.isOpenUI;
-            Debug.LogWarning("mainUI.isOpenUI " + mainUI.isOpenUI);
+            
+            // Открываем инвентарь только если он закрыт
+            if (!playerUIbackGround.activeInHierarchy)
+            {
+                playerUIbackGround.SetActive(true);
+                mainUI.isOpenUI = true;
+                Debug.LogWarning("mainUI.isOpenUI " + mainUI.isOpenUI);
+            }
         }
     }
 }
