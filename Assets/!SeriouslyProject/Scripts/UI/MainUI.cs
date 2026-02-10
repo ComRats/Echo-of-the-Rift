@@ -12,6 +12,7 @@ public class MainUI : MonoBehaviour
     public FishingUI fishingUI;
 
     public bool canOpenUI = true;
+    public bool isOpenUI = false;
 
     public void Hide()
     {

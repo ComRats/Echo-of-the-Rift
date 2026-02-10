@@ -3,16 +3,9 @@ using Zenject;
 
 public class PressableButtons : MonoBehaviour
 {
-    [SerializeField] private KeyCode openInventoryKey = KeyCode.E;
-    //[SerializeField] private KeyCode openPauseMenuKey = KeyCode.Escape;
-
     [Inject] private PlayerUI playerUI;
-
-    private void Start()
-    {
-        //заменить на загрузку из настроек 
-        openInventoryKey = KeyCode.E;
-    }
+    [Inject] private MainUI mainUI;
+    [Inject] private GameSettings settings;
 
     private void Update()
     {
@@ -21,7 +14,7 @@ public class PressableButtons : MonoBehaviour
 
     private void OpenPlayerIU()
     {
-        if (Input.GetKeyDown(openInventoryKey))
+        if (Input.GetKeyDown(settings.openInvenoryKey) && mainUI.canOpenUI)
         {
             if (playerUI == null)
             {
@@ -31,7 +24,9 @@ public class PressableButtons : MonoBehaviour
 
             GameObject playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
             playerUIbackGround.SetActive(!playerUIbackGround.activeInHierarchy);
-            playerUI.OpenPlayerUI();
+            //playerUI.OpenPlayerUI();
+            mainUI.isOpenUI = !mainUI.isOpenUI;
+            Debug.LogWarning("mainUI.isOpenUI " + mainUI.isOpenUI);
         }
     }
 }

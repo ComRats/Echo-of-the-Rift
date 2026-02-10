@@ -5302,6 +5302,7 @@ MonoBehaviour:
   inventoryManager: {fileID: 1979945657100220229}
   fishingUI: {fileID: 5988741947867167589}
   canOpenUI: 1
+  isOpenUI: 0
 --- !u!1 &5479070883063013135
 GameObject:
   m_ObjectHideFlags: 0

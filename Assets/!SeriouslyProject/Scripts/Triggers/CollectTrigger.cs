@@ -73,7 +73,7 @@ public class CollectTrigger : BaseTrigger
                 clickBar.AddProgress(eventQueue[currentStepIndex].clickPower);
             }
         }
-        else if (Input.GetKeyDown(gameSettings.useButton))
+        else if (Input.GetKeyDown(gameSettings.useButton) && !mainUI.isOpenUI)
         {
             TryExecuteCurrentEvent();
         }
@@ -148,8 +148,11 @@ public class CollectTrigger : BaseTrigger
 
     private bool CanExecute(CollectEvent ev)
     {
-        bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) || QuestLog.GetQuestState(ev.questCode) == ev.needQuestState;
-        bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) || (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
+        bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) || 
+            QuestLog.GetQuestState(ev.questCode) == ev.needQuestState;
+
+        bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) || 
+            (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
 
         return questConditionsMet && inventoryConditionsMet;
     }
@@ -163,7 +166,12 @@ public class CollectTrigger : BaseTrigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out _)) { playerInside = true; UpdatePrompt(); }
+        if (collision.TryGetComponent<Player>(out _)) 
+        { 
+            playerInside = true; 
+            UpdatePrompt();
+            mainUI.canOpenUI = false;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -174,6 +182,7 @@ public class CollectTrigger : BaseTrigger
             minigameActive = false;
             clickBar.Hide();
             ShowButtonPrompt(false, "");
+            mainUI.canOpenUI = true;
         }
     }
 
