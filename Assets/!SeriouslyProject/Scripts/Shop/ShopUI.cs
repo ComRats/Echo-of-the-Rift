@@ -40,6 +40,9 @@ public class ShopUI : MonoBehaviour
     {
         Debug.Log("[ShopUI] Awake вызван");
         
+        // Проверка обязательных полей
+        ValidateSetup();
+        
         // Создаём ShopManager если его нет
         if (shopManager == null)
         {
@@ -77,6 +80,44 @@ public class ShopUI : MonoBehaviour
         else
         {
             Debug.LogError("[ShopUI] shopPanel не назначен в инспекторе!");
+        }
+    }
+
+    private void ValidateSetup()
+    {
+        bool hasErrors = false;
+
+        if (shopPanel == null)
+        {
+            Debug.LogError("[ShopUI] ❌ shopPanel не назначен!");
+            hasErrors = true;
+        }
+
+        if (merchantSlots == null || merchantSlots.Length == 0)
+        {
+            Debug.LogError("[ShopUI] ❌ merchantSlots не назначен или пуст! Назначьте массив слотов торговца.");
+            hasErrors = true;
+        }
+
+        if (playerSlots == null || playerSlots.Length == 0)
+        {
+            Debug.LogError("[ShopUI] ❌ playerSlots не назначен или пуст! Назначьте массив слотов игрока.");
+            hasErrors = true;
+        }
+
+        if (merchantItemPrefab == null)
+        {
+            Debug.LogError("[ShopUI] ❌ merchantItemPrefab не назначен! Назначьте префаб предмета.");
+            hasErrors = true;
+        }
+
+        if (hasErrors)
+        {
+            Debug.LogError("[ShopUI] ⚠️ КРИТИЧЕСКИЕ ОШИБКИ! Магазин не будет работать без назначения обязательных полей в инспекторе!");
+        }
+        else
+        {
+            Debug.Log("[ShopUI] ✅ Все обязательные поля назначены");
         }
     }
 
@@ -214,7 +255,21 @@ public class ShopUI : MonoBehaviour
 
     private void LoadMerchantInventory(ShopData shopData)
     {
+        if (merchantSlots == null || merchantSlots.Length == 0)
+        {
+            Debug.LogError("[ShopUI] merchantSlots не назначен! Назначьте массив слотов торговца в инспекторе.");
+            return;
+        }
+
+        if (merchantItemPrefab == null)
+        {
+            Debug.LogError("[ShopUI] merchantItemPrefab не назначен! Назначьте префаб предмета в инспекторе.");
+            return;
+        }
+
         ClearMerchantInventory();
+
+        Debug.Log($"[ShopUI] Загрузка {shopData.items.Count} товаров в {merchantSlots.Length} слотов");
 
         for (int i = 0; i < merchantSlots.Length && i < shopData.items.Count; i++)
         {
@@ -252,8 +307,20 @@ public class ShopUI : MonoBehaviour
 
     private void ClearMerchantInventory()
     {
+        if (merchantSlots == null || merchantSlots.Length == 0)
+        {
+            Debug.LogError("[ShopUI] merchantSlots не назначен или пуст!");
+            return;
+        }
+
         foreach (var slot in merchantSlots)
         {
+            if (slot == null)
+            {
+                Debug.LogWarning("[ShopUI] Один из merchantSlots равен null!");
+                continue;
+            }
+
             if (slot.transform.childCount > 0)
             {
                 Destroy(slot.transform.GetChild(0).gameObject);
@@ -263,13 +330,29 @@ public class ShopUI : MonoBehaviour
 
     private void SyncPlayerInventory()
     {
-        if (inventoryManager == null) return;
+        if (inventoryManager == null)
+        {
+            Debug.LogError("[ShopUI] inventoryManager не назначен!");
+            return;
+        }
+
+        if (playerSlots == null || playerSlots.Length == 0)
+        {
+            Debug.LogError("[ShopUI] playerSlots не назначен! Назначьте массив слотов игрока в инспекторе.");
+            return;
+        }
 
         Debug.Log("[ShopUI] SyncPlayerInventory начат");
 
         // Очищаем слоты игрока в магазине
         foreach (var slot in playerSlots)
         {
+            if (slot == null)
+            {
+                Debug.LogWarning("[ShopUI] Один из playerSlots равен null!");
+                continue;
+            }
+
             if (slot.transform.childCount > 0)
             {
                 Destroy(slot.transform.GetChild(0).gameObject);
