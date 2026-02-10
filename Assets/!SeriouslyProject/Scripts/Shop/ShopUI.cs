@@ -27,6 +27,7 @@ public class ShopUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private PlayerWallet playerWallet;
+    [SerializeField] private MainUI mainUI;
 
     private ShopData currentShopData;
     private bool isShopMode = false;
@@ -63,6 +64,12 @@ public class ShopUI : MonoBehaviour
         {
             playerWallet = inventoryManager.Wallet;
             Debug.Log($"[ShopUI] PlayerWallet получен из InventoryManager: {playerWallet != null}");
+        }
+
+        if (mainUI == null)
+        {
+            mainUI = FindObjectOfType<MainUI>();
+            Debug.Log($"[ShopUI] MainUI найден автоматически: {mainUI != null}");
         }
         
         // Инициализируем ShopManager
@@ -169,6 +176,13 @@ public class ShopUI : MonoBehaviour
         currentShopData = shopData;
         isShopMode = true;
 
+        // Блокируем возможность открытия других UI (меню паузы, инвентарь)
+        if (mainUI != null)
+        {
+            mainUI.canOpenUI = false;
+            Debug.Log("[ShopUI] UI заблокирован (canOpenUI = false)");
+        }
+
         // Обновляем UI магазина
         if (shopNameText != null)
         {
@@ -216,6 +230,13 @@ public class ShopUI : MonoBehaviour
     public void CloseShop()
     {
         Debug.Log("[ShopUI] CloseShop вызван");
+
+        // Разблокируем UI перед закрытием магазина
+        if (mainUI != null)
+        {
+            mainUI.canOpenUI = true;
+            Debug.Log("[ShopUI] UI разблокирован (canOpenUI = true)");
+        }
         
         if (shopManager != null)
         {

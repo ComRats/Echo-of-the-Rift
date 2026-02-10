@@ -40,6 +40,25 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(gameSettings.openPauseMenuKey))
         {
+            // Если магазин открыт - закрываем его вместо открытия меню паузы
+            if (_mainUIInstance.shopUI != null && _mainUIInstance.shopUI.IsShopMode)
+            {
+                _mainUIInstance.shopUI.CloseShop();
+                return;
+            }
+
+            // Если инвентарь игрока открыт - закрываем его вместо открытия меню паузы
+            if (_mainUIInstance.isOpenUI && _mainUIInstance.playerUI != null)
+            {
+                GameObject playerUIbackGround = _mainUIInstance.playerUI.transform.GetChild(0).gameObject;
+                if (playerUIbackGround.activeInHierarchy)
+                {
+                    playerUIbackGround.SetActive(false);
+                    _mainUIInstance.isOpenUI = false;
+                    return;
+                }
+            }
+
             stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
 
             if (stateInfo.IsName("ShowSettings") && _mainUIInstance.canOpenUI)

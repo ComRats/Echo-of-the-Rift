@@ -10,6 +10,7 @@ public class MainUI : MonoBehaviour
     public SpriteCollection spriteCollection;
     public InventoryManager inventoryManager;
     public FishingUI fishingUI;
+    public ShopUI shopUI;
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;

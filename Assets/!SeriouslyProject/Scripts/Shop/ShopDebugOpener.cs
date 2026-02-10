@@ -37,7 +37,7 @@ public class ShopDebugOpener : MonoBehaviour
         }
     }
 
-    private void ToggleShop()
+    public void ToggleShop()
     {
         if (shopUI == null)
         {
