@@ -8,6 +8,8 @@ using System;
 using UnityEngine;
 using Zenject;
 using EchoRift.SaveLoadSystem;
+using Unity.VisualScripting;
+using PixelCrushers;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
@@ -148,19 +150,24 @@ public class GlobalLoader : MonoBehaviour
         var data = new GlobalData
         {
             selectedTongueIndex = selectedTongueIndex,
-            sceneIndex = SceneManager.GetActiveScene().buildIndex
+            sceneIndex = SceneManager.GetActiveScene().buildIndex,
+            dialogueData = SaveSystem.Serialize(SaveSystem.RecordSavedGameData()),
+            isStart = false
         };
+
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
             SaveLoadSystem.Save("globalSave", data, GAME_DIRECTORY);
 
         mainUI.inventoryManager.SaveInventory();
     }
 
-    private void LoadGlobal()
+    private void LoadGlobal() 
     {
         var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
         selectedTongueIndex = data.selectedTongueIndex;
         isStart = data.isStart;
+        var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
+        SaveSystem.ApplySavedGameData(savedGameData);
     }
 
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
@@ -221,7 +228,7 @@ public class GlobalLoader : MonoBehaviour
         }
 
         public bool HasGameProgress => sceneIndex > 1;
-
+        public string dialogueData;
         public bool isStart;
     }
 }

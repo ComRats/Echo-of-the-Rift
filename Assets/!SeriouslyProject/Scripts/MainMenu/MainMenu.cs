@@ -1,4 +1,6 @@
 ﻿using EchoRift.SaveLoadSystem;
+using PixelCrushers;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -47,22 +49,16 @@ public class MainMenu : MonoBehaviour
     {
         SaveLoadSystem.ClearAllSaves(GlobalLoader.GAME_DIRECTORY);
         
-        // Очищаем ScriptableObject инвентаря при новой игре
-        if (inventoryData != null)
-        {
-            inventoryData.Clear();
-            Debug.Log("Инвентарь очищен для новой игры");
-        }
-        else
-        {
-            Debug.LogWarning("InventoryData не назначен в MainMenu!");
-        }
+        inventoryData.Clear();
         
         var data = new GlobalLoader.GlobalData
         {
             isStart = true
         };
         SaveLoadSystem.Save("globalSave", data, GlobalLoader.GAME_DIRECTORY);
+
+        DialogueManager.ResetDatabase(DatabaseResetOptions.RevertToDefault);
+        SaveSystem.ResetGameState();
 
         startSceneLoader.LoadAsync();
     }
@@ -76,6 +72,9 @@ public class MainMenu : MonoBehaviour
         string filePath = SaveLoadSystem.GetPath(fileName, GlobalLoader.GAME_DIRECTORY);
         var playerName = SaveLoadSystem.Load<ChangeNameDialogueActor.PLayerNameData>(fileName, GlobalLoader.GAME_DIRECTORY);
         var playerActor = GlobalLoader.Instance.playerInstance.dialogActor;
+
+        var savedGameData = SaveSystem.Deserialize<SavedGameData>(globalData.dialogueData);
+        SaveSystem.ApplySavedGameData(savedGameData);
 
         loadSceneLoader._onSceneActivated.AddListener(() => playerActor.SaveNameForDialogueActor(playerName.playerDialogueName, true));
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
