@@ -57,7 +57,7 @@ namespace EchoRift
                 Heal = data.Heal;
                 Armor = data.Armor;
                 Lucky = data.Lucky;
-                CreteChance = data.CreteChance;
+                CreteDamage = data.CreteDamage;
 
                 Level = data.Level;
                 CurrentXP = data.CurrentXP;

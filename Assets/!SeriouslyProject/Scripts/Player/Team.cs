@@ -137,7 +137,7 @@ public class CharactersSettings : IData
     public int Heal { get => _heal; set => _heal = value; }
     public int Armor { get => _armor; set => _armor = value; }
     public int Lucky { get => _lucky; set => _lucky = value; }
-    public int CreteChance { get => _creteChance; set => _creteChance = value; }
+    public int CreteDamage { get => _creteChance; set => _creteChance = value; }
     public int Level { get => _level; set => _level = value; }
     public int CurrentXP { get => _currentXP; set => _currentXP = value; }
     public int MaxXP { get => _maxXP; set => _maxXP = value; }

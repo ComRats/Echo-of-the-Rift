@@ -1,11 +1,10 @@
 ﻿using EchoRift;
 using EchoRift.SaveLoadSystem;
-using FightSystem.Character;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
-using UnityEditor.Overlays;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
@@ -13,117 +12,98 @@ using static GlobalLoader;
 
 public class ActionButtons : MonoBehaviour
 {
-    #region Attack Fields
-    [FoldoutGroup("Attack")]
-    [SerializeField] private Button physicAttack;
-    [FoldoutGroup("Attack")]
-    [SerializeField] private GameObject physicAttackButtons;
-    [FoldoutGroup("Attack")]
-    [SerializeField] private Button magicAttack;
-    [FoldoutGroup("Attack")]
-    [SerializeField] private GameObject magicAttackButtons;
+    #region UI References
+    [FoldoutGroup("UI")][SerializeField] private GameObject physicAttackButtons;
+    [FoldoutGroup("UI")][SerializeField] private GameObject magicAttackButtons;
+    [FoldoutGroup("UI")][SerializeField] private Button physicAttackToggleBtn;
+    [FoldoutGroup("UI")][SerializeField] private Button magicAttackToggleBtn;
     #endregion 
+
+    [Title("UI Feedback")]
+    [SerializeField] private TextMeshProUGUI descriptionText;
+
+    [Title("Abilities Configuration")]
+    [SerializeField] private List<AbilityBinding> abilityBindings;
 
     [HideInInspector] public Enemy currentEnemy;
 
     [SerializeField] private FightManager fightManager;
-    [SerializeField] private SceneLoader sceneLoader;   
-    [SerializeField] private List<ButtonsMethods> buttonsMethods;
-
+    [SerializeField] private SceneLoader sceneLoader;
     [Inject] private MainUI mainUI;
 
     private Action pendingAction;
+    //добавить динамическое создание кнопок по листу кнопок и абилок
+    //баг с утечкой памяти при  повышении уровня
 
     private void Start()
     {
-        magicAttack.onClick.AddListener(MagicAction);
-        physicAttack.onClick.AddListener(PhysicAction);
+        magicAttackToggleBtn.onClick.AddListener(() => OpenButtons(magicAttackButtons, physicAttackButtons));
+        physicAttackToggleBtn.onClick.AddListener(() => OpenButtons(physicAttackButtons, magicAttackButtons));
 
-        Initialize();
+        InitializeButtons();
     }
 
-    private void Initialize()
+    private void InitializeButtons()
     {
-        IterateButtons();
-    }
-
-    private void IterateButtons()
-    {
-        for (int i = 0; i < buttonsMethods.Count; i++)
+        foreach (var binding in abilityBindings)
         {
-            var bm = buttonsMethods[i];
-            if (bm.button == null || string.IsNullOrEmpty(bm.methodName)) continue;
+            if (binding.button == null || binding.ability == null) continue;
 
-            var methodInfo = typeof(BattleActions).GetMethod(
-                bm.methodName,
-                System.Reflection.BindingFlags.Instance |
-                System.Reflection.BindingFlags.Public |
-                System.Reflection.BindingFlags.NonPublic);
+            TextMeshProUGUI buttonText = binding.button.GetComponentInChildren<TextMeshProUGUI>();
+            buttonText.text = binding.ability.AbilityName;
 
-            if (methodInfo == null)
+            binding.button.onClick.RemoveAllListeners();
+
+            var localAbility = binding.ability;
+            binding.button.onClick.AddListener(() => OnAbilityClicked(localAbility));
+        }
+    }
+
+    private void OnAbilityClicked(BattleAbility ability)
+    {
+        var activeChar = fightManager.ActiveCharacter;
+
+        if (activeChar == null) return;
+
+        if (!ability.CanUse(activeChar))
+        {
+            return;
+        }
+
+        pendingAction = () =>
+        {
+            if (currentEnemy == null)
             {
-                Debug.LogError($"Method '{bm.methodName}' not found in BattleActions.");
-                continue;
+                Debug.LogWarning("No target enemy selected.");
+                return;
             }
 
-            bm.button.onClick.RemoveAllListeners();
+            ability.Execute(activeChar, currentEnemy);
 
-            var localMethod = methodInfo;
-            var localButton = bm.button;
+            activeChar.UpdateUI();
+            activeChar.IsTurn = false;
 
-            localButton.onClick.AddListener(() =>
-            {
-                var activeChar = fightManager.ActiveCharacter;
-                if (activeChar == null)
-                {
-                    Debug.Log("No active character");
-                    return;
-                }
+            fightManager.DeleteEnemyOnList(currentEnemy);
+        };
 
-                if (activeChar.Mana < bm.manaCost)
-                {
-                    Debug.LogWarning($"{activeChar.Name} не хватает маны для {bm.methodName}. Нужно {bm.manaCost}, есть {activeChar.Mana}");
-                    return;
-                }
-
-                int damage = activeChar.GiveDamage();
-
-                pendingAction = () =>
-                {
-                    if (currentEnemy == null)
-                    {
-                        Debug.LogWarning("No target enemy selected.");
-                        return;
-                    }
-
-                    var ba = new BattleActions(activeChar, damage, currentEnemy);
-                    localMethod.Invoke(ba, null);
-
-                    activeChar.Mana -= bm.manaCost;
-                    activeChar.UpdateUI();
-
-                    activeChar.IsTurn = false;
-                    fightManager.DeleteEnemyOnList(currentEnemy);
-                };
-
-                if (currentEnemy != null)
-                {
-                    pendingAction.Invoke();
-                    pendingAction = null;
-                }
-                else
-                {
-                    Debug.Log("Ожидается выбор врага...");
-                }
-            });
-
+        if (currentEnemy != null)
+        {
+            ExecutePendingAction();
+        }
+        else
+        {
+            Debug.Log("Выберите цель для способности: " + ability.AbilityName);
         }
     }
 
     public void OnEnemySelected(Enemy enemy)
     {
         currentEnemy = enemy;
+        ExecutePendingAction();
+    }
 
+    private void ExecutePendingAction()
+    {
         if (pendingAction != null)
         {
             pendingAction.Invoke();
@@ -131,30 +111,17 @@ public class ActionButtons : MonoBehaviour
         }
     }
 
-
-    public void MagicAction()
+    private void OpenButtons(GameObject toOpen, GameObject toClose)
     {
-        OpenButtons(magicAttackButtons, physicAttackButtons);
-    }
-
-    public void PhysicAction()
-    {
-        OpenButtons(physicAttackButtons, magicAttackButtons);
-    }
-
-    private void OpenButtons(GameObject _buttons1, GameObject _buttons2)
-    {
-        _buttons1.SetActive(!_buttons1.activeSelf);
-        _buttons2.SetActive(false);
+        toOpen.SetActive(!toOpen.activeSelf);
+        toClose.SetActive(false);
     }
 
     public void EscapeFight()
     {
         Player.Result = FightResult.Escape;
-
-        var sceneIndex = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
-
-        sceneLoader.LoadAsync(sceneIndex.SceneIndex);
+        var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+        sceneLoader.LoadAsync(data.SceneIndex);
     }
 
     public void OpenInventory()
@@ -165,86 +132,9 @@ public class ActionButtons : MonoBehaviour
     }
 
     [System.Serializable]
-    public class BattleActions
-    {
-        private Base attacker;
-        private Base target;
-        private int damage;
-        private int manaCost;
-
-        public BattleActions(Base _attacker, int _damage, Base _target)
-        {
-            attacker = _attacker;
-            damage = _damage;
-            target = _target;
-        }
-
-        public BattleActions(Base _attacker, int _damage, Base _target, int _manaCost)
-        {
-            attacker = _attacker;
-            damage = _damage;
-            target = _target;
-            manaCost = _manaCost;
-        }
-
-        public void SlashAttack()
-        {
-            Debug.Log($"{attacker.Name} бьёт {target.Name} на {damage} урона (SlashAttack)");
-            target.TakeDamage(damage);
-        }
-
-        public void RudeBlow()
-        {
-            Debug.Log($"{attacker.Name} использует RudeBlow");
-            target.TakeDamage(damage);
-        }
-
-        public void ProudPose()
-        {
-            Debug.Log($"{attacker.Name} делает ProudPose");
-
-        }
-
-        public void Parry()
-        {
-            Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
-
-        }
-
-
-
-        public void MagicSlashAttack()
-        {
-            Debug.Log($"{attacker.Name} бьёт {target.Name} на {damage} урона (SlashAttack)");
-            target.TakeMagicDamage(damage);
-            attacker.Mana -= manaCost;
-        }
-
-        public void MagicRudeBlow()
-        {
-            Debug.Log($"{attacker.Name} использует RudeBlow");
-            target.TakeMagicDamage(damage);
-        }
-
-        public void MagicProudPose()
-        {
-            Debug.Log($"{attacker.Name} делает ProudPose");
-
-        }
-
-        public void MagicParry()
-        {
-            Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
-
-        }
-    }
-
-    [System.Serializable]
-    public struct ButtonsMethods
+    public struct AbilityBinding
     {
         public Button button;
-        public string methodName;
-        public int manaCost;
+        public BattleAbility ability;
     }
-
 }

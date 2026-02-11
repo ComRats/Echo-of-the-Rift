@@ -18,7 +18,7 @@ public class EntityStats : IData
     [BoxGroup("Stats")][SerializeField] protected int _heal;
     [BoxGroup("Stats")][SerializeField] protected int _armor;
     [BoxGroup("Stats")][SerializeField] protected int _lucky;
-    [BoxGroup("Stats")][SerializeField] protected int _creteChance;
+    [BoxGroup("Stats")][SerializeField] protected int _creteDamage;
 
     [BoxGroup("Progression")][SerializeField] protected int _level = 1;
     [BoxGroup("Progression")][SerializeField] protected int _currentXP;
@@ -45,7 +45,7 @@ public class EntityStats : IData
     public virtual int Heal { get => _heal; set => _heal = value; }
     public virtual int Armor { get => _armor; set => _armor = value; }
     public virtual int Lucky { get => _lucky; set => _lucky = value; }
-    public virtual int CreteChance { get => _creteChance; set => _creteChance = value; }
+    public virtual int CreteDamage { get => _creteDamage; set => _creteDamage = value; }
 
     public virtual int Level { get => _level; set => _level = value; }
     public virtual int CurrentXP { get => _currentXP; set => _currentXP = value; }
@@ -59,14 +59,39 @@ public class EntityStats : IData
     public virtual int MaxManaPerLevel { get => _maxManaPerLevel; set => _maxManaPerLevel = value; }
     public virtual int XpRewardPerLevel { get => _xpRewardPerLevel; set => _xpRewardPerLevel = value; }
 
+    private int _baseDamage;
+    private int _baseMaxHealth;
+    private int _baseHeal;
+    private int _baseArmor;
+    private int _baseMaxMana;
+    private int _baseMaxXP;
+
+    private bool _isInitialized = false;
+
+    public void CaptureBaseStats()
+    {
+        _baseDamage = _damage;
+        _baseMaxHealth = _maxHealth;
+        _baseHeal = _heal;
+        _baseArmor = _armor;
+        _baseMaxMana = _maxMana;
+        _baseMaxXP = _maxXP;
+        _isInitialized = true;
+    }
+
     public virtual void RecalculateStats()
     {
-        _damage = _damagePerLevel * _level;
-        _maxHealth = _maxHealthPerLevel * _level;
-        _heal = _healPerLevel * _level;
-        _armor = _armorPerLevel * _level;
-        _maxMana = _maxManaPerLevel * _level;
-        _xpReward = _xpRewardPerLevel * _level;
+        if (!_isInitialized) CaptureBaseStats();
+
+        int levelsGained = _level - 1;
+
+        _damage = _baseDamage + (_damagePerLevel * levelsGained);
+        _maxHealth = _baseMaxHealth + (_maxHealthPerLevel * levelsGained);
+        _heal = _baseHeal + (_healPerLevel * levelsGained);
+        _armor = _baseArmor + (_armorPerLevel * levelsGained);
+        _maxMana = _baseMaxMana + (_maxManaPerLevel * levelsGained);
+
+        _maxXP = _baseMaxXP + (100 * levelsGained);
 
         if (!Application.isPlaying)
         {

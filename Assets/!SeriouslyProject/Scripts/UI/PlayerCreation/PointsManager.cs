@@ -40,7 +40,7 @@ public class PointsManager : MonoBehaviour
                         break;
                     case "Lucky":
                         characterData.Lucky = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
-                        characterData.CreteChance = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
+                        characterData.CreteDamage = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
                         break;
                     default:
 

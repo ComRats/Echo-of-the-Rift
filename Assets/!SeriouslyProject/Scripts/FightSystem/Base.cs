@@ -1,5 +1,6 @@
 using Sirenix.OdinInspector;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,7 @@ public class Base : MonoBehaviour, IData
     [SerializeField]
     private EntityStats stats = new EntityStats();
 
+    public List<ActiveStatusEffect> activeEffects = new List<ActiveStatusEffect>();
     public bool IsBlinking { get; set; } = true;
 
     public string Name { get => stats.Name; set => stats.Name = value; }
@@ -41,7 +43,7 @@ public class Base : MonoBehaviour, IData
     public int Heal { get => stats.Heal; set => stats.Heal = value; }
     public int Armor { get => stats.Armor; set => stats.Armor = value; }
     public int Lucky { get => stats.Lucky; set => stats.Lucky = value; }
-    public int CreteChance { get => stats.CreteChance; set => stats.CreteChance = value; }
+    public int CreteDamage { get => stats.CreteDamage; set => stats.CreteDamage = value; }
     public int Level { get => stats.Level; set => stats.Level = value; }
     public int CurrentXP { get => stats.CurrentXP; set => stats.CurrentXP = value; }
     public int MaxXP { get => stats.MaxXP; set => stats.MaxXP = value; }
@@ -75,7 +77,7 @@ public class Base : MonoBehaviour, IData
         Priority = data.Priority;
         Armor = data.Armor;
         Lucky = data.Lucky;
-        CreteChance = data.CreteChance;
+        CreteDamage = data.CreteDamage;
         XpReward = data.XpReward;
         Level = data.Level;
         CurrentXP = data.CurrentXP;
@@ -86,6 +88,48 @@ public class Base : MonoBehaviour, IData
         ArmorPerLevel = data.ArmorPerLevel;
         MaxManaPerLevel = data.MaxManaPerLevel;
         XpRewardPerLevel = data.XpRewardPerLevel;
+    }
+
+    public void ApplyStatusEffect(StatusEffectSO effectData)
+    {
+        var existing = activeEffects.Find(e => e.data == effectData);
+        if (existing != null)
+        {
+            existing.remainingTurns = effectData.duration;
+        }
+        else
+        {
+            activeEffects.Add(new ActiveStatusEffect(effectData));
+        }
+        Debug.Log($"{Name} получил эффект {effectData.effectName}");
+    }
+
+    public void ProcessStatusEffects()
+    {
+        for (int i = activeEffects.Count - 1; i >= 0; i--)
+        {
+            var effect = activeEffects[i];
+
+            if (effect.data.damagePerTurn != 0)
+            {
+                FightAnimation.ShowText(textPrefab, Mathf.Abs(effect.data.damagePerTurn), transform, effect.data.tickColor);
+
+                if (effect.data.damagePerTurn > 0)
+                    Health -= effect.data.damagePerTurn;
+                else
+                    TakeHeal(Mathf.Abs(effect.data.damagePerTurn));
+
+                UpdateUI();
+                TryDeath();
+            }
+
+            effect.remainingTurns--;
+
+            if (effect.remainingTurns <= 0)
+            {
+                activeEffects.RemoveAt(i);
+            }
+        }
     }
 
     public void TakeDamage(int _damage)
@@ -138,9 +182,30 @@ public class Base : MonoBehaviour, IData
         return Heal;
     }
 
-    public int GiveDamage()
+    public virtual int GiveDamage()
     {
-        return Damage;
+        int finalDamage = Damage;
+
+        float critChance = Lucky * 0.5f;
+
+        if (Random.Range(0, 100) <= critChance)
+        {
+            float rawRandom = Random.value;
+
+            float powerFactor = Mathf.Lerp(4.0f, 1.0f, Mathf.Clamp01(Lucky / 100f));
+            float weightedRandom = Mathf.Pow(rawRandom, powerFactor);
+
+            float minBonus = 0.1f;
+            float maxBonus = CreteDamage / 100f;
+
+            float critBonusPercent = Mathf.Lerp(minBonus, maxBonus, weightedRandom);
+
+            finalDamage = Mathf.RoundToInt(finalDamage * (1f + critBonusPercent));
+
+            FightAnimation.ShowText(textPrefab, "КРИТ!", transform, Color.yellow, 1.2f);
+        }
+
+        return finalDamage;
     }
 
     public void TryDeath()

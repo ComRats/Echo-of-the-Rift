@@ -62,7 +62,7 @@ namespace FightSystem.Character
                 character.Heal = settings.Heal;
                 character.Armor = settings.Armor;
                 character.Lucky = settings.Lucky;
-                character.CreteChance = settings.CreteChance;
+                character.CreteDamage = settings.CreteDamage;
                 character.Level = settings.Level;
                 character.CurrentXP = settings.CurrentXP;
                 character.MaxXP = settings.MaxXP;

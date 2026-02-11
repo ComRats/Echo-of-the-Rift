@@ -68,7 +68,7 @@ namespace FightSystem.Enemy
                 enemy.Heal = settings.Heal;
                 enemy.Armor = settings.Armor;
                 enemy.Lucky = settings.Lucky;
-                enemy.CreteChance = settings.CreteChance;
+                enemy.CreteDamage = settings.CreteDamage;
                 enemy.Level = settings.Level;
                 enemy.CurrentXP = settings.CurrentXP;
                 enemy.MaxXP = settings.MaxXP;

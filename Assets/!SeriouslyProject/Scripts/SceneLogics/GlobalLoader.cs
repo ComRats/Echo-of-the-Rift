@@ -8,13 +8,12 @@ using System;
 using UnityEngine;
 using Zenject;
 using EchoRift.SaveLoadSystem;
-using Unity.VisualScripting;
 using PixelCrushers;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
-    [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private SceneLoader fightSceneLoader;
     [SerializeField] private List<SerializableScene> notShowScene;
     [SerializeField] private AudioManagerSettings settings;
 
@@ -176,10 +175,16 @@ public class GlobalLoader : MonoBehaviour
         SceneManager.LoadScene(sceneToLoad);
     }
 
-    public void LoadToScene(string sceneToLoad/*, Vector3 positionToLoad*/)
+    public void LoadToScene()
+    {
+        var globalData = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+        fightSceneLoader.LoadAsync(globalData.SceneIndex);
+    }
+
+    public void LoadToScene(string sceneToLoad)
     {
         //overridePosition = positionToLoad;
-        sceneLoader.LoadAsync(sceneToLoad);
+        fightSceneLoader.LoadAsync(sceneToLoad);
     }
 
 #if !UNITY_EDITOR

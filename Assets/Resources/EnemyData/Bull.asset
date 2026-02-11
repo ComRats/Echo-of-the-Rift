@@ -24,7 +24,9 @@ MonoBehaviour:
   _maxHealth: 20
   _health: 20
   _heal: 5
-  _armor: 5
+  _armor: 1
+  _lucky: 0
+  _creteChance: 0
   _level: 1
   _currentXP: 0
   _maxXP: 0

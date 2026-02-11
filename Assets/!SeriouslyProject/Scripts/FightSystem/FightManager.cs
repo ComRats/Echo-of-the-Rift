@@ -48,14 +48,21 @@ public class FightManager : MonoBehaviour
     {
         for (int i = 0; i < bases.Count; i++)
         {
-            if (bases[i] is Enemy enemy && enemy.Health > 0)
+            var currentBase = bases[i];
+            if (currentBase == null || currentBase.Health <= 0) continue;
+
+            currentBase.ProcessStatusEffects();
+            yield return new WaitForSeconds(0.2f);
+
+            if (currentBase.Health <= 0) continue;
+                                                   
+            if (currentBase is Enemy enemy)
             {
                 yield return new WaitForSeconds(damageDelay);
                 GetCharacterLowestHP().TakeDamage(enemy.Damage);
-
                 DeleteCharacterOnList(GetCharacterLowestHP());
             }
-            else if (bases[i] is Character character && character.Health > 0)
+            else if (currentBase is Character character)
             {
                 yield return StartCoroutine(WaitCharacterTurn(character));
             }
@@ -80,7 +87,7 @@ public class FightManager : MonoBehaviour
 
             //Показывать UI и Игрока
 
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
+            GlobalLoader.Instance.LoadToScene();
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
         {
@@ -96,7 +103,7 @@ public class FightManager : MonoBehaviour
 
             //Показывать UI и Игрока
 
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
+            GlobalLoader.Instance.LoadToScene();
 
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health > 0))
