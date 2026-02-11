@@ -151,7 +151,8 @@ public class GlobalLoader : MonoBehaviour
             selectedTongueIndex = selectedTongueIndex,
             sceneIndex = SceneManager.GetActiveScene().buildIndex,
             dialogueData = SaveSystem.Serialize(SaveSystem.RecordSavedGameData()),
-            isStart = false
+            isStart = false,
+            gameTime = GameTimer.GameTime // Сохранение текущего игрового времени
         };
 
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
@@ -167,6 +168,9 @@ public class GlobalLoader : MonoBehaviour
         isStart = data.isStart;
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
+        
+        // Восстановление игрового времени при загрузке
+        GameTimer.SetTime(data.gameTime);
     }
 
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
@@ -235,5 +239,6 @@ public class GlobalLoader : MonoBehaviour
         public bool HasGameProgress => sceneIndex > 1;
         public string dialogueData;
         public bool isStart;
+        public float gameTime; // Сохранение игрового времени
     }
 }

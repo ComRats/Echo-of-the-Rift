@@ -171,6 +171,9 @@ public class ShopUI : MonoBehaviour
             return;
         }
 
+        // Останавливаем игровое время при открытии магазина
+        GameTimer.PauseGame();
+
         // ВАЖНО: Синхронизируем основной инвентарь перед открытием магазина
         if (inventoryManager != null)
         {
@@ -238,6 +241,9 @@ public class ShopUI : MonoBehaviour
     public void CloseShop()
     {
         Debug.Log("[ShopUI] CloseShop вызван");
+
+        // Возобновляем игровое время при закрытии магазина
+        GameTimer.ResumeGame();
 
         // Закрываем контекстное меню, если оно открыто
         if (contextMenu != null)

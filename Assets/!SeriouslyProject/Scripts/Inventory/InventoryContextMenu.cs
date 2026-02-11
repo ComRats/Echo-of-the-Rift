@@ -398,7 +398,25 @@ public class InventoryContextMenu : MonoBehaviour
         // Здесь можно добавить логику выбрасывания предмета в мир
         // Например: создание физического объекта предмета в игровом мире
 
-        Destroy(item.gameObject);
+        // Удаляем только 1 единицу предмета из конкретного слота
+        if (inventoryManager != null && currentSlot != null)
+        {
+            inventoryManager.RemoveItemFromSlot(currentSlot, 1);
+        }
+        else if (inventoryManager != null && item.parentAfterDrag != null)
+        {
+            // Fallback: если currentSlot не установлен, пытаемся получить слот из parentAfterDrag
+            InventorySlot slot = item.parentAfterDrag.GetComponent<InventorySlot>();
+            if (slot != null)
+            {
+                inventoryManager.RemoveItemFromSlot(slot, 1);
+            }
+            else
+            {
+                // Последний fallback: удаляем через имя предмета
+                inventoryManager.RemoveItem(item.itemData.itemName, 1);
+            }
+        }
     }
 
 

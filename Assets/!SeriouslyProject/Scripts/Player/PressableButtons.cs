@@ -35,6 +35,10 @@ public class PressableButtons : MonoBehaviour
             {
                 playerUIbackGround.SetActive(true);
                 mainUI.isOpenUI = true;
+                
+                // Останавливаем время при открытии инвентаря
+                GameTimer.PauseGame();
+                
                 Debug.LogWarning("mainUI.isOpenUI " + mainUI.isOpenUI);
             }
         }

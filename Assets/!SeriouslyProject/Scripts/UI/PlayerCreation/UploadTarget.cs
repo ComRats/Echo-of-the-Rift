@@ -1,4 +1,4 @@
-﻿using EchoRift;
+﻿﻿using EchoRift;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +37,12 @@ public class UploadTarget : MonoBehaviour
 
     public void NextScene()
     {
+        if (string.IsNullOrWhiteSpace(inputField.text))
+        {
+            descriptionStats.text = "Введите имя персонажа!";
+            return;
+        }
+
         if (points.usedPoints >= points.maxPoints)
         {
             points.AddPointsToPlayer();
@@ -62,6 +68,7 @@ public class UploadTarget : MonoBehaviour
             descriptionStats.text = $"Распределите оставшиеся очки: ({points.maxPoints - points.usedPoints})";
         }
     }
+
 
     private void RestoreValues()
     {

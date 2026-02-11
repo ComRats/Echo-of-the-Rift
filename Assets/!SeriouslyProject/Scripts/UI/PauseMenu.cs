@@ -60,6 +60,9 @@ public class PauseMenu : MonoBehaviour
                     playerUIbackGround.SetActive(false);
                     _mainUIInstance.isOpenUI = false;
                     
+                    // Возобновляем время при закрытии инвентаря
+                    GameTimer.ResumeGame();
+                    
                     // Закрываем контекстное меню при закрытии инвентаря
                     if (contextMenu != null)
                     {

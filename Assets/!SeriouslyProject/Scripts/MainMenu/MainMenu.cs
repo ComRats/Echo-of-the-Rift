@@ -59,6 +59,9 @@ public class MainMenu : MonoBehaviour
 
         DialogueManager.ResetDatabase(DatabaseResetOptions.RevertToDefault);
         SaveSystem.ResetGameState();
+        
+        // Установка времени на 12:00 (12 часов * 60 минут * 60 секунд = 43200 секунд)
+        GameTimer.SetTime(12f * 60f * 60f);
 
         startSceneLoader.LoadAsync();
     }
