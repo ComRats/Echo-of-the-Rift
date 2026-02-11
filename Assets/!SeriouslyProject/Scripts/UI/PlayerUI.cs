@@ -4,12 +4,13 @@ using UnityEngine;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private List<Tongue> tongues;
+    [SerializeField] private GameObject playerPanel;
+    [SerializeField] private GameObject overlayPanel;
 
     private int selectedTongueIndex = 0;
 
     private void Start()
     {
-        if (GlobalLoader.Instance != null)
         selectedTongueIndex = GlobalLoader.Instance.SelectedTongueIndex;
     }
 
@@ -33,6 +34,12 @@ public class PlayerUI : MonoBehaviour
         SelectTongue(selectedIndex);
         selectedTongueIndex = selectedIndex;
         GlobalLoader.Instance.SelectedTongueIndex = selectedIndex;
+    }
+
+    public void ToggleInventoryOnFight()
+    {
+        overlayPanel.SetActive(!overlayPanel.activeSelf);
+        playerPanel.SetActive(!playerPanel.activeSelf);
     }
 
 

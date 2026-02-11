@@ -551,6 +551,149 @@ RectTransform:
   m_AnchoredPosition: {x: 675.4852, y: 70.9}
   m_SizeDelta: {x: 228.10999, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &169029679
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 169029681}
+  - component: {fileID: 169029680}
+  m_Layer: 0
+  m_Name: SceneContext
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &169029680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169029679}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scriptableObjectInstallers: []
+  _monoInstallers: []
+  _installerPrefabs: []
+  _autoRun: 1
+  OnPreInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostInstall:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPreResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPostResolve:
+    m_PersistentCalls:
+      m_Calls: []
+  _parentNewObjectsUnderSceneContext: 0
+  _contractNames: []
+  _parentContractNames: []
+--- !u!4 &169029681
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 169029679}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &212447656
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 212447659}
+  - component: {fileID: 212447658}
+  - component: {fileID: 212447657}
+  m_Layer: 0
+  m_Name: SceneLoader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &212447657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212447656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa8e5e0369ba6e24e98fdf81f63eafe4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isShow: 1
+--- !u!114 &212447658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212447656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd365665b7127cd4f976e9a586967674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _serializableScene:
+    Scene: {fileID: 0}
+    SceneName: 
+    _sceneIndexInBuildSettings: -1
+    _isSceneEnabledInBuildSettings: 0
+  _loadingSpeed: 0.5
+  _preloadOnStart: 0
+  _loadSceneMode: 0
+  _useSceneManager: 0
+  _destroyOnLoad: 1
+  _onSceneLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneActivated:
+    m_PersistentCalls:
+      m_Calls: []
+  _onSceneUnloaded:
+    m_PersistentCalls:
+      m_Calls: []
+  _onLoadingSceneLoad:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!4 &212447659
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 212447656}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 352.59277, y: 204.75754, z: 2.8087568}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &453639112
 GameObject:
   m_ObjectHideFlags: 0
@@ -1351,7 +1494,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 561654231}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1328588735}
+        m_TargetAssemblyTypeName: ActionButtons, Assembly-CSharp
+        m_MethodName: EscapeFight
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &561654231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2841,7 +2996,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: SetStateHeal
         m_Mode: 1
@@ -2853,7 +3008,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: FightStateController
         m_Mode: 1
@@ -3509,6 +3664,7 @@ MonoBehaviour:
   magicAttackButtons: {fileID: 143133837}
   currentEnemy: {fileID: 0}
   fightManager: {fileID: 517749535}
+  sceneLoader: {fileID: 212447658}
   buttonsMethods:
   - button: {fileID: 1313098202}
     methodName: SlashAttack
@@ -3990,7 +4146,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: RunOutFight
         m_Mode: 1
@@ -4244,7 +4400,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: SetStateMagicAttack
         m_Mode: 1
@@ -4256,7 +4412,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: FightStateController
         m_Mode: 1
@@ -5032,7 +5188,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1945937642}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1328588735}
+        m_TargetAssemblyTypeName: ActionButtons, Assembly-CSharp
+        m_MethodName: OpenInventory
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1945937642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5350,7 +5518,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: SetStateAttack
         m_Mode: 1
@@ -5362,7 +5530,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 8611235187967662012}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ContextMenu, Assembly-CSharp
         m_MethodName: FightStateController
         m_Mode: 1
@@ -5732,7 +5900,6 @@ GameObject:
   - component: {fileID: 4661679701041444285}
   - component: {fileID: 7502306831596179984}
   - component: {fileID: 3031256458906299932}
-  - component: {fileID: 8611235187967662012}
   m_Layer: 5
   m_Name: ContextMenu
   m_TagString: Untagged
@@ -5812,21 +5979,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5651480131747665981}
   m_CullTransparentMesh: 1
---- !u!114 &8611235187967662012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5651480131747665981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a107a3d342d20148897252d9a0cad4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1400247405}
   - {fileID: 2033780432}
+  - {fileID: 212447659}
+  - {fileID: 169029681}

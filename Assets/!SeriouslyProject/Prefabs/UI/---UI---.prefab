@@ -3446,6 +3446,8 @@ MonoBehaviour:
   - {fileID: 329503484046346716}
   - {fileID: 4043278271249852851}
   - {fileID: 5407389708792671188}
+  playerPanel: {fileID: 7239341143947604704}
+  overlayPanel: {fileID: 6904261498568966990}
 --- !u!114 &497676878694825957
 MonoBehaviour:
   m_ObjectHideFlags: 0

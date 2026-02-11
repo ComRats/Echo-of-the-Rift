@@ -5,8 +5,11 @@ using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
+using static GlobalLoader;
 
 public class ActionButtons : MonoBehaviour
 {
@@ -24,7 +27,10 @@ public class ActionButtons : MonoBehaviour
     [HideInInspector] public Enemy currentEnemy;
 
     [SerializeField] private FightManager fightManager;
+    [SerializeField] private SceneLoader sceneLoader;   
     [SerializeField] private List<ButtonsMethods> buttonsMethods;
+
+    [Inject] private MainUI mainUI;
 
     private Action pendingAction;
 
@@ -142,6 +148,22 @@ public class ActionButtons : MonoBehaviour
         _buttons2.SetActive(false);
     }
 
+    public void EscapeFight()
+    {
+        Player.Result = FightResult.Escape;
+
+        var sceneIndex = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+
+        sceneLoader.LoadAsync(sceneIndex.SceneIndex);
+    }
+
+    public void OpenInventory()
+    {
+        mainUI.playerUI.enabled = !mainUI.playerUI.enabled;
+        mainUI.canvas.enabled = !mainUI.canvas.enabled;
+        mainUI.playerUI.ToggleInventoryOnFight();
+    }
+
     [System.Serializable]
     public class BattleActions
     {
@@ -214,13 +236,6 @@ public class ActionButtons : MonoBehaviour
         {
             Debug.Log($"{attacker.Name} парирует атаку {target.Name}");
 
-        }
-
-        public void EscapeFight()
-        {
-            Player.Result = FightResult.Escape;
-            //Добавить переменную для сцены и логику
-            GlobalLoader.Instance.LoadToScene(SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).SceneIndex);
         }
     }
 
