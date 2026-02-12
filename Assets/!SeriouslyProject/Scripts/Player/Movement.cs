@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class TestMovement : MonoBehaviour, ISceneLoader
+public class Movement : MonoBehaviour, ISceneLoader
 {
     [SerializeField] private float playerSpeed;
 
@@ -18,13 +18,15 @@ public class TestMovement : MonoBehaviour, ISceneLoader
 
     private void Update()
     {
+        canMove = !GameTimer.IsPaused;
+
         if (canMove)
             Moving();
         else
         {
             direction = Vector2.zero;
             animator.SetFloat("Speed", 0f);
-        }    
+        }
     }
 
     private void Moving()

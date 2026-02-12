@@ -9,7 +9,7 @@ namespace EchoRift
         public SpriteRenderer spriteRenderer;
         public PressableButtons pressableButtons;
         public CameraSettings cameraSettings;
-        public TestMovement movement;
+        public Movement movement;
         public ChangeNameDialogueActor dialogActor;
         public PlayerSaver playerSaver;
 

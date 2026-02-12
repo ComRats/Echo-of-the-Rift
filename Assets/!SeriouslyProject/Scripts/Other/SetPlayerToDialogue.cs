@@ -27,8 +27,8 @@ public class SetPlayerToDialogue : MonoBehaviour
             DialogueSystemEvents dialogue = GetComponent<DialogueSystemEvents>();
             if (dialogue != null)
             {
-                Transform playerTransform = FindObjectOfType<TestMovement>().transform;
-                TestMovement playerMovement = playerTransform.GetComponent<TestMovement>();
+                Transform playerTransform = FindObjectOfType<Movement>().transform;
+                Movement playerMovement = playerTransform.GetComponent<Movement>();
 
                 dialogue.conversationEvents.onConversationStart.AddListener((playerTransform) => { playerMovement.canMove = !playerMovement.canMove; });
             }
@@ -38,8 +38,8 @@ public class SetPlayerToDialogue : MonoBehaviour
             DialogueSystemEvents dialogue = GetComponent<DialogueSystemEvents>();
             if (dialogue != null)
             {
-                Transform playerTransform = FindObjectOfType<TestMovement>().transform;
-                TestMovement playerMovement = playerTransform.GetComponent<TestMovement>();
+                Transform playerTransform = FindObjectOfType<Movement>().transform;
+                Movement playerMovement = playerTransform.GetComponent<Movement>();
 
                 dialogue.conversationEvents.onConversationEnd.AddListener((playerTransform) => { playerMovement.canMove = !playerMovement.canMove; });
             }

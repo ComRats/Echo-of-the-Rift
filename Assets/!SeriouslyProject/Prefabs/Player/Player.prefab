@@ -80,9 +80,9 @@ GameObject:
   - component: {fileID: 5675628018793854427}
   - component: {fileID: 9033014257014286328}
   - component: {fileID: 5331974340841231968}
-  - component: {fileID: 1808547916611058563}
   - component: {fileID: 7434136987225483318}
   - component: {fileID: -7914314194156218776}
+  - component: {fileID: 2890027749639525815}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -128,7 +128,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 73ddb2958e9cd451c82f37c26efa5eb0, type: 2}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -243,20 +243,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.12}
   m_Size: {x: 1, y: 0.25}
   m_Direction: 1
---- !u!114 &1808547916611058563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2738678033949911019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bbfc6e6e79f994f4ebadf72c6190d652, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerSpeed: 2.5
-  canMove: 1
 --- !u!114 &7434136987225483318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,7 +298,7 @@ MonoBehaviour:
   spriteRenderer: {fileID: 3297244487077200008}
   pressableButtons: {fileID: 6311396538040425498}
   cameraSettings: {fileID: 1086631943437718153}
-  movement: {fileID: 1808547916611058563}
+  movement: {fileID: 2890027749639525815}
   dialogActor: {fileID: 3241060594297500284}
   playerSaver:
     _name: 
@@ -327,7 +313,7 @@ MonoBehaviour:
     _heal: 0
     _armor: 0
     _lucky: 0
-    _creteChance: 0
+    _creteDamage: 0
     _level: 1
     _currentXP: 0
     _maxXP: 100
@@ -340,6 +326,20 @@ MonoBehaviour:
     _xpRewardPerLevel: 1
     spritePath: 
   startPosition: {x: -35, y: -3, z: 0}
+--- !u!114 &2890027749639525815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738678033949911019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2eb98bd9e4b4b145b2ae25b0cd426ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpeed: 2.5
+  canMove: 1
 --- !u!1 &4650786699909764950
 GameObject:
   m_ObjectHideFlags: 0
@@ -368,7 +368,7 @@ Transform:
   m_GameObject: {fileID: 4650786699909764950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -491,7 +491,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbe6a2fe3c5811947afc41b986e388b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openInventoryKey: 101
 --- !u!114 &7485701881848595183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -541,7 +540,7 @@ MonoBehaviour:
     onConversationStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1808547916611058563}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: TestMovement, Assembly-CSharp
           m_MethodName: FrezeMoving
           m_Mode: 1
@@ -556,7 +555,7 @@ MonoBehaviour:
     onConversationEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 1808547916611058563}
+        - m_Target: {fileID: 0}
           m_TargetAssemblyTypeName: TestMovement, Assembly-CSharp
           m_MethodName: UnFrezeMoving
           m_Mode: 1
@@ -639,7 +638,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5439ae06cbb88fb41af0b0fd608cf523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialoguePlayer: {fileID: 7485701881848595183}
+  actorDatabaseName: Player
 --- !u!1 &5244682795864369976
 GameObject:
   m_ObjectHideFlags: 0
@@ -669,7 +668,7 @@ Transform:
   m_GameObject: {fileID: 5244682795864369976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
   m_LocalScale: {x: 1.4285713, y: 1.4285713, z: 1.4285713}
   m_ConstrainProportionsScale: 0
   m_Children: []

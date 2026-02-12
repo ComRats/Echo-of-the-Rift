@@ -8,7 +8,7 @@ public class Fishing : MonoBehaviour
 {
     private InventoryManager inventoryManager;
     private FishingUI fishingUI;
-    private TestMovement playerMovement;
+    private Movement playerMovement;
     private FishingTrigger currentFishingTrigger;
     private Coroutine fishingCoroutine;
 
@@ -31,7 +31,7 @@ public class Fishing : MonoBehaviour
     {
         fishingUI = _mainUI.fishingUI;
         inventoryManager = _mainUI.inventoryManager;
-        playerMovement = FindObjectOfType<TestMovement>(); // замени на Inject player.movement
+        playerMovement = FindObjectOfType<Movement>(); // замени на Inject player.movement
     }
 
     public void StartFishingProcess(FishingTrigger trigger)
