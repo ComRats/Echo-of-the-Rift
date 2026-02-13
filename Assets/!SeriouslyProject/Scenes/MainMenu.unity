@@ -653,6 +653,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1354076076}
     - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
+      propertyPath: fightSceneLoader
+      value: 
+      objectReference: {fileID: 1354076076}
+    - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
       propertyPath: notShowScene.Array.size
       value: 2
       objectReference: {fileID: 0}

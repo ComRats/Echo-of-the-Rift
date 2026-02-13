@@ -52,7 +52,7 @@ public class FightManager : MonoBehaviour
             if (currentBase == null || currentBase.Health <= 0) continue;
 
             currentBase.ProcessStatusEffects();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
 
             if (currentBase.Health <= 0) continue;
                                                    
