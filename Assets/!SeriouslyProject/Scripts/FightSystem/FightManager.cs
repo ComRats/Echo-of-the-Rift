@@ -86,7 +86,7 @@ public class FightManager : MonoBehaviour
             Player.Result = FightResult.Win;
 
             //Показывать UI и Игрока
-
+            yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
         }
         else if (enemies.All(e => e.Health > 0) && characters.All(c => c.Health == 0))
@@ -102,7 +102,7 @@ public class FightManager : MonoBehaviour
             Player.Result = FightResult.Lose;
 
             //Показывать UI и Игрока
-
+            yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
 
         }

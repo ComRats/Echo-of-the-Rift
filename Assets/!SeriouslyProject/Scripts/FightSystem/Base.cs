@@ -60,6 +60,7 @@ public class Base : MonoBehaviour, IData
     private void OnValidate() => stats.RecalculateStats();
 
     private IData data;
+    private Transform textOffset;
 
     public void Initialize(IData data, GameObject gameObj)
     {
@@ -112,7 +113,7 @@ public class Base : MonoBehaviour, IData
 
             if (effect.data.damagePerTurn != 0)
             {
-                FightAnimation.ShowText(textPrefab, Mathf.Abs(effect.data.damagePerTurn), transform, effect.data.tickColor);
+                FightAnimation.ShowText(textPrefab, Mathf.Abs(effect.data.damagePerTurn), transform, effect.data.tickColor, new Vector3(30f,20f,0f));
 
                 if (effect.data.damagePerTurn > 0)
                     Health -= effect.data.damagePerTurn;
@@ -254,7 +255,7 @@ public class Base : MonoBehaviour, IData
 
     public void GetXP(int _getXP)
     {
-        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), gameObject.transform, Color.magenta, 1f);
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Color.magenta, new Vector3(-30f,20f,0f));
 
         CurrentXP += _getXP;
 
@@ -265,7 +266,7 @@ public class Base : MonoBehaviour, IData
     {
         if (CurrentXP >= MaxXP)
         {
-            FightAnimation.ShowText(textPrefab, "Новый уровень", gameObject.transform, Color.grey, 1.25f);
+            FightAnimation.ShowText(textPrefab, "Новый уровень", transform, Color.white);
 
             Level++;
 

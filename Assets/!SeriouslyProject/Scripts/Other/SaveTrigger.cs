@@ -9,6 +9,8 @@ public class SaveTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out var player))
         {
             GlobalLoader.Instance.SavePlayer();
+            GlobalLoader.Instance.SaveGlobal();
+            GlobalLoader.Instance.SaveInventory();
         }
     }
 }

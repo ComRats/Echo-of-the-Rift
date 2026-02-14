@@ -26,7 +26,7 @@ public static class FightAnimation
         ShowTextInternal(_textPrefab, _value.ToString(), _showPosition, _textColor, 0f);
     }
 
-    public static void ShowText(GameObject _textPrefab, string _value, Transform _showPosition, Color _textColor)
+    public static void ShowText(GameObject _textPrefab, string _value, Transform _showPosition, Color _textColor, Vector3 _extraOffset = default)
     {
         ShowTextInternal(_textPrefab, _value, _showPosition, _textColor, 0f);
     }
@@ -36,13 +36,18 @@ public static class FightAnimation
         ShowTextInternal(_textPrefab, _value, _showPosition, _textColor, _animDelay);
     }
 
-    private static void ShowTextInternal(GameObject _textPrefab, string _value, Transform _showPosition, Color _textColor, float _delay)
+    public static void ShowText(GameObject _textPrefab, int _value, Transform _showPosition, Color _textColor, Vector3 _extraOffset)
+    {
+        ShowTextInternal(_textPrefab, _value.ToString(), _showPosition, _textColor, 0f, _extraOffset);
+    }
+
+    private static void ShowTextInternal(GameObject _textPrefab, string _value, Transform _showPosition, Color _textColor, float _delay, Vector3 _extraOffset = default)
     {
         float direction = Random.value > 0.5f ? DIRECTION_MULTIPLIER : -DIRECTION_MULTIPLIER;
         float randomX = Random.Range(MIN_RANDOM_X, MAX_RANDOM_X) * direction;
 
         Vector3 spawnOffset = new Vector3(randomX * SPAWN_X_OFFSET_MODIFIER, START_HEIGHT, 0f);
-        Vector3 spawnPosition = _showPosition.position + spawnOffset;
+        Vector3 spawnPosition = _showPosition.position + spawnOffset + _extraOffset;
 
         GameObject newTextObj = GameObject.Instantiate(_textPrefab, spawnPosition, Quaternion.identity);
 
@@ -55,21 +60,16 @@ public static class FightAnimation
         rect.transform.localScale = Vector3.one * START_SCALE;
 
         Sequence seq = DOTween.Sequence();
-
+        seq.SetLink(newTextObj);
         if (_delay > 0) seq.PrependInterval(_delay);
-
         seq.Append(rect.DOScale(Vector3.one * TARGET_SCALE, SCALE_DURATION).SetEase(Ease.OutBack));
 
         Vector3 endPos = rect.position + new Vector3(direction * SIDE_SPREAD, END_Y_OFFSET, 0f);
-
         seq.Join(rect.DOJump(endPos, JUMP_POWER, 1, DURATION).SetEase(Ease.OutQuad));
-
         seq.Insert(DURATION * FADE_START_PERCENT, text.DOFade(0f, DURATION * FADE_DURATION_PERCENT));
 
-        seq.OnComplete(() =>
-        {
-            if (newTextObj != null)
-                Object.Destroy(newTextObj);
+        seq.OnComplete(() => {
+            if (newTextObj != null) Object.Destroy(newTextObj);
         });
     }
 }
