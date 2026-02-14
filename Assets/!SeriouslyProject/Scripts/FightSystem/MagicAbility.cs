@@ -17,6 +17,8 @@ public class MagicAbility : BattleAbility
     {
         attacker.Mana -= ManaCost;
 
+        PlayHitAnimation(target);
+
         target.TakeMagicDamage(magicDamage);
 
         if (vfxEffect != null)

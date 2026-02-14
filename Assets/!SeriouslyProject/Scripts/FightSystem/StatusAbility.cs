@@ -8,6 +8,8 @@ public class StatusAbility : BattleAbility
 
     public override void Execute(Base attacker, Base target)
     {
+        PlayHitAnimation(target);
+
         int damage = Mathf.RoundToInt(attacker.GiveDamage() * damageMultiplier);
         target.TakeDamage(damage);
 

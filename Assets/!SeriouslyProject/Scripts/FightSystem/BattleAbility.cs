@@ -7,8 +7,20 @@ public abstract class BattleAbility : ScriptableObject
     public string AbilityName;
     public int ManaCost;
 
+    [Title("Animation Settings")]
+    [Tooltip("Имя триггера в Аниматоре цели")]
+    public string animTrigger = "Hit";
+
     [TextArea]
     public string Description;
+
+    protected void PlayHitAnimation(Base target)
+    {
+        if (target != null && !string.IsNullOrEmpty(animTrigger))
+        {
+            target.PlayAnimation(animTrigger);
+        }
+    }
 
     public virtual bool CanUse(Base attacker)
     {

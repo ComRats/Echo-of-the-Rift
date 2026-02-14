@@ -19,6 +19,8 @@ public class MeleeAbility : BattleAbility
 
     public override void Execute(Base attacker, Base target)
     {
+        PlayHitAnimation(target);
+
         int finalDamage = attacker.GiveDamage() * baseDamageMultiplier;
         Debug.Log($"{attacker.Name} использует {AbilityName} на {target.Name} с уроном {finalDamage}");
         target.TakeDamage(finalDamage);

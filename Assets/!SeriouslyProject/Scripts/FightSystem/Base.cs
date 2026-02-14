@@ -23,6 +23,9 @@ public class Base : MonoBehaviour, IData
     [Header("TextPrefab")]
     public GameObject textPrefab;
 
+    [Header("AnimatorPrefab")]
+    [SerializeField] private Animator animator;
+
     [HideLabel]
     [InlineProperty]
     [SerializeField]
@@ -91,6 +94,11 @@ public class Base : MonoBehaviour, IData
         XpRewardPerLevel = data.XpRewardPerLevel;
     }
 
+    public void PlayAnimation(string triggerName)
+    {
+        animator.SetTrigger(triggerName);
+    }
+
     public void ApplyStatusEffect(StatusEffectSO effectData)
     {
         var existing = activeEffects.Find(e => e.data == effectData);
@@ -113,7 +121,7 @@ public class Base : MonoBehaviour, IData
 
             if (effect.data.damagePerTurn != 0)
             {
-                FightAnimation.ShowText(textPrefab, Mathf.Abs(effect.data.damagePerTurn), transform, effect.data.tickColor, new Vector3(30f,20f,0f));
+                FightAnimation.ShowText(textPrefab, Mathf.Abs(effect.data.damagePerTurn), transform, effect.data.tickColor, new Vector3(30f, 20f, 0f));
 
                 if (effect.data.damagePerTurn > 0)
                     Health -= effect.data.damagePerTurn;
@@ -255,7 +263,7 @@ public class Base : MonoBehaviour, IData
 
     public void GetXP(int _getXP)
     {
-        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Color.magenta, new Vector3(-30f,20f,0f));
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Color.magenta, new Vector3(-30f, 20f, 0f));
 
         CurrentXP += _getXP;
 
@@ -283,7 +291,7 @@ public class Base : MonoBehaviour, IData
             Mana = MaxMana;
 
             UpdateUI();
-            
+
             GlobalLoader.Instance.SavePlayer();
 
             UpdateLevel();

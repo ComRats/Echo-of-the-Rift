@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AbilityName: "\u0420\u0443\u0431\u044F\u0449\u0430\u044F \u0430\u0442\u0430\u043A\u0430"
   ManaCost: 0
+  animTrigger: SoloPunch
   Description: 
   baseDamageMultiplier: 2
   hasStatusEffect: 0
