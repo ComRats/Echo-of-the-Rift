@@ -19,6 +19,7 @@ public class EntityStats : IData
     [BoxGroup("Stats")][SerializeField] protected int _armor;
     [BoxGroup("Stats")][SerializeField] protected int _lucky;
     [BoxGroup("Stats")][SerializeField] protected int _creteDamage;
+    [BoxGroup("Stats")][SerializeField] protected string _attackAnimationName;
 
     [BoxGroup("Progression")][SerializeField] protected int _level = 1;
     [BoxGroup("Progression")][SerializeField] protected int _currentXP;
@@ -46,6 +47,7 @@ public class EntityStats : IData
     public virtual int Armor { get => _armor; set => _armor = value; }
     public virtual int Lucky { get => _lucky; set => _lucky = value; }
     public virtual int CreteDamage { get => _creteDamage; set => _creteDamage = value; }
+    public virtual string AttackAnimationName { get => _attackAnimationName; set => _attackAnimationName = value; }
 
     public virtual int Level { get => _level; set => _level = value; }
     public virtual int CurrentXP { get => _currentXP; set => _currentXP = value; }

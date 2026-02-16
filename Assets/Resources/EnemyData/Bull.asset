@@ -27,6 +27,7 @@ MonoBehaviour:
   _armor: 1
   _lucky: 0
   _creteChance: 0
+  _attackAnimationName: SoloPunch
   _level: 1
   _currentXP: 0
   _maxXP: 0

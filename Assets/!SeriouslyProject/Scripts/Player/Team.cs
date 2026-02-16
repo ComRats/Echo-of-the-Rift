@@ -148,6 +148,8 @@ public class CharactersSettings : IData
     public int ArmorPerLevel { get => armorPerLevel; set => armorPerLevel = value; }
     public int MaxManaPerLevel { get => maxManaPerLevel; set => maxManaPerLevel = value; }
     public int XpRewardPerLevel { get => xpRewardPerLevel; set => xpRewardPerLevel = value; }
+    [HideInInspector]
+    public string AttackAnimationName { get => ""; set { } }
 
     public Sprite GetSprite()
     {

@@ -176,6 +176,10 @@ public class EnemiesSettings : IData
 
     [HideIf("useEnemyData")]
     [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private string attackAnimationName = "Attack";
+
+    [HideIf("useEnemyData")]
+    [FoldoutGroup("Параметры вручную")]
     [LabelText("Спрайт врага")]
     [SerializeField] private Sprite sprite;
 
@@ -207,6 +211,7 @@ public class EnemiesSettings : IData
     public int ArmorPerLevel { get => armorPerLevel; set => armorPerLevel = value; }
     public int MaxManaPerLevel { get => maxManaPerLevel; set => maxManaPerLevel = value; }
     public int XpRewardPerLevel { get => xpRewardPerLevel; set => xpRewardPerLevel = value; }
+    public string AttackAnimationName { get => attackAnimationName; set => attackAnimationName = value; }
 
     public Sprite GetSprite()
     {

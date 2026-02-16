@@ -16,6 +16,7 @@ public interface IData
     int Armor { get; set; }
     int Lucky { get; set; }
     int CreteDamage { get; set; }
+    string AttackAnimationName { get; set; }
 
     int Level { get; set; }
     int CurrentXP { get; set; }

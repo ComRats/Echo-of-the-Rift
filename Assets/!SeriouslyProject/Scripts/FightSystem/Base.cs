@@ -1,3 +1,4 @@
+using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System.Collections;
 using System.Collections.Generic;
@@ -51,6 +52,7 @@ public class Base : MonoBehaviour, IData
     public int CurrentXP { get => stats.CurrentXP; set => stats.CurrentXP = value; }
     public int MaxXP { get => stats.MaxXP; set => stats.MaxXP = value; }
     public int XpReward { get => stats.XpReward; set => stats.XpReward = value; }
+    public string AttackAnimationName { get; set; }
 
     public int DamagePerLevel { get => stats.DamagePerLevel; set => stats.DamagePerLevel = value; }
     public int MaxHealthPerLevel { get => stats.MaxHealthPerLevel; set => stats.MaxHealthPerLevel = value; }
@@ -72,6 +74,7 @@ public class Base : MonoBehaviour, IData
         Name = gameObj.name = data.Name;
         Sprite.sprite = data.Sprite;
         Description = data.Description;
+        AttackAnimationName = data.AttackAnimationName;
         Damage = data.Damage;
         MaxHealth = data.MaxHealth;
         Health = data.Health;
@@ -97,6 +100,7 @@ public class Base : MonoBehaviour, IData
     public void PlayAnimation(string triggerName)
     {
         animator.SetTrigger(triggerName);
+        Debug.Log($"<color=yellow>Trigger Sent:</color> Триггер '{AttackAnimationName}' отправлен в Animator.");
     }
 
     public void ApplyStatusEffect(StatusEffectSO effectData)
@@ -143,6 +147,12 @@ public class Base : MonoBehaviour, IData
 
     public void TakeDamage(int _damage)
     {
+        if (Random.Range(0, 100) < 10)
+        {
+            FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            return;
+        }
+
         int currentDamage = _damage - Armor;
         if (currentDamage > 0)
             Health -= currentDamage;
@@ -155,6 +165,12 @@ public class Base : MonoBehaviour, IData
 
     public void TakeMagicDamage(int _damage)
     {
+        if (Random.Range(0, 100) < 10)
+        {
+            FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            return;
+        }
+
         if (_damage > 0)
             Health -= _damage;
         else _damage = 0;

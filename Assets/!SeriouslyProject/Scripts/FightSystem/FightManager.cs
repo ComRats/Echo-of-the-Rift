@@ -59,7 +59,9 @@ public class FightManager : MonoBehaviour
             if (currentBase is Enemy enemy)
             {
                 yield return new WaitForSeconds(damageDelay);
-                GetCharacterLowestHP().TakeDamage(enemy.Damage);
+                Character target = GetCharacterLowestHP();
+                target.TakeDamage(enemy.GiveDamage());
+                target.PlayAnimation(enemy.AttackAnimationName);
                 DeleteCharacterOnList(GetCharacterLowestHP());
             }
             else if (currentBase is Character character)

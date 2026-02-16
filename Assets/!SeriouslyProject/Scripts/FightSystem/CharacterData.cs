@@ -67,6 +67,8 @@ namespace FightSystem.Data
         public int ArmorPerLevel { get => _armorPerLevel; set => _armorPerLevel = value; }
         public int MaxManaPerLevel { get => _maxManaPerLevel; set => _maxManaPerLevel = value; }
         public int XpRewardPerLevel { get => _xpRewardPerLevel; set => _xpRewardPerLevel = value; }
+        [HideInInspector]
+        public string AttackAnimationName { get => ""; set { } }
 
         private void UpdateStats()
         {

@@ -7,8 +7,8 @@ namespace FightSystem.Enemy
     public class Enemy : Base
     {
         [SerializeField] private EnemyData enemyData;
-        [SerializeField] private ActionButtons actionButtons;
 
+        private ActionButtons actionButtons;
         private Button button;
 
         private void Awake()
@@ -19,6 +19,7 @@ namespace FightSystem.Enemy
 
             StartCoroutine(Blinking());
 
+            actionButtons = FindObjectOfType<ActionButtons>();
             button = GetComponent<Button>();
             button.onClick.AddListener(() => 
             {
@@ -26,8 +27,16 @@ namespace FightSystem.Enemy
                 actionButtons.OnEnemySelected(this);
             });
 
-            actionButtons = FindObjectOfType<ActionButtons>();
         }
+
+        //public override int GiveDamage()
+        //{
+        //    if (!string.IsNullOrEmpty(AttackAnimationName))
+        //    {
+        //        PlayAnimation(AttackAnimationName);
+        //    }
+        //    return base.GiveDamage();
+        //}
 
         public void LocalInizialize()
         {
@@ -56,6 +65,7 @@ namespace FightSystem.Enemy
             {
                 EnemyData enemy = new();
 
+                enemy.AttackAnimationName = "Attack";
                 enemy.Name = settings.Name;
                 enemy.Description = settings.Description;
                 enemy.Sprite = settings.GetSprite();

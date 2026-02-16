@@ -1,8 +1,6 @@
 using FightSystem.Data;
 using UnityEngine;
-using UnityEngine.U2D;
 using UnityEngine.UI;
-using static Cinemachine.DocumentationSortingAttribute;
 
 namespace FightSystem.Character
 {
@@ -13,15 +11,9 @@ namespace FightSystem.Character
         [Header("DataCharacter")]
         [SerializeField] private CharacterData characterData;
 
-        private Button button;
-
         private void Awake()
         {   
             Sprite = GetComponent<Image>();
-
-            //LocalInizialize();
-
-            button = GetComponent<Button>();
         }
 
         private void LocalInizialize()

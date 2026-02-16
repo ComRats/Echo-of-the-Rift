@@ -1,5 +1,5 @@
 using UnityEngine;
-using Sirenix.OdinInspector; // Ты используешь Odin, это круто
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "New Melee Attack", menuName = "Battle/Melee Ability")]
 public class MeleeAbility : BattleAbility

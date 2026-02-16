@@ -27,6 +27,7 @@ namespace FightSystem.Data
         public int _armor;
         public int _lucky;
         public int _creteChance;
+        public string _attackAnimationName = "Attack";
 
         public int Damage { get => _damage; set => _damage = value; }
         public int Priority { get => _priority; set => _priority = value; }
@@ -38,6 +39,7 @@ namespace FightSystem.Data
         public int Armor { get => _armor; set => _armor = value; }
         public int Lucky { get => _lucky; set => _lucky = value; }
         public int CreteDamage { get => _creteChance; set => _creteChance = value; }
+        public string AttackAnimationName { get => _attackAnimationName; set => _attackAnimationName = value; }
 
         [BoxGroup("Progression")]
         [OnValueChanged("UpdateStats")]
