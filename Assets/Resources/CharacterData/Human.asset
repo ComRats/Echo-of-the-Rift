@@ -15,20 +15,20 @@ MonoBehaviour:
   _name: Human
   _description: Human
   _sprite: {fileID: 862427899, guid: 0a51a8ee9d846b9428a48924d15a35ce, type: 3}
-  _damage: 3
-  _priority: 2
-  _maxMana: 5
-  _mana: 5
-  _maxHealth: 40
-  _health: 40
+  _damage: 8
+  _priority: 3
+  _maxMana: 6
+  _mana: 6
+  _maxHealth: 13
+  _health: 13
   _heal: 3
   _armor: 1
-  _lucky: 100
-  _creteChance: 50
+  _lucky: 3
+  _creteChance: 3
   _level: 1
   _currentXP: 0
   _maxXP: 100
-  _xpReward: 1
+  _xpReward: 100
   _damagePerLevel: 5
   _maxHealthPerLevel: 10
   _healPerLevel: 3

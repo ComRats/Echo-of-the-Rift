@@ -33,7 +33,6 @@ public class ActionButtons : MonoBehaviour
 
     private Action pendingAction;
     //добавить динамическое создание кнопок по листу кнопок и абилок
-    //баг с утечкой памяти при повышении уровня врага  
     //хил и защита отдельные классы
 
     private void Start()

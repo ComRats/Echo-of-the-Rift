@@ -30,7 +30,7 @@ MonoBehaviour:
   _attackAnimationName: SoloPunch
   _level: 1
   _currentXP: 0
-  _maxXP: 0
+  _maxXP: 100
   _xpReward: 100
   _damagePerLevel: 2
   _maxHealthPerLevel: 4

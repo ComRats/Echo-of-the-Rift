@@ -27,20 +27,6 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
-  - soundName: TheSpace
-    type: 1
-    audioClip: {fileID: 8300000, guid: c5a6af7adb029df4ba0967bc4de9e7ac, type: 3}
-    mixerGroup: {fileID: 0}
-    loop: 0
-    volume: 1
-    pitch: 1
-    spatialBlend: 0.5
-    dopplerLevel: 0
-    spreadAngle: 0
-    volumeRolloff: 0
-    minDistance: 0
-    maxDistance: 0
-    source: {fileID: 0}
   - soundName: Trollheim
     type: 1
     audioClip: {fileID: 8300000, guid: 56a415e063aba7e49b55ff750df85a94, type: 3}
@@ -104,6 +90,76 @@ MonoBehaviour:
     loop: 1
     volume: 1
     pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Step
+    type: 0
+    audioClip: {fileID: 8300000, guid: d34082ff6fb7bd248ac4b0d1d82a8f2d, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: WaterSplash
+    type: 0
+    audioClip: {fileID: 8300000, guid: fe8ff6715246c9f43b3b53ad725907d0, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 0.5
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Heal
+    type: 0
+    audioClip: {fileID: 8300000, guid: 38ba8e76ea87d5a43837a287bc276ac0, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.3
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: MagicDamage
+    type: 0
+    audioClip: {fileID: 8300000, guid: 7da9270d4668651478fc37864b641411, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.15
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: MeleeDamage
+    type: 0
+    audioClip: {fileID: 8300000, guid: 808fc6de4ebbb9f49a093228f031d6db, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.15
     spatialBlend: 0.5
     dopplerLevel: 0
     spreadAngle: 0
