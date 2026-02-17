@@ -15,4 +15,4 @@ MonoBehaviour:
   effectName: "\u041A\u0440\u043E\u0432\u043E\u0442\u0435\u0447\u0435\u043D\u0438\u0435"
   damagePerTurn: 1
   duration: 2
-  tickColor: {r: 1, g: 0.64744824, b: 0, a: 1}
+  tickColor: {r: 0.2901961, g: 0.015686275, b: 0.015686275, a: 1}

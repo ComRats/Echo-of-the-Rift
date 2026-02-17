@@ -1,3 +1,5 @@
+using AudioManager.Core;
+using AudioManager.Locator;
 using UnityEngine;
 
 public class Movement : MonoBehaviour, ISceneLoader
@@ -9,11 +11,13 @@ public class Movement : MonoBehaviour, ISceneLoader
     private Animator animator;
     private Vector2 direction;
     private new Rigidbody2D rigidbody;
+    private IAudioManager service;
 
     private void Start()
     {
         rigidbody = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        service = ServiceLocator.GetService();
     }
 
     private void Update()
@@ -37,6 +41,25 @@ public class Movement : MonoBehaviour, ISceneLoader
         animator.SetFloat("Horizontal", direction.x);
         animator.SetFloat("Vertical", direction.y);
         animator.SetFloat("Speed", direction.sqrMagnitude);
+
+        HandleStepSound(direction.sqrMagnitude);
+    }
+
+    private void HandleStepSound(float speed)
+    {
+        if (speed < 0.01f)
+        {
+            service.Stop("Step");
+            return;
+        }
+
+        float progress;
+        service.GetProgress("Step", out progress);
+
+        if (float.IsNaN(progress) || progress >= 0.98f || progress <= 0f)
+        {
+            service.Play("Step");
+        }
     }
 
     private void FixedUpdate()

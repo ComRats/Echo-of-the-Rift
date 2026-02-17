@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using EchoRift;
 using Zenject;
+using AudioManager.Locator;
 
 public class Fishing : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class Fishing : MonoBehaviour
         playerMovement.enabled = false;
 
         Debug.Log("Ожидание поклевки...");
+        ServiceLocator.GetService().PlayOneShot("WaterSplash");
         fishingUI?.ShowWaitingForBite();
 
         yield return null;

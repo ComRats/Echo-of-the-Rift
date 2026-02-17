@@ -1,3 +1,5 @@
+using AudioManager.Core;
+using AudioManager.Locator;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System.Collections;
@@ -5,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static GameColorsDataBase;
 
 public class Base : MonoBehaviour, IData
 {
@@ -66,6 +69,12 @@ public class Base : MonoBehaviour, IData
 
     private IData data;
     private Transform textOffset;
+    private IAudioManager service;
+
+    private void Start()
+    {
+        service = ServiceLocator.GetService();
+    }
 
     public void Initialize(IData data, GameObject gameObj)
     {
@@ -100,7 +109,6 @@ public class Base : MonoBehaviour, IData
     public void PlayAnimation(string triggerName)
     {
         animator.SetTrigger(triggerName);
-        Debug.Log($"<color=yellow>Trigger Sent:</color> Триггер '{AttackAnimationName}' отправлен в Animator.");
     }
 
     public void ApplyStatusEffect(StatusEffectSO effectData)
@@ -158,7 +166,8 @@ public class Base : MonoBehaviour, IData
             Health -= currentDamage;
         else currentDamage = 0;
 
-        FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, Color.red);
+        FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, PhysDamage);
+        service.Play("MeleeDamage");
         UpdateUI();
         TryDeath();
     }
@@ -175,8 +184,8 @@ public class Base : MonoBehaviour, IData
             Health -= _damage;
         else _damage = 0;
 
-        FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, Color.blue);
-
+        FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, MagicDamage);
+        service.Play("MagicDamage");
         UpdateUI();
         TryDeath();
     }
@@ -227,7 +236,7 @@ public class Base : MonoBehaviour, IData
 
             finalDamage = Mathf.RoundToInt(finalDamage * (1f + critBonusPercent));
 
-            FightAnimation.ShowText(textPrefab, "КРИТ!", transform, Color.yellow, 1.2f);
+            FightAnimation.ShowText(textPrefab, "КРИТ!", transform, CritDamage, 1.2f);
         }
 
         return finalDamage;
@@ -279,7 +288,7 @@ public class Base : MonoBehaviour, IData
 
     public void GetXP(int _getXP)
     {
-        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Color.magenta, new Vector3(-30f, 20f, 0f));
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience, new Vector3(-30f, 20f, 0f));
 
         CurrentXP += _getXP;
 
@@ -290,7 +299,7 @@ public class Base : MonoBehaviour, IData
     {
         if (CurrentXP >= MaxXP)
         {
-            FightAnimation.ShowText(textPrefab, "Новый уровень", transform, Color.white);
+            FightAnimation.ShowText(textPrefab, "Новый уровень", transform, LevelUp);
 
             Level++;
 

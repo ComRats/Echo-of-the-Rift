@@ -16,7 +16,7 @@ public abstract class BattleAbility : ScriptableObject
 
     protected void PlayHitAnimation(Base target)
     {
-        if (target != null && !string.IsNullOrEmpty(animTrigger))
+        if (target != null && !string.IsNullOrEmpty(animTrigger)) 
         {
             target.PlayAnimation(animTrigger);
         }

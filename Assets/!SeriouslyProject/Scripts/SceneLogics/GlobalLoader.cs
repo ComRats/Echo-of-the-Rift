@@ -152,7 +152,7 @@ public class GlobalLoader : MonoBehaviour
             sceneIndex = SceneManager.GetActiveScene().buildIndex,
             dialogueData = SaveSystem.Serialize(SaveSystem.RecordSavedGameData()),
             isStart = false,
-            gameTime = GameTimer.GameTime // Сохранение текущего игрового времени
+            gameTime = GameTimer.GameTime
         };
 
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
@@ -169,7 +169,6 @@ public class GlobalLoader : MonoBehaviour
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
         
-        // Восстановление игрового времени при загрузке
         GameTimer.SetTime(data.gameTime);
     }
 
