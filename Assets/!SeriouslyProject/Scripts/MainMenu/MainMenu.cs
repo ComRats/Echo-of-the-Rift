@@ -79,7 +79,7 @@ public class MainMenu : MonoBehaviour
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(globalData.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
 
-        //loadSceneLoader._onSceneActivated.AddListener(() => playerActor.SaveNameForDialogueActor(playerName.playerDialogueName, true));
+        //loadSceneLoader._onSceneActivated.AddListener(() => GameTimer.ResetTime());
         playerActor.SaveNameForDialogueActor(playerName.playerDialogueName, true);
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
     }

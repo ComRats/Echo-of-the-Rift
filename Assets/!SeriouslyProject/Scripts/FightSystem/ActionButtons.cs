@@ -22,53 +22,41 @@ public class ActionButtons : MonoBehaviour
     [Title("UI Feedback")]
     [SerializeField] private TextMeshProUGUI descriptionText;
 
-    [Title("Abilities Configuration")]
-    [SerializeField] private List<AbilityBinding> abilityBindings;
-
     [HideInInspector] public Enemy currentEnemy;
 
     [SerializeField] private FightManager fightManager;
     [SerializeField] private SceneLoader sceneLoader;
+    [SerializeField] private AbilityManager abilityManager;
     [Inject] private MainUI mainUI;
 
     private Action pendingAction;
-    //добавить динамическое создание кнопок по листу кнопок и абилок
-    //хил и защита отдельные классы
+    private BattleAbility pendingAbility;
+    private Base pendingAttacker;
 
     private void Start()
     {
         magicAttackToggleBtn.onClick.AddListener(() => OpenButtons(magicAttackButtons, physicAttackButtons));
         physicAttackToggleBtn.onClick.AddListener(() => OpenButtons(physicAttackButtons, magicAttackButtons));
-
-        InitializeButtons();
     }
 
-    private void InitializeButtons()
+    public void OnEnemySelected(Enemy enemy)
     {
-        foreach (var binding in abilityBindings)
-        {
-            if (binding.button == null || binding.ability == null) continue;
-
-            TextMeshProUGUI buttonText = binding.button.GetComponentInChildren<TextMeshProUGUI>();
-            buttonText.text = binding.ability.AbilityName;
-
-            binding.button.onClick.RemoveAllListeners();
-
-            var localAbility = binding.ability;
-            binding.button.onClick.AddListener(() => OnAbilityClicked(localAbility));
-        }
+        currentEnemy = enemy;
+        ExecutePendingAction();
     }
 
-    private void OnAbilityClicked(BattleAbility ability)
+    /// <summary>
+    /// Метод для установки ожидающей способности из AbilityManager
+    /// </summary>
+    public void SetPendingAbility(BattleAbility ability, Base attacker)
     {
-        var activeChar = fightManager.ActiveCharacter;
-
-        if (activeChar == null) return;
-
-        if (!ability.CanUse(activeChar))
+        if (!ability.CanUse(attacker))
         {
             return;
         }
+
+        pendingAbility = ability;
+        pendingAttacker = attacker;
 
         pendingAction = () =>
         {
@@ -78,12 +66,18 @@ public class ActionButtons : MonoBehaviour
                 return;
             }
 
-            ability.Execute(activeChar, currentEnemy);
+            pendingAbility.Execute(pendingAttacker, currentEnemy);
 
-            activeChar.UpdateUI();
-            activeChar.IsTurn = false;
+            if (pendingAttacker is FightSystem.Character.Character character)
+            {
+                character.UpdateUI();
+                character.IsTurn = false;
+            }
 
             fightManager.DeleteEnemyOnList(currentEnemy);
+            
+            pendingAbility = null;
+            pendingAttacker = null;
         };
 
         if (currentEnemy != null)
@@ -94,12 +88,6 @@ public class ActionButtons : MonoBehaviour
         {
             Debug.Log("Выберите цель для способности: " + ability.AbilityName);
         }
-    }
-
-    public void OnEnemySelected(Enemy enemy)
-    {
-        currentEnemy = enemy;
-        ExecutePendingAction();
     }
 
     private void ExecutePendingAction()
@@ -129,12 +117,5 @@ public class ActionButtons : MonoBehaviour
         mainUI.playerUI.enabled = !mainUI.playerUI.enabled;
         mainUI.canvas.enabled = !mainUI.canvas.enabled;
         mainUI.playerUI.ToggleInventoryOnFight();
-    }
-
-    [System.Serializable]
-    public struct AbilityBinding
-    {
-        public Button button;
-        public BattleAbility ability;
     }
 }

@@ -35,3 +35,4 @@ MonoBehaviour:
   _armorPerLevel: 2
   _maxManaPerLevel: 5
   _xpRewardPerLevel: 1
+  _abilitySet: {fileID: 11400000, guid: 149655fc9a8292e4a9d3a6ded93994ff, type: 2}

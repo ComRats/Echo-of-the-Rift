@@ -11,6 +11,8 @@ namespace FightSystem.Character
         [Header("DataCharacter")]
         [SerializeField] private CharacterData characterData;
 
+        public CharacterAbilitySet AbilitySet { get; private set; }
+
         private void Awake()
         {   
             Sprite = GetComponent<Image>();
@@ -19,7 +21,7 @@ namespace FightSystem.Character
         private void LocalInizialize()
         {
             Initialize(characterData, gameObject);
-
+            AbilitySet = characterData.AbilitySet;
             UpdateUI();
         }
 
@@ -35,7 +37,7 @@ namespace FightSystem.Character
                 }
                 else
                 {
-                    Debug.LogError($"Не найден CharacterData с именем {settings.characterDataName}");
+                    Debug.LogError($"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ CharacterData пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {settings.characterDataName}");
                 }
             }
             else
@@ -69,7 +71,9 @@ namespace FightSystem.Character
                 Initialize(character, gameObject);
             }
 
-            // Обновление UI
+            AbilitySet = characterData?.AbilitySet;
+
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI
             UpdateUI();
         }
     }

@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Echo-of-the-Rift.sln"
+    "dotnet.defaultSolution": "Echo-of-the-Rift.sln",
+    "kiroAgent.configureMCP": "Disabled"
 }

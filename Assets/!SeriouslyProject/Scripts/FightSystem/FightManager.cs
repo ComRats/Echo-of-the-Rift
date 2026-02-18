@@ -7,7 +7,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.SceneManagement;
 using EchoRift;
-using EchoRift.SaveLoadSystem;
+using Sirenix.OdinInspector;
 
 public class FightManager : MonoBehaviour
 {
@@ -22,6 +22,9 @@ public class FightManager : MonoBehaviour
     public List<Character> characters = new();
 
     [SerializeField] private List<Base> bases = new();
+
+    [Title("Ability System")]
+    [SerializeField] private AbilityManager abilityManager;
 
     private int allEnemyXP;
     private int allCharacterXP;
@@ -82,12 +85,12 @@ public class FightManager : MonoBehaviour
             foreach (var basic in bases)
             {
                 basic.GetXP(allEnemyXP / characterStartCount);
-                Debug.Log(basic.name + " получил " + (allEnemyXP / characterStartCount) + " XP");
+                Debug.Log(basic.name + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + (allEnemyXP / characterStartCount) + " XP");
             }
 
             Player.Result = FightResult.Win;
 
-            //Показывать UI и Игрока
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
         }
@@ -98,12 +101,12 @@ public class FightManager : MonoBehaviour
             foreach (var basic in bases)
             {
                 basic.GetXP(allCharacterXP / enemiesStartCount);
-                Debug.Log(basic.name + " получил " + (allEnemyXP / enemiesStartCount) + " XP");
+                Debug.Log(basic.name + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + (allEnemyXP / enemiesStartCount) + " XP");
             }
 
             Player.Result = FightResult.Lose;
 
-            //Показывать UI и Игрока
+            //пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
             yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
 
@@ -152,6 +155,12 @@ public class FightManager : MonoBehaviour
     {
         _character.IsTurn = true;
         ActiveCharacter = _character;
+
+        // РЎРѕР·РґР°РµРј РєРЅРѕРїРєРё СЃРїРѕСЃРѕР±РЅРѕСЃС‚РµР№ РґР»СЏ Р°РєС‚РёРІРЅРѕРіРѕ РїРµСЂСЃРѕРЅР°Р¶Р°
+        if (abilityManager != null)
+        {
+            abilityManager.SetupAbilitiesForCharacter(_character);
+        }
 
         StartEnemyBlinking();
 

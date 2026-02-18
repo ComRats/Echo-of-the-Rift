@@ -275,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &41601023
 RectTransform:
   m_ObjectHideFlags: 0
@@ -291,10 +291,10 @@ RectTransform:
   - {fileID: 502234252}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 120, y: -145}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &41601024
 MonoBehaviour:
@@ -1452,6 +1452,8 @@ MonoBehaviour:
   enemies: []
   characters: []
   bases: []
+  abilityManager: {fileID: 1328588736}
+  createAbilitiesOnStart: 0
 --- !u!1 &555087642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1462,7 +1464,6 @@ GameObject:
   m_Component:
   - component: {fileID: 555087643}
   - component: {fileID: 555087645}
-  - component: {fileID: 555087644}
   m_Layer: 5
   m_Name: PhysAttacsButtons
   m_TagString: Untagged
@@ -1490,25 +1491,11 @@ RectTransform:
   - {fileID: 1698193059}
   m_Father: {fileID: 1286986749}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 184.063}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &555087644
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555087642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
 --- !u!114 &555087645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1522,9 +1509,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
+    m_Left: 20
     m_Right: 0
-    m_Top: 0
+    m_Top: 25
     m_Bottom: 0
   m_ChildAlignment: 0
   m_StartCorner: 0
@@ -2018,7 +2005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &679398888
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2034,10 +2021,10 @@ RectTransform:
   - {fileID: 305639655}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 690, y: -40}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &679398889
 MonoBehaviour:
@@ -3888,6 +3875,7 @@ GameObject:
   - component: {fileID: 1328588734}
   - component: {fileID: 1328588733}
   - component: {fileID: 1328588735}
+  - component: {fileID: 1328588736}
   m_Layer: 5
   m_Name: ActionPanel
   m_TagString: Untagged
@@ -3974,16 +3962,32 @@ MonoBehaviour:
   physicAttackToggleBtn: {fileID: 1410949756}
   magicAttackToggleBtn: {fileID: 1879273137}
   descriptionText: {fileID: 0}
-  abilityBindings:
-  - button: {fileID: 4581830973372312709}
-    ability: {fileID: 11400000, guid: f61d499b4953fb54c982d981e70dca5b, type: 2}
-  - button: {fileID: 41601024}
-    ability: {fileID: 11400000, guid: 9f9d62fcca659794d98e97e6b4ce3aa4, type: 2}
-  - button: {fileID: 1867330192}
-    ability: {fileID: 11400000, guid: e25755940f29a4d41b670f74aef9ade2, type: 2}
   currentEnemy: {fileID: 0}
   fightManager: {fileID: 517749535}
   sceneLoader: {fileID: 212447658}
+  abilityManager: {fileID: 1328588736}
+--- !u!114 &1328588736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1328588731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ac1d354a862947479d7e84c09e586e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  physicalAbilitiesContainer: {fileID: 555087643}
+  magicAbilitiesContainer: {fileID: 1228529822}
+  defenseAbilitiesContainer: {fileID: 555087643}
+  supportAbilitiesContainer: {fileID: 1228529822}
+  abilityButtonPrefab: {fileID: 3802382256954073297, guid: 94651b7146a5ac54bae06ea4f4fc9fe9, type: 3}
+  useButtonAnimation: 1
+  animationDuration: 0.3
+  delayBetweenButtons: 0.1
+  animationType: 0
+  fightManager: {fileID: 517749535}
 --- !u!1 &1349405639
 GameObject:
   m_ObjectHideFlags: 0
@@ -4648,7 +4652,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1663760384
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4664,10 +4668,10 @@ RectTransform:
   - {fileID: 1704054489}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 405, y: -40}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1663760385
 MonoBehaviour:
@@ -4761,7 +4765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1698193059
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4777,10 +4781,10 @@ RectTransform:
   - {fileID: 916464461}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 690, y: -145}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1698193060
 MonoBehaviour:
@@ -5421,7 +5425,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1867330191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5437,10 +5441,10 @@ RectTransform:
   - {fileID: 1911182536}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 405, y: -145}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1867330192
 MonoBehaviour:
@@ -6688,10 +6692,10 @@ RectTransform:
   - {fileID: 5692617857815893655}
   m_Father: {fileID: 555087643}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 140, y: -65}
+  m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5190133833038485895
 MonoBehaviour:
@@ -6979,7 +6983,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!222 &8317924342358258945
 CanvasRenderer:
   m_ObjectHideFlags: 0

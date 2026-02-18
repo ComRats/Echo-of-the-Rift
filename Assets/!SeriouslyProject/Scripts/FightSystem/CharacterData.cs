@@ -72,6 +72,11 @@ namespace FightSystem.Data
         [HideInInspector]
         public string AttackAnimationName { get => ""; set { } }
 
+        [BoxGroup("Abilities")]
+        [Tooltip("Набор способностей персонажа")]
+        public CharacterAbilitySet _abilitySet;
+        public CharacterAbilitySet AbilitySet { get => _abilitySet; set => _abilitySet = value; }
+
         private void UpdateStats()
         {
             _damage = _damagePerLevel * _level;

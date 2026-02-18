@@ -124,7 +124,7 @@ public class Base : MonoBehaviour, IData
         {
             activeEffects.Add(new ActiveStatusEffect(effectData));
         }
-        Debug.Log($"{Name} получил эффект {effectData.effectName}");
+        Debug.Log($"{Name} пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {effectData.effectName}");
     }
 
     public void ProcessStatusEffects()
@@ -159,7 +159,7 @@ public class Base : MonoBehaviour, IData
     {
         if (Random.Range(0, 100) < 10)
         {
-            FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            FightAnimation.ShowText(textPrefab, "РџСЂРѕРјР°С…", gameObject.transform, Color.gray);
             return;
         }
 
@@ -178,7 +178,7 @@ public class Base : MonoBehaviour, IData
     {
         if (Random.Range(0, 100) < 10)
         {
-            FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            FightAnimation.ShowText(textPrefab, "РџСЂРѕРјР°С…", gameObject.transform, Color.gray);
             return;
         }
 
@@ -238,7 +238,7 @@ public class Base : MonoBehaviour, IData
 
             finalDamage = Mathf.RoundToInt(finalDamage * (1f + critBonusPercent));
 
-            FightAnimation.ShowText(textPrefab, "КРИТ!", transform, CritDamage, 1.2f);
+            FightAnimation.ShowText(textPrefab, "РљР РРў!", transform, CritDamage, 1.2f);
         }
 
         return finalDamage;
@@ -301,7 +301,7 @@ public class Base : MonoBehaviour, IData
     {
         if (CurrentXP >= MaxXP)
         {
-            FightAnimation.ShowText(textPrefab, "Новый уровень", transform, LevelUp);
+            FightAnimation.ShowText(textPrefab, "LEVEL UP!", transform, LevelUp);
 
             Level++;
 
@@ -319,9 +319,39 @@ public class Base : MonoBehaviour, IData
 
             UpdateUI();
 
-            GlobalLoader.Instance.SavePlayer();
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+            SaveCharacterProgress();
 
             UpdateLevel();
+        }
+    }
+
+    private void SaveCharacterProgress()
+    {
+        // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Character), пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
+        if (this is FightSystem.Character.Character character)
+        {
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ playerSaver пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+            if (GlobalLoader.Instance != null && GlobalLoader.Instance.playerInstance != null)
+            {
+                var playerSaver = GlobalLoader.Instance.playerInstance.playerSaver;
+                
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+                playerSaver.Level = Level;
+                playerSaver.CurrentXP = CurrentXP;
+                playerSaver.MaxXP = MaxXP;
+                playerSaver.Damage = Damage;
+                playerSaver.MaxHealth = MaxHealth;
+                playerSaver.Health = Health;
+                playerSaver.Heal = Heal;
+                playerSaver.Armor = Armor;
+                playerSaver.MaxMana = MaxMana;
+                playerSaver.Mana = Mana;
+                playerSaver.XpReward = XpReward;
+                
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ
+                GlobalLoader.Instance.SavePlayer();
+            }
         }
     }
 
