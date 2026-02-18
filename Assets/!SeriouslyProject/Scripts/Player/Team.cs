@@ -41,6 +41,10 @@ public class CharactersSettings : IData
 
     [HideIf("useCharacterData")]
     [FoldoutGroup("Параметры вручную")]
+    [SerializeField] private int _magicDamage;
+
+    [HideIf("useCharacterData")]
+    [FoldoutGroup("Параметры вручную")]
     [SerializeField] private int _priority;
 
     [HideIf("useCharacterData")]
@@ -129,6 +133,7 @@ public class CharactersSettings : IData
     public string Description { get => description; set => description = value; }
     public Sprite Sprite { get => sprite; set => sprite = value; }
     public int Damage { get => _damage; set => _damage = value; }
+    public int MagicDamage { get => _magicDamage; set => _magicDamage = value; }
     public int Priority { get => _priority; set => _priority = value; }
     public int MaxMana { get => _maxMana; set => _maxMana = value; }
     public int Mana { get => _mana; set => _mana = value; }

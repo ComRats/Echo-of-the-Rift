@@ -18,6 +18,7 @@ namespace FightSystem.Data
 
         [BoxGroup("Stats (Base)")]
         public int _damage;
+        public int _magicDamage;
         public int _priority;
         public int _maxMana;
         public int _mana;
@@ -29,6 +30,7 @@ namespace FightSystem.Data
         public int _creteChance;
 
         public int Damage { get => _damage; set => _damage = value; }
+        public int MagicDamage { get => _magicDamage; set => _magicDamage = value; }
         public int Priority { get => _priority; set => _priority = value; }
         public int MaxMana { get => _maxMana; set => _maxMana = value; }
         public int Mana { get => _mana; set => _mana = value; }

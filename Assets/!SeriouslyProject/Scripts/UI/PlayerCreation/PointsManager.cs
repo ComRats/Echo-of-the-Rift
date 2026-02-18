@@ -26,21 +26,25 @@ public class PointsManager : MonoBehaviour
                 {
                     case "Power":
                         characterData.Damage = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.Health = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.MaxHealth = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
                         break;
                     case "Intellect":
-                        characterData.Mana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
-                        characterData.MaxMana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
-                        //magic damage
+                        characterData.MagicDamage = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
                         break;
-                    case "Agility":
+                    case "Charisma":
                         characterData.Priority = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
                         characterData.Armor = 1 + (int)(0.4f * data.usedPoints);
                         break;
                     case "Lucky":
                         characterData.Lucky = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
                         characterData.CreteDamage = 2 + data.usedPoints + (int)(0.2f * data.usedPoints);
+                        break;
+                    case "HP":
+                        characterData.Health = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.MaxHealth = 10 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        break;
+                    case "MP":
+                        characterData.Mana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
+                        characterData.MaxMana = 5 + data.usedPoints + (int)(0.5f * data.usedPoints);
                         break;
                     default:
 

@@ -42,6 +42,7 @@ public class Base : MonoBehaviour, IData
     public string Description { get => stats.Description; set => stats.Description = value; }
     public Image Sprite { get; set; }
     public int Damage { get => stats.Damage; set => stats.Damage = value; }
+    public int MagicDamage { get => stats.MagicDamage; set => stats.MagicDamage = value; }
     public int Priority { get => stats.Priority; set => stats.Priority = value; }
     public int MaxMana { get => stats.MaxMana; set => stats.MaxMana = value; }
     public int Mana { get => stats.Mana; set => stats.Mana = value; }
@@ -85,6 +86,7 @@ public class Base : MonoBehaviour, IData
         Description = data.Description;
         AttackAnimationName = data.AttackAnimationName;
         Damage = data.Damage;
+        MagicDamage = data.MagicDamage;
         MaxHealth = data.MaxHealth;
         Health = data.Health;
         MaxMana = data.MaxMana;
@@ -172,7 +174,7 @@ public class Base : MonoBehaviour, IData
         TryDeath();
     }
 
-    public void TakeMagicDamage(int _damage)
+    public void TakeMagicDamage(int _magicDamage)
     {
         if (Random.Range(0, 100) < 10)
         {
@@ -180,11 +182,11 @@ public class Base : MonoBehaviour, IData
             return;
         }
 
-        if (_damage > 0)
-            Health -= _damage;
-        else _damage = 0;
+        if (_magicDamage > 0)
+            Health -= _magicDamage;
+        else _magicDamage = 0;
 
-        FightAnimation.ShowText(textPrefab, _damage, gameObject.transform, MagicDamage);
+        FightAnimation.ShowText(textPrefab, _magicDamage, gameObject.transform, MageDamage);
         service.Play("MagicDamage");
         UpdateUI();
         TryDeath();

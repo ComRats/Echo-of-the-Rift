@@ -10,6 +10,7 @@ public class EntityStats : IData
     [BoxGroup("General Info")][SerializeField] protected Sprite _sprite;
 
     [BoxGroup("Stats")][SerializeField] protected int _damage;
+    [BoxGroup("Stats")][SerializeField] protected int _magicDamage;
     [BoxGroup("Stats")][SerializeField] protected int _priority;
     [BoxGroup("Stats")][SerializeField] protected int _maxMana;
     [BoxGroup("Stats")][SerializeField] protected int _mana;
@@ -38,6 +39,7 @@ public class EntityStats : IData
     public virtual Sprite Sprite { get => _sprite; set => _sprite = value; }
 
     public virtual int Damage { get => _damage; set => _damage = value; }
+    public virtual int MagicDamage { get => _magicDamage; set => _magicDamage = value; }
     public virtual int Priority { get => _priority; set => _priority = value; }
     public virtual int MaxMana { get => _maxMana; set => _maxMana = value; }
     public virtual int Mana { get => _mana; set => _mana = value; }

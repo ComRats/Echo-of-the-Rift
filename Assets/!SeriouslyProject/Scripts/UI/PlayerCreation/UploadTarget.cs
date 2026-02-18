@@ -7,7 +7,6 @@ using Zenject;
 public class UploadTarget : MonoBehaviour
 {
     [SerializeField] private SceneLoader nextSceneLoader;
-    [SerializeField] private SceneLoaderBridge loaderBridge;
     [SerializeField] private PointsManager points;
     [SerializeField] private TextMeshProUGUI descriptionStats;
     [SerializeField] private TMP_InputField inputField;

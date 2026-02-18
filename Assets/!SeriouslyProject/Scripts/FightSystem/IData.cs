@@ -7,6 +7,7 @@ public interface IData
     Sprite Sprite { get; set; }
 
     int Damage { get; set; }
+    int MagicDamage { get; set; }
     int Priority { get; set; }
     int MaxMana { get; set; }
     int Mana { get; set; }
