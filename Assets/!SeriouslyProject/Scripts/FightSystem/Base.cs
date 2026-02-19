@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 using static GameColorsDataBase;
 
 public class Base : MonoBehaviour, IData
@@ -314,16 +315,37 @@ public class Base : MonoBehaviour, IData
             XpReward += data.XpRewardPerLevel * Level;
             MaxXP += data.MaxXP * Level;
 
-            Health = MaxHealth;
-            Mana = MaxMana;
+            AnimateStatRestore();
 
-            UpdateUI();
-
-            // ��������� ������� ��������� ����� ��������� ������
             SaveCharacterProgress();
 
             UpdateLevel();
         }
+    }
+
+    private void AnimateStatRestore()
+    {
+        int startHealth = Health;
+        int startMana = Mana;
+        int targetHealth = MaxHealth;
+        int targetMana = MaxMana;
+
+        float duration = 1.5f;
+
+        DOTween.To(() => startHealth, x => 
+        {
+            Health = x;
+            UpdateUI();
+        }, targetHealth, duration)
+        .SetEase(Ease.OutBack);
+
+        // Анимация восстановления маны
+        DOTween.To(() => startMana, x => 
+        {
+            Mana = x;
+            UpdateUI();
+        }, targetMana, duration)
+        .SetEase(Ease.OutQuad);
     }
 
     private void SaveCharacterProgress()

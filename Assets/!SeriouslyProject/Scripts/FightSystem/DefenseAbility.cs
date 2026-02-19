@@ -5,8 +5,8 @@ using Sirenix.OdinInspector;
 public class DefenseAbility : BattleAbility
 {
     [Title("Defense Settings")]
-    [Tooltip("Множитель защиты (например, 2 = удвоенная защита на 1 ход)")]
-    [SerializeField] private float defenseMultiplier = 2f;
+    [Tooltip("Дополнительная защита")]
+    [SerializeField] private int bonusDefense = 2;
 
     [Tooltip("Длительность эффекта в ходах")]
     [SerializeField] private int duration = 1;
@@ -21,8 +21,7 @@ public class DefenseAbility : BattleAbility
 
         PlayHitAnimation(attacker);
 
-        // Временное увеличение защиты
-        int armorBonus = Mathf.RoundToInt(attacker.Armor * (defenseMultiplier - 1f));
+        int armorBonus = attacker.Armor + bonusDefense;
         
         Debug.Log($"{attacker.Name} использует {AbilityName}! Защита увеличена на {armorBonus}");
 
@@ -32,8 +31,7 @@ public class DefenseAbility : BattleAbility
         }
         else
         {
-            // Создаем временный эффект защиты
-            StatusEffectSO tempDefense = ScriptableObject.CreateInstance<StatusEffectSO>();
+            StatusEffectSO tempDefense = CreateInstance<StatusEffectSO>();
             tempDefense.effectName = "Защита";
             tempDefense.duration = duration;
             tempDefense.damagePerTurn = 0;

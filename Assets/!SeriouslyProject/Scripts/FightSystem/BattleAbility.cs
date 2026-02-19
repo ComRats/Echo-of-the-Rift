@@ -7,8 +7,12 @@ public abstract class BattleAbility : ScriptableObject
     public string AbilityName;
     public int ManaCost;
 
+    [Title("Target Settings")]
+    [Tooltip("РўРёРї С†РµР»Рё РґР»СЏ СЃРїРѕСЃРѕР±РЅРѕСЃС‚Рё")]
+    public TargetType targetType = TargetType.Enemy;
+
     [Title("Animation Settings")]
-    [Tooltip("Имя триггера в Аниматоре цели")]
+    [Tooltip("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ")]
     public string animTrigger = "Hit";
 
     [TextArea]
@@ -26,7 +30,7 @@ public abstract class BattleAbility : ScriptableObject
     {
         if (attacker.Mana < ManaCost)
         {
-            Debug.LogWarning($"{attacker.Name} не хватает маны! Нужно {ManaCost}, есть {attacker.Mana}");
+            Debug.LogWarning($"{attacker.Name} пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ! пїЅпїЅпїЅпїЅпїЅ {ManaCost}, пїЅпїЅпїЅпїЅ {attacker.Mana}");
             return false;
         }
         return true;

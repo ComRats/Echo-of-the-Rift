@@ -4,6 +4,7 @@ using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,35 +59,146 @@ public class ActionButtons : MonoBehaviour
         pendingAbility = ability;
         pendingAttacker = attacker;
 
-        pendingAction = () =>
+        // Проверяем тип цели способности
+        switch (ability.targetType)
         {
-            if (currentEnemy == null)
-            {
-                Debug.LogWarning("No target enemy selected.");
-                return;
-            }
+            case TargetType.Self:
+                // Применяем способность на себя сразу
+                ExecuteAbilityOnTarget(attacker);
+                break;
 
-            pendingAbility.Execute(pendingAttacker, currentEnemy);
+            case TargetType.Ally:
+                // Нужно выбрать союзника (включая себя)
+                Debug.Log("Выберите союзника для способности: " + ability.AbilityName);
+                StartCharacterSelection();
+                break;
 
-            if (pendingAttacker is FightSystem.Character.Character character)
-            {
-                character.UpdateUI();
-                character.IsTurn = false;
-            }
+            case TargetType.Enemy:
+                // Нужно выбрать врага
+                pendingAction = () =>
+                {
+                    if (currentEnemy == null)
+                    {
+                        Debug.LogWarning("No target enemy selected.");
+                        return;
+                    }
 
-            fightManager.DeleteEnemyOnList(currentEnemy);
-            
-            pendingAbility = null;
-            pendingAttacker = null;
-        };
+                    ExecuteAbilityOnTarget(currentEnemy);
+                };
 
-        if (currentEnemy != null)
-        {
-            ExecutePendingAction();
+                if (currentEnemy != null)
+                {
+                    ExecutePendingAction();
+                }
+                else
+                {
+                    Debug.Log("Выберите врага для способности: " + ability.AbilityName);
+                }
+                break;
+
+            case TargetType.AllEnemies:
+                // Применяем на всех врагов
+                ExecuteAbilityOnAllEnemies();
+                break;
+
+            case TargetType.AllAllies:
+                // Применяем на всех союзников
+                ExecuteAbilityOnAllAllies();
+                break;
         }
-        else
+    }
+
+    private void ExecuteAbilityOnTarget(Base target)
+    {
+        if (pendingAbility == null || pendingAttacker == null)
         {
-            Debug.Log("Выберите цель для способности: " + ability.AbilityName);
+            return;
+        }
+
+        pendingAbility.Execute(pendingAttacker, target);
+
+        if (pendingAttacker is FightSystem.Character.Character character)
+        {
+            character.UpdateUI();
+            character.IsTurn = false;
+        }
+
+        // Удаляем врага из списка, если он умер
+        if (target is Enemy enemy)
+        {
+            fightManager.DeleteEnemyOnList(enemy);
+        }
+
+        pendingAbility = null;
+        pendingAttacker = null;
+    }
+
+    private void ExecuteAbilityOnAllEnemies()
+    {
+        if (pendingAbility == null || pendingAttacker == null)
+        {
+            return;
+        }
+
+        foreach (var enemy in fightManager.enemies.ToList())
+        {
+            pendingAbility.Execute(pendingAttacker, enemy);
+            fightManager.DeleteEnemyOnList(enemy);
+        }
+
+        if (pendingAttacker is FightSystem.Character.Character character)
+        {
+            character.UpdateUI();
+            character.IsTurn = false;
+        }
+
+        pendingAbility = null;
+        pendingAttacker = null;
+    }
+
+    private void ExecuteAbilityOnAllAllies()
+    {
+        if (pendingAbility == null || pendingAttacker == null)
+        {
+            return;
+        }
+
+        foreach (var ally in fightManager.characters)
+        {
+            pendingAbility.Execute(pendingAttacker, ally);
+        }
+
+        if (pendingAttacker is FightSystem.Character.Character character)
+        {
+            character.UpdateUI();
+            character.IsTurn = false;
+        }
+
+        pendingAbility = null;
+        pendingAttacker = null;
+    }
+
+    private void StartCharacterSelection()
+    {
+        // Включаем подсветку персонажей для выбора
+        foreach (var character in fightManager.characters)
+        {
+            character.IsBlinking = true;
+        }
+        fightManager.StopEnemyBlinking();
+    }
+
+    public void OnCharacterSelected(FightSystem.Character.Character character)
+    {
+        if (pendingAbility != null && pendingAttacker != null)
+        {
+            ExecuteAbilityOnTarget(character);
+            
+            // Выключаем подсветку персонажей
+            foreach (var c in fightManager.characters)
+            {
+                c.IsBlinking = false;
+            }
         }
     }
 

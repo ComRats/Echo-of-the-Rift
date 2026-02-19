@@ -13,9 +13,23 @@ namespace FightSystem.Character
 
         public CharacterAbilitySet AbilitySet { get; private set; }
 
+        private ActionButtons actionButtons;
+        private Button button;
+
         private void Awake()
         {   
             Sprite = GetComponent<Image>();
+
+            actionButtons = FindObjectOfType<ActionButtons>();
+            button = GetComponent<Button>();
+            
+            if (button != null)
+            {
+                button.onClick.AddListener(() => 
+                {
+                    actionButtons.OnCharacterSelected(this);
+                });
+            }
         }
 
         private void LocalInizialize()
