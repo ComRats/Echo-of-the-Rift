@@ -36,6 +36,11 @@ public static class FightAnimation
         ShowTextInternal(_textPrefab, _value, _showPosition, _textColor, _animDelay);
     }
 
+    public static void ShowText(GameObject _textPrefab, string _value, Transform _showPosition, Color _textColor, Vector3 _extraOffset, float _animDelay)
+    {
+        ShowTextInternal(_textPrefab, _value, _showPosition, _textColor, _animDelay);
+    }
+
     public static void ShowText(GameObject _textPrefab, int _value, Transform _showPosition, Color _textColor, Vector3 _extraOffset)
     {
         ShowTextInternal(_textPrefab, _value.ToString(), _showPosition, _textColor, 0f, _extraOffset);

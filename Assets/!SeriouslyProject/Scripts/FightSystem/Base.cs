@@ -291,7 +291,7 @@ public class Base : MonoBehaviour, IData
 
     public void GetXP(int _getXP)
     {
-        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience, new Vector3(-30f, 20f, 0f));
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience, new Vector3(-30f, 20f, 0f), 1f);
 
         CurrentXP += _getXP;
 
@@ -339,7 +339,6 @@ public class Base : MonoBehaviour, IData
         }, targetHealth, duration)
         .SetEase(Ease.OutBack);
 
-        // Анимация восстановления маны
         DOTween.To(() => startMana, x => 
         {
             Mana = x;
@@ -350,15 +349,12 @@ public class Base : MonoBehaviour, IData
 
     private void SaveCharacterProgress()
     {
-        // ���� ��� �������� (Character), ��������� ��� ������
         if (this is FightSystem.Character.Character character)
         {
-            // ��������� � playerSaver ���� ��� ������� �����
             if (GlobalLoader.Instance != null && GlobalLoader.Instance.playerInstance != null)
             {
                 var playerSaver = GlobalLoader.Instance.playerInstance.playerSaver;
                 
-                // ��������� ������ ������ ���������
                 playerSaver.Level = Level;
                 playerSaver.CurrentXP = CurrentXP;
                 playerSaver.MaxXP = MaxXP;
@@ -371,7 +367,6 @@ public class Base : MonoBehaviour, IData
                 playerSaver.Mana = Mana;
                 playerSaver.XpReward = XpReward;
                 
-                // ��������� � ����
                 GlobalLoader.Instance.SavePlayer();
             }
         }
