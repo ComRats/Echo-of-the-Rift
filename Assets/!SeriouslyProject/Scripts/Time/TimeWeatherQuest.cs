@@ -28,7 +28,6 @@ public class TimeWeatherQuest : MonoBehaviour
 
     private void Update()
     {
-        GameTimer.Update();
         UpdateTimeAndDay();
     }
 

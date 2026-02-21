@@ -33,6 +33,18 @@ public class InventoryContextMenu : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        // Очищаем все кнопки при уничтожении объекта
+        ClearButtons();
+        
+        // Обнуляем ссылки
+        currentItem = null;
+        currentSlot = null;
+        
+        Debug.Log("[InventoryContextMenu] Очищено при уничтожении");
+    }
+
     private void Update()
     {
         // Закрываем меню при клике ЛКМ вне меню
@@ -84,9 +96,12 @@ public class InventoryContextMenu : MonoBehaviour
         {
             contextMenuPanel.SetActive(false);
         }
+        
+        // Очищаем кнопки перед обнулением ссылок
+        ClearButtons();
+        
         currentItem = null;
         currentSlot = null;
-        ClearButtons();
     }
 
     private void CreateButtonsForItem(DraggableItem item)
@@ -239,7 +254,10 @@ public class InventoryContextMenu : MonoBehaviour
     {
         foreach (GameObject button in activeButtons)
         {
-            Destroy(button);
+            if (button != null)
+            {
+                Destroy(button);
+            }
         }
         activeButtons.Clear();
     }

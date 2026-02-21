@@ -49,6 +49,7 @@ public class DayNightCycle : MonoBehaviour
     {
         if (globalLight == null) return;
         
+        GameTimer.Update();
         UpdateLighting();
         
         if (showDebugInfo)

@@ -14,9 +14,6 @@ public class GlobalTimeSystem : MonoBehaviour
     [Header("Lighting")]
     [SerializeField] private Light2D globalLight;
     
-    private static GlobalTimeSystem instance;
-    public static GlobalTimeSystem Instance => instance;
-    
     public DayNightCycle DayNightCycle => dayNightCycle;
     public TimeManager TimeManager => timeManager;
     
@@ -27,15 +24,6 @@ public class GlobalTimeSystem : MonoBehaviour
         {
             Debug.LogWarning("[GlobalTimeSystem] Должен быть дочерним объектом GlobalLoader!");
         }
-        
-        if (instance != null && instance != this)
-        {
-            Debug.LogWarning("[GlobalTimeSystem] Дубликат обнаружен и будет уничтожен");
-            Destroy(gameObject);
-            return;
-        }
-        
-        instance = this;
         
         // Инициализация компонентов
         InitializeComponents();
@@ -87,11 +75,5 @@ public class GlobalTimeSystem : MonoBehaviour
         }
     }
     
-    private void OnDestroy()
-    {
-        if (instance == this)
-        {
-            instance = null;
-        }
-    }
+
 }

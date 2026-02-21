@@ -33,6 +33,7 @@ public class ShopUI : MonoBehaviour
     private ShopData currentShopData;
     private bool isShopMode = false;
     private ShopManager shopManager;
+    private GameObject shopManagerObject; // Ссылка на созданный объект для правильного удаления
 
     public bool IsShopMode => isShopMode;
     public InventorySlot[] MerchantSlots => merchantSlots;
@@ -46,13 +47,24 @@ public class ShopUI : MonoBehaviour
         // Проверка обязательных полей
         ValidateSetup();
         
-        // Создаём ShopManager если его нет
+        // Создаём ShopManager только если его нет (предотвращаем дубликаты)
         if (shopManager == null)
         {
-            GameObject managerObj = new GameObject("ShopManager");
-            shopManager = managerObj.AddComponent<ShopManager>();
-            managerObj.transform.SetParent(transform);
-            Debug.Log("[ShopUI] ShopManager создан автоматически");
+            // Проверяем, может быть ShopManager уже существует как дочерний объект
+            shopManager = GetComponentInChildren<ShopManager>();
+            
+            if (shopManager == null)
+            {
+                shopManagerObject = new GameObject("ShopManager");
+                shopManager = shopManagerObject.AddComponent<ShopManager>();
+                shopManagerObject.transform.SetParent(transform);
+                Debug.Log("[ShopUI] ShopManager создан автоматически");
+            }
+            else
+            {
+                shopManagerObject = shopManager.gameObject;
+                Debug.Log("[ShopUI] ShopManager найден среди дочерних объектов");
+            }
         }
         
         // Автопоиск компонентов если не назначены
@@ -149,6 +161,30 @@ public class ShopUI : MonoBehaviour
         if (playerWallet != null)
         {
             playerWallet.OnCoinsChanged -= UpdateCoinsDisplay;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Отписываемся от событий при уничтожении
+        if (playerWallet != null)
+        {
+            playerWallet.OnCoinsChanged -= UpdateCoinsDisplay;
+        }
+
+        // Очищаем ShopManager если он был создан автоматически
+        if (shopManagerObject != null && shopManager != null)
+        {
+            // Отписываемся от всех событий ShopManager перед уничтожением
+            shopManager.OnShopOpened = null;
+            shopManager.OnShopClosed = null;
+            shopManager.OnItemBought = null;
+            shopManager.OnItemSold = null;
+            
+            Destroy(shopManagerObject);
+            shopManager = null;
+            shopManagerObject = null;
+            Debug.Log("[ShopUI] ShopManager уничтожен при OnDestroy");
         }
     }
 
