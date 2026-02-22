@@ -228,5 +228,17 @@ namespace EchoRift.Shop
             if (!IsShopOpen || item == null) return 0;
             return currentShop.GetSellPriceForItem(item);
         }
+
+        /// <summary>
+        /// Очистить все подписки на события (для предотвращения утечек памяти)
+        /// </summary>
+        public void ClearEventSubscriptions()
+        {
+            OnShopOpened = null;
+            OnShopClosed = null;
+            OnItemBought = null;
+            OnItemSold = null;
+            Debug.Log("[ShopManager] Все подписки на события очищены");
+        }
     }
 }

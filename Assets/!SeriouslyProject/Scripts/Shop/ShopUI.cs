@@ -175,11 +175,8 @@ public class ShopUI : MonoBehaviour
         // Очищаем ShopManager если он был создан автоматически
         if (shopManagerObject != null && shopManager != null)
         {
-            // Отписываемся от всех событий ShopManager перед уничтожением
-            shopManager.OnShopOpened = null;
-            shopManager.OnShopClosed = null;
-            shopManager.OnItemBought = null;
-            shopManager.OnItemSold = null;
+            // Очищаем все подписки на события ShopManager перед уничтожением
+            shopManager.ClearEventSubscriptions();
             
             Destroy(shopManagerObject);
             shopManager = null;
