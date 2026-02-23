@@ -1,45 +1,49 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class Choosing : MonoBehaviour, IUpdatableUI
 {
-    public TextMeshProUGUI descriptionText;
-    public TextMeshProUGUI DescriptionText => descriptionText;
+    [SerializeField] private StatType statType;
+    [SerializeField] private TextMeshProUGUI valueText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Button leftButton;
     [SerializeField] private Button rightButton;
-    [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private PointsManager pointsManager;
-    [SerializeField] private List<string> descriptions;
-    [SerializeField] private int maxLevel;
-    [HideInInspector] public int currentValue = 0;
+    [SerializeField] private int maxStatValue = 5;
+
+    public TextMeshProUGUI DescriptionText => descriptionText;
+    public int currentValue { get; private set; }
+
     private void Start()
     {
         leftButton.onClick.AddListener(() => ChangeValue(-1));
         rightButton.onClick.AddListener(() => ChangeValue(1));
+        UpdateUI();
     }
+
     private void ChangeValue(int step)
     {
-        int newValue = currentValue + step;
-        if (step > 0)
+        if (step > 0 
+            && currentValue < maxStatValue 
+            && pointsManager.CanAddPoint())
         {
-            if (pointsManager.usedPoints < pointsManager.maxPoints && newValue < descriptions.Count && newValue <= maxLevel)
-            {
-                pointsManager.usedPoints++;
-                currentValue = newValue;
-                UpdateUI();
-            }
+            currentValue++;
+            pointsManager.AddPoint();
         }
         else if (step < 0 && currentValue > 0)
         {
-            pointsManager.usedPoints--;
-            currentValue = newValue;
-            UpdateUI();
+            currentValue--;
+            pointsManager.RemovePoint();
         }
+
+        UpdateUI();
     }
+
     public void UpdateUI()
     {
         valueText.text = currentValue.ToString();
-        descriptionText.text = descriptions[currentValue];
+        DescriptionText.text =
+            pointsManager.GetDescription(statType, currentValue);
     }
 }

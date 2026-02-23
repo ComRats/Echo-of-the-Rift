@@ -6,15 +6,14 @@ public class HoverHandler : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 {
     [SerializeField] private string descriptionText;
     [SerializeField] private string descriptionText1;
+    [SerializeField] private PointsManager points;
 
     private TextMeshProUGUI description;
-    private PointsManager points;
     private IUpdatableUI uiHandler;
 
     private void Start()
     {
         uiHandler = GetComponent<IUpdatableUI>();
-        points = GetComponentInParent<PointsManager>();
 
         if (uiHandler is Choosing)
         {
