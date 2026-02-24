@@ -25,15 +25,7 @@ public class GlobalLoader : MonoBehaviour
 
     public const string GAME_DIRECTORY = "GameProcess";
 
-    private Vector3? overridePosition = null;
     private bool isStart;
-
-    private int selectedTongueIndex = 0;
-    public int SelectedTongueIndex
-    {
-        get => selectedTongueIndex;
-        set => selectedTongueIndex = value;
-    }
 
     private void Awake()
     {
@@ -68,13 +60,21 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
         LoadPlayer();
+        
+        // Очищаем SceneTransitionData после использования
+        SceneTransitionData.NextPosition = null;
+        
         // CameraSettingsInitialize();
     }
 
 
     public void SavePlayer()
     {
-        if (playerInstance == null) return;
+        if (playerInstance == null)
+        {
+            Debug.LogWarning("[GlobalLoader] Не удалось сохранить игрока - playerInstance == null");
+            return;
+        }
 
         var data = new PlayerData
         {
@@ -82,8 +82,11 @@ public class GlobalLoader : MonoBehaviour
             Rotation = playerInstance.transform.rotation
         };
 
-        SaveLoadSystem.Save($"playerSave_{SceneManager.GetActiveScene().name}", data, GAME_DIRECTORY);
+        string sceneName = SceneManager.GetActiveScene().name;
+        SaveLoadSystem.Save($"playerSave_{sceneName}", data, GAME_DIRECTORY);
         SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
+
+        Debug.Log($"[GlobalLoader] Игрок сохранен в сцене '{sceneName}' на позиции {data.Position}");
 
         mainUI.inventoryManager.SaveInventory();
     }
@@ -92,8 +95,8 @@ public class GlobalLoader : MonoBehaviour
     {
         if (SaveLoadSystem.Exists("playerData", GAME_DIRECTORY))
         {
-            //Debug.LogWarning(playerInstance);
             playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData", GAME_DIRECTORY);
+            Debug.Log("[GlobalLoader] Данные игрока загружены");
         }
         else
         {
@@ -101,45 +104,55 @@ public class GlobalLoader : MonoBehaviour
             playerInstance.playerSaver = new Player.PlayerSaver();
             playerInstance.playerSaver.LoadFrom(characterData);
             SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
+            Debug.Log("[GlobalLoader] Созданы новые данные игрока");
         }
     }
 
     private void LoadPlayer()
     {
-        if (playerInstance == null) return;
-
-        overridePosition = SceneTransitionData.NextPosition;
-
-        if (overridePosition.HasValue)
+        if (playerInstance == null)
         {
-            playerInstance.transform.position = overridePosition.Value;
-            overridePosition = null;
+            Debug.LogWarning("[GlobalLoader] Не удалось загрузить позицию игрока - playerInstance == null");
             return;
         }
 
-        string fileName = $"playerSave_{SceneManager.GetActiveScene().name}";
-        string filePath = SaveLoadSystem.GetPath(fileName, GAME_DIRECTORY);
-
-        if (!SaveLoadSystem.Exists(fileName, GAME_DIRECTORY))
+        // Приоритет 1: Позиция из перехода между сценами
+        if (SceneTransitionData.NextPosition.HasValue)
         {
-            ResetPlayerTransform();
+            playerInstance.transform.position = SceneTransitionData.NextPosition.Value;
+            playerInstance.transform.rotation = Quaternion.identity;
+            Debug.Log($"[GlobalLoader] Игрок загружен на позицию перехода: {SceneTransitionData.NextPosition.Value}");
             return;
         }
 
-        var data = SaveLoadSystem.Load<PlayerData>(fileName, GAME_DIRECTORY);
+        string sceneName = SceneManager.GetActiveScene().name;
+        string fileName = $"playerSave_{sceneName}";
 
-        if (data == null || isStart)
+        // Приоритет 2: Сохраненная позиция для текущей сцены
+        if (SaveLoadSystem.Exists(fileName, GAME_DIRECTORY))
         {
-            ResetPlayerTransform();
-            return;
+            var data = SaveLoadSystem.Load<PlayerData>(fileName, GAME_DIRECTORY);
+
+            if (data != null && !isStart)
+            {
+                playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
+                Debug.Log($"[GlobalLoader] Игрок загружен из сохранения сцены '{sceneName}' на позицию {data.Position}");
+                return;
+            }
         }
 
-        playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
-        Debug.LogError(SaveLoadSystem.GetPath(fileName, GAME_DIRECTORY));
+        // Приоритет 3: Стартовая позиция
+        ResetPlayerTransform();
+        Debug.Log($"[GlobalLoader] Игрок загружен на стартовую позицию: {playerInstance.startPosition}");
     }
 
     private void ResetPlayerTransform()
     {
+        if (playerInstance.startPosition == Vector3.zero)
+        {
+            Debug.LogWarning("[GlobalLoader] startPosition не установлен! Используется (0, 0, 0)");
+        }
+        
         playerInstance.transform.position = playerInstance.startPosition;
         playerInstance.transform.rotation = Quaternion.identity;
     }
@@ -148,7 +161,6 @@ public class GlobalLoader : MonoBehaviour
     {
         var data = new GlobalData
         {
-            selectedTongueIndex = selectedTongueIndex,
             sceneIndex = SceneManager.GetActiveScene().buildIndex,
             dialogueData = SaveSystem.Serialize(SaveSystem.RecordSavedGameData()),
             isStart = false,
@@ -164,17 +176,19 @@ public class GlobalLoader : MonoBehaviour
     private void LoadGlobal() 
     {
         var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
-        selectedTongueIndex = data.selectedTongueIndex;
         isStart = data.isStart;
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
         
         GameTimer.SetTime(data.gameTime);
+        
+        // Принудительно возобновляем игру при загрузке, сбрасывая все состояния паузы
+        GameTimer.ForceResumeGame();
     }
 
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
-        overridePosition = positionToLoad;
+        //overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }
 
@@ -224,7 +238,6 @@ public class GlobalLoader : MonoBehaviour
     [Serializable]
     public class GlobalData
     {
-        public int selectedTongueIndex;
         public int sceneIndex;
         public string SceneIndex
         {
@@ -238,6 +251,6 @@ public class GlobalLoader : MonoBehaviour
         public bool HasGameProgress => sceneIndex > 1;
         public string dialogueData;
         public bool isStart;
-        public float gameTime; // Сохранение игрового времени
+        public float gameTime;
     }
 }

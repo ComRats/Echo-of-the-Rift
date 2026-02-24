@@ -16,8 +16,12 @@ public class SceneLoaderTrigger : MonoBehaviour
             _isTriggered = true;
             player.movement.canMove = false;
 
+            // Сохраняем текущую позицию перед переходом
+            GlobalLoader.Instance.SavePlayer();
+
             await GlobalLoader.Instance.mainUI.screenFader.FadeInAsync();
 
+            // Устанавливаем позицию для следующей сцены
             SceneTransitionData.NextPosition = nextScenePosition;
 
             GlobalLoader.Instance.Hide();

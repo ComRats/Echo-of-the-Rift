@@ -96,6 +96,19 @@ public static class GameTimer
     }
 
     /// <summary>
+    /// Принудительно возобновляет игру, сбрасывая все состояния паузы.
+    /// Используется при загрузке игры для гарантированного возобновления.
+    /// </summary>
+    public static void ForceResumeGame()
+    {
+        isPaused = false;
+        previousTimeScale = 1f;
+        TimeScale = 1f;
+        OnGameResumed?.Invoke();
+        Debug.Log("[GameTimer] Игра принудительно возобновлена");
+    }
+
+    /// <summary>
     /// ���������� ������� ����� �� 0.
     /// </summary>
     public static void ResetTime()

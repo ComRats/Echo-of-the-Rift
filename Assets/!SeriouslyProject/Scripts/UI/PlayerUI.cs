@@ -7,13 +7,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject playerPanel;
     [SerializeField] private GameObject overlayPanel;
 
-    private int selectedTongueIndex = 0;
-
-    private void Start()
-    {
-        selectedTongueIndex = GlobalLoader.Instance.SelectedTongueIndex;
-    }
-
     public void OpenPlayerUI()
     {
         for (int i = 0; i < tongues.Count; i++)
@@ -24,15 +17,14 @@ public class PlayerUI : MonoBehaviour
 
         if (tongues.Count > 0)
         {
-            SelectTongue(selectedTongueIndex);
+            // Всегда открываем первый язычок (инвентарь)
+            SelectTongue(0);
         }
     }
 
     private void OnTongueSelected(int selectedIndex)
     {
         SelectTongue(selectedIndex);
-        selectedTongueIndex = selectedIndex;
-        GlobalLoader.Instance.SelectedTongueIndex = selectedIndex;
     }
 
     public void ToggleInventoryOnFight()

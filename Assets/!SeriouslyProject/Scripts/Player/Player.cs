@@ -16,6 +16,16 @@ namespace EchoRift
         public static FightResult Result = FightResult.None;
         public Vector3 startPosition;
 
+        private void Awake()
+        {
+            // Если startPosition не установлен в Inspector, используем текущую позицию
+            if (startPosition == Vector3.zero)
+            {
+                startPosition = transform.position;
+                Debug.Log($"[Player] startPosition автоматически установлен на {startPosition}");
+            }
+        }
+
         public void Hide()
         {
             //Debug.LogWarning("Hide player");
