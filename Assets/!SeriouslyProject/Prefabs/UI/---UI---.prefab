@@ -359,7 +359,6 @@ GameObject:
   - component: {fileID: 2404274695439019580}
   - component: {fileID: 996200023227347950}
   - component: {fileID: 5889043872631159222}
-  - component: {fileID: 5380819550340146343}
   - component: {fileID: 5407389708792671188}
   m_Layer: 5
   m_Name: Tongue (3)
@@ -437,7 +436,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -462,27 +461,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &5380819550340146343
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 443238554598966124}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0d60f608a8af1742a460fc2beedfbad, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &5407389708792671188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,6 +475,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 3
   objectToOpen: {fileID: 5479070883063013135}
+  hoverOffsetY: 10
+  pressOffsetY: 20
+  selectedOffsetY: 15
+  animationDuration: 0.2
+  animationEase: 6
+  useScaleAnimation: 1
+  hoverScale: 1.05
+  pressScale: 0.95
 --- !u!1 &462535785721801266
 GameObject:
   m_ObjectHideFlags: 0
@@ -4767,7 +4753,6 @@ GameObject:
   - component: {fileID: 7272113363674492497}
   - component: {fileID: 2381613975314323194}
   - component: {fileID: 8611274580540055260}
-  - component: {fileID: 918506147282663314}
   - component: {fileID: 329503484046346716}
   m_Layer: 5
   m_Name: Tongue (1)
@@ -4845,7 +4830,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -4870,27 +4855,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &918506147282663314
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4897971630930075918}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0d60f608a8af1742a460fc2beedfbad, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &329503484046346716
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4905,6 +4869,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 1
   objectToOpen: {fileID: 6417866873365750641}
+  hoverOffsetY: 10
+  pressOffsetY: 20
+  selectedOffsetY: 15
+  animationDuration: 0.2
+  animationEase: 6
+  useScaleAnimation: 1
+  hoverScale: 1.05
+  pressScale: 0.95
 --- !u!1 &4944338854297321596
 GameObject:
   m_ObjectHideFlags: 0
@@ -5816,7 +5788,6 @@ GameObject:
   - component: {fileID: 1901918452930797561}
   - component: {fileID: 7196128564521188394}
   - component: {fileID: 4849499189941904086}
-  - component: {fileID: 5088505565912450767}
   - component: {fileID: 83714401764242863}
   m_Layer: 5
   m_Name: Tongue
@@ -5894,7 +5865,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -5919,27 +5890,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &5088505565912450767
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6036751417883464479}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0d60f608a8af1742a460fc2beedfbad, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &83714401764242863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5954,6 +5904,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 0
   objectToOpen: {fileID: 8087955312769666547}
+  hoverOffsetY: 10
+  pressOffsetY: 20
+  selectedOffsetY: 15
+  animationDuration: 0.2
+  animationEase: 6
+  useScaleAnimation: 1
+  hoverScale: 1.05
+  pressScale: 0.95
 --- !u!1 &6101351638853815290
 GameObject:
   m_ObjectHideFlags: 0
@@ -7416,7 +7374,6 @@ GameObject:
   - component: {fileID: 5726660202234168524}
   - component: {fileID: 3275955765764900957}
   - component: {fileID: 20431430437800998}
-  - component: {fileID: 59526049781958471}
   - component: {fileID: 4043278271249852851}
   m_Layer: 5
   m_Name: Tongue (2)
@@ -7494,7 +7451,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -7519,27 +7476,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &59526049781958471
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249723951007953708}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f0d60f608a8af1742a460fc2beedfbad, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &4043278271249852851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7554,6 +7490,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 2
   objectToOpen: {fileID: 3917182413503622692}
+  hoverOffsetY: 10
+  pressOffsetY: 20
+  selectedOffsetY: 15
+  animationDuration: 0.2
+  animationEase: 6
+  useScaleAnimation: 1
+  hoverScale: 1.05
+  pressScale: 0.95
 --- !u!1 &7470231099636643878
 GameObject:
   m_ObjectHideFlags: 0

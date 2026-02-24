@@ -17,11 +17,13 @@ public class FishingTrigger : MonoBehaviour
     
     private Player currentPlayer;
     private bool playerInside = false;
+    private bool lastUIState;
     private GameObject buttonUI;
 
     private void Start()
     {
         sprites = mainUI.spriteCollection;
+        lastUIState = mainUI.isOpenUI;
 
         if (transform.childCount > 0)
             buttonUI = transform.GetChild(0).gameObject;
@@ -32,7 +34,8 @@ public class FishingTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out currentPlayer))
         {
             playerInside = true;
-            ShowButtonPrompt(true);
+            if (!mainUI.isOpenUI)
+                ShowButtonPrompt(true);
         }
     }
 
@@ -43,12 +46,38 @@ public class FishingTrigger : MonoBehaviour
             playerInside = false;
             currentPlayer = null;
             ShowButtonPrompt(false);
+            
+            // Если рыбалка не активна, разблокируем UI
+            if (fishing == null || !fishing.IsFishing)
+            {
+                mainUI.canOpenUI = true;
+            }
         }
     }
 
     private void Update()
     {
-        if (playerInside && Input.GetKeyDown(gameSettings.useButton) && fishing != null && !fishing.IsFishing)
+        if (!playerInside) return;
+
+        // Обновляем видимость промпта только при изменении состояния UI
+        if (lastUIState != mainUI.isOpenUI)
+        {
+            lastUIState = mainUI.isOpenUI;
+            
+            if (mainUI.isOpenUI)
+            {
+                ShowButtonPrompt(false);
+            }
+            else if (fishing != null && !fishing.IsFishing)
+            {
+                ShowButtonPrompt(true);
+            }
+        }
+
+        // Блокируем взаимодействие при открытом UI
+        if (mainUI.isOpenUI) return;
+
+        if (Input.GetKeyDown(gameSettings.useButton) && fishing != null && !fishing.IsFishing)
         {
             Debug.Log("Рыбалка началась");
 

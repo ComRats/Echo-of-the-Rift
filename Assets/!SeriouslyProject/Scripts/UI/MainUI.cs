@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 public class MainUI : MonoBehaviour
 {
@@ -14,6 +15,69 @@ public class MainUI : MonoBehaviour
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;
+
+    [Inject] private GameSettings gameSettings;
+
+    private GameObject playerUIbackGround;
+    private InventoryContextMenu contextMenu;
+
+    private void Awake()
+    {
+        if (playerUI != null && playerUI.transform.childCount > 0)
+        {
+            playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
+        }
+
+        contextMenu = FindObjectOfType<InventoryContextMenu>();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(gameSettings.openInvenoryKey) && canOpenUI)
+        {
+            ToggleInventory();
+        }
+    }
+
+    public void ToggleInventory()
+    {
+        if (playerUIbackGround == null) return;
+
+        bool isOpen = playerUIbackGround.activeSelf;
+
+        if (isOpen)
+        {
+            CloseInventory();
+        }
+        else
+        {
+            OpenInventory();
+        }
+    }
+
+    public void OpenInventory()
+    {
+        if (playerUIbackGround == null || !canOpenUI) return;
+
+        playerUIbackGround.SetActive(true);
+        isOpenUI = true;
+        playerUI.OpenPlayerUI();
+        GameTimer.PauseGame();
+    }
+
+    public void CloseInventory()
+    {
+        if (playerUIbackGround == null) return;
+
+        playerUIbackGround.SetActive(false);
+        isOpenUI = false;
+        GameTimer.ResumeGame();
+
+        if (contextMenu != null)
+        {
+            contextMenu.Hide();
+        }
+    }
 
     public void Hide()
     {

@@ -25,7 +25,6 @@ public class PlayerUI : MonoBehaviour
         if (tongues.Count > 0)
         {
             SelectTongue(selectedTongueIndex);
-            tongues[selectedTongueIndex].PlayAnimationTrigger("Pressed");
         }
     }
 

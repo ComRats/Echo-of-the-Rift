@@ -1,3 +1,4 @@
+using DG.Tweening;
 using UnityEngine;
 
 public abstract class SelectableTab : MonoBehaviour
@@ -6,5 +7,6 @@ public abstract class SelectableTab : MonoBehaviour
     public GameObject objectToOpen;
 
     protected bool isSelected = false;
-    protected Animator animator;
+    protected RectTransform rectTransform;
+    protected Vector2 originalPosition;
 }

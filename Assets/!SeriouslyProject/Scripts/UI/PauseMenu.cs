@@ -19,7 +19,6 @@ public class PauseMenu : MonoBehaviour
 
     private Animator settingsAnimator;
     private AnimatorStateInfo stateInfo;
-    private InventoryContextMenu contextMenu;
 
     private void Awake()
     {
@@ -27,9 +26,6 @@ public class PauseMenu : MonoBehaviour
         GameTimer.OnGameResumed += OnGameResumed;
 
         settingsAnimator = settingsPanel.GetComponent<Animator>();
-
-        // Находим контекстное меню
-        contextMenu = FindObjectOfType<InventoryContextMenu>();
 
         ButtonInitialize();
     }
@@ -52,26 +48,10 @@ public class PauseMenu : MonoBehaviour
             }
 
             // Если инвентарь игрока открыт - закрываем его вместо открытия меню паузы
-            if (_mainUIInstance.isOpenUI && _mainUIInstance.playerUI != null)
+            if (_mainUIInstance.isOpenUI)
             {
-                GameObject playerUIbackGround = _mainUIInstance.playerUI.transform.GetChild(0).gameObject;
-                if (playerUIbackGround.activeInHierarchy)
-                {
-                    playerUIbackGround.SetActive(false);
-                    _mainUIInstance.isOpenUI = false;
-                    
-                    // Возобновляем время при закрытии инвентаря
-                    GameTimer.ResumeGame();
-                    
-                    // Закрываем контекстное меню при закрытии инвентаря
-                    if (contextMenu != null)
-                    {
-                        contextMenu.Hide();
-                        Debug.Log("[PauseMenu] Контекстное меню закрыто при закрытии инвентаря");
-                    }
-                    
-                    return;
-                }
+                _mainUIInstance.CloseInventory();
+                return;
             }
 
             stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);

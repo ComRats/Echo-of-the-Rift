@@ -40,6 +40,7 @@ public class Fishing : MonoBehaviour
         if (!IsFishing && playerMovement != null)
         {
             currentFishingTrigger = trigger;
+            _mainUI.canOpenUI = false; // Блокируем UI во время рыбалки
             fishingCoroutine = StartCoroutine(FishingCoroutine());
         }
     }
@@ -123,6 +124,7 @@ public class Fishing : MonoBehaviour
     public void EndFishing()
     {
         IsFishing = false;
+        _mainUI.canOpenUI = true; // Разблокируем UI после рыбалки
         fishingUI?.HideText();
 
         if (fishingCoroutine != null)

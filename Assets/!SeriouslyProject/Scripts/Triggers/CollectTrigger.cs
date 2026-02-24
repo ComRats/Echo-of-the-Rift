@@ -16,7 +16,7 @@ public class CollectTrigger : BaseTrigger
         [BoxGroup("General")] public QuestState setStateAfterStep = (QuestState)0;
         [BoxGroup("General")] public string itemNameToCollect;
         [BoxGroup("General")] public string collectTextHelper;
-        [BoxGroup("General")] public string getItemText = "�� ��������: ";
+        [BoxGroup("General")] public string getItemText = "�� ��������: ";
         [BoxGroup("General")] public float textVisibleDelay = 2.5f;
         [BoxGroup("Logic")] public bool removeEventAfterStep = true;
         [BoxGroup("Logic")] public bool isRepeatable = false;
@@ -35,7 +35,7 @@ public class CollectTrigger : BaseTrigger
         [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
         public float drainSpeed = 0.05f;
         [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
-        public string minigameStartText = "������ ������� ���!";
+        public string minigameStartText = "������ ������� ���!";
     }
 
     [SerializeField, BoxGroup("View")] private Vector3 keyMassageOffset;
@@ -47,6 +47,7 @@ public class CollectTrigger : BaseTrigger
     private int currentStepIndex;
     private bool playerInside;
     private bool minigameActive;
+    private bool lastUIState;
 
     private SpriteCollection sprites;
     private ClickBarUI clickBar;
@@ -60,11 +61,30 @@ public class CollectTrigger : BaseTrigger
         sprites = mainUI.spriteCollection;
         clickBar = mainUI.fishingUI.clickBar;
         fishingUI = mainUI.fishingUI;
+        lastUIState = mainUI.isOpenUI;
     }
 
     private void Update()
     {
         if (!playerInside) return;
+
+        // Обновляем видимость промпта только при изменении состояния UI
+        if (lastUIState != mainUI.isOpenUI)
+        {
+            lastUIState = mainUI.isOpenUI;
+            
+            if (mainUI.isOpenUI)
+            {
+                ShowButtonPrompt(false, "");
+            }
+            else if (!minigameActive)
+            {
+                UpdatePrompt();
+            }
+        }
+
+        // Блокируем взаимодействие при открытом UI
+        if (mainUI.isOpenUI) return;
 
         if (minigameActive)
         {
@@ -73,7 +93,7 @@ public class CollectTrigger : BaseTrigger
                 clickBar.AddProgress(eventQueue[currentStepIndex].clickPower);
             }
         }
-        else if (Input.GetKeyDown(gameSettings.useButton) && !mainUI.isOpenUI)
+        else if (Input.GetKeyDown(gameSettings.useButton))
         {
             TryExecuteCurrentEvent();
         }
@@ -93,6 +113,7 @@ public class CollectTrigger : BaseTrigger
     private void StartMinigame(CollectEvent ev)
     {
         minigameActive = true;
+        mainUI.canOpenUI = false; // Блокируем UI во время миниигры
         ShowButtonPrompt(false, "");
         fishingUI.ShowMinigameHint(ev.minigameStartText);
         clickBar.Setup(ev.startFill, ev.drainSpeed, FinishCurrentStep);
@@ -101,6 +122,7 @@ public class CollectTrigger : BaseTrigger
     private void FinishCurrentStep()
     {
         minigameActive = false;
+        mainUI.canOpenUI = true; // Разблокируем UI после миниигры
         var ev = eventQueue[currentStepIndex];
 
         if (!string.IsNullOrEmpty(ev.itemNameToCollect))
@@ -168,9 +190,9 @@ public class CollectTrigger : BaseTrigger
     {
         if (collision.TryGetComponent<Player>(out _)) 
         { 
-            playerInside = true; 
-            UpdatePrompt();
-            mainUI.canOpenUI = false;
+            playerInside = true;
+            if (!mainUI.isOpenUI)
+                UpdatePrompt();
         }
     }
 
@@ -180,9 +202,9 @@ public class CollectTrigger : BaseTrigger
         {
             playerInside = false;
             minigameActive = false;
+            mainUI.canOpenUI = true; // Разблокируем UI при выходе из триггера
             clickBar.Hide();
             ShowButtonPrompt(false, "");
-            mainUI.canOpenUI = true;
         }
     }
 
