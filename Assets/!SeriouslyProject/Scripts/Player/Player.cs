@@ -22,7 +22,6 @@ namespace EchoRift
             if (startPosition == Vector3.zero)
             {
                 startPosition = transform.position;
-                Debug.Log($"[Player] startPosition автоматически установлен на {startPosition}");
             }
         }
 

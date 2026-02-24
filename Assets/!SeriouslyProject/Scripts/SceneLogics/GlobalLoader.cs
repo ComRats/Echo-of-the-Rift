@@ -86,8 +86,6 @@ public class GlobalLoader : MonoBehaviour
         SaveLoadSystem.Save($"playerSave_{sceneName}", data, GAME_DIRECTORY);
         SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
 
-        Debug.Log($"[GlobalLoader] Игрок сохранен в сцене '{sceneName}' на позиции {data.Position}");
-
         mainUI.inventoryManager.SaveInventory();
     }
 
@@ -96,7 +94,6 @@ public class GlobalLoader : MonoBehaviour
         if (SaveLoadSystem.Exists("playerData", GAME_DIRECTORY))
         {
             playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData", GAME_DIRECTORY);
-            Debug.Log("[GlobalLoader] Данные игрока загружены");
         }
         else
         {
@@ -104,7 +101,6 @@ public class GlobalLoader : MonoBehaviour
             playerInstance.playerSaver = new Player.PlayerSaver();
             playerInstance.playerSaver.LoadFrom(characterData);
             SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
-            Debug.Log("[GlobalLoader] Созданы новые данные игрока");
         }
     }
 
@@ -121,7 +117,6 @@ public class GlobalLoader : MonoBehaviour
         {
             playerInstance.transform.position = SceneTransitionData.NextPosition.Value;
             playerInstance.transform.rotation = Quaternion.identity;
-            Debug.Log($"[GlobalLoader] Игрок загружен на позицию перехода: {SceneTransitionData.NextPosition.Value}");
             return;
         }
 
@@ -136,14 +131,12 @@ public class GlobalLoader : MonoBehaviour
             if (data != null && !isStart)
             {
                 playerInstance.transform.SetPositionAndRotation(data.Position, data.Rotation);
-                Debug.Log($"[GlobalLoader] Игрок загружен из сохранения сцены '{sceneName}' на позицию {data.Position}");
                 return;
             }
         }
 
         // Приоритет 3: Стартовая позиция
         ResetPlayerTransform();
-        Debug.Log($"[GlobalLoader] Игрок загружен на стартовую позицию: {playerInstance.startPosition}");
     }
 
     private void ResetPlayerTransform()

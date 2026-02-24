@@ -29,10 +29,5 @@ public class SaveTrigger : MonoBehaviour
         GlobalLoader.Instance.SavePlayer();
         GlobalLoader.Instance.SaveGlobal();
         GlobalLoader.Instance.SaveInventory();
-
-        if (showDebugMessage)
-        {
-            Debug.Log($"[SaveTrigger] Игра сохранена в точке '{gameObject.name}'");
-        }
     }
 }

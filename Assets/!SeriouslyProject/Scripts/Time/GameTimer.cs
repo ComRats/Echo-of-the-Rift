@@ -105,7 +105,6 @@ public static class GameTimer
         previousTimeScale = 1f;
         TimeScale = 1f;
         OnGameResumed?.Invoke();
-        Debug.Log("[GameTimer] Игра принудительно возобновлена");
     }
 
     /// <summary>
