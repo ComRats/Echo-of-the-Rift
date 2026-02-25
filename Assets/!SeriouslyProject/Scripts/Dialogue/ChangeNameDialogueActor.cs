@@ -1,4 +1,5 @@
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -35,7 +36,7 @@ public class ChangeNameDialogueActor : MonoBehaviour
             playerDialogueName = _cachedName
         };
 
-        SaveLoadSystem.Save("PlayerName", playerNameData, GlobalLoader.GAME_DIRECTORY);
+        SaveLoadSystem.Save(PLAYER_NAME, playerNameData, GAME_DIRECTORY);
     }
 
     [SerializeField]

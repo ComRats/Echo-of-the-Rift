@@ -2304,6 +2304,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2153949271162320337, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 165.1897
+      objectReference: {fileID: 0}
+    - target: {fileID: 2153949271162320337, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 42.7836
+      objectReference: {fileID: 0}
     - target: {fileID: 2345813145415352354, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2327,6 +2335,10 @@ PrefabInstance:
     - target: {fileID: 2345813145415352354, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3154080262262433212, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_Colors.m_ColorMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3741919910192230821, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_SizeDelta.y
@@ -2439,6 +2451,14 @@ PrefabInstance:
     - target: {fileID: 7968214683462963041, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432601529438462031, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_fontSize
+      value: 13.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8432601529438462031, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_characterSpacing
+      value: 18.62
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

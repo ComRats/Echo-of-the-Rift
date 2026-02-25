@@ -1,6 +1,5 @@
 ﻿using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using AudioManager.Locator;
 using AudioManager.Provider;
 using FightSystem.Data;
 using EchoRift;
@@ -8,6 +7,7 @@ using System;
 using UnityEngine;
 using Zenject;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 using PixelCrushers;
 
 [DisallowMultipleComponent]
@@ -22,8 +22,6 @@ public class GlobalLoader : MonoBehaviour
 
     [Inject, HideInInspector] public Player playerInstance;
     [Inject, HideInInspector] public MainUI mainUI;
-
-    public const string GAME_DIRECTORY = "GameProcess";
 
     private bool isStart;
 
@@ -61,10 +59,7 @@ public class GlobalLoader : MonoBehaviour
     {
         LoadPlayer();
         
-        // Очищаем SceneTransitionData после использования
         SceneTransitionData.NextPosition = null;
-        
-        // CameraSettingsInitialize();
     }
 
 
@@ -83,24 +78,24 @@ public class GlobalLoader : MonoBehaviour
         };
 
         string sceneName = SceneManager.GetActiveScene().name;
-        SaveLoadSystem.Save($"playerSave_{sceneName}", data, GAME_DIRECTORY);
-        SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
+        SaveLoadSystem.Save(GetPlayerSceneSave(sceneName), data, GAME_DIRECTORY);
+        SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
 
         mainUI.inventoryManager.SaveInventory();
     }
 
     private void LoadPlayerData()
     {
-        if (SaveLoadSystem.Exists("playerData", GAME_DIRECTORY))
+        if (SaveLoadSystem.Exists(PLAYER_DATA, GAME_DIRECTORY))
         {
-            playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>("playerData", GAME_DIRECTORY);
+            playerInstance.playerSaver = SaveLoadSystem.Load<Player.PlayerSaver>(PLAYER_DATA, GAME_DIRECTORY);
         }
         else
         {
             var characterData = Resources.Load<CharacterData>("CharacterData/Human");
             playerInstance.playerSaver = new Player.PlayerSaver();
             playerInstance.playerSaver.LoadFrom(characterData);
-            SaveLoadSystem.Save("playerData", playerInstance.playerSaver, GAME_DIRECTORY);
+            SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
         }
     }
 
@@ -121,7 +116,7 @@ public class GlobalLoader : MonoBehaviour
         }
 
         string sceneName = SceneManager.GetActiveScene().name;
-        string fileName = $"playerSave_{sceneName}";
+        string fileName = GetPlayerSceneSave(sceneName);
 
         // Приоритет 2: Сохраненная позиция для текущей сцены
         if (SaveLoadSystem.Exists(fileName, GAME_DIRECTORY))
@@ -161,14 +156,14 @@ public class GlobalLoader : MonoBehaviour
         };
 
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
-            SaveLoadSystem.Save("globalSave", data, GAME_DIRECTORY);
+            SaveLoadSystem.Save(GLOBAL_SAVE, data, GAME_DIRECTORY);
 
         mainUI.inventoryManager.SaveInventory();
     }
 
     private void LoadGlobal() 
     {
-        var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+        var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         isStart = data.isStart;
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
@@ -187,7 +182,7 @@ public class GlobalLoader : MonoBehaviour
 
     public void LoadToScene()
     {
-        var globalData = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+        var globalData = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         fightSceneLoader.LoadAsync(globalData.SceneIndex);
     }
 
@@ -196,25 +191,6 @@ public class GlobalLoader : MonoBehaviour
         //overridePosition = positionToLoad;
         fightSceneLoader.LoadAsync(sceneToLoad);
     }
-
-#if !UNITY_EDITOR
-    private void OnApplicationQuit()
-    {
-        SavePlayer();
-        SaveGlobal();
-        
-        if (mainUI.inventoryManager != null)
-        {
-            mainUI.inventoryManager.SaveInventory();
-        }
-    }
-#endif
-
-    // public void CameraSettingsInitialize()
-    // {
-    //     if (playerInstance.cameraSettings != null)
-    //         playerInstance.cameraSettings.Initialize();
-    // }
 
     public void SaveInventory()
     {

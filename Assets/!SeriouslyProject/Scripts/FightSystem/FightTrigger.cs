@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using EchoRift;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour
@@ -17,13 +18,9 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemiesSettings> enemies = new List<EnemiesSettings>();
 
-    private const string EnemySavePath = "enemies_data";
-
     [Header("CharcterFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
-
-    private const string CharacterSavePath = "characters_data";
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -45,19 +42,19 @@ public class FightTrigger : MonoBehaviour
         SaveCharactersToFile();
     }
 
-    [Button("Сохранить врагов в файл")]
+    [Button("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ")]
     private void SaveEnemiesToFile()
     {
         FightData data = new FightData { enemies = this.enemies };
-        SaveLoadSystem.Save(EnemySavePath, data, GlobalLoader.GAME_DIRECTORY);
-        Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
+        SaveLoadSystem.Save(ENEMY_SAVE, data, GAME_DIRECTORY);
+        Debug.Log($"[FightTrigger] пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
-        SaveLoadSystem.Save(CharacterSavePath, data, GlobalLoader.GAME_DIRECTORY);
-        Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CharacterSavePath)}");
+        SaveLoadSystem.Save(CHARACTER_SAVE, data, GAME_DIRECTORY);
+        Debug.LogError($"[FightTrigger] пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     [Serializable]
@@ -72,124 +69,124 @@ public class EnemiesSettings : IData
 {
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("Использовать шаблон врага")]
+    [LabelText("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")]
     public bool useEnemyData = true;
 
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("Имя шаблона врага (ресурсы)")]
+    [LabelText("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ)")]
     public string enemyDataName;
 
     [ShowIf("useEnemyData")]
-    [LabelText("Шаблон врага")]
+    [LabelText("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")]
     [InlineEditor(InlineEditorModes.GUIOnly)]
     public EnemyData enemyData;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private string name;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [TextArea(3, 10)]
     [SerializeField] private string description;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _damage;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _magicDamage;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _priority;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _maxMana;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _mana;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _maxHealth;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _health;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _heal;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _armor;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _lucky;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _creteChance;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _level;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _currentXP;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _maxXP;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int _xpReward;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int damagePerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int maxHealthPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int healPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int armorPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int maxManaPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private int xpRewardPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private string attackAnimationName = "Attack";
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
-    [LabelText("Спрайт врага")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
+    [LabelText("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private Sprite sprite;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("Параметры вручную")]
-    [LabelText("Путь до спрайта (Resources)")]
+    [FoldoutGroup("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
+    [LabelText("пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ (Resources)")]
     public string spritePath;
 
     public string Name { get => name; set => name = value; }

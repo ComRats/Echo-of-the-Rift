@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 [Serializable]
 public class InventorySaver
@@ -473,18 +474,18 @@ public class InventoryManager : MonoBehaviour
             saver.coins = 0;
         }
         
-        SaveLoadSystem.Save("inventoryData", saver, GlobalLoader.GAME_DIRECTORY);
+        SaveLoadSystem.Save(INVENTORY_DATA, saver, GAME_DIRECTORY);
     }
 
     public void LoadInventory()
     {
         // Добавь GlobalLoader.GAME_DIRECTORY
-        if (!SaveLoadSystem.Exists("inventoryData", GlobalLoader.GAME_DIRECTORY))
+        if (!SaveLoadSystem.Exists(INVENTORY_DATA, GAME_DIRECTORY))
         {
             Debug.Log("Сохранение инвентаря не найдено");
             return;
         }
-        InventorySaver saver = SaveLoadSystem.Load<InventorySaver>("inventoryData", GlobalLoader.GAME_DIRECTORY);
+        InventorySaver saver = SaveLoadSystem.Load<InventorySaver>(INVENTORY_DATA, GAME_DIRECTORY);
         if (saver == null)
         {
             Debug.LogWarning("Не удалось загрузить данные инвентаря");

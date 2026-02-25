@@ -2,21 +2,19 @@ using AudioManager.Core;
 using AudioManager.Locator;
 using UnityEngine;
 
-public class Movement : MonoBehaviour, ISceneLoader
+public class Movement : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
+    [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private Animator animator;
 
     public bool canMove = true;
 
-    private Animator animator;
     private Vector2 direction;
-    private new Rigidbody2D rigidbody;
     private IAudioManager service;
 
     private void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
         service = ServiceLocator.GetService();
     }
 
@@ -37,6 +35,11 @@ public class Movement : MonoBehaviour, ISceneLoader
     {
         direction.x = Input.GetAxisRaw("Horizontal");
         direction.y = Input.GetAxisRaw("Vertical");
+
+        if (direction.sqrMagnitude > 0.01f)
+        {
+            direction.Normalize();
+        }
 
         animator.SetFloat("Horizontal", direction.x);
         animator.SetFloat("Vertical", direction.y);
@@ -65,16 +68,6 @@ public class Movement : MonoBehaviour, ISceneLoader
     private void FixedUpdate()
     {
         rigidbody.MovePosition(rigidbody.position + direction * playerSpeed * Time.fixedDeltaTime);
-    }
-
-    public void FrezeMoving()
-    {
-        canMove = false;
-    }
-
-    public void UnFrezeMoving()
-    {
-        canMove = true;
     }
 
     public void SetPlayerPosition(Vector3 nextPos)

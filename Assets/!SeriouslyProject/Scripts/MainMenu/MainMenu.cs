@@ -1,4 +1,5 @@
 ﻿using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
@@ -18,7 +19,7 @@ public class MainMenu : MonoBehaviour
     {
         Animator animator = GetComponent<Animator>();
 
-        if (!SaveLoadSystem.Exists("globalSave", GlobalLoader.GAME_DIRECTORY) || SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY).sceneIndex <= 1)
+        if (!SaveLoadSystem.Exists(GLOBAL_SAVE, GAME_DIRECTORY) || SaveLoadSystem.Load<GlobalLoader.GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY).sceneIndex <= 1)
         {
             LoadButton.SetActive(false);
             animator.SetTrigger("ButtonsShowLoad");
@@ -32,9 +33,9 @@ public class MainMenu : MonoBehaviour
 
     public void TryPlay()
     {
-        if (SaveLoadSystem.Exists("globalSave", GlobalLoader.GAME_DIRECTORY))
+        if (SaveLoadSystem.Exists(GLOBAL_SAVE, GAME_DIRECTORY))
         {
-            var data = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
+            var data = SaveLoadSystem.Load<GlobalLoader.GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
 
             if (data != null && data.HasGameProgress)
             {
@@ -47,7 +48,7 @@ public class MainMenu : MonoBehaviour
 
     private void Play()
     {
-        SaveLoadSystem.ClearAllSaves(GlobalLoader.GAME_DIRECTORY);
+        SaveLoadSystem.ClearAllSaves(GAME_DIRECTORY);
         
         inventoryData.Clear();
         
@@ -55,7 +56,7 @@ public class MainMenu : MonoBehaviour
         {
             isStart = true
         };
-        SaveLoadSystem.Save("globalSave", data, GlobalLoader.GAME_DIRECTORY);
+        SaveLoadSystem.Save(GLOBAL_SAVE, data, GAME_DIRECTORY);
 
         DialogueManager.ResetDatabase(DatabaseResetOptions.RevertToDefault);
         SaveSystem.ResetGameState();
@@ -68,12 +69,11 @@ public class MainMenu : MonoBehaviour
 
     public void Load()
     {
-        globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>("globalSave", GlobalLoader.GAME_DIRECTORY);
+        globalData = SaveLoadSystem.Load<GlobalLoader.GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         SceneTransitionData.NextSceneName = globalData.SceneIndex;
 
-        string fileName = $"PlayerName";
-        string filePath = SaveLoadSystem.GetPath(fileName, GlobalLoader.GAME_DIRECTORY);
-        var playerName = SaveLoadSystem.Load<ChangeNameDialogueActor.PLayerNameData>(fileName, GlobalLoader.GAME_DIRECTORY);
+        string filePath = SaveLoadSystem.GetPath(PLAYER_NAME, GAME_DIRECTORY);
+        var playerName = SaveLoadSystem.Load<ChangeNameDialogueActor.PLayerNameData>(PLAYER_NAME, GAME_DIRECTORY);
         var playerActor = GlobalLoader.Instance.playerInstance.dialogActor;
 
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(globalData.dialogueData);

@@ -3,13 +3,13 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using AudioManager.Locator;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 public class AudioSettingsUI : MonoBehaviour
 {
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
 
-    public const string AudioSaveKey = "audio_settings";
     private const int SFX_INDEX = 0;
     private const int MUSIC_INDEX = 1;
 
@@ -33,7 +33,7 @@ public class AudioSettingsUI : MonoBehaviour
         var am = ServiceLocator.GetService();
         if (am == null) return;
 
-        var savedData = SaveLoadSystem.Load<AudioSaveData>(AudioSaveKey) ?? new AudioSaveData();
+        var savedData = SaveLoadSystem.Load<AudioSaveData>(AUDIO_SETTINGS) ?? new AudioSaveData();
 
         Configure(sfxSlider, savedData.sfxVolume, SFX_INDEX);
         Configure(musicSlider, savedData.musicVolume, MUSIC_INDEX);
@@ -61,7 +61,7 @@ public class AudioSettingsUI : MonoBehaviour
             musicVolume = musicSlider.value,
             sfxVolume = sfxSlider.value
         };
-        SaveLoadSystem.Save(AudioSaveKey, data);
+        SaveLoadSystem.Save(AUDIO_SETTINGS, data);
     }
 
     [System.Serializable]

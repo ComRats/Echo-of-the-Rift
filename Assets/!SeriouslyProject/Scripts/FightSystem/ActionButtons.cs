@@ -1,5 +1,6 @@
 ﻿using EchoRift;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;
@@ -220,7 +221,7 @@ public class ActionButtons : MonoBehaviour
     public void EscapeFight()
     {
         Player.Result = FightResult.Escape;
-        var data = SaveLoadSystem.Load<GlobalData>("globalSave", GAME_DIRECTORY);
+        var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         sceneLoader.LoadAsync(data.SceneIndex);
     }
 

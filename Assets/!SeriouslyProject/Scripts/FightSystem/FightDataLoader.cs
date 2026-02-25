@@ -4,19 +4,17 @@ using Sirenix.OdinInspector;
 using FightSystem.Enemy;
 using FightSystem.Character;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 public class FightDataLoader : MonoBehaviour
 {
-    [Title("Враги")]
+    [Title("пїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private RectTransform spawnParent;
 
-    [Title("Персонажи")]
+    [Title("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private RectTransform characterSpawnParent;
-
-    private const string EnemySaveFile = "enemies_data";
-    private const string CharacterSaveFile = "characters_data";
 
     private void Awake()
     {
@@ -24,14 +22,14 @@ public class FightDataLoader : MonoBehaviour
         LoadCharactersData();
     }
 
-    [Button("Загрузить врагов")]
+    [Button("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ")]
     private void LoadFightData()
     {
-        FightData fightData = SaveLoadSystem.Load<FightData>(EnemySaveFile, GlobalLoader.GAME_DIRECTORY);
+        FightData fightData = SaveLoadSystem.Load<FightData>(ENEMY_SAVE, GAME_DIRECTORY);
 
         if (fightData?.enemies == null || fightData.enemies.Count == 0)
         {
-            Debug.LogWarning("[ВРАГИ] Список врагов пуст или файла нет.");
+            Debug.LogWarning("[пїЅпїЅпїЅпїЅпїЅ] пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.");
             return;
         }
 
@@ -40,18 +38,18 @@ public class FightDataLoader : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, spawnParent);
             Enemy enemyComponent = newEnemy.GetComponent<Enemy>();
             enemyComponent.InitializeFromSettings(enemySettings);
-            Debug.Log($"[ВРАГ] Создан: {enemySettings.Name}");
+            Debug.Log($"[пїЅпїЅпїЅпїЅ] пїЅпїЅпїЅпїЅпїЅпїЅ: {enemySettings.Name}");
         }
     }
 
-    [Button("Загрузить персонажей")]
+    [Button("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ")]
     private void LoadCharactersData()
     {
-        CharacterDataWrapper characterData = SaveLoadSystem.Load<CharacterDataWrapper>(CharacterSaveFile, GlobalLoader.GAME_DIRECTORY);
+        CharacterDataWrapper characterData = SaveLoadSystem.Load<CharacterDataWrapper>(CHARACTER_SAVE, GAME_DIRECTORY);
 
         if (characterData?.characters == null || characterData.characters.Count == 0)
         {
-            Debug.LogWarning("[ПЕРСОНАЖИ] Список персонажей пуст или файла нет.");
+            Debug.LogWarning("[пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ] пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ.");
             return;
         }
 
@@ -60,7 +58,7 @@ public class FightDataLoader : MonoBehaviour
             GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
             Character characterComponent = newCharacter.GetComponent<Character>();
             characterComponent.InitializeFromSettings(characterSettings);
-            Debug.Log($"[ПЕРСОНАЖ] Создан: {characterSettings.Name}");
+            Debug.Log($"[пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ] пїЅпїЅпїЅпїЅпїЅпїЅ: {characterSettings.Name}");
         }
     }
 }

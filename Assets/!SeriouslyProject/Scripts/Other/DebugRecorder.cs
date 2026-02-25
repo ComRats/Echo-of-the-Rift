@@ -2,12 +2,11 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using EchoRift.SaveLoadSystem;
+using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 public class DebugRecorder : MonoBehaviour
 {
     [Header("Settings")]
-    [SerializeField] private string folderName = "DebugLogs";
-    [SerializeField] private string fileName = "SessionLog";
     [SerializeField] private bool saveOnQuit = true;
 
     private DebugLogData currentLogData = new DebugLogData();
@@ -21,11 +20,11 @@ public class DebugRecorder : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Пытаемся загрузить старые логи, если хотим продолжать запись в тот же файл
-            // Если нужно каждый раз новый файл - можно генерировать имя с датой в Start
-            if (SaveLoadSystem.Exists(fileName, folderName))
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅ
+            // пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ - пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ Start
+            if (SaveLoadSystem.Exists(DEBUG_LOGS, GAME_DIRECTORY))
             {
-                currentLogData = SaveLoadSystem.Load<DebugLogData>(fileName, folderName);
+                currentLogData = SaveLoadSystem.Load<DebugLogData>(DEBUG_LOGS, GAME_DIRECTORY);
             }
         }
         else
@@ -35,10 +34,10 @@ public class DebugRecorder : MonoBehaviour
     }
 
     /// <summary>
-    /// Записать сообщение в лог.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ.
     /// </summary>
-    /// <param name="tag">Категория (например, "ScreenFader", "Player")</param>
-    /// <param name="message">Сообщение или значение</param>
+    /// <param name="tag">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, "ScreenFader", "Player")</param>
+    /// <param name="message">пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ</param>
     public void Log(string tag, object message)
     {
         var entry = new DebugEntry
@@ -50,25 +49,25 @@ public class DebugRecorder : MonoBehaviour
 
         currentLogData.entries.Add(entry);
 
-        // Опционально: выводим в консоль Unity, чтобы видеть в реальном времени
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ Unity, пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         // Debug.Log($"[{entry.timestamp}] [{tag}] {entry.message}");
     }
 
     /// <summary>
-    /// Принудительно сохранить текущие логи в файл через твою систему.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
     /// </summary>
     [ContextMenu("Save Logs Now")]
     public void SaveLogs()
     {
-        SaveLoadSystem.Save(fileName, currentLogData, folderName);
-        Debug.Log($"<color=green>Debug logs saved to: {folderName}/{fileName}.json</color>");
+        SaveLoadSystem.Save(DEBUG_LOGS, currentLogData, GAME_DIRECTORY);
+        Debug.Log($"<color=green>Debug logs saved to: {GAME_DIRECTORY}/{DEBUG_LOGS}.json</color>");
     }
 
     [ContextMenu("Clear Logs")]
     public void ClearLogs()
     {
         currentLogData.entries.Clear();
-        SaveLoadSystem.Save(fileName, currentLogData, folderName);
+        SaveLoadSystem.Save(DEBUG_LOGS, currentLogData, GAME_DIRECTORY);
         Debug.Log("Logs cleared.");
     }
 
