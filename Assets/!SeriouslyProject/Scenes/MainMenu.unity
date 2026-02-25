@@ -2400,6 +2400,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: persistentDataSettings.includeAllItemData
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: persistentDataSettings.includeLocationData
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: persistentDataSettings.recordPersistentDataOn
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: persistentDataSettings.includeAllConversationFields
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7120163989582192004, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_Name
       value: Dialogue Manager
@@ -2450,6 +2466,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7968214683462963041, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7968214683462963041, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8432601529438462031, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
