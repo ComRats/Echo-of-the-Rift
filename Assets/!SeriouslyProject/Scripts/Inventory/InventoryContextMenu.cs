@@ -40,9 +40,7 @@ public class InventoryContextMenu : MonoBehaviour
         
         // Обнуляем ссылки
         currentItem = null;
-        currentSlot = null;
-        
-        Debug.Log("[InventoryContextMenu] Очищено при уничтожении");
+        currentSlot = null;        
     }
 
     private void Update()

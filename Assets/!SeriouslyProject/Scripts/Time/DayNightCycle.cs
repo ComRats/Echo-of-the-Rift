@@ -222,7 +222,6 @@ public class DayNightCycle : MonoBehaviour
     public void SetGlobalLight(Light2D light)
     {
         globalLight = light;
-        Debug.Log("[DayNightCycle] Global Light2D установлен");
     }
     
     private Color GetProgressBarColor()

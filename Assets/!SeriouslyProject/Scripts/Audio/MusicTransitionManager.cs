@@ -10,7 +10,7 @@ using System;
 public class SceneMusicConfig
 {
     public SerializableScene scene;
-    public string musicName;
+    public List<string> musicNames = new List<string>();
 }
 
 public class MusicTransitionManager : MonoBehaviour
@@ -21,11 +21,10 @@ public class MusicTransitionManager : MonoBehaviour
     [SerializeField] private float normalVolume = 1.0f;
 
     private IAudioManager _am;
-    private string _currentMusicName;
+    private List<string> _currentMusicNames = new List<string>();
 
     private void Awake()
     {
-        // Если ты уверен, что объект один, DontDestroyOnLoad достаточно
         DontDestroyOnLoad(gameObject);
     }
 
@@ -55,55 +54,80 @@ public class MusicTransitionManager : MonoBehaviour
         if (_am == null) _am = ServiceLocator.GetService();
         if (_am == null) return;
 
-        string targetMusic = GetMusicForScene(sceneName);
+        List<string> targetMusicList = GetMusicForScene(sceneName);
 
-        // ИСПРАВЛЕНИЕ 1: Если для сцены (например, LoadingScene) музыка не прописана, 
-        // мы просто выходим и оставляем играть то, что играло.
-        if (string.IsNullOrEmpty(targetMusic))
+        // РЎС†РµРЅР°СЂРёР№ 1: Р•СЃР»Рё РЅРµС‚ РјСѓР·С‹РєРё (РЅР°РїСЂРёРјРµСЂ, LoadingScene) РїСЂРѕСЃС‚Рѕ РЅРµ С‚СЂРѕРіР°РµРј
+        if (targetMusicList == null || targetMusicList.Count == 0)
         {
             return;
         }
 
-        // ИСПРАВЛЕНИЕ 2: Если музыка та же самая
-        if (targetMusic == _currentMusicName)
+        // РЎС†РµРЅР°СЂРёР№ 2: Р•СЃР»Рё СЃРїРёСЃРѕРє РјСѓР·С‹РєРё С‚РѕС‚ Р¶Рµ СЃР°РјС‹Р№
+        if (AreMusicListsEqual(_currentMusicNames, targetMusicList))
         {
-            // Проверяем, играет ли она физически (через Wrapper источника)
-            if (_am.TryGetSource(_currentMusicName, out var wrapper) == AudioError.OK)
+            // РџСЂРѕРІРµСЂСЏРµРј Рё РІРѕСЃСЃС‚Р°РЅР°РІР»РёРІР°РµРј РіСЂРѕРјРєРѕСЃС‚СЊ РґР»СЏ РІСЃРµС… С‚СЂРµРєРѕРІ
+            foreach (var musicName in _currentMusicNames)
             {
-                if (wrapper.Source.isPlaying)
+                if (_am.TryGetSource(musicName, out var wrapper) == AudioError.OK)
                 {
-                    // Если уже играет — просто плавно возвращаем громкость, если она была занижена
-                    _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
-                    return; // ВАЖНО: не идем дальше, чтобы не вызвать Play()
+                    if (wrapper.Source.isPlaying)
+                    {
+                        _am.LerpVolume(musicName, normalVolume, fadeDuration);
+                    }
                 }
+            }
+            return;
+        }
+
+        // Р•СЃР»Рё РјС‹ Р·РґРµСЃСЊ, Р·РЅР°С‡РёС‚ РјСѓР·С‹РєР° РґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ РјРµРЅСЏРµС‚СЃСЏ
+
+        // 1. Р—Р°С‚СѓС…Р°РЅРёРµ СЃС‚Р°СЂРѕР№ РјСѓР·С‹РєРё
+        foreach (var oldMusic in _currentMusicNames)
+        {
+            if (!string.IsNullOrEmpty(oldMusic))
+            {
+                _am.LerpVolume(oldMusic, 0f, fadeDuration);
             }
         }
 
-        // Если мы здесь, значит музыка ДЕЙСТВИТЕЛЬНО сменилась
-
-        // 1. Затухание старой музыки
-        if (!string.IsNullOrEmpty(_currentMusicName))
+        // 2. Р—Р°РїСѓСЃРє РЅРѕРІРѕР№ РјСѓР·С‹РєРё
+        _currentMusicNames = new List<string>(targetMusicList);
+        
+        foreach (var newMusic in _currentMusicNames)
         {
-            _am.LerpVolume(_currentMusicName, 0f, fadeDuration);
+            if (string.IsNullOrEmpty(newMusic)) continue;
+            
+            _am.Play(newMusic);
+
+            // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РіСЂРѕРјРєРѕСЃС‚СЊ РІ 0 РїРµСЂРµРґ РїР»Р°РІРЅС‹Рј РЅР°СЂР°СЃС‚Р°РЅРёРµРј (Fade In)
+            if (_am.TryGetSource(newMusic, out var newWrapper) == AudioError.OK)
+            {
+                newWrapper.Source.volume = 0f;
+            }
+
+            _am.LerpVolume(newMusic, normalVolume, fadeDuration);
         }
-
-        // 2. Запуск новой
-        _currentMusicName = targetMusic;
-        _am.Play(_currentMusicName);
-
-        // Устанавливаем громкость в 0 перед началом затухания (Fade In)
-        if (_am.TryGetSource(_currentMusicName, out var newWrapper) == AudioError.OK)
-        {
-            newWrapper.Source.volume = 0f;
-        }
-
-        _am.LerpVolume(_currentMusicName, normalVolume, fadeDuration);
     }
 
-    private string GetMusicForScene(string sceneName)
+    private bool AreMusicListsEqual(List<string> list1, List<string> list2)
     {
-        // Ищем конфиг для конкретной сцены
+        if (list1.Count != list2.Count) return false;
+        
+        var sorted1 = list1.OrderBy(x => x).ToList();
+        var sorted2 = list2.OrderBy(x => x).ToList();
+        
+        for (int i = 0; i < sorted1.Count; i++)
+        {
+            if (sorted1[i] != sorted2[i]) return false;
+        }
+        
+        return true;
+    }
+
+    private List<string> GetMusicForScene(string sceneName)
+    {
+        // РС‰РµРј РјСѓР·С‹РєСѓ РґР»СЏ РєРѕРЅРєСЂРµС‚РЅРѕР№ СЃС†РµРЅС‹
         var config = sceneMusicSettings.FirstOrDefault(s => s.scene != null && s.scene.SceneName == sceneName);
-        return config?.musicName;
+        return config?.musicNames ?? new List<string>();
     }
 }

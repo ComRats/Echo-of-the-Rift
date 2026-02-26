@@ -58,8 +58,6 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
         LoadPlayer();
-        
-        SceneTransitionData.NextPosition = null;
     }
 
 
@@ -103,18 +101,16 @@ public class GlobalLoader : MonoBehaviour
     {
         if (playerInstance == null)
         {
-            Debug.LogWarning("[GlobalLoader] Не удалось загрузить позицию игрока - playerInstance == null");
             return;
         }
 
-        // Приоритет 1: Позиция из перехода между сценами
         if (SceneTransitionData.NextPosition.HasValue)
         {
             playerInstance.transform.position = SceneTransitionData.NextPosition.Value;
             playerInstance.transform.rotation = Quaternion.identity;
             return;
         }
-
+        
         string sceneName = SceneManager.GetActiveScene().name;
         string fileName = GetPlayerSceneSave(sceneName);
 
@@ -135,12 +131,7 @@ public class GlobalLoader : MonoBehaviour
     }
 
     private void ResetPlayerTransform()
-    {
-        if (playerInstance.startPosition == Vector3.zero)
-        {
-            Debug.LogWarning("[GlobalLoader] startPosition не установлен! Используется (0, 0, 0)");
-        }
-        
+    {  
         playerInstance.transform.position = playerInstance.startPosition;
         playerInstance.transform.rotation = Quaternion.identity;
     }

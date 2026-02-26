@@ -41,9 +41,7 @@ public class ShopUI : MonoBehaviour
     public ShopManager ShopManager => shopManager;
 
     private void Awake()
-    {
-        Debug.Log("[ShopUI] Awake вызван");
-        
+    {    
         // Проверка обязательных полей
         ValidateSetup();
         
@@ -58,7 +56,6 @@ public class ShopUI : MonoBehaviour
                 shopManagerObject = new GameObject("ShopManager");
                 shopManager = shopManagerObject.AddComponent<ShopManager>();
                 shopManagerObject.transform.SetParent(transform);
-                Debug.Log("[ShopUI] ShopManager создан автоматически");
             }
             else
             {
@@ -89,20 +86,17 @@ public class ShopUI : MonoBehaviour
         if (contextMenu == null)
         {
             contextMenu = FindObjectOfType<InventoryContextMenu>();
-            Debug.Log($"[ShopUI] InventoryContextMenu найден автоматически: {contextMenu != null}");
         }
         
         // Инициализируем ShopManager
         if (shopManager != null && inventoryManager != null && playerWallet != null)
         {
             shopManager.Initialize(inventoryManager, playerWallet);
-            Debug.Log("[ShopUI] ShopManager инициализирован");
         }
         
         if (shopPanel != null)
         {
             shopPanel.SetActive(false);
-            Debug.Log("[ShopUI] shopPanel скрыт при инициализации");
         }
         else
         {
@@ -142,10 +136,6 @@ public class ShopUI : MonoBehaviour
         {
             Debug.LogError("[ShopUI] ⚠️ КРИТИЧЕСКИЕ ОШИБКИ! Магазин не будет работать без назначения обязательных полей в инспекторе!");
         }
-        else
-        {
-            Debug.Log("[ShopUI] ✅ Все обязательные поля назначены");
-        }
     }
 
     private void OnEnable()
@@ -181,7 +171,6 @@ public class ShopUI : MonoBehaviour
             Destroy(shopManagerObject);
             shopManager = null;
             shopManagerObject = null;
-            Debug.Log("[ShopUI] ShopManager уничтожен при OnDestroy");
         }
     }
 

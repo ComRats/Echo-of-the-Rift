@@ -4,7 +4,6 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class SaveTrigger : MonoBehaviour
 {
-    [SerializeField] private bool showDebugMessage = true;
     [SerializeField] private bool saveOnEnter = true;
     [SerializeField] private bool saveOnExit = false;
 

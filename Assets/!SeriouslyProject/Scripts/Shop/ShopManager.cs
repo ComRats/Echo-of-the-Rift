@@ -25,7 +25,7 @@ namespace EchoRift.Shop
         {
             playerInventory = inventory;
             playerWallet = wallet;
-            Debug.Log($"[ShopManager] Инициализирован. InventoryManager: {(inventory != null ? "OK" : "NULL")}, PlayerWallet: {(wallet != null ? "OK" : "NULL")}");
+            //Debug.Log($"[ShopManager] Инициализирован. InventoryManager: {(inventory != null ? "OK" : "NULL")}, PlayerWallet: {(wallet != null ? "OK" : "NULL")}");
         }
 
         /// <summary>
@@ -238,7 +238,6 @@ namespace EchoRift.Shop
             OnShopClosed = null;
             OnItemBought = null;
             OnItemSold = null;
-            Debug.Log("[ShopManager] Все подписки на события очищены");
         }
     }
 }

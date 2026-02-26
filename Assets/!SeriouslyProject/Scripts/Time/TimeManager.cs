@@ -201,6 +201,5 @@ public class TimeManager : MonoBehaviour
     public void SetDayNightCycle(DayNightCycle cycle)
     {
         dayNightCycle = cycle;
-        Debug.Log("[TimeManager] DayNightCycle установлен");
     }
 }

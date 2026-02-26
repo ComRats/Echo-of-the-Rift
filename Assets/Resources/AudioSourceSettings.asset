@@ -167,3 +167,45 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: WaterSplash1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 82c16698840b31b46b5e7d3e70ef3dca, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: ButtonClick2
+    type: 0
+    audioClip: {fileID: 8300000, guid: af047430d4c08de47b5313889825d908, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.8
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Wind1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 72d259c5e6ca37149ba17aa096e4556c, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

@@ -2199,29 +2199,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneMusicSettings:
   - scene:
-      Scene: {fileID: 102900000, guid: 28f89208719735049b1e54579c8ca50b, type: 3}
-      SceneName: PlayerCreating
-      _sceneIndexInBuildSettings: 1
-      _isSceneEnabledInBuildSettings: 1
-    musicName: MainMenu1
-  - scene:
       Scene: {fileID: 102900000, guid: b50cec1e2675e174c84343a1b43e368a, type: 3}
       SceneName: MainMenu
       _sceneIndexInBuildSettings: 0
       _isSceneEnabledInBuildSettings: 1
-    musicName: MainMenu1
+    musicNames:
+    - MainMenu1
   - scene:
       Scene: {fileID: 102900000, guid: a528bf3a65804084b8df8f26577f7eff, type: 3}
       SceneName: VillageScene_1
       _sceneIndexInBuildSettings: 6
       _isSceneEnabledInBuildSettings: 1
-    musicName: Village1
+    musicNames:
+    - Wind1
+    - Village1
   - scene:
       Scene: {fileID: 102900000, guid: a0cfa9f672ed7c645b1f52851442d6fd, type: 3}
       SceneName: VillageScene_2
       _sceneIndexInBuildSettings: 5
       _isSceneEnabledInBuildSettings: 1
-    musicName: Village1
+    musicNames:
+    - Wind1
+    - Village1
   fadeDuration: 1.5
   normalVolume: 1
 --- !u!1001 &1769731901
@@ -2875,7 +2874,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96

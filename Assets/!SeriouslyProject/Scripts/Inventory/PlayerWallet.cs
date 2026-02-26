@@ -34,7 +34,6 @@ public class PlayerWallet : MonoBehaviour
 
         coins += amount;
         OnCoinsChanged?.Invoke(coins);
-        Debug.Log($"Получено {amount} монет. Всего: {coins}");
     }
 
     public void SetCoins(int amount)
@@ -42,6 +41,5 @@ public class PlayerWallet : MonoBehaviour
         int oldCoins = coins;
         coins = Mathf.Max(0, amount);
         OnCoinsChanged?.Invoke(coins);
-        Debug.Log($"[PlayerWallet] SetCoins: {oldCoins} → {coins}");
     }
 }

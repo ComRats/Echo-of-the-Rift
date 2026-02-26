@@ -1,10 +1,13 @@
 using UnityEngine;
 using System.Threading.Tasks;
+using EchoRift;
 
 public class SceneLoaderBridge : MonoBehaviour
 {
     [SerializeField] private bool isShow = true;
     private SceneLoader _sceneLoader;
+
+    private Player player => GlobalLoader.Instance.playerInstance;
 
     private void Awake()
     {
@@ -15,12 +18,10 @@ public class SceneLoaderBridge : MonoBehaviour
 
     private void OnPreloadLogic()
     {
-        var player = GlobalLoader.Instance.playerInstance;
-        if (player != null && SceneTransitionData.NextPosition.HasValue)
-        {
-            player.movement.SetPlayerPosition(SceneTransitionData.NextPosition.Value);
-            player.cameraSettings.Initialize();
-        }
+        //if (player != null)
+        //{
+        //    player.cameraSettings.Initialize();
+        //}
     }
 
     private async void OnActivatedLogic()
@@ -30,6 +31,12 @@ public class SceneLoaderBridge : MonoBehaviour
         if (isShow) GlobalLoader.Instance.Show();
 
         await Task.Yield();
+
+        if (SceneTransitionData.NextPosition.HasValue)
+        {
+            player.movement.SetPlayerPosition(SceneTransitionData.NextPosition.Value);
+            SceneTransitionData.NextPosition = null;
+        }
 
         GlobalLoader.Instance.playerInstance?.cameraSettings.Initialize();
 

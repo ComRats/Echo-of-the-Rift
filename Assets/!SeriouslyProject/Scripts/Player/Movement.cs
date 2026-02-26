@@ -5,7 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float playerSpeed;
-    [SerializeField] private Rigidbody2D rigidbody;
+    [SerializeField] private new Rigidbody2D rigidbody;
     [SerializeField] private Animator animator;
 
     public bool canMove = true;
@@ -20,9 +20,7 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
-        canMove = !GameTimer.IsPaused;
-
-        if (canMove)
+        if (canMove && !GameTimer.IsPaused)
             Moving();
         else
         {

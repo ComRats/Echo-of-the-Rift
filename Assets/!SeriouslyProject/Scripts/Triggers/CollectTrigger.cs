@@ -5,6 +5,8 @@ using Zenject;
 using System.Collections.Generic;
 using System;
 using Sirenix.OdinInspector;
+using AudioManager.Core;
+using AudioManager.Locator;
 
 public class CollectTrigger : BaseTrigger
 {
@@ -24,6 +26,8 @@ public class CollectTrigger : BaseTrigger
         [BoxGroup("Inventory Requirement")] public string itemNameToHas;
         [ShowIf("@!string.IsNullOrEmpty(itemNameToHas)"), BoxGroup("Inventory Requirement")]
         public bool removeItemAfterStep = true;
+
+        [BoxGroup("Audio")] public string musicName;
 
         [Space, GUIColor(0.4f, 0.8f, 1f)]
         public bool isMinigame;
@@ -52,6 +56,7 @@ public class CollectTrigger : BaseTrigger
     private SpriteCollection sprites;
     private ClickBarUI clickBar;
     private FishingUI fishingUI;
+    private IAudioManager audioService;
 
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
@@ -62,6 +67,7 @@ public class CollectTrigger : BaseTrigger
         clickBar = mainUI.fishingUI.clickBar;
         fishingUI = mainUI.fishingUI;
         lastUIState = mainUI.isOpenUI;
+        audioService = ServiceLocator.GetService();
     }
 
     private void Update()
@@ -113,7 +119,7 @@ public class CollectTrigger : BaseTrigger
     private void StartMinigame(CollectEvent ev)
     {
         minigameActive = true;
-        mainUI.canOpenUI = false; // Блокируем UI во время миниигры
+        mainUI.canOpenUI = false;
         ShowButtonPrompt(false, "");
         fishingUI.ShowMinigameHint(ev.minigameStartText);
         clickBar.Setup(ev.startFill, ev.drainSpeed, FinishCurrentStep);
@@ -122,8 +128,14 @@ public class CollectTrigger : BaseTrigger
     private void FinishCurrentStep()
     {
         minigameActive = false;
-        mainUI.canOpenUI = true; // Разблокируем UI после миниигры
+        mainUI.canOpenUI = true;
         var ev = eventQueue[currentStepIndex];
+
+        // Воспроизведение музыки если указана
+        if (!string.IsNullOrEmpty(ev.musicName))
+        {
+            audioService?.Play(ev.musicName);
+        }
 
         if (!string.IsNullOrEmpty(ev.itemNameToCollect))
         {
@@ -202,7 +214,7 @@ public class CollectTrigger : BaseTrigger
         {
             playerInside = false;
             minigameActive = false;
-            mainUI.canOpenUI = true; // Разблокируем UI при выходе из триггера
+            mainUI.canOpenUI = true;
             clickBar.Hide();
             ShowButtonPrompt(false, "");
         }

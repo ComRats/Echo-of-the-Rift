@@ -6,7 +6,7 @@ namespace EchoRift.Shop
     /// <summary>
     /// NPC-торговец с магазином
     /// </summary>
-    public class MerchantNPC : MonoBehaviour, IShopkeeper, ITalkable
+    public class MerchantNPC : MonoBehaviour, IShopkeeper
     {
         [Header("Shop Settings")]
         [SerializeField] private ShopData shopData;
@@ -21,10 +21,6 @@ namespace EchoRift.Shop
         private void Awake()
         {
             shopUI = FindObjectOfType<ShopUI>();
-            if (shopUI == null)
-            {
-                Debug.LogError("[MerchantNPC] ShopUI не найден в сцене!");
-            }
         }
 
         public void OpenShop()
@@ -47,12 +43,6 @@ namespace EchoRift.Shop
         public void CloseShop()
         {
             shopUI?.CloseShop();
-        }
-
-        public void Talk(Collider2D trigger, DialogueSystemTrigger dialogueData, DialogueSystemTrigger conversation)
-        {
-            // Можно открыть магазин через диалог или сразу
-            // Пока оставляем заглушку для интеграции с Dialogue System
         }
 
         private void OnValidate()

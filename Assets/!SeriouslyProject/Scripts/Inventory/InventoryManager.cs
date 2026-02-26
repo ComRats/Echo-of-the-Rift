@@ -462,11 +462,9 @@ public class InventoryManager : MonoBehaviour
 
         InventorySaver saver = inventoryData.CreateSaveData();
         
-        // Сохраняем монеты
         if (playerWallet != null)
         {
             saver.coins = playerWallet.Coins;
-            Debug.Log($"Инвентарь сохранён. Монет: {playerWallet.Coins}");
         }
         else
         {
@@ -493,11 +491,9 @@ public class InventoryManager : MonoBehaviour
         }
         inventoryData.LoadFromSaveData(saver);
         
-        // Загружаем монеты
         LoadCoins(saver.coins);
         
         RefreshUI();
-        Debug.Log($"Инвентарь загружен. Монет: {saver.coins}");
     }
 
     private void LoadCoins(int coins)
@@ -505,7 +501,7 @@ public class InventoryManager : MonoBehaviour
         if (playerWallet != null)
         {
             playerWallet.SetCoins(coins);
-            Debug.Log($"Монеты загружены: {coins}");
+
         }
         else
         {
