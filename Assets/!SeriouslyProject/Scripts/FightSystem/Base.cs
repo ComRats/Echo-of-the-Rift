@@ -39,6 +39,9 @@ public class Base : MonoBehaviour, IData
     public List<ActiveStatusEffect> activeEffects = new List<ActiveStatusEffect>();
     public bool IsBlinking { get; set; } = true;
 
+    public event System.Action<int, int> OnXPChanged;
+    public event System.Action<int, int> OnHealthChanged;
+
     public string Name { get => stats.Name; set => stats.Name = value; }
     public string Description { get => stats.Description; set => stats.Description = value; }
     public Image Sprite { get; set; }
@@ -144,6 +147,7 @@ public class Base : MonoBehaviour, IData
                     TakeHeal(Mathf.Abs(effect.data.damagePerTurn));
 
                 UpdateUI();
+                OnHealthChanged?.Invoke(Health, MaxHealth);
                 TryDeath();
             }
 
@@ -172,6 +176,7 @@ public class Base : MonoBehaviour, IData
         FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, PhysDamage);
         service.Play("MeleeDamage");
         UpdateUI();
+        OnHealthChanged?.Invoke(Health, MaxHealth);
         TryDeath();
     }
 
@@ -190,6 +195,7 @@ public class Base : MonoBehaviour, IData
         FightAnimation.ShowText(textPrefab, _magicDamage, gameObject.transform, MageDamage);
         service.Play("MagicDamage");
         UpdateUI();
+        OnHealthChanged?.Invoke(Health, MaxHealth);
         TryDeath();
     }
 
@@ -262,6 +268,7 @@ public class Base : MonoBehaviour, IData
             FightAnimation.ShowText(textPrefab, _heal, gameObject.transform, Color.green);
             Health += _heal;
             UpdateUI();
+            OnHealthChanged?.Invoke(Health, MaxHealth);
         }
         else Health = MaxHealth;
     }
@@ -294,6 +301,7 @@ public class Base : MonoBehaviour, IData
         FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience, new Vector3(-30f, 20f, 0f), 1f);
 
         CurrentXP += _getXP;
+        OnXPChanged?.Invoke(CurrentXP, MaxXP);
 
         UpdateLevel();
     }
@@ -318,6 +326,8 @@ public class Base : MonoBehaviour, IData
             AnimateStatRestore();
 
             SaveCharacterProgress();
+
+            OnXPChanged?.Invoke(CurrentXP, MaxXP);
 
             UpdateLevel();
         }

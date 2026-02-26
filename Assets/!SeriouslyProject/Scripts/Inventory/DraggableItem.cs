@@ -72,6 +72,10 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // Разрешаем перетаскивание только левой кнопкой мыши
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         if (contextMenu != null)
         {
             contextMenu.Hide();
@@ -88,11 +92,19 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
+        // Разрешаем перетаскивание только левой кнопкой мыши
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        // Разрешаем перетаскивание только левой кнопкой мыши
+        if (eventData.button != PointerEventData.InputButton.Left)
+            return;
+
         image.raycastTarget = true;
 
         if (transform.parent == GetComponentInParent<Canvas>().transform)
