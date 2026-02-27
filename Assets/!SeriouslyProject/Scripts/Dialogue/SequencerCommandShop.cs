@@ -24,9 +24,9 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             }
 
             // Найти MainUI на сцене
-            MainUI mainUI = Object.FindObjectOfType<MainUI>();
             if (mainUI == null)
             {
+                MainUI mainUI = Object.FindObjectOfType<MainUI>();
                 Debug.LogError("[SequencerCommandShop] MainUI не найден на сцене!");
                 Stop();
                 return;

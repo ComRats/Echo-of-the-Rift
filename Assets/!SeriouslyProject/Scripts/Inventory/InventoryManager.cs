@@ -477,7 +477,6 @@ public class InventoryManager : MonoBehaviour
 
     public void LoadInventory()
     {
-        // Добавь GlobalLoader.GAME_DIRECTORY
         if (!SaveLoadSystem.Exists(INVENTORY_DATA, GAME_DIRECTORY))
         {
             Debug.Log("Сохранение инвентаря не найдено");

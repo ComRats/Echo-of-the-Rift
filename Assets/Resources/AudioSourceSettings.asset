@@ -209,3 +209,59 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: Quest2
+    type: 0
+    audioClip: {fileID: 8300000, guid: 10d9a23eab6b84a41be889240b9ce68b, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Shop1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 3ed32c12b90196243b9cbb5fd9c85edb, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: OpenUI
+    type: 0
+    audioClip: {fileID: 8300000, guid: 0291d477ff154314e93e9b5cb79bb744, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: OpenUI_R
+    type: 0
+    audioClip: {fileID: 8300000, guid: d9b17c8e04fca114bb1a1c39239eca64, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1.2
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

@@ -51,15 +51,16 @@ public class MainUI : MonoBehaviour
 
         service ??= ServiceLocator.GetService();
 
-        service.PlayOneShot("OpenUI");
 
         if (isOpen)
         {
             CloseInventory();
+            service.PlayOneShot("OpenUI_R");
         }
         else
         {
             OpenInventory();
+            service.PlayOneShot("OpenUI");
         }
     }
 

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using AudioManager.Locator;
 #if USE_ADDRESSABLES
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
@@ -1764,6 +1765,7 @@ namespace PixelCrushers.DialogueSystem
                 if (message.Contains("\\n")) message = message.Replace("\\n", "\n");
                 gameObject.BroadcastMessage(DialogueSystemMessages.OnShowAlert, message, SendMessageOptions.DontRequireReceiver);
                 dialogueUI.ShowAlert(GetLocalizedText(FormattedText.ParseCode(message)), duration);
+                ServiceLocator.GetService().PlayOneShot("Quest2");
             }
         }
 
