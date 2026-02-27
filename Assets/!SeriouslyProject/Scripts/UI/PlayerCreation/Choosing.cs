@@ -17,7 +17,7 @@ public class Choosing : MonoBehaviour, IUpdatableUI
 
     private void Start()
     {
-        leftButton.onClick.AddListener(() => ChangeValue(-1));
+        leftButton.onClick.AddListener(() => ChangeValue(-1)); 
         rightButton.onClick.AddListener(() => ChangeValue(1));
         UpdateUI();
     }

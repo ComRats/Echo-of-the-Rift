@@ -1,5 +1,7 @@
 using UnityEngine;
 using System;
+using AudioManager.Core;
+using AudioManager.Locator;
 
 namespace EchoRift.Shop
 {
@@ -20,6 +22,13 @@ namespace EchoRift.Shop
         public event Action OnShopClosed;
         public event Action<ItemData, int, int> OnItemBought;  // item, quantity, totalPrice
         public event Action<ItemData, int, int> OnItemSold;    // item, quantity, totalPrice
+
+        private IAudioManager service;
+
+        private void Start()
+        {
+            service = ServiceLocator.GetService();
+        }
 
         public void Initialize(InventoryManager inventory, PlayerWallet wallet)
         {
@@ -143,6 +152,7 @@ namespace EchoRift.Shop
             {
                 shopItem.quantity -= quantity;
             }
+            service.PlayOneShot("Shop1");
 
             OnItemBought?.Invoke(item, quantity, totalPrice);
             Debug.Log($"[ShopManager] Куплено: {item.itemName} x{quantity} за {totalPrice} монет");
@@ -185,6 +195,7 @@ namespace EchoRift.Shop
             // Расчёт стоимости
             int pricePerItem = currentShop.GetSellPriceForItem(item);
             int totalPrice = pricePerItem * quantity;
+            service.PlayOneShot("Shop1");
 
             // Удаление предмета из инвентаря
             Debug.Log($"[ShopManager] Удаление предмета: {item.itemName}");

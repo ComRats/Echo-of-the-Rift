@@ -1,3 +1,6 @@
+using AudioManager.Core;
+using AudioManager.Locator;
+using AudioManager.Logger;
 using UnityEngine;
 using Zenject;
 
@@ -20,6 +23,7 @@ public class MainUI : MonoBehaviour
 
     private GameObject playerUIbackGround;
     private InventoryContextMenu contextMenu;
+    private IAudioManager service;
 
     private void Awake()
     {
@@ -44,6 +48,10 @@ public class MainUI : MonoBehaviour
         if (playerUIbackGround == null) return;
 
         bool isOpen = playerUIbackGround.activeSelf;
+
+        service ??= ServiceLocator.GetService();
+
+        service.PlayOneShot("OpenUI");
 
         if (isOpen)
         {
