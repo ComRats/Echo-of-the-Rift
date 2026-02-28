@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41a4b2a721239864f8cc8436e2a1d238, type: 3}
+  m_Name: Bosota3
+  m_EditorClassIdentifier: 
+  _name: Bosota3
+  _description: "\u041E\u0431\u043D\u0430\u0433\u043B\u0435\u0432\u0448\u0430\u044F
+    \u0431\u043E\u0441\u043E\u0442\u0430"
+  _sprite: {fileID: 21300000, guid: f53b6335df6328b4f935c1fb83672550, type: 3}
+  _damage: 3
+  _magicDamage: 0
+  _priority: 5
+  _maxMana: 0
+  _mana: 0
+  _maxHealth: 10
+  _health: 10
+  _heal: 1
+  _armor: 2
+  _lucky: 10
+  _creteChance: 10
+  _attackAnimationName: SoloPunch
+  _level: 1
+  _currentXP: 0
+  _maxXP: 100
+  _xpReward: 5
+  _damagePerLevel: 2
+  _maxHealthPerLevel: 4
+  _healPerLevel: 1
+  _armorPerLevel: 1
+  _maxManaPerLevel: 4
+  _xpRewardPerLevel: 5

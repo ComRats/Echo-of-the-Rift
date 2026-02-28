@@ -72,4 +72,9 @@ public class Movement : MonoBehaviour
     {
         gameObject.transform.position = nextPos;
     }
+
+    public void ToggleCanMove()
+    {
+        canMove = !canMove;
+    }
 }

@@ -373,7 +373,7 @@ Transform:
   m_GameObject: {fileID: 4650786699909764950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -545,9 +545,9 @@ MonoBehaviour:
     onConversationStart:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: TestMovement, Assembly-CSharp
-          m_MethodName: FrezeMoving
+        - m_Target: {fileID: 2890027749639525815}
+          m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+          m_MethodName: ToggleCanMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -560,9 +560,9 @@ MonoBehaviour:
     onConversationEnd:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: TestMovement, Assembly-CSharp
-          m_MethodName: UnFrezeMoving
+        - m_Target: {fileID: 2890027749639525815}
+          m_TargetAssemblyTypeName: Movement, Assembly-CSharp
+          m_MethodName: ToggleCanMove
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -673,7 +673,7 @@ Transform:
   m_GameObject: {fileID: 5244682795864369976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
   m_LocalScale: {x: 1.4285713, y: 1.4285713, z: 1.4285713}
   m_ConstrainProportionsScale: 0
   m_Children: []

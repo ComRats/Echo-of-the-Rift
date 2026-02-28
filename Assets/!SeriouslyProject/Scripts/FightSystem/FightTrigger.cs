@@ -42,19 +42,19 @@ public class FightTrigger : MonoBehaviour
         SaveCharactersToFile();
     }
 
-    [Button("��������� ������ � ����")]
+    [Button("Сохранить врагов в файл")]
     private void SaveEnemiesToFile()
     {
         FightData data = new FightData { enemies = this.enemies };
         SaveLoadSystem.Save(ENEMY_SAVE, data, GAME_DIRECTORY);
-        Debug.Log($"[FightTrigger] ����� ���������: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
+        Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
         SaveLoadSystem.Save(CHARACTER_SAVE, data, GAME_DIRECTORY);
-        Debug.LogError($"[FightTrigger] ��������� ���������: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
+        Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     [Serializable]
@@ -69,124 +69,124 @@ public class EnemiesSettings : IData
 {
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("������������ ������ �����")]
+    [LabelText("Использовать данные врага")]
     public bool useEnemyData = true;
 
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("��� ������� ����� (�������)")]
+    [LabelText("Имя данных врага (Resources)")]
     public string enemyDataName;
 
     [ShowIf("useEnemyData")]
-    [LabelText("������ �����")]
+    [LabelText("Данные врага")]
     [InlineEditor(InlineEditorModes.GUIOnly)]
     public EnemyData enemyData;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private string name;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [TextArea(3, 10)]
     [SerializeField] private string description;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _damage;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _magicDamage;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _priority;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _maxMana;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _mana;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _maxHealth;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _health;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _heal;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _armor;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _lucky;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _creteChance;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _level;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _currentXP;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _maxXP;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int _xpReward;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int damagePerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int maxHealthPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int healPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int armorPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int maxManaPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private int xpRewardPerLevel = 1;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
+    [FoldoutGroup("Параметры персонажа")]
     [SerializeField] private string attackAnimationName = "Attack";
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
-    [LabelText("������ �����")]
+    [FoldoutGroup("Параметры персонажа")]
+    [LabelText("Спрайт врага")]
     [SerializeField] private Sprite sprite;
 
     [HideIf("useEnemyData")]
-    [FoldoutGroup("��������� �������")]
-    [LabelText("���� �� ������� (Resources)")]
+    [FoldoutGroup("Параметры персонажа")]
+    [LabelText("Путь к спрайту (Resources)")]
     public string spritePath;
 
     public string Name { get => name; set => name = value; }

@@ -23,7 +23,7 @@ public class BaseTrigger : MonoBehaviour
                     break;
 
                 case FightResult.Lose:
-                    quest.onFightLose?.Invoke();
+                    quest.onFightLose?.Invoke(); 
                     break;
 
                 case FightResult.Escape:
