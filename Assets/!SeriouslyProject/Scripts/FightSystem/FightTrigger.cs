@@ -11,6 +11,8 @@ using static EchoRift.SaveLoadSystem.SaveFileNames;
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour
 {
+    public bool canTriggered = true;
+
     [Header("OtherSettings")]
     [SerializeField] private SceneLoader sceneLoader;
 
@@ -22,9 +24,18 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
 
+    private void Start()
+    {
+        if (transform.parent.TryGetComponent<FightNPC>(out FightNPC fNPC))
+        {
+            GetComponent<BoxCollider2D>().size = fNPC.GetComponent<BoxCollider2D>().size;
+            GetComponent<BoxCollider2D>().offset = fNPC.GetComponent<BoxCollider2D>().offset;
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out var player))
+        if (collision.TryGetComponent<Player>(out var player) && canTriggered)
         {
             characters = collision.GetComponent<Team>().characters;
 

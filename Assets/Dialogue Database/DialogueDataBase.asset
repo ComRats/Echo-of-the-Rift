@@ -309,6 +309,14 @@ MonoBehaviour:
       value: False
       type: 2
       typeString: CustomFieldType_Boolean
+    - title: Trackable
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Track
+      value: True
+      type: 2
+      typeString: CustomFieldType_Boolean
   locations: []
   variables:
   - id: 3
@@ -5408,7 +5416,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(FightTrigger1, true)
+        value: 'SetActive(FightTrigger1, true);
+
+          Continue()'
         type: 0
         typeString: 
       conversationID: 7

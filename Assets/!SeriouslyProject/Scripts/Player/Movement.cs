@@ -73,8 +73,13 @@ public class Movement : MonoBehaviour
         gameObject.transform.position = nextPos;
     }
 
-    public void ToggleCanMove()
+    public void CanMoveTrue()
     {
-        canMove = !canMove;
+        canMove = true;
+    }
+
+    public void CanMoveFalse()
+    {
+        canMove = false;
     }
 }

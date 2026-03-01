@@ -97,7 +97,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4722374070658803483
 Transform:
   m_ObjectHideFlags: 0
@@ -108,8 +108,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.739113, y: 11.739113, z: 11.739113}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 9.15, y: 9.15, z: 9.15}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4114469362354069096}
   - {fileID: 9033143625026812910}
@@ -175,8 +175,8 @@ MonoBehaviour:
   sceneLoader: {fileID: 6720105593597586563}
   enemies:
   - useEnemyData: 1
-    enemyDataName: Bull
-    enemyData: {fileID: 11400000, guid: 01c47300ae9f96349b99023f0fd58728, type: 2}
+    enemyDataName: Bosota1
+    enemyData: {fileID: 11400000, guid: 04958f9f6d83ed946a4f9e188d0d0063, type: 2}
     name: Bull
     description: 
     _damage: 3
@@ -203,6 +203,64 @@ MonoBehaviour:
     attackAnimationName: Attack
     sprite: {fileID: 0}
     spritePath: EnemyData/Sprites/Bull_Fight1
+  - useEnemyData: 1
+    enemyDataName: Bosota2
+    enemyData: {fileID: 11400000, guid: 89265e5d4c9d4c749a6f937f9622928a, type: 2}
+    name: 
+    description: 
+    _damage: 0
+    _magicDamage: 0
+    _priority: 0
+    _maxMana: 0
+    _mana: 0
+    _maxHealth: 0
+    _health: 0
+    _heal: 0
+    _armor: 0
+    _lucky: 0
+    _creteChance: 0
+    _level: 0
+    _currentXP: 0
+    _maxXP: 0
+    _xpReward: 0
+    damagePerLevel: 1
+    maxHealthPerLevel: 1
+    healPerLevel: 1
+    armorPerLevel: 1
+    maxManaPerLevel: 1
+    xpRewardPerLevel: 1
+    attackAnimationName: Attack
+    sprite: {fileID: 0}
+    spritePath: 
+  - useEnemyData: 1
+    enemyDataName: Bosota3
+    enemyData: {fileID: 11400000, guid: 8a8bfc2743aa4d142bfa1c81a01b1365, type: 2}
+    name: 
+    description: 
+    _damage: 0
+    _magicDamage: 0
+    _priority: 0
+    _maxMana: 0
+    _mana: 0
+    _maxHealth: 0
+    _health: 0
+    _heal: 0
+    _armor: 0
+    _lucky: 0
+    _creteChance: 0
+    _level: 0
+    _currentXP: 0
+    _maxXP: 0
+    _xpReward: 0
+    damagePerLevel: 1
+    maxHealthPerLevel: 1
+    healPerLevel: 1
+    armorPerLevel: 1
+    maxManaPerLevel: 1
+    xpRewardPerLevel: 1
+    attackAnimationName: Attack
+    sprite: {fileID: 0}
+    spritePath: 
 --- !u!1001 &4383430110815755509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -270,14 +328,6 @@ PrefabInstance:
     - target: {fileID: 5855241089367081213, guid: 971bc01d484a38b4ebbb2a40f215537f, type: 3}
       propertyPath: m_Size.y
       value: 1.6221505
-      objectReference: {fileID: 0}
-    - target: {fileID: 5855241089367081213, guid: 971bc01d484a38b4ebbb2a40f215537f, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.02578935
-      objectReference: {fileID: 0}
-    - target: {fileID: 5855241089367081213, guid: 971bc01d484a38b4ebbb2a40f215537f, type: 3}
-      propertyPath: m_Offset.y
-      value: 0.044908226
       objectReference: {fileID: 0}
     - target: {fileID: 8807685687236996836, guid: 971bc01d484a38b4ebbb2a40f215537f, type: 3}
       propertyPath: m_Name

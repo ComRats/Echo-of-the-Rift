@@ -7,7 +7,6 @@ namespace EchoRift
     public class Player : MonoBehaviour
     {
         public SpriteRenderer spriteRenderer;
-        public PressableButtons pressableButtons;
         public CameraSettings cameraSettings;
         public Movement movement;
         public ChangeNameDialogueActor dialogActor;
@@ -32,7 +31,6 @@ namespace EchoRift
             spriteRenderer.enabled = false;
             movement.enabled = false;
             cameraSettings.enabled = false;
-            pressableButtons.enabled = false;
         }
 
         public void Show()
@@ -42,7 +40,6 @@ namespace EchoRift
             spriteRenderer.enabled = true;
             movement.enabled = true;
             cameraSettings.enabled = true;
-            pressableButtons.enabled = true;
         }
 
         [System.Serializable]

@@ -1537,6 +1537,11 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 8751355472417944872, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
   m_PrefabInstance: {fileID: 979315035}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &979315037 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6303169106884157379, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+  m_PrefabInstance: {fileID: 979315035}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1111320893 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 970719131080332961, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
@@ -2725,7 +2730,7 @@ PrefabInstance:
     - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: displaySettings.dialogueUI
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 979315037}
     - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: persistentDataSettings.includeAllItemData
       value: 1

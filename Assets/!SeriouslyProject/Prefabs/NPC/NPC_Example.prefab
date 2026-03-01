@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 406415795373206280}
   - component: {fileID: 8114591709910402909}
   - component: {fileID: 6069528994407380562}
+  - component: {fileID: 2234601220347033293}
   m_Layer: 0
   m_Name: NPC_Example
   m_TagString: Untagged
@@ -32,6 +33,7 @@ Transform:
   m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 1
   m_Children:
+  - {fileID: 4368347422705449631}
   - {fileID: 8644271585455227135}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -71,8 +73,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.4, y: 6.4}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 8.213333, y: 6.188073}
+    newSize: {x: 49.28, y: 37.128437}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -148,17 +150,91 @@ SpriteRenderer:
   m_SortingLayerID: -423682559
   m_SortingLayer: 4
   m_SortingOrder: 1
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: f53b6335df6328b4f935c1fb83672550, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 49.28, y: 37.128437}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &2234601220347033293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482013551599293818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d95288802b2214aa65a98cfee2b16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  quests:
+  - questCode: WoeTheLoosers
+    questState_Win: 64
+    onFightWin:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2234601220347033293}
+          m_TargetAssemblyTypeName: BaseTrigger, Assembly-CSharp
+          m_MethodName: ApplyQuestChanges
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_MethodName: SetActive
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    questState_Lose: 8
+    onFightLose:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2234601220347033293}
+          m_TargetAssemblyTypeName: BaseTrigger, Assembly-CSharp
+          m_MethodName: ApplyQuestChanges
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    questState_Escape: 8
+    onFightEscape:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2234601220347033293}
+          m_TargetAssemblyTypeName: BaseTrigger, Assembly-CSharp
+          m_MethodName: ApplyQuestChanges
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7462033337664677003
 GameObject:
   m_ObjectHideFlags: 0
@@ -260,7 +336,7 @@ MonoBehaviour:
   maxConversationDistance: 5
   monitorConversationDistanceFrequency: 1
   showCursorDuringConversation: 0
-  pauseGameDuringConversation: 1
+  pauseGameDuringConversation: 0
   setActiveActions: []
   setEnabledActions: []
   setAnimatorStateActions: []
@@ -303,7 +379,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.22291899, y: 0.03217888}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0.19999999, y: 0.19999999, z: 0.19999999, w: 0.19999999}
     pivot: {x: 0.5, y: 0.5}
@@ -314,7 +390,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 8.572284, y: 8.309616}
+  m_Size: {x: 10, y: 10}
   m_EdgeRadius: 0
 --- !u!222 &3611278994950707337
 CanvasRenderer:
@@ -343,3 +419,65 @@ MonoBehaviour:
   m_target: {fileID: 0}
   m_usePlayerSpawnpoint: 0
   m_multiscene: 0
+--- !u!1001 &9013465252657618308
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3972072975807863687}
+    m_Modifications:
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8807685687236996836, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+      propertyPath: m_Name
+      value: FightTrigger1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+--- !u!4 &4368347422705449631 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4722374070658803483, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
+  m_PrefabInstance: {fileID: 9013465252657618308}
+  m_PrefabAsset: {fileID: 0}

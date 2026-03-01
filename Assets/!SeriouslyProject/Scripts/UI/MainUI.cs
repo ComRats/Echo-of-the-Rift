@@ -1,6 +1,7 @@
 using AudioManager.Core;
 using AudioManager.Locator;
 using AudioManager.Logger;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Zenject;
 
@@ -15,6 +16,8 @@ public class MainUI : MonoBehaviour
     public InventoryManager inventoryManager;
     public FishingUI fishingUI;
     public ShopUI shopUI;
+    public QuestLogWindowHotkey questWindow;
+    public Canvas tonguesCanvas;
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;
@@ -33,6 +36,7 @@ public class MainUI : MonoBehaviour
         }
 
         contextMenu = FindObjectOfType<InventoryContextMenu>();
+        questWindow.key = gameSettings.questWindowKey;
     }
 
     private void Update()
@@ -95,6 +99,7 @@ public class MainUI : MonoBehaviour
         canvas.enabled = false;
         pauseMenu.enabled = false;
         playerUI.enabled = false;
+        tonguesCanvas.enabled = false;
     }
 
     public void Show()
@@ -104,5 +109,6 @@ public class MainUI : MonoBehaviour
         canvas.enabled = true;
         pauseMenu.enabled = true;
         playerUI.enabled = true;
+        tonguesCanvas.enabled = true;
     }
 }

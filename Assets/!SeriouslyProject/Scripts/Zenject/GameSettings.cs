@@ -8,6 +8,7 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
     public KeyCode openInvenoryKey = KeyCode.E;
     public KeyCode openPauseMenuKey = KeyCode.Escape;
     public KeyCode useButton = KeyCode.F;
+    public KeyCode questWindowKey = KeyCode.J;
 
     public override void InstallBindings()
     {
