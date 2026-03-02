@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 444455371561076146}
   - component: {fileID: 5850043989812833210}
   - component: {fileID: 6046234950210736509}
-  - component: {fileID: 3069528925934001719}
+  - component: {fileID: 4659868762306766469}
   m_Layer: 5
   m_Name: BattleAbilityButton
   m_TagString: Untagged
@@ -201,7 +201,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 3
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -248,24 +248,25 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 3286163911610860551, guid: 00dd83a100f67654f924d210bdc8682e, type: 3}
   m_PreserveAspect: 0
---- !u!95 &3069528925934001719
-Animator:
-  serializedVersion: 5
+--- !u!114 &4659868762306766469
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3802382256954073297}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9b5dc4e8ba93809418d20d537f5dfe48, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e3f8d4ec8493d4eac53bdb24076a29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hoverOffsetY: 10
+  pressOffsetY: 20
+  selectedOffsetY: 15
+  animationDuration: 0.2
+  animationEase: 22
+  useScaleAnimation: 1
+  hoverScale: 1.05
+  pressScale: 0.95
+  button: {fileID: 5850043989812833210}
+  rectTransform: {fileID: 8314710465943503157}

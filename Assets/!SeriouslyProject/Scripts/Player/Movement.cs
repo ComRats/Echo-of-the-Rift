@@ -48,7 +48,9 @@ public class Movement : MonoBehaviour
 
     private void HandleStepSound(float speed)
     {
-        if (speed < 0.01f)
+        bool isMoving = Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0;
+        
+        if (speed < 0.01f || !isMoving)
         {
             service.Stop("Step");
             return;

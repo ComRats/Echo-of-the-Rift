@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Sirenix.OdinInspector;
+using DG.Tweening;
 
 public class AbilityManager : MonoBehaviour
 {
@@ -11,15 +12,22 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] private Transform magicAbilitiesContainer;
     [SerializeField] private Transform defenseAbilitiesContainer;
     [SerializeField] private Transform supportAbilitiesContainer;
+    [SerializeField] private RectTransform abilitiesPanel;
 
     [Title("Button Prefab")]
     [SerializeField] private GameObject abilityButtonPrefab;
+
+    [Title("Animation Settings")]
+    [SerializeField] private float slideInDuration = 0.5f;
+    [SerializeField] private float slideInDistance = 240f;
+    [SerializeField] private Ease slideInEase = Ease.OutBack;
 
     [Title("References")]
     [SerializeField] private FightManager fightManager;
 
     private Dictionary<Button, BattleAbility> buttonAbilityMap = new Dictionary<Button, BattleAbility>();
     private FightSystem.Character.Character currentCharacter;
+    private Vector2 originalPanelPosition;
 
     public void SetupAbilitiesForCharacter(FightSystem.Character.Character character)
     {
@@ -37,6 +45,23 @@ public class AbilityManager : MonoBehaviour
         {
             CreateAbilityButton(charAbility);
         }
+
+        AnimatePanelSlideIn();
+    }
+
+    private void AnimatePanelSlideIn()
+    {
+        if (abilitiesPanel == null) return;
+
+        if (originalPanelPosition == Vector2.zero)
+        {
+            originalPanelPosition = abilitiesPanel.anchoredPosition;
+        }
+
+        Vector2 targetPosition = originalPanelPosition + Vector2.up * slideInDistance;
+
+        abilitiesPanel.DOAnchorPos(targetPosition, slideInDuration)
+            .SetEase(slideInEase);
     }
 
     private void CreateAbilityButton(CharacterAbility charAbility)

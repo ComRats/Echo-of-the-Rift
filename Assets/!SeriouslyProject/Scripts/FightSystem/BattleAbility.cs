@@ -16,6 +16,10 @@ public abstract class BattleAbility : ScriptableObject
     public string animTrigger = "Hit";
 
     [TextArea]
+    [Tooltip("[dmg]...[/dmg] - урон (красный цвет)" +
+        "\r\n[heal]...[/heal] - исцеление (зеленый цвет)" +
+        "\r\n[def]...[/def] - защита (синий цвет)" +
+        "\r\n[mana]...[/mana] - мана (фиолетовый цвет)")]
     public string Description;
 
     protected void PlayHitAnimation(Base target)

@@ -16,7 +16,7 @@ MonoBehaviour:
   ManaCost: 1
   targetType: 1
   animTrigger: Hit
-  Description: 
+  Description: "\u041C\u043E\u043B\u0438\u0442\u0432\u0430"
   baseHealAmount: 5
   useCharacterHealStat: 1
   healMultiplier: 1.5

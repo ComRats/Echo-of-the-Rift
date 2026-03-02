@@ -327,6 +327,7 @@ MonoBehaviour:
     _maxManaPerLevel: 1
     _xpRewardPerLevel: 1
     spritePath: 
+  dialogueEvents: {fileID: 6738157905227129964}
   startPosition: {x: -35, y: -3, z: 0}
 --- !u!114 &2890027749639525815
 MonoBehaviour:

@@ -40,7 +40,18 @@ public class GlobalLoader : MonoBehaviour
 
         LoadGlobal();
         LoadPlayerData();
-
+        
+        playerInstance.SetListenerToEvents(OnConversationStart, OnConversationEnd);
+    }
+    
+    private void OnConversationStart(Transform actor)
+    {
+        mainUI.canOpenUI = false;
+    }
+    
+    private void OnConversationEnd(Transform actor)
+    {
+        mainUI.canOpenUI = true;
     }
 
     public void Show()

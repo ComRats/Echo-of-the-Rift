@@ -14,3 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openInvenoryKey: 101
   openPauseMenuKey: 27
+  useButton: 102
+  questWindowKey: 106
+  enemyTurnDelay: 0.5
+  enemyTurnSpeed: 0.5

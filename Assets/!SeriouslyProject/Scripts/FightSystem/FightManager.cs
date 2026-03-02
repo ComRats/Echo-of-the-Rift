@@ -8,6 +8,7 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using EchoRift;
 using Sirenix.OdinInspector;
+using Zenject;
 
 public class FightManager : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class FightManager : MonoBehaviour
 
     [Title("Ability System")]
     [SerializeField] private AbilityManager abilityManager;
+
+    [Inject] private GameSettings gameSettings;
 
     private int allEnemyXP;
     private int allCharacterXP;
@@ -61,10 +64,23 @@ public class FightManager : MonoBehaviour
                                                    
             if (currentBase is Enemy enemy)
             {
-                yield return new WaitForSeconds(damageDelay);
+                // Используем настройки из GameSettings
+                float enemyDelay = gameSettings != null ? gameSettings.enemyTurnDelay : damageDelay;
+                float enemySpeed = gameSettings != null ? gameSettings.enemyTurnSpeed : 1f;
+                
+                yield return new WaitForSeconds(enemyDelay);
+                
                 Character target = GetCharacterLowestHP();
+                
+                // Устанавливаем скорость анимации противника
+                enemy.SetAnimationSpeed(enemySpeed);
+                
                 target.TakeDamage(enemy.GiveDamage());
                 target.PlayAnimation(enemy.AttackAnimationName);
+                
+                // Возвращаем нормальную скорость анимации
+                enemy.SetAnimationSpeed(1f);
+                
                 DeleteCharacterOnList(GetCharacterLowestHP());
             }
             else if (currentBase is Character character)

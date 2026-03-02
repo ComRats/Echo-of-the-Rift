@@ -117,6 +117,14 @@ public class Base : MonoBehaviour, IData
         animator.SetTrigger(triggerName);
     }
 
+    public void SetAnimationSpeed(float speed)
+    {
+        if (animator != null)
+        {
+            animator.speed = speed;
+        }
+    }
+
     public void ApplyStatusEffect(StatusEffectSO effectData)
     {
         var existing = activeEffects.Find(e => e.data == effectData);

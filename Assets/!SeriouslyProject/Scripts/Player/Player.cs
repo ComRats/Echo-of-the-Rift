@@ -1,6 +1,7 @@
-using Cinemachine;
 using FightSystem.Data;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace EchoRift
 {
@@ -10,6 +11,7 @@ namespace EchoRift
         public CameraSettings cameraSettings;
         public Movement movement;
         public ChangeNameDialogueActor dialogActor;
+        public DialogueSystemEvents dialogueEvents;
         public PlayerSaver playerSaver;
 
         public static FightResult Result = FightResult.None;
@@ -17,11 +19,16 @@ namespace EchoRift
 
         private void Awake()
         {
-            // Если startPosition не установлен в Inspector, используем текущую позицию
             if (startPosition == Vector3.zero)
             {
                 startPosition = transform.position;
             }
+        }
+
+        public void SetListenerToEvents(UnityAction<Transform> _onStartConversation, UnityAction<Transform> _onEndConversation)
+        {
+            dialogueEvents.conversationEvents.onConversationStart.AddListener(_onStartConversation);
+            dialogueEvents.conversationEvents.onConversationEnd.AddListener(_onEndConversation);
         }
 
         public void Hide()

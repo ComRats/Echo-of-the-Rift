@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Компонент для кнопки способности
 /// Автоматически настраивается через AbilityManager
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class AbilityButton : MonoBehaviour
+public class AbilityButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI abilityNameText;
@@ -22,10 +23,12 @@ public class AbilityButton : MonoBehaviour
     private Button button;
     private BattleAbility ability;
     private Base character;
+    private ActionButtons actionButtons;
 
     private void Awake()
     {
         button = GetComponent<Button>();
+        actionButtons = FindObjectOfType<ActionButtons>();
     }
 
     /// <summary>
@@ -85,5 +88,27 @@ public class AbilityButton : MonoBehaviour
     public BattleAbility GetAbility()
     {
         return ability;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (ability != null && actionButtons != null)
+        {
+            ShowDescription();
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (actionButtons != null)
+        {
+            actionButtons.ClearDescription();
+        }
+    }
+
+    private void ShowDescription()
+    {
+        if (actionButtons == null || ability == null) return;
+        actionButtons.ShowAbilityDescription(ability);
     }
 }
