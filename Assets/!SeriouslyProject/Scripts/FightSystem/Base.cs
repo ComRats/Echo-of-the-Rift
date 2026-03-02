@@ -273,7 +273,7 @@ public class Base : MonoBehaviour, IData
     {
         if (Health < MaxHealth)
         {
-            FightAnimation.ShowText(textPrefab, _heal, gameObject.transform, Color.green);
+            FightAnimation.ShowText(textPrefab, _heal, transform, GameColorsDataBase.Heal);
             Health += _heal;
             UpdateUI();
             OnHealthChanged?.Invoke(Health, MaxHealth);
@@ -306,7 +306,7 @@ public class Base : MonoBehaviour, IData
 
     public void GetXP(int _getXP)
     {
-        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience, new Vector3(-30f, 20f, 0f), 1f);
+        FightAnimation.ShowText(textPrefab, "+" + _getXP.ToString(), transform, Experience);
 
         CurrentXP += _getXP;
         OnXPChanged?.Invoke(CurrentXP, MaxXP);

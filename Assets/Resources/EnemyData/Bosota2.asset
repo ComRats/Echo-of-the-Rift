@@ -31,7 +31,7 @@ MonoBehaviour:
   _level: 1
   _currentXP: 0
   _maxXP: 100
-  _xpReward: 5
+  _xpReward: 34
   _damagePerLevel: 2
   _maxHealthPerLevel: 4
   _healPerLevel: 1
