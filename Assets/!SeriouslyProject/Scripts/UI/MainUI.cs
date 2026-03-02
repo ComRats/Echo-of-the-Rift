@@ -1,6 +1,5 @@
 using AudioManager.Core;
 using AudioManager.Locator;
-using AudioManager.Logger;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Zenject;
@@ -16,8 +15,8 @@ public class MainUI : MonoBehaviour
     public InventoryManager inventoryManager;
     public FishingUI fishingUI;
     public ShopUI shopUI;
-    public QuestLogWindowHotkey questWindow;
     public Canvas tonguesCanvas;
+    public StandardUIQuestLogWindow questLogWindow;
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;
@@ -38,18 +37,36 @@ public class MainUI : MonoBehaviour
         contextMenu = FindObjectOfType<InventoryContextMenu>();
     }
 
-    private void Start()
-    {
-        questWindow.key = gameSettings.questWindowKey;
-        questWindow.toOpenQuestLog = OpenInventory;
-        questWindow.toCloseQuestLog = CloseInventory;
-    }
-
     private void Update()
     {
         if (Input.GetKeyDown(gameSettings.openInvenoryKey) && canOpenUI)
         {
             ToggleInventory();
+        }
+
+        if (Input.GetKeyDown(gameSettings.questWindowKey) && canOpenUI)
+        {
+            ToggleQuestLog();
+        }
+    }
+
+    public void ToggleQuestLog()
+    {
+        if (playerUIbackGround == null) return;
+
+        bool isOpen = playerUIbackGround.activeSelf;
+
+        service ??= ServiceLocator.GetService();
+
+        if (isOpen)
+        {
+            CloseQuestLog();
+            service.PlayOneShot("OpenUI_R");
+        }
+        else
+        {
+            OpenQuestLog();
+            service.PlayOneShot("OpenUI");
         }
     }
 
@@ -81,6 +98,7 @@ public class MainUI : MonoBehaviour
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
         playerUI.OpenPlayerUI(3);
+        questLogWindow.Open();
         GameTimer.PauseGame();
     }
 
@@ -90,6 +108,7 @@ public class MainUI : MonoBehaviour
 
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
+        questLogWindow.Close();
         GameTimer.ResumeGame();
 
         if (contextMenu != null)

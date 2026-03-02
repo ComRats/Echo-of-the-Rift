@@ -461,7 +461,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9111643095551154492}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PixelCrushers.DialogueSystem.QuestLogWindowHotkey,
           Assembly-CSharp-firstpass
         m_MethodName: OpenQuestLog
@@ -5116,7 +5116,6 @@ GameObject:
   - component: {fileID: 2970919600457424677}
   - component: {fileID: 8244653829459058981}
   - component: {fileID: 5380684461530444215}
-  - component: {fileID: 9111643095551154492}
   m_Layer: 0
   m_Name: ---UI---
   m_TagString: Untagged
@@ -5217,25 +5216,10 @@ MonoBehaviour:
   inventoryManager: {fileID: 1979945657100220229}
   fishingUI: {fileID: 5988741947867167589}
   shopUI: {fileID: 3422994083309555792}
-  questWindow: {fileID: 9111643095551154492}
   tonguesCanvas: {fileID: 3325242553226485423}
+  questLogWindow: {fileID: 3372159800089793790}
   canOpenUI: 1
   isOpenUI: 0
---- !u!114 &9111643095551154492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5448540565575511018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6cf523ba89902b4096edc7b521eebfa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  key: 106
-  buttonName: 
-  questLogWindow: {fileID: 0}
 --- !u!1 &5479070883063013135
 GameObject:
   m_ObjectHideFlags: 0
@@ -14542,6 +14526,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Standard UI Quest Log Window
       objectReference: {fileID: 0}
+    - target: {fileID: 11400838, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
+      propertyPath: pauseWhileOpen
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400838, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
+      propertyPath: unlockCursorWhileOpen
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 11406400, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
       propertyPath: m_Padding.m_Top
       value: 20
@@ -15295,6 +15287,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
+--- !u!114 &3372159800089793790 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 11400838, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
+  m_PrefabInstance: {fileID: 3372159800096432760}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27e68e079d48afa43b19c14dd2dbbeaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3372159800116532288 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22410808, guid: f40d1072f56eeb04f9c104b7c4a8811f, type: 3}
