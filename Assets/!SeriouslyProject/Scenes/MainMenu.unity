@@ -1335,6 +1335,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3054237857817594138, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.0002441
+      objectReference: {fileID: 0}
     - target: {fileID: 3944943503745241950, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_enableAutoSizing
       value: 0
@@ -1414,6 +1418,10 @@ PrefabInstance:
     - target: {fileID: 6303169106884157379, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_Name
       value: Runic Standard Dialogue UI Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 6483087345747476905, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 18.647217
       objectReference: {fileID: 0}
     - target: {fileID: 7807118735855279027, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_AnchorMax.y

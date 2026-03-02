@@ -36,7 +36,13 @@ public class MainUI : MonoBehaviour
         }
 
         contextMenu = FindObjectOfType<InventoryContextMenu>();
+    }
+
+    private void Start()
+    {
         questWindow.key = gameSettings.questWindowKey;
+        questWindow.toOpenQuestLog = OpenInventory;
+        questWindow.toCloseQuestLog = CloseInventory;
     }
 
     private void Update()
@@ -65,6 +71,30 @@ public class MainUI : MonoBehaviour
         {
             OpenInventory();
             service.PlayOneShot("OpenUI");
+        }
+    }
+
+    public void OpenQuestLog()
+    {
+        if (playerUIbackGround == null || !canOpenUI) return;
+
+        playerUIbackGround.SetActive(true);
+        isOpenUI = true;
+        playerUI.OpenPlayerUI(3);
+        GameTimer.PauseGame();
+    }
+
+    public void CloseQuestLog()
+    {
+        if (playerUIbackGround == null) return;
+
+        playerUIbackGround.SetActive(false);
+        isOpenUI = false;
+        GameTimer.ResumeGame();
+
+        if (contextMenu != null)
+        {
+            contextMenu.Hide();
         }
     }
 

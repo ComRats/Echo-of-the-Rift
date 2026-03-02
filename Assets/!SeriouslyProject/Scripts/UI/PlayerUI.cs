@@ -7,7 +7,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject playerPanel;
     [SerializeField] private GameObject overlayPanel;
 
-    public void OpenPlayerUI()
+    public void OpenPlayerUI(int tongue = 0)
     {
         for (int i = 0; i < tongues.Count; i++)
         {
@@ -17,8 +17,7 @@ public class PlayerUI : MonoBehaviour
 
         if (tongues.Count > 0)
         {
-            // Всегда открываем первый язычок (инвентарь)
-            SelectTongue(0);
+            SelectTongue(tongue);
         }
     }
 
