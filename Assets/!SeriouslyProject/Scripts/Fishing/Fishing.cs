@@ -17,8 +17,6 @@ public class Fishing : MonoBehaviour
     [Inject] private Player _player;
     [Inject] private GameSettings _settings;
 
-
-
     [Header("Настройки")]
     [SerializeField] private float minWaitTime = 5f;
     [SerializeField] private float maxWaitTime = 15f;

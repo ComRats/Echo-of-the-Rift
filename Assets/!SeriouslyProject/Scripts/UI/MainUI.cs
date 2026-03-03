@@ -39,7 +39,6 @@ public class MainUI : MonoBehaviour
 
     private void Update()
     {
-        // Если магазин открыт, закрываем его на E
         if (Input.GetKeyDown(gameSettings.openInvenoryKey))
         {
             if (shopUI != null && shopUI.IsShopMode)
@@ -56,7 +55,6 @@ public class MainUI : MonoBehaviour
 
         if (Input.GetKeyDown(gameSettings.questWindowKey) && canOpenUI)
         {
-            // Не открываем квест лог если магазин открыт
             if (shopUI != null && shopUI.IsShopMode)
                 return;
 
