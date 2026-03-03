@@ -33,6 +33,7 @@ public class FightManager : MonoBehaviour
     private int allCharacterXP;
     private int characterStartCount;
     private int enemiesStartCount;
+    private int pendingEnemyDeletions = 0;
 
     //WARNING DELETE!!!!!!!!
 #if UNITY_EDITOR
@@ -88,6 +89,13 @@ public class FightManager : MonoBehaviour
                 yield return StartCoroutine(WaitCharacterTurn(character));
             }
         }
+        
+        // Ждем, пока все враги физически удалятся с экрана
+        while (pendingEnemyDeletions > 0)
+        {
+            yield return null;
+        }
+        
         contextText.ChangeTurnText();
         yield return StartCoroutine(EndFight());
     }
@@ -223,9 +231,29 @@ public class FightManager : MonoBehaviour
     {
         if (enemy.Health <= 0)
         {
+            // Удаляем из списков сразу, чтобы логика боя работала правильно
             enemies.Remove(enemy);
             bases.Remove(enemy);
+            
+            // Увеличиваем счетчик ожидающих удаления врагов
+            pendingEnemyDeletions++;
+            
+            // Но GameObject удаляем с задержкой, чтобы показать урон и анимацию
+            StartCoroutine(DeleteEnemyGameObjectWithDelay(enemy));
+        }
+    }
+
+    private IEnumerator DeleteEnemyGameObjectWithDelay(Enemy enemy)
+    {
+        // Ждем, чтобы успели показаться урон и анимация
+        yield return new WaitForSeconds(1.5f);
+        
+        if (enemy != null)
+        {
             Destroy(enemy.gameObject);
         }
+        
+        // Уменьшаем счетчик после удаления
+        pendingEnemyDeletions--;
     }
 }
