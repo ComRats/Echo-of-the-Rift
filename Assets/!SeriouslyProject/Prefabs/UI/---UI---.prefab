@@ -4971,6 +4971,7 @@ MonoBehaviour:
   playerWallet: {fileID: 7094627163202907554}
   mainUI: {fileID: 5380684461530444215}
   contextMenu: {fileID: 0}
+  shopManager: {fileID: 7681985235357188018}
 --- !u!1 &5114504596500820402
 GameObject:
   m_ObjectHideFlags: 0
@@ -8419,7 +8420,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 16, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &5171317629764951236
@@ -18195,6 +18196,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3554940867211475249, guid: f0048392f57ec474e9d3261c1ac8a5d6, type: 3}
   m_PrefabInstance: {fileID: 6326970824503516410}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7681985235357188018 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4419736231534420808, guid: f0048392f57ec474e9d3261c1ac8a5d6, type: 3}
+  m_PrefabInstance: {fileID: 6326970824503516410}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9346daf5f4b9a534e838109af54f7262, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &6402349630604976131
 PrefabInstance:
   m_ObjectHideFlags: 0

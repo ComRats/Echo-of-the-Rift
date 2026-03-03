@@ -29,10 +29,10 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private PlayerWallet playerWallet;
     [SerializeField] private MainUI mainUI;
     [SerializeField] private InventoryContextMenu contextMenu;
+    [SerializeField] private ShopManager shopManager;
 
     private ShopData currentShopData;
     private bool isShopMode = false;
-    private ShopManager shopManager;
     private GameObject shopManagerObject; // Ссылка на созданный объект для правильного удаления
 
     public bool IsShopMode => isShopMode;
@@ -47,10 +47,7 @@ public class ShopUI : MonoBehaviour
         
         // Создаём ShopManager только если его нет (предотвращаем дубликаты)
         if (shopManager == null)
-        {
-            // Проверяем, может быть ShopManager уже существует как дочерний объект
-            shopManager = GetComponentInChildren<ShopManager>();
-            
+        {            
             if (shopManager == null)
             {
                 shopManagerObject = new GameObject("ShopManager");
