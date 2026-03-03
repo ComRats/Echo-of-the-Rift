@@ -6,8 +6,7 @@ using System.Collections;
 
 public class UIAudioAutoInstaller : MonoBehaviour
 {
-    [SerializeField] private string clickSoundName = "ClickSound";
-    private bool isAudioManagerReady = false;
+    [SerializeField] private string clickSoundName = "ButtonClick1";
 
     private void Start()
     {
@@ -16,26 +15,27 @@ public class UIAudioAutoInstaller : MonoBehaviour
 
     private IEnumerator InitializeWithDelay()
     {
-        // Ждем один кадр, чтобы все Awake() методы успели выполниться
-        yield return null;
+        // Ждем несколько кадров, чтобы AudioManager точно инициализировался
+        yield return new WaitForSeconds(0.1f);
         
-        // Проверяем, что AudioManager инициализирован и звук зарегистрирован
+        // Получаем AudioManager
         var audioManager = ServiceLocator.GetService();
-        if (audioManager != null)
+        
+        if (audioManager == null)
         {
-            // Проверяем, что звук существует
-            if (audioManager.TryGetSource(clickSoundName, out _) == AudioError.OK)
-            {
-                isAudioManagerReady = true;
-            }
-            else
-            {
-                Debug.LogWarning($"[UIAudioAutoInstaller] Sound '{clickSoundName}' not registered yet. Buttons will be silent.");
-            }
+            Debug.LogWarning($"[UIAudioAutoInstaller] AudioManager not found. Buttons will be silent.");
+            yield break;
         }
 
-        Button[] buttons = GetComponentsInChildren<Button>(true);
+        // Проверяем, что звук зарегистрирован
+        if (audioManager.TryGetSource(clickSoundName, out _) != AudioError.OK)
+        {
+            Debug.LogWarning($"[UIAudioAutoInstaller] Sound '{clickSoundName}' not registered. Buttons will be silent.");
+            yield break;
+        }
 
+        // Добавляем обработчики к кнопкам
+        Button[] buttons = GetComponentsInChildren<Button>(true);
         foreach (var btn in buttons)
         {
             btn.onClick.AddListener(() => PlaySound());
@@ -44,8 +44,10 @@ public class UIAudioAutoInstaller : MonoBehaviour
 
     private void PlaySound()
     {
-        if (!isAudioManagerReady) return;
-        
-        ServiceLocator.GetService().Play(clickSoundName, ChildType.PARENT);
+        var audioManager = ServiceLocator.GetService();
+        if (audioManager != null)
+        {
+            audioManager.Play(clickSoundName, ChildType.PARENT);
+        }
     }
 }

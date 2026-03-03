@@ -5265,7 +5265,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: SetQuestState("WoeTheLoosers", "failure")
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -5982,7 +5982,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: GiveItem(brokeHelmet,1)
+        value: 
         type: 0
         typeString: 
       conversationID: 8

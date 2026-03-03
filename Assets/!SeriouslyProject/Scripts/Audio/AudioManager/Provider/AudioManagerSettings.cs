@@ -24,23 +24,42 @@ namespace AudioManager.Provider {
 
         private static AudioManagerSettings m_instace;
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStaticState()
+        {
+            m_instace = null;
+        }
+
         private void OnEnable() {
             // When the gameObject first gets enabled we set the given hideFlags.
             gameObject.hideFlags = customHideFlags;
         }
 
         private void Awake() {
+            // Проверяем, есть ли уже существующий экземпляр AudioManagerSettings
+            // Это важно для защиты от Domain Reload
+            var existingInstances = FindObjectsOfType<AudioManagerSettings>();
+            
+            // Если найдено больше одного экземпляра, уничтожаем текущий
+            if (existingInstances.Length > 1)
+            {
+                // Находим самый старый экземпляр (не текущий)
+                foreach (var instance in existingInstances)
+                {
+                    if (instance != this)
+                    {
+                        // Старый экземпляр уже существует, уничтожаем новый
+                        Destroy(gameObject);
+                        return;
+                    }
+                }
+            }
+            
             // Make gameObject persistent so that audio keeps playing over scene changes,
             // as all audioSources and emtpy gameObjects get attached or parented to the passed gameObject in the AudioManager constructor.
             DontDestroyOnLoad(gameObject);
 
-            // Ensure this is the only instance that has been registered as DontDestroyOnLoad, if not detroy this instance.
-            // This is done to ensure we don't create a new instance each time we reload the scene.
-            if (m_instace is not null && m_instace != this) 
-            {
-                Destroy(gameObject);
-                return;
-            }
+            // Устанавливаем singleton instance
             m_instace = this;
 
             SettingsHelper.SetupSounds(out var sounds, settings, this.gameObject);

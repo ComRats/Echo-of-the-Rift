@@ -1,5 +1,6 @@
 using AudioManager.Logger;
 using AudioManager.Core;
+using UnityEngine;
 
 namespace AudioManager.Locator {
     public class ServiceLocator {
@@ -7,6 +8,15 @@ namespace AudioManager.Locator {
         private static readonly NullAudioManager s_nullAudioManagerService = new NullAudioManager();
         // Audio manager instance, that implements our public API.
         private static IAudioManager s_audioManagerService = s_nullAudioManagerService;
+
+        /// <summary>
+        /// Переинициализация после Domain Reload
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStaticState()
+        {
+            s_audioManagerService = s_nullAudioManagerService;
+        }
 
         /// <summary>
         /// Gets the registered audio manager service instance.
