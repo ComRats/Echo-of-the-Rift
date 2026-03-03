@@ -163,6 +163,11 @@ public class Base : MonoBehaviour, IData
 
             if (effect.remainingTurns <= 0)
             {
+                if (effect.data.armorBonus != 0)
+                {
+                    Armor -= effect.data.armorBonus;
+                    Debug.Log($"{Name} теряет бонус защиты {effect.data.armorBonus}. Текущая защита: {Armor}");
+                }
                 activeEffects.RemoveAt(i);
             }
         }

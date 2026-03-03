@@ -20,14 +20,16 @@ public class DefenseAbility : BattleAbility
         attacker.Mana -= ManaCost;
 
         PlayHitAnimation(attacker);
-
-        int armorBonus = attacker.Armor + bonusDefense;
         
-        Debug.Log($"{attacker.Name} использует {AbilityName}! Защита увеличена на {armorBonus}");
+        Debug.Log($"{attacker.Name} использует {AbilityName}! Защита увеличена на {bonusDefense}");
 
         if (defenseEffect != null)
         {
             attacker.ApplyStatusEffect(defenseEffect);
+            if (defenseEffect.armorBonus != 0)
+            {
+                attacker.Armor += defenseEffect.armorBonus;
+            }
         }
         else
         {
@@ -36,9 +38,10 @@ public class DefenseAbility : BattleAbility
             tempDefense.duration = duration;
             tempDefense.damagePerTurn = 0;
             tempDefense.tickColor = Color.blue;
+            tempDefense.armorBonus = bonusDefense;
             
             attacker.ApplyStatusEffect(tempDefense);
-            attacker.Armor += armorBonus;
+            attacker.Armor += bonusDefense;
         }
 
         attacker.UpdateUI();

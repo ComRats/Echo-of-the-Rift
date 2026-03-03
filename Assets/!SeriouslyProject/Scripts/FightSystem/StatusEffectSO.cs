@@ -7,6 +7,7 @@ public class StatusEffectSO : ScriptableObject
     public int damagePerTurn;
     public int duration;
     public Color tickColor = Color.red;
+    public int armorBonus;
 }
 
 [System.Serializable]
