@@ -14,25 +14,36 @@ public class Fishing : MonoBehaviour
     private Coroutine fishingCoroutine;
 
     [Inject] private MainUI _mainUI;
+    [Inject] private Player _player;
+    [Inject] private GameSettings _settings;
 
-    [Header("Управление")]
-    [SerializeField] private KeyCode fishingKey = KeyCode.F;
+
 
     [Header("Настройки")]
     [SerializeField] private float minWaitTime = 5f;
     [SerializeField] private float maxWaitTime = 15f;
     [SerializeField] private float biteWindow = 1f;
 
+    [Header("Мини-игра")]
+    [SerializeField, Range(0, 1)] private float minigameStartFill = 0.15f;
+    [SerializeField] private float minigameClickPower = 0.12f;
+    [SerializeField] private float minigameDrainSpeed = 0.08f;
+
     [Header("Рыба")]
     [SerializeField] private List<string> fishList;
 
     public bool IsFishing { get; private set; } = false;
+    private bool isMinigameActive = false;
+    private ClickBarUI clickBar;
+    private KeyCode fishingKey = KeyCode.F;
 
     private void Start()
     {
         fishingUI = _mainUI.fishingUI;
+        clickBar = fishingUI.clickBar;
         inventoryManager = _mainUI.inventoryManager;
-        playerMovement = FindObjectOfType<Movement>(); // замени на Inject player.movement
+        playerMovement = _player.movement;
+        fishingKey = _settings.useButton;
     }
 
     public void StartFishingProcess(FishingTrigger trigger)
@@ -92,19 +103,59 @@ public class Fishing : MonoBehaviour
 
         if (buttonPressed)
         {
-            Debug.Log("Рыба поймана!");
-            string caughtFish = CatchRandomFish();
-            fishingUI?.ShowCatchResult(caughtFish);
+            Debug.Log("Рыба на крючке! Начинается мини-игра!");
+            fishingUI?.ShowMinigameHint("Кликайте мышью, чтобы удержать рыбу!");
+
+            // Запускаем мини-игру
+            yield return StartMinigame();
         }
         else
         {
             Debug.Log("Упустил!");
             fishingUI?.ShowMissed();
+            yield return new WaitForSeconds(2f);
+        }
+
+        EndFishing();
+    }
+
+    private IEnumerator StartMinigame()
+    {
+        isMinigameActive = true;
+        bool minigameCompleted = false;
+        bool minigameFailed = false;
+
+        clickBar.Setup(minigameStartFill, minigameDrainSpeed,
+            () => { minigameCompleted = true; },
+            () => { minigameFailed = true; });
+
+        // Ждём завершения мини-игры
+        while (!minigameCompleted && !minigameFailed)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                clickBar.AddProgress(minigameClickPower);
+            }
+            yield return null;
+        }
+
+        isMinigameActive = false;
+
+        if (minigameCompleted)
+        {
+            Debug.Log("Рыба поймана!");
+            string caughtFish = CatchRandomFish();
+            var itemData = inventoryManager.FindItemDataByName(caughtFish);
+            fishingUI?.ShowCatchResult(itemData?.itemGameName ?? caughtFish);
+            ServiceLocator.GetService().PlayOneShot("CollectItem1");
+        }
+        else
+        {
+            Debug.Log("Рыба сорвалась!");
+            fishingUI?.ShowFishEscaped();
         }
 
         yield return new WaitForSeconds(2f);
-
-        EndFishing();
     }
 
     private string CatchRandomFish()
@@ -124,8 +175,10 @@ public class Fishing : MonoBehaviour
     public void EndFishing()
     {
         IsFishing = false;
+        isMinigameActive = false;
         _mainUI.canOpenUI = true; // Разблокируем UI после рыбалки
         fishingUI?.HideText();
+        clickBar?.Hide();
 
         if (fishingCoroutine != null)
         {
@@ -138,7 +191,7 @@ public class Fishing : MonoBehaviour
 
         if (currentFishingTrigger != null)
             currentFishingTrigger.ShowButtonAfterFishing();
-            
+
         Debug.Log("Рыбалка окончена.");
     }
 }

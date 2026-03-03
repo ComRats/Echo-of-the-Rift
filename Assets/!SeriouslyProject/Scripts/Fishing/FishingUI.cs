@@ -45,6 +45,12 @@ public class FishingUI : MonoBehaviour
         fishingHelpText.text = "";
     }
 
+    public void ShowFishEscaped()
+    {
+        fishingStatusText.text = "Рыба сорвалась!";
+        fishingHelpText.text = "Попробуйте ещё раз";
+    }
+
     public void HideText()
     {
         fishingStatusText.text = "";

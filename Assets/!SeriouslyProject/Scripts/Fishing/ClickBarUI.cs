@@ -13,16 +13,18 @@ public class ClickBarUI : MonoBehaviour
     private float drainSpeed;
     private bool isActive;
     private Action onComplete;
+    private Action onFailed;
 
     private Tween fillTween;
     private Tween scaleTween;
 
-    public void Setup(float startFill, float drain, Action completeCallback)
+    public void Setup(float startFill, float drain, Action completeCallback, Action failCallback = null)
     {
         isActive = false;
         drainSpeed = drain;
         currentFill = Mathf.Clamp01(startFill);
         onComplete = completeCallback;
+        onFailed = failCallback;
 
         ResetVisuals(currentFill);
 
@@ -49,7 +51,7 @@ public class ClickBarUI : MonoBehaviour
 
     private void Update()
     {
-        if (!isActive || currentFill <= 0) return;
+        if (!isActive) return;
 
         currentFill = Mathf.Max(0, currentFill - drainSpeed * Time.deltaTime);
 
@@ -57,6 +59,11 @@ public class ClickBarUI : MonoBehaviour
         {
             fillImage.fillAmount = currentFill;
             fillImage.color = fillGradient.Evaluate(currentFill);
+        }
+
+        if (currentFill <= 0)
+        {
+            Failed();
         }
     }
 
@@ -76,6 +83,15 @@ public class ClickBarUI : MonoBehaviour
         scaleTween?.Kill(true);
         fillTween?.Kill(true);
         onComplete?.Invoke();
+        Hide();
+    }
+
+    private void Failed()
+    {
+        isActive = false;
+        scaleTween?.Kill(true);
+        fillTween?.Kill(true);
+        onFailed?.Invoke();
         Hide();
     }
 
