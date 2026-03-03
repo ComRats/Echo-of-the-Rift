@@ -2655,8 +2655,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160
-        y: 30
+        x: 184
+        y: 50
         width: 160
         height: 30
     - id: 1
@@ -2701,13 +2701,13 @@ MonoBehaviour:
       - originConversationID: 3
         originDialogueID: 1
         destinationConversationID: 3
-        destinationDialogueID: 2
+        destinationDialogueID: 3
         isConnector: 0
         priority: 2
       - originConversationID: 3
         originDialogueID: 1
         destinationConversationID: 3
-        destinationDialogueID: 3
+        destinationDialogueID: 2
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -2717,8 +2717,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 160.56499
-        y: 80
+        x: 184
+        y: 134
         width: 160
         height: 30
     - id: 2
@@ -2766,8 +2766,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 91.63843
-        y: 163.33336
+        x: 80
+        y: 218
         width: 160
         height: 30
     - id: 3
@@ -2817,12 +2817,12 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 313.10745
-        y: 152.59885
+        x: 288
+        y: 218
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 59.85969, y: 22.656582}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 1.1799998
   - id: 4
     fields:
