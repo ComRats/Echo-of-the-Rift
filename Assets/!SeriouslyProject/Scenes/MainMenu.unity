@@ -1423,6 +1423,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 18.647217
       objectReference: {fileID: 0}
+    - target: {fileID: 7465117809711819730, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_fontSize
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465117809711819730, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 7465117809711819730, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7807118735855279027, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
