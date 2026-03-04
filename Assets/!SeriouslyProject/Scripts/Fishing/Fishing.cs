@@ -33,7 +33,7 @@ public class Fishing : MonoBehaviour
     public bool IsFishing { get; private set; } = false;
     private bool isMinigameActive = false;
     private ClickBarUI clickBar;
-    private KeyCode fishingKey = KeyCode.F;
+    private KeyCode fishingKey;
 
     private void Start()
     {

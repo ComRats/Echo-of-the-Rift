@@ -7,6 +7,8 @@ using System;
 using Sirenix.OdinInspector;
 using AudioManager.Core;
 using AudioManager.Locator;
+using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class CollectTrigger : BaseTrigger
 {
@@ -46,6 +48,7 @@ public class CollectTrigger : BaseTrigger
     [SerializeField, BoxGroup("View")] private Vector3 textMassageOffset;
     [SerializeField, BoxGroup("View"), Range(0, 30)] private int spriteIndex = 14;
 
+    [SerializeField] private UnityEvent onTriggerEnter;
     [SerializeField] private List<CollectEvent> eventQueue = new List<CollectEvent>();
 
     private int currentStepIndex;
@@ -78,7 +81,7 @@ public class CollectTrigger : BaseTrigger
         if (lastUIState != mainUI.isOpenUI)
         {
             lastUIState = mainUI.isOpenUI;
-            
+
             if (mainUI.isOpenUI)
             {
                 ShowButtonPrompt(false, "");
@@ -87,6 +90,11 @@ public class CollectTrigger : BaseTrigger
             {
                 UpdatePrompt();
             }
+        }
+
+        if (currentStepIndex < eventQueue.Count && CanExecute(eventQueue[currentStepIndex]))
+        {
+            onTriggerEnter?.Invoke();
         }
 
         // Блокируем взаимодействие при открытом UI
@@ -167,7 +175,6 @@ public class CollectTrigger : BaseTrigger
             currentStepIndex++;
         }
 
-
         if (currentStepIndex >= eventQueue.Count)
         {
             ShowButtonPrompt(false, "");
@@ -182,10 +189,10 @@ public class CollectTrigger : BaseTrigger
 
     private bool CanExecute(CollectEvent ev)
     {
-        bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) || 
+        bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) ||
             QuestLog.GetQuestState(ev.questCode) == ev.needQuestState;
 
-        bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) || 
+        bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) ||
             (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
 
         return questConditionsMet && inventoryConditionsMet;
@@ -200,8 +207,8 @@ public class CollectTrigger : BaseTrigger
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.TryGetComponent<Player>(out _)) 
-        { 
+        if (collision.TryGetComponent<Player>(out _))
+        {
             playerInside = true;
             if (!mainUI.isOpenUI)
                 UpdatePrompt();

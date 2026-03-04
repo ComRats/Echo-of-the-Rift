@@ -4,7 +4,6 @@ using static EchoRift.SaveLoadSystem.SaveFileNames;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;

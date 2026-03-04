@@ -279,3 +279,31 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: DoorOpen1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 718e48177a2fd8c4ea197981a418fde9, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 0.8
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: LockDoor1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 14390e46b2c028d46ac853549ad6cdab, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 0.8
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

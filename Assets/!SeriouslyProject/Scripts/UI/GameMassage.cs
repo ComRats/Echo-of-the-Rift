@@ -2,6 +2,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.U2D;
 
 public static class GameMassage
 {
@@ -35,6 +36,50 @@ public static class GameMassage
         }
     }
 
+    public static void MassageText(
+        GameObject target,
+        bool isShow,
+        string hintText,
+        Vector3 textOffset = default,
+        float textSize = 3f,
+        Color? textColor = null)
+    {
+        if (isShow)
+        {
+            if (newMessage != null) return;
+
+            newMessage = new GameObject("KeyMassage");
+            newMessage.transform.SetParent(target.transform);
+            newMessage.transform.position = target.transform.position;
+            newMessage.transform.localScale = new Vector3(2f, 2f, 1f);
+
+            var sr = newMessage.AddComponent<SpriteRenderer>();
+            sr.sortingLayerName = "Player";
+            sr.sortingOrder = 500;
+
+            var textObj = new GameObject("HintText");
+            textObj.transform.SetParent(newMessage.transform);
+            textObj.transform.localPosition = textOffset;
+
+            var tmp = textObj.AddComponent<TextMeshPro>();
+            tmp.text = hintText;
+            tmp.fontSize = textSize;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color = textColor ?? Color.white;
+
+            tmp.sortingLayerID = sr.sortingLayerID;
+            tmp.sortingOrder = sr.sortingOrder + 1;
+        }
+        else
+        {
+            if (newMessage != null)
+            {
+                Object.Destroy(newMessage);
+                newMessage = null;
+            }
+        }
+    }
+
     public static void ButtonMassageWithText(
             GameObject target,
             bool isShow,
@@ -52,7 +97,7 @@ public static class GameMassage
             newMessage = new GameObject("KeyMassage");
             newMessage.transform.SetParent(target.transform);
             newMessage.transform.position = target.transform.position + iconOffset;
-            newMessage.transform.localScale = new Vector3(2f, 2f, 1f);
+            newMessage.transform.localScale = new Vector3(1f, 1f, 1f);
 
             var sr = newMessage.AddComponent<SpriteRenderer>();
             sr.sprite = sprite;

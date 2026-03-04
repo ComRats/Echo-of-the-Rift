@@ -12,6 +12,7 @@ namespace EchoRift
         public Movement movement;
         public ChangeNameDialogueActor dialogActor;
         public DialogueSystemEvents dialogueEvents;
+        public PlayerThinking thinking;
         public PlayerSaver playerSaver;
 
         public static FightResult Result = FightResult.None;
