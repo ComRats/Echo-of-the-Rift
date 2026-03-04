@@ -4368,8 +4368,9 @@ MonoBehaviour:
       - title: Sequence
         value: "required SetActive(Women1, true);\r\nrequired MoveTo(Point2, \u0414\u0435\u0434_\u0413\u0413,
           2);\r\nrequired MoveTo(Point1,Women1 , 2);\r\nrequired SetActive(Women1,
-          false)@2;\r\nrequired MoveTo(Point1, \u0414\u0435\u0434_\u0413\u0413, 2)@2;\r\nrequired
-          SetActive(\u0414\u0435\u0434_\u0413\u0413, false)@4;"
+          false)@2;\r\nrequired PlaySound(DoorOpen1)@2;\nrequired MoveTo(Point1,
+          \u0414\u0435\u0434_\u0413\u0413, 2)@2;\r\nrequired SetActive(\u0414\u0435\u0434_\u0413\u0413,
+          false)@4;\nrequired PlaySound(DoorOpen1)@4;"
         type: 0
         typeString: 
       conversationID: 5
@@ -4424,8 +4425,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: "required SetActive(Women1, true);\r\nrequired MoveTo(Point3,Women1
-          , 2);\r"
+        value: "required SetActive(Women1, true);\r\nPlaySound(DoorOpen1);\nrequired
+          MoveTo(Point3,Women1 , 2);\r"
         type: 0
         typeString: 
       conversationID: 5
@@ -4448,7 +4449,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 69.26349, y: 0}
+    canvasScrollPosition: {x: 0, y: 27.550995}
     canvasZoom: 0.98
   - id: 6
     fields:
