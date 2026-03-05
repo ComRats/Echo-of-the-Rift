@@ -97,7 +97,6 @@ public class CollectTrigger : BaseTrigger
             onTriggerEnter?.Invoke();
         }
 
-        // Блокируем взаимодействие при открытом UI
         if (mainUI.isOpenUI) return;
 
         if (minigameActive)

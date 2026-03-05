@@ -4754,7 +4754,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: GiveItem(brokeHelmet,1)
+        value: GiveItem(rustChestplate,1)
         type: 0
         typeString: 
       conversationID: 6
@@ -5154,7 +5154,7 @@ MonoBehaviour:
         destinationDialogueID: 2
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: CurrentQuestState("WoeTheLoosers") ~= "failure"
       userScript: 
       onExecute:
         m_PersistentCalls:
