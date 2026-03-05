@@ -12,6 +12,7 @@ namespace EchoRift.SaveLoadSystem
         
         public const string PLAYER_DATA = "playerData";
         public const string PLAYER_NAME = "PlayerName";
+        public const string TEAM_DATA = "teamData";
         
         public static string GetPlayerSceneSave(string sceneName) => $"playerSave_{sceneName}";
         

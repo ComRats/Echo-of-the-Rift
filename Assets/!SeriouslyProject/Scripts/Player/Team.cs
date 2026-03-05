@@ -7,6 +7,112 @@ using UnityEngine;
 public class Team : MonoBehaviour
 {
     public List<CharactersSettings> characters = new List<CharactersSettings>();
+
+    public TeamSaveData CreateSaveData()
+    {
+        var saveData = new TeamSaveData();
+        saveData.charactersData = new List<CharacterSaveData>();
+
+        foreach (var character in characters)
+        {
+            var charData = new CharacterSaveData
+            {
+                characterDataName = character.characterDataName,
+                useCharacterData = character.useCharacterData,
+                Name = character.Name,
+                Health = character.Health,
+                MaxHealth = character.MaxHealth,
+                Mana = character.Mana,
+                MaxMana = character.MaxMana,
+                Level = character.Level,
+                CurrentXP = character.CurrentXP,
+                MaxXP = character.MaxXP,
+                Damage = character.Damage,
+                Heal = character.Heal,
+                Armor = character.Armor,
+                XpReward = character.XpReward
+            };
+            saveData.charactersData.Add(charData);
+        }
+
+        return saveData;
+    }
+
+    public void LoadFromSaveData(TeamSaveData saveData)
+    {
+        if (saveData == null || saveData.charactersData == null) return;
+
+        for (int i = 0; i < Mathf.Min(characters.Count, saveData.charactersData.Count); i++)
+        {
+            var charData = saveData.charactersData[i];
+            var character = characters[i];
+
+            // ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼ Ñ‡Ñ‚Ð¾ ÑÑ‚Ð¾ Ñ‚Ð¾Ñ‚ Ð¶Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶
+            if (character.useCharacterData && character.characterDataName != charData.characterDataName)
+                continue;
+
+            // Ð”Ð»Ñ ScriptableObject Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶ÐµÐ¹ Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ runtime ÐºÐ¾Ð¿Ð¸ÑŽ
+            if (character.useCharacterData && character.RuntimeData != null)
+            {
+                character.RuntimeData.Health = charData.Health;
+                character.RuntimeData.Mana = charData.Mana;
+                character.RuntimeData.Level = charData.Level;
+                character.RuntimeData.CurrentXP = charData.CurrentXP;
+                character.RuntimeData.MaxXP = charData.MaxXP;
+                
+                // ÐžÐ±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð¿Ñ€Ð¾Ð¸Ð·Ð²Ð¾Ð´Ð½Ñ‹Ðµ Ñ…Ð°Ñ€Ð°ÐºÑ‚ÐµÑ€Ð¸ÑÑ‚Ð¸ÐºÐ¸ Ð½Ð° Ð¾ÑÐ½Ð¾Ð²Ðµ ÑƒÑ€Ð¾Ð²Ð½Ñ
+                character.RuntimeData.Damage = charData.Damage;
+                character.RuntimeData.MaxHealth = charData.MaxHealth;
+                character.RuntimeData.Heal = charData.Heal;
+                character.RuntimeData.Armor = charData.Armor;
+                character.RuntimeData.MaxMana = charData.MaxMana;
+                character.RuntimeData.XpReward = charData.XpReward;
+
+                // Ð’Ð°Ð»Ð¸Ð´Ð°Ñ†Ð¸Ñ Ð¿Ð¾ÑÐ»Ðµ Ð·Ð°Ð³Ñ€ÑƒÐ·ÐºÐ¸
+                character.RuntimeData.ValidateAndFixData();
+            }
+            else
+            {
+                // Ð”Ð»Ñ Ñ€ÑƒÑ‡Ð½Ñ‹Ñ… Ð½Ð°ÑÑ‚Ñ€Ð¾ÐµÐº Ð¾Ð±Ð½Ð¾Ð²Ð»ÑÐµÐ¼ Ð½Ð°Ð¿Ñ€ÑÐ¼ÑƒÑŽ
+                character.Health = charData.Health;
+                character.MaxHealth = charData.MaxHealth;
+                character.Mana = charData.Mana;
+                character.MaxMana = charData.MaxMana;
+                character.Level = charData.Level;
+                character.CurrentXP = charData.CurrentXP;
+                character.MaxXP = charData.MaxXP;
+                character.Damage = charData.Damage;
+                character.Heal = charData.Heal;
+                character.Armor = charData.Armor;
+                character.XpReward = charData.XpReward;
+            }
+        }
+    }
+}
+
+[Serializable]
+public class TeamSaveData
+{
+    public List<CharacterSaveData> charactersData;
+}
+
+[Serializable]
+public class CharacterSaveData
+{
+    public string characterDataName;
+    public bool useCharacterData;
+    public string Name;
+    public int Health;
+    public int MaxHealth;
+    public int Mana;
+    public int MaxMana;
+    public int Level;
+    public int CurrentXP;
+    public int MaxXP;
+    public int Damage;
+    public int Heal;
+    public int Armor;
+    public int XpReward;
 }
 
 [Serializable]
@@ -14,151 +120,309 @@ public class CharactersSettings : IData
 {
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("Èñïîëüçîâàòü øàáëîí ïåðñîíàæà")]
+    [LabelText("Ð˜ÑÐ¿Ð¾Ð»ÑŒÐ·Ð¾Ð²Ð°Ñ‚ÑŒ Ð´Ð°Ð½Ð½Ñ‹Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     public bool useCharacterData = true;
+
     [Space(1)]
     [LabelWidth(200)]
-    [LabelText("Èìÿ øàáëîíà ïåðñîíàæà (ðåñóðñû)")]
+    [LabelText("Ð˜Ð¼Ñ Ñ„Ð°Ð¹Ð»Ð° Ð´Ð°Ð½Ð½Ñ‹Ñ… Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð° (Resources)")]
     public string characterDataName;
 
     [ShowIf("useCharacterData")]
-    [LabelText("Øàáëîí ïåðñîíàæà")]
+    [LabelText("Ð”Ð°Ð½Ð½Ñ‹Ðµ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [InlineEditor(InlineEditorModes.GUIOnly)]
     public CharacterData characterData;
 
+    // Runtime ÐºÐ¾Ð¿Ð¸Ñ Ð´Ð»Ñ Ð¸Ð·Ð¼ÐµÐ½ÐµÐ½Ð¸Ð¹ Ð²Ð¾ Ð²Ñ€ÐµÐ¼Ñ Ð¸Ð³Ñ€Ñ‹
+    [System.NonSerialized]
+    private CharacterDataRuntime runtimeData;
+
+    // Ð“ÐµÑ‚Ñ‚ÐµÑ€ Ð´Ð»Ñ runtime Ð´Ð°Ð½Ð½Ñ‹Ñ…
+    public CharacterDataRuntime RuntimeData
+    {
+        get
+        {
+            if (useCharacterData && characterData != null && runtimeData == null)
+            {
+                runtimeData = CharacterDataRuntime.CreateFromScriptableObject(characterData);
+            }
+            return runtimeData;
+        }
+    }
+
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private string name;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [TextArea(3, 10)]
     [SerializeField] private string description;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _damage;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _magicDamage;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _priority;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _maxMana;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _mana;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _maxHealth;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _health;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _heal;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _armor;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _lucky;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _creteChance;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _level;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _currentXP;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _maxXP;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int _xpReward;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int damagePerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int maxHealthPerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int healPerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int armorPerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int maxManaPerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private int xpRewardPerLevel = 1;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
-    [LabelText("Ñïðàéò ïåðñîíàæà")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
+    [LabelText("Ð¡Ð¿Ñ€Ð°Ð¹Ñ‚ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
     [SerializeField] private Sprite sprite;
 
     [HideIf("useCharacterData")]
-    [FoldoutGroup("Ïàðàìåòðû âðó÷íóþ")]
-    [LabelText("Ïóòü äî ñïðàéòà (Resources)")]
+    [FoldoutGroup("ÐŸÐ°Ñ€Ð°Ð¼ÐµÑ‚Ñ€Ñ‹ Ð¿ÐµÑ€ÑÐ¾Ð½Ð°Ð¶Ð°")]
+    [LabelText("ÐŸÑƒÑ‚ÑŒ Ðº ÑÐ¿Ñ€Ð°Ð¹Ñ‚Ñƒ (Resources)")]
     public string spritePath;
 
-    public string Name { get => name; set => name = value; }
-    public string Description { get => description; set => description = value; }
-    public Sprite Sprite { get => sprite; set => sprite = value; }
-    public int Damage { get => _damage; set => _damage = value; }
-    public int MagicDamage { get => _magicDamage; set => _magicDamage = value; }
-    public int Priority { get => _priority; set => _priority = value; }
-    public int MaxMana { get => _maxMana; set => _maxMana = value; }
-    public int Mana { get => _mana; set => _mana = value; }
-    public int MaxHealth { get => _maxHealth; set => _maxHealth = value; }
-    public int Health { get => _health; set => _health = value; }
-    public int Heal { get => _heal; set => _heal = value; }
-    public int Armor { get => _armor; set => _armor = value; }
-    public int Lucky { get => _lucky; set => _lucky = value; }
-    public int CreteDamage { get => _creteChance; set => _creteChance = value; }
-    public int Level { get => _level; set => _level = value; }
-    public int CurrentXP { get => _currentXP; set => _currentXP = value; }
-    public int MaxXP { get => _maxXP; set => _maxXP = value; }
-    public int XpReward { get => _xpReward; set => _xpReward = value; }
-    public int DamagePerLevel { get => damagePerLevel; set => damagePerLevel = value; }
-    public int MaxHealthPerLevel { get => maxHealthPerLevel; set => maxHealthPerLevel = value; }
-    public int HealPerLevel { get => healPerLevel; set => healPerLevel = value; }
-    public int ArmorPerLevel { get => armorPerLevel; set => armorPerLevel = value; }
-    public int MaxManaPerLevel { get => maxManaPerLevel; set => maxManaPerLevel = value; }
-    public int XpRewardPerLevel { get => xpRewardPerLevel; set => xpRewardPerLevel = value; }
+    public string Name 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Name : name; 
+        set => name = value; 
+    }
+    
+    public string Description 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Description : description; 
+        set => description = value; 
+    }
+    
+    public Sprite Sprite 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Sprite : sprite; 
+        set => sprite = value; 
+    }
+    
+    public int Damage 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Damage : _damage; 
+        set => _damage = value; 
+    }
+    
+    public int MagicDamage 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MagicDamage : _magicDamage; 
+        set => _magicDamage = value; 
+    }
+    
+    public int Priority 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Priority : _priority; 
+        set => _priority = value; 
+    }
+    
+    public int MaxMana 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MaxMana : _maxMana; 
+        set => _maxMana = value; 
+    }
+    
+    public int Mana 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Mana : _mana; 
+        set => _mana = value; 
+    }
+    
+    public int MaxHealth 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MaxHealth : _maxHealth; 
+        set => _maxHealth = value; 
+    }
+    
+    public int Health 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Health : _health; 
+        set => _health = value; 
+    }
+    
+    public int Heal 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Heal : _heal; 
+        set => _heal = value; 
+    }
+    
+    public int Armor 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Armor : _armor; 
+        set => _armor = value; 
+    }
+    
+    public int Lucky 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Lucky : _lucky; 
+        set => _lucky = value; 
+    }
+    
+    public int CreteDamage 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.CreteDamage : _creteChance; 
+        set => _creteChance = value; 
+    }
+    
+    public int Level 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.Level : _level; 
+        set 
+        { 
+            _level = value;
+            if (useCharacterData && RuntimeData != null) 
+                RuntimeData.Level = value;
+        }
+    }
+    
+    public int CurrentXP 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.CurrentXP : _currentXP; 
+        set 
+        { 
+            _currentXP = value;
+            if (useCharacterData && RuntimeData != null) 
+                RuntimeData.CurrentXP = value;
+        }
+    }
+    
+    public int MaxXP 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MaxXP : _maxXP; 
+        set 
+        { 
+            _maxXP = value;
+            if (useCharacterData && RuntimeData != null) 
+                RuntimeData.MaxXP = value;
+        }
+    }
+    
+    public int XpReward 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.XpReward : _xpReward; 
+        set => _xpReward = value; 
+    }
+    
+    public int DamagePerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.DamagePerLevel : damagePerLevel; 
+        set => damagePerLevel = value; 
+    }
+    
+    public int MaxHealthPerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MaxHealthPerLevel : maxHealthPerLevel; 
+        set => maxHealthPerLevel = value; 
+    }
+    
+    public int HealPerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.HealPerLevel : healPerLevel; 
+        set => healPerLevel = value; 
+    }
+    
+    public int ArmorPerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.ArmorPerLevel : armorPerLevel; 
+        set => armorPerLevel = value; 
+    }
+    
+    public int MaxManaPerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.MaxManaPerLevel : maxManaPerLevel; 
+        set => maxManaPerLevel = value; 
+    }
+    
+    public int XpRewardPerLevel 
+    { 
+        get => useCharacterData && RuntimeData != null ? RuntimeData.XpRewardPerLevel : xpRewardPerLevel; 
+        set => xpRewardPerLevel = value; 
+    }
+    
     [HideInInspector]
     public string AttackAnimationName { get => ""; set { } }
 
     public Sprite GetSprite()
     {
-        if (string.IsNullOrEmpty(spritePath)) return null;
+        if (useCharacterData && RuntimeData != null)
+            return RuntimeData.Sprite;
+            
+        if (string.IsNullOrEmpty(spritePath)) 
+            return sprite;
+            
         return Resources.Load<Sprite>(spritePath);
     }
 

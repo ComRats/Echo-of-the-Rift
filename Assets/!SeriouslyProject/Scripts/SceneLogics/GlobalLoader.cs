@@ -1,4 +1,4 @@
-﻿using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using AudioManager.Provider;
 using FightSystem.Data;
@@ -69,6 +69,12 @@ public class GlobalLoader : MonoBehaviour
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
     {
         LoadPlayer();
+        
+        // Обновляем UI команды после загрузки сцены
+        if (mainUI != null && mainUI.teamManager != null)
+        {
+            mainUI.teamManager.UpdateTeamUI();
+        }
     }
 
 
@@ -90,6 +96,14 @@ public class GlobalLoader : MonoBehaviour
         SaveLoadSystem.Save(GetPlayerSceneSave(sceneName), data, GAME_DIRECTORY);
         SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
 
+        // Сохранение команды
+        var team = playerInstance.GetComponent<Team>();
+        if (team != null)
+        {
+            var teamData = team.CreateSaveData();
+            SaveLoadSystem.Save(TEAM_DATA, teamData, GAME_DIRECTORY);
+        }
+
         mainUI.inventoryManager.SaveInventory();
     }
 
@@ -105,6 +119,20 @@ public class GlobalLoader : MonoBehaviour
             playerInstance.playerSaver = new Player.PlayerSaver();
             playerInstance.playerSaver.LoadFrom(characterData);
             SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
+        }
+
+        // Загрузка команды
+        var team = playerInstance.GetComponent<Team>();
+        if (team != null && SaveLoadSystem.Exists(TEAM_DATA, GAME_DIRECTORY))
+        {
+            var teamData = SaveLoadSystem.Load<TeamSaveData>(TEAM_DATA, GAME_DIRECTORY);
+            team.LoadFromSaveData(teamData);
+            
+            // Обновляем UI команды после загрузки данных
+            if (mainUI != null && mainUI.teamManager != null)
+            {
+                mainUI.teamManager.UpdateTeamUI();
+            }
         }
     }
 

@@ -89,5 +89,57 @@ namespace FightSystem.Data
             _health = _maxHealth;
             _mana = _maxMana;
         }
+
+        public void ValidateAndFixData()
+        {
+            // Если уровень 0 или не задан, устанавливаем минимум 1
+            if (_level <= 0)
+            {
+                _level = 1;
+                UpdateStats();
+            }
+
+            // Если MaxHealth не задан, вычисляем
+            if (_maxHealth <= 0)
+            {
+                _maxHealth = _maxHealthPerLevel * _level;
+            }
+
+            // Если MaxXP не задан, устанавливаем базовое значение
+            if (_maxXP <= 0)
+            {
+                _maxXP = 100 * _level;
+            }
+
+            // Если MaxMana не задан, вычисляем
+            if (_maxMana <= 0)
+            {
+                _maxMana = _maxManaPerLevel * _level;
+            }
+
+            // Ограничиваем текущее здоровье максимальным
+            if (_health > _maxHealth)
+            {
+                _health = _maxHealth;
+            }
+
+            // Если здоровье 0 или меньше, восстанавливаем до максимума
+            if (_health <= 0)
+            {
+                _health = _maxHealth;
+            }
+
+            // Ограничиваем текущую ману максимальной
+            if (_mana > _maxMana)
+            {
+                _mana = _maxMana;
+            }
+
+            // Если мана 0 или меньше, восстанавливаем до максимума
+            if (_mana <= 0)
+            {
+                _mana = _maxMana;
+            }
+        }
     }
 }

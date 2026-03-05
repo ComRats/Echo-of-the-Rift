@@ -17,6 +17,7 @@ public class MainUI : MonoBehaviour
     public ShopUI shopUI;
     public Canvas tonguesCanvas;
     public StandardUIQuestLogWindow questLogWindow;
+    public TeamManager teamManager;
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;

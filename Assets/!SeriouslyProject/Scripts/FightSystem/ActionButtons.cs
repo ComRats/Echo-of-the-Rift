@@ -528,6 +528,18 @@ public class ActionButtons : MonoBehaviour
     public void EscapeFight()
     {
         Player.Result = FightResult.Escape;
+        
+        // Синхронизируем команду перед выходом из боя
+        var battleSync = FindObjectOfType<BattleTeamSync>();
+        if (battleSync != null)
+        {
+            battleSync.SyncTeamAfterBattle();
+        }
+        else
+        {
+            Debug.LogWarning("[ActionButtons] BattleTeamSync not found, team data not synchronized");
+        }
+        
         var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         sceneLoader.LoadAsync(data.SceneIndex);
     }

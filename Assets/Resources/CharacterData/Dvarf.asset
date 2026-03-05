@@ -14,12 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Dvarf
   _description: Dvarf
-  _sprite: {fileID: 611899083, guid: 62ac10b75a33b5648aef1ef50de04c13, type: 3}
-  _damage: 15
+  _sprite: {fileID: -521198639, guid: 26bc0f092e037b140bdc193d26c67f49, type: 3}
+  _damage: 3
+  _magicDamage: 0
   _priority: 5
-  _maxMana: 125
-  _mana: 125
-  _maxHealth: 75
-  _health: 75
-  _heal: 50
-  _armor: 5
+  _maxMana: 5
+  _mana: 4
+  _maxHealth: 7
+  _health: 7
+  _heal: 1
+  _armor: 2
+  _lucky: 0
+  _creteChance: 0
+  _level: 1
+  _currentXP: 57
+  _maxXP: 70
+  _xpReward: 50
+  _damagePerLevel: 1
+  _maxHealthPerLevel: 1
+  _healPerLevel: 1
+  _armorPerLevel: 1
+  _maxManaPerLevel: 1
+  _xpRewardPerLevel: 1
+  _abilitySet: {fileID: 11400000, guid: 149655fc9a8292e4a9d3a6ded93994ff, type: 2}

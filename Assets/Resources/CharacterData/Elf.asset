@@ -15,11 +15,25 @@ MonoBehaviour:
   _name: Elf
   _description: Elf
   _sprite: {fileID: 21300000, guid: c9235e1fdc3982844a02eb9c804fc720, type: 3}
-  _damage: 10
+  _damage: 1
+  _magicDamage: 0
   _priority: 10
-  _maxMana: 105
-  _mana: 105
-  _maxHealth: 50
-  _health: 50
-  _heal: 20
-  _armor: 5
+  _maxMana: 1
+  _mana: 1
+  _maxHealth: 10
+  _health: 10
+  _heal: 1
+  _armor: 1
+  _lucky: 0
+  _creteChance: 0
+  _level: 1
+  _currentXP: 34
+  _maxXP: 100
+  _xpReward: 1
+  _damagePerLevel: 1
+  _maxHealthPerLevel: 1
+  _healPerLevel: 1
+  _armorPerLevel: 1
+  _maxManaPerLevel: 1
+  _xpRewardPerLevel: 1
+  _abilitySet: {fileID: 11400000, guid: 149655fc9a8292e4a9d3a6ded93994ff, type: 2}

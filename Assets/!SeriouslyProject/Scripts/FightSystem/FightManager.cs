@@ -26,6 +26,7 @@ public class FightManager : MonoBehaviour
 
     [Title("Ability System")]
     [SerializeField] private AbilityManager abilityManager;
+    [SerializeField] private BattleTeamSync battleTeamSync;
 
     [Inject] private GameSettings gameSettings;
 
@@ -114,6 +115,10 @@ public class FightManager : MonoBehaviour
 
             Player.Result = FightResult.Win;
 
+            // Синхронизируем команду перед выходом
+            if (battleTeamSync != null)
+                battleTeamSync.SyncTeamAfterBattle();
+
             //���������� UI � ������
             yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
@@ -129,6 +134,10 @@ public class FightManager : MonoBehaviour
             }
 
             Player.Result = FightResult.Lose;
+
+            // Синхронизируем команду перед выходом
+            if (battleTeamSync != null)
+                battleTeamSync.SyncTeamAfterBattle();
 
             //���������� UI � ������
             yield return new WaitForSecondsRealtime(1f);

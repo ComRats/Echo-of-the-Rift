@@ -652,6 +652,7 @@ GameObject:
   m_Component:
   - component: {fileID: 517749534}
   - component: {fileID: 517749535}
+  - component: {fileID: 517749536}
   m_Layer: 5
   m_Name: BattleSystem
   m_TagString: Untagged
@@ -699,6 +700,20 @@ MonoBehaviour:
   characters: []
   bases: []
   abilityManager: {fileID: 1328588736}
+  battleTeamSync: {fileID: 517749536}
+--- !u!114 &517749536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 517749533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa7e878071eb8704aa862b8fe2e3fb7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fightManager: {fileID: 517749535}
 --- !u!1 &555087642
 GameObject:
   m_ObjectHideFlags: 0
