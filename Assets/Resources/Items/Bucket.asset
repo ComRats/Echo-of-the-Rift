@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: Bucket
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 1b707e2f50815b94f8659717efb569e2, type: 3}
+  icon: {fileID: 3286163911610860551, guid: 1434cce2c39ccfe46b59b56078ec4835, type: 3}
   itemName: Bucket
   itemGameName: "\u0412\u0435\u0434\u0440\u043E"
   itemType: 64

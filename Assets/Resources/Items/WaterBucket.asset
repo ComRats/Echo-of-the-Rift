@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: WaterBucket
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: a857fa04194a9d04f86619e706821df2, type: 3}
+  icon: {fileID: 3286163911610860551, guid: 8cdb69304437be642b32df76a06447c8, type: 3}
   itemName: WaterBucket
   itemGameName: "\u0412\u0435\u0434\u0440\u043E \u0441 \u0432\u043E\u0434\u043E\u0439"
   itemType: 4

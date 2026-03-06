@@ -16,6 +16,7 @@ MonoBehaviour:
   itemName: skatina
   itemGameName: "\u0421\u043A\u0430\u0442\u0438\u043D\u0430"
   itemType: 1
+  itemPrice: 0
   description: 
   isStackable: 1
   maxStackSize: 9
