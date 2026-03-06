@@ -1,4 +1,5 @@
 using FightSystem.Character;
+using FightSystem.Data;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,6 +87,13 @@ public class TeamManager : MonoBehaviour
         {
             Debug.LogError("[TeamManager] TeamMember component not found on prefab");
         }
+    }
+
+    public void AddTeamMember(CharacterData data)
+    {
+        team.AddCharacter(data);
+
+        CreateTeamMemberUI(team.characters[team.characters.Count - 1]);
     }
 
     private void ClearTeamUI()

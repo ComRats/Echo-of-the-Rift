@@ -40,15 +40,15 @@ public class GlobalLoader : MonoBehaviour
 
         LoadGlobal();
         LoadPlayerData();
-        
+
         playerInstance.SetListenerToEvents(OnConversationStart, OnConversationEnd);
     }
-    
+
     private void OnConversationStart(Transform actor)
     {
         mainUI.canOpenUI = false;
     }
-    
+
     private void OnConversationEnd(Transform actor)
     {
         mainUI.canOpenUI = true;
@@ -66,10 +66,10 @@ public class GlobalLoader : MonoBehaviour
         mainUI.Hide();
     }
 
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode) 
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         LoadPlayer();
-        
+
         // Обновляем UI команды после загрузки сцены
         if (mainUI != null && mainUI.teamManager != null)
         {
@@ -98,11 +98,8 @@ public class GlobalLoader : MonoBehaviour
 
         // Сохранение команды
         var team = playerInstance.GetComponent<Team>();
-        if (team != null)
-        {
-            var teamData = team.CreateSaveData();
-            SaveLoadSystem.Save(TEAM_DATA, teamData, GAME_DIRECTORY);
-        }
+        var teamData = team.CreateSaveData();
+        SaveLoadSystem.Save(TEAM_DATA, teamData, GAME_DIRECTORY);
 
         mainUI.inventoryManager.SaveInventory();
     }
@@ -127,7 +124,7 @@ public class GlobalLoader : MonoBehaviour
         {
             var teamData = SaveLoadSystem.Load<TeamSaveData>(TEAM_DATA, GAME_DIRECTORY);
             team.LoadFromSaveData(teamData);
-            
+
             // Обновляем UI команды после загрузки данных
             if (mainUI != null && mainUI.teamManager != null)
             {
@@ -149,7 +146,7 @@ public class GlobalLoader : MonoBehaviour
             playerInstance.transform.rotation = Quaternion.identity;
             return;
         }
-        
+
         string sceneName = SceneManager.GetActiveScene().name;
         string fileName = GetPlayerSceneSave(sceneName);
 
@@ -170,7 +167,7 @@ public class GlobalLoader : MonoBehaviour
     }
 
     private void ResetPlayerTransform()
-    {  
+    {
         playerInstance.transform.position = playerInstance.startPosition;
         playerInstance.transform.rotation = Quaternion.identity;
     }
@@ -191,15 +188,15 @@ public class GlobalLoader : MonoBehaviour
         mainUI.inventoryManager.SaveInventory();
     }
 
-    private void LoadGlobal() 
+    private void LoadGlobal()
     {
         var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         isStart = data.isStart;
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
-        
+
         GameTimer.SetTime(data.gameTime);
-        
+
         // Принудительно возобновляем игру при загрузке, сбрасывая все состояния паузы
         GameTimer.ForceResumeGame();
     }
