@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: brokeHelmet
   m_EditorClassIdentifier: 
-  icon: {fileID: 3286163911610860551, guid: 9a59181c8e3206440a52ca390f6d0f82, type: 3}
+  icon: {fileID: 0}
   itemName: brokeHelmet
   itemGameName: "\u041F\u043E\u0434\u0431\u0438\u0442\u044B\u0439 \u0448\u043B\u0435\u043C"
   itemType: 64

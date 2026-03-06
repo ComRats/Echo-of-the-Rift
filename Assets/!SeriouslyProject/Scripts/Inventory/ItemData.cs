@@ -23,6 +23,7 @@ public class ItemData : ScriptableObject
     [VerticalGroup("Информация о предмете/Main/Left")]
     [PreviewField(100, ObjectFieldAlignment.Center)]
     [HideLabel]
+    [Tooltip("SVG иконка предмета (импортированная как Sprite из Vector Graphics)")]
     public Sprite icon;
 
     [VerticalGroup("Информация о предмете/Main/Right")]

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2354965145934809992}
   - component: {fileID: 2940191238900223003}
-  - component: {fileID: 5369847211327002565}
+  - component: {fileID: 5910045364768545966}
   - component: {fileID: 5516471730581111185}
   m_Layer: 5
   m_Name: ItemPrefab
@@ -47,7 +47,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1068034338426748895}
   m_CullTransparentMesh: 1
---- !u!114 &5369847211327002565
+--- !u!114 &5910045364768545966
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1068034338426748895}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -68,15 +68,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 0}
-  m_Type: 0
   m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
 --- !u!114 &5516471730581111185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,7 +81,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15452836f7082e943b39b3c08b5f2ce0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  image: {fileID: 5369847211327002565}
+  image: {fileID: 5910045364768545966}
   countText: {fileID: 1422977441691322598}
   parentAfterDrag: {fileID: 0}
   itemData: {fileID: 0}

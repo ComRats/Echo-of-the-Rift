@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg
+    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:cc="http://creativecommons.org/ns#"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+    xmlns:svg="http://www.w3.org/2000/svg"
+    xmlns:ns1="http://sozi.baierouge.fr"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    id="svg2"
+    sodipodi:docname="Piggy.svg"
+    viewBox="0 0 220.9 253.18"
+    version="1.1"
+    inkscape:version="0.48.1 r9760"
+  >
+  <sodipodi:namedview
+      id="base"
+      fit-margin-left="0"
+      inkscape:zoom="0.33163487"
+      borderopacity="1.0"
+      inkscape:current-layer="layer1"
+      inkscape:cx="614.90439"
+      inkscape:window-y="27"
+      inkscape:window-maximized="1"
+      showgrid="false"
+      fit-margin-right="0"
+      showguides="true"
+      bordercolor="#666666"
+      inkscape:window-x="0"
+      inkscape:guide-bbox="true"
+      fit-margin-bottom="0"
+      inkscape:window-width="1920"
+      inkscape:pageopacity="0.0"
+      inkscape:pageshadow="2"
+      pagecolor="#ffffff"
+      inkscape:cy="-321.05124"
+      inkscape:document-units="px"
+      inkscape:window-height="1022"
+      fit-margin-top="0"
+  />
+  <g
+      id="layer1"
+      inkscape:label="Capa 1"
+      inkscape:groupmode="layer"
+      transform="translate(242.86 389.16)"
+    >
+    <path
+        id="path3041"
+        sodipodi:nodetypes="cssssssc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+        d="m-47.041-264.07s-7.43-35.453 2.5269-48.01c8.4464-10.652 8.4912 3.8626 14.379-8.3906 2.8624-5.9567 5.3651-6.2321 6.4452-5.4745 3.3808 2.3714 1.0657 2.2639-0.67072 10.724-3.192 15.551-4.1443 0.0782-13.743 12.723-11.782 15.521-3.884 72.541-7.0426 54.853s-1.8951-16.425-1.8951-16.425z"
+    />
+    <path
+        id="path3037"
+        sodipodi:nodetypes="cscc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+        d="m-52.315-210.61s4.8611 27.646-0.28183 31.009c-6.2713 4.1006-20.205-10.9-20.205-10.9z"
+    />
+    <path
+        id="path3039"
+        d="m-76.9-194.76c23.14 25.029 33.462 24.725 25.072-13.245 2.3336 25.065-1.7587 37.543-25.072 13.245z"
+        sodipodi:nodetypes="ccc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path3035"
+        d="m-99.38-178.31s-2.7849 37.247-10.519 39.9c-9.431 3.2346-22.489-20.675-22.489-20.675z"
+        sodipodi:nodetypes="cscc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path3033"
+        sodipodi:nodetypes="cscc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+        d="m-207.47-185.93s2.7849 37.247 10.519 39.9c9.431 3.2346 22.489-20.675 22.489-20.675z"
+    />
+    <path
+        id="path3023"
+        d="m-42.44-343.6-28.694-21.471 2.9471 34.633-45.999-25.503 42.86-33.221z"
+        sodipodi:nodetypes="cccccc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path3043"
+        d="m-47.041-264.07s-6.3418-32.551 3.615-45.108c8.4464-10.652 8.5935 2.9756 14.551-9.8314 2.7873-5.9922 3.1103-6.2342 4.4871-5.5899 1.7036 0.7972-0.71892 3.3885-1.5062 8.1917-1.3409 8.1811-3.6696 6.745-7.4561 7.1507-1.5725 0.16848-3.7499 0.14639-6.5664 3.8569-11.782 15.521-2.0704 75.443-5.229 57.755s-1.8951-16.425-1.8951-16.425z"
+        sodipodi:nodetypes="csssssssc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path2989"
+        sodipodi:rx="485.71429"
+        sodipodi:ry="485.71429"
+        style="fill:#ff8080"
+        sodipodi:type="arc"
+        d="m728.57 226.65c0 268.25-217.46 485.71-485.71 485.71s-485.71-217.46-485.71-485.71 217.46-485.71 485.71-485.71 485.71 217.46 485.71 485.71z"
+        transform="matrix(.20993 0 0 .20993 -191.87 -307.46)"
+        sodipodi:cy="226.6479"
+        sodipodi:cx="242.85715"
+    />
+    <path
+        id="path3025"
+        d="m-83.831-375.8 10.35 7.7698 1.3423 33.533c-12.449-10.672-24.898-16.956-37.348-20.889z"
+        sodipodi:nodetypes="ccccc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path2993"
+        sodipodi:rx="485.71429"
+        sodipodi:ry="485.71429"
+        style="fill:#ffd5d5"
+        sodipodi:type="arc"
+        d="m728.57 226.65c0 268.25-217.46 485.71-485.71 485.71s-485.71-217.46-485.71-485.71 217.46-485.71 485.71-485.71 485.71 217.46 485.71 485.71z"
+        transform="matrix(.19820 0 0 .19820 -189.87 -306.06)"
+        sodipodi:cy="226.6479"
+        sodipodi:cx="242.85715"
+    />
+    <path
+        id="path3015"
+        sodipodi:nodetypes="cccccc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+        d="m-240.56-343.6 28.694-24.01-2.9471 37.172 45.999-25.503-42.86-33.221z"
+    />
+    <path
+        id="path3005"
+        sodipodi:rx="69.353378"
+        sodipodi:ry="85.937889"
+        style="fill:#000000"
+        sodipodi:type="arc"
+        d="m-530.7 155.29c0 47.462-31.051 85.938-69.353 85.938-38.303 0-69.353-38.476-69.353-85.938s31.051-85.938 69.353-85.938c38.303 0 69.353 38.476 69.353 85.938z"
+        transform="matrix(.20993 0 0 .20993 -23.493 -328.35)"
+        sodipodi:cy="155.29128"
+        sodipodi:cx="-600.0575"
+    />
+    <path
+        id="path2999"
+        sodipodi:rx="69.353378"
+        sodipodi:ry="85.937889"
+        style="fill:#000000"
+        sodipodi:type="arc"
+        d="m-530.7 155.29c0 47.462-31.051 85.938-69.353 85.938-38.303 0-69.353-38.476-69.353-85.938s31.051-85.938 69.353-85.938c38.303 0 69.353 38.476 69.353 85.938z"
+        transform="matrix(.20993 0 0 .20993 -79.198 -330.88)"
+        sodipodi:cy="155.29128"
+        sodipodi:cx="-600.0575"
+    />
+    <path
+        id="path3013"
+        sodipodi:nodetypes="ccsc"
+        style="fill:#ff5555"
+        inkscape:connector-curvature="0"
+        d="m-191.87-213.14 33.55 0.63302s-16.667 19.303-25.321 18.99c-8.3977-0.30357-8.2292-19.623-8.2292-19.623z"
+    />
+    <path
+        id="path2995"
+        sodipodi:rx="485.71429"
+        sodipodi:ry="485.71429"
+        style="fill:#ff8080"
+        sodipodi:type="arc"
+        d="m728.57 226.65c0 268.25-217.46 485.71-485.71 485.71s-485.71-217.46-485.71-485.71 217.46-485.71 485.71-485.71 485.71 217.46 485.71 485.71z"
+        transform="matrix(.091332 0 0 .093939 -202.32 -271.68)"
+        sodipodi:cy="226.6479"
+        sodipodi:cx="242.85715"
+    />
+    <path
+        id="path3007"
+        sodipodi:rx="69.353378"
+        sodipodi:ry="85.937889"
+        style="fill:#ffffff"
+        sodipodi:type="arc"
+        d="m-530.7 155.29c0 47.462-31.051 85.938-69.353 85.938-38.303 0-69.353-38.476-69.353-85.938s31.051-85.938 69.353-85.938c38.303 0 69.353 38.476 69.353 85.938z"
+        transform="matrix(.088391 0 0 .088391 -101.68 -315.08)"
+        sodipodi:cy="155.29128"
+        sodipodi:cx="-600.0575"
+    />
+    <path
+        id="path2997"
+        sodipodi:rx="485.71429"
+        sodipodi:ry="485.71429"
+        style="fill:#ffd5d5"
+        sodipodi:type="arc"
+        d="m728.57 226.65c0 268.25-217.46 485.71-485.71 485.71s-485.71-217.46-485.71-485.71 217.46-485.71 485.71-485.71 485.71 217.46 485.71 485.71z"
+        transform="matrix(.079712 0 0 .086083 -199.86 -270.46)"
+        sodipodi:cy="226.6479"
+        sodipodi:cx="242.85715"
+    />
+    <path
+        id="path3003"
+        sodipodi:rx="69.353378"
+        sodipodi:ry="85.937889"
+        style="fill:#ffffff"
+        sodipodi:type="arc"
+        d="m-530.7 155.29c0 47.462-31.051 85.938-69.353 85.938-38.303 0-69.353-38.476-69.353-85.938s31.051-85.938 69.353-85.938c38.303 0 69.353 38.476 69.353 85.938z"
+        transform="matrix(.088391 0 0 .088391 -157.39 -317.61)"
+        sodipodi:cy="155.29128"
+        sodipodi:cx="-600.0575"
+    />
+    <path
+        id="path3009"
+        sodipodi:rx="43.722786"
+        sodipodi:ry="73.876427"
+        style="fill:#ff5555"
+        sodipodi:type="arc"
+        d="m-316.61 221.63c0 40.801-19.575 73.876-43.723 73.876-24.147 0-43.723-33.076-43.723-73.876 0-40.801 19.575-73.876 43.723-73.876 24.147 0 43.723 33.076 43.723 73.876z"
+        transform="matrix(.13030 0 0 .22278 -149.35 -302.4)"
+        sodipodi:cy="221.62929"
+        sodipodi:cx="-360.33606"
+    />
+    <path
+        id="path3011"
+        sodipodi:rx="43.722786"
+        sodipodi:ry="73.876427"
+        style="fill:#ff5555"
+        sodipodi:type="arc"
+        d="m-316.61 221.63c0 40.801-19.575 73.876-43.723 73.876-24.147 0-43.723-33.076-43.723-73.876 0-40.801 19.575-73.876 43.723-73.876 24.147 0 43.723 33.076 43.723 73.876z"
+        transform="matrix(.13030 0 0 .22278 -127.1 -302.4)"
+        sodipodi:cy="221.62929"
+        sodipodi:cx="-360.33606"
+    />
+    <path
+        id="path3019"
+        sodipodi:nodetypes="cccc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+        d="m-208.97-384.51-1.899 50.008c12.449-10.672 24.898-16.956 37.348-20.889z"
+    />
+    <path
+        id="path3021"
+        sodipodi:nodetypes="cccc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+        d="m-211.68-385.87-20.079 33.009 19.623-17.724z"
+    />
+    <path
+        id="path3027"
+        d="m-71.327-385.51 20.079 32.646-30.505-25.342z"
+        sodipodi:nodetypes="cccc"
+        style="fill:#ffd5d5"
+        inkscape:connector-curvature="0"
+    />
+    <path
+        id="path3029"
+        sodipodi:nodetypes="ccc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+        d="m-136.28-165.92c21.647 39.858 35.058 42.846 36.673-8.8703-5.1992 33.09-14.564 47.843-36.673 8.8703z"
+    />
+    <path
+        id="path3031"
+        d="m-170.14-174.31c-21.647 39.858-35.058 42.846-36.673-8.8703 5.1992 33.09 14.564 47.843 36.673 8.8703z"
+        sodipodi:nodetypes="ccc"
+        style="fill:#ff8080"
+        inkscape:connector-curvature="0"
+    />
+  </g
+  >
+  <metadata
+    >
+    <rdf:RDF
+      >
+      <cc:Work
+        >
+        <dc:format
+          >image/svg+xml</dc:format
+        >
+        <dc:type
+            rdf:resource="http://purl.org/dc/dcmitype/StillImage"
+        />
+        <cc:license
+            rdf:resource="http://creativecommons.org/licenses/publicdomain/"
+        />
+        <dc:publisher
+          >
+          <cc:Agent
+              rdf:about="http://openclipart.org/"
+            >
+            <dc:title
+              >Openclipart</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:publisher
+        >
+        <dc:title
+          >Cerdito | Little Pig</dc:title
+        >
+        <dc:date
+          >2011-09-09T06:39:22</dc:date
+        >
+        <dc:description
+          >Un cerdito dibujado en clase</dc:description
+        >
+        <dc:source
+          >https://openclipart.org/detail/159667/cerdito--little-pig-by-maw</dc:source
+        >
+        <dc:creator
+          >
+          <cc:Agent
+            >
+            <dc:title
+              >Maw</dc:title
+            >
+          </cc:Agent
+          >
+        </dc:creator
+        >
+        <dc:subject
+          >
+          <rdf:Bag
+            >
+            <rdf:li
+              >animal</rdf:li
+            >
+            <rdf:li
+              >animals</rdf:li
+            >
+            <rdf:li
+              >cerdito</rdf:li
+            >
+            <rdf:li
+              >cerdo</rdf:li
+            >
+            <rdf:li
+              >cute</rdf:li
+            >
+            <rdf:li
+              >farm</rdf:li
+            >
+            <rdf:li
+              >granja</rdf:li
+            >
+            <rdf:li
+              >lindo</rdf:li
+            >
+            <rdf:li
+              >little</rdf:li
+            >
+            <rdf:li
+              >pequeño</rdf:li
+            >
+            <rdf:li
+              >pig</rdf:li
+            >
+            <rdf:li
+              >pink</rdf:li
+            >
+            <rdf:li
+              >rosa</rdf:li
+            >
+          </rdf:Bag
+          >
+        </dc:subject
+        >
+      </cc:Work
+      >
+      <cc:License
+          rdf:about="http://creativecommons.org/licenses/publicdomain/"
+        >
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Reproduction"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#Distribution"
+        />
+        <cc:permits
+            rdf:resource="http://creativecommons.org/ns#DerivativeWorks"
+        />
+      </cc:License
+      >
+    </rdf:RDF
+    >
+  </metadata
+  >
+</svg
+>

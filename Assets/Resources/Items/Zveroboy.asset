@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: Zveroboy
   m_EditorClassIdentifier: 
-  icon: {fileID: 3286163911610860551, guid: f84851bd7e1dcfd45acbe0822d00ad98, type: 3}
+  icon: {fileID: 0}
   itemName: zveroboy
   itemGameName: "\u0417\u0432\u0435\u0440\u043E\u0431\u043E\u043E\u0439"
   itemType: 2

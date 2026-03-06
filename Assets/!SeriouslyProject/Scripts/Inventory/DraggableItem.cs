@@ -2,11 +2,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
+using Unity.VectorGraphics;
 
 public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerClickHandler
 {
     [Header("UI")]
-    public Image image;
+    [Tooltip("SVG Image компонент для отображения иконки")]
+    public SVGImage image;
     public TextMeshProUGUI countText;
 
     [HideInInspector] public Transform parentAfterDrag;
@@ -36,7 +38,14 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void InitialiseItem(ItemData newItem, int amount)
     {
         itemData = newItem;
-        image.sprite = newItem.icon;
+        
+        // Устанавливаем SVG иконку (импортированную как Sprite)
+        if (image != null && newItem.icon != null)
+        {
+            image.sprite = newItem.icon;
+            image.preserveAspect = true;
+        }
+        
         count = amount;
         RefreshCount();
 
