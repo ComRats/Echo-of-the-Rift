@@ -56,7 +56,7 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Echo-of-the-Rift.sln",
+    "dotnet.defaultSolution": "Echo-of-the-Rift.slnx",
     "kiroAgent.configureMCP": "Disabled",
     "terminal.integrated.detectLocale": "on"
 }

@@ -144,6 +144,43 @@ public class ShopUI : MonoBehaviour
             shopPanel.SetActive(false);
 
         inventoryManager?.RefreshUIFromData();
+        
+        // Включаем обратно DraggableItem для всех предметов в основном инвентаре
+        EnableDraggableItems();
+    }
+    
+    /// <summary>
+    /// Включает DraggableItem компоненты для всех предметов в инвентаре
+    /// </summary>
+    private void EnableDraggableItems()
+    {
+        if (inventoryManager == null) return;
+        
+        // Включаем для слотов инвентаря
+        foreach (var slot in inventoryManager.inventorySlots)
+        {
+            if (slot != null)
+            {
+                DraggableItem draggable = slot.GetComponentInChildren<DraggableItem>();
+                if (draggable != null)
+                {
+                    draggable.enabled = true;
+                }
+            }
+        }
+        
+        // Включаем для слотов экипировки
+        foreach (var slot in inventoryManager.equipmentSlots)
+        {
+            if (slot != null)
+            {
+                DraggableItem draggable = slot.GetComponentInChildren<DraggableItem>();
+                if (draggable != null)
+                {
+                    draggable.enabled = true;
+                }
+            }
+        }
     }
 
     /// <summary>
