@@ -300,67 +300,122 @@ public class CharactersSettings : IData
     public int Damage
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Damage : _damage;
-        set => _damage = value;
+        set
+        {
+            _damage = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Damage = value;
+        }
     }
 
     public int MagicDamage
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.MagicDamage : _magicDamage;
-        set => _magicDamage = value;
+        set
+        {
+            _magicDamage = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.MagicDamage = value;
+        }
     }
 
     public int Priority
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Priority : _priority;
-        set => _priority = value;
+        set
+        {
+            _priority = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Priority = value;
+        }
     }
 
     public int MaxMana
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.MaxMana : _maxMana;
-        set => _maxMana = value;
+        set
+        {
+            _maxMana = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.MaxMana = value;
+        }
     }
 
     public int Mana
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Mana : _mana;
-        set => _mana = value;
+        set
+        {
+            _mana = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Mana = value;
+        }
     }
 
     public int MaxHealth
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.MaxHealth : _maxHealth;
-        set => _maxHealth = value;
+        set
+        {
+            _maxHealth = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.MaxHealth = value;
+        }
     }
 
     public int Health
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Health : _health;
-        set => _health = value;
+        set
+        {
+            _health = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Health = value;
+        }
     }
 
     public int Heal
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Heal : _heal;
-        set => _heal = value;
+        set
+        {
+            _heal = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Heal = value;
+        }
     }
 
     public int Armor
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Armor : _armor;
-        set => _armor = value;
+        set
+        {
+            _armor = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Armor = value;
+        }
     }
 
     public int Lucky
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.Lucky : _lucky;
-        set => _lucky = value;
+        set
+        {
+            _lucky = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.Lucky = value;
+        }
     }
 
     public int CreteDamage
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.CreteDamage : _creteChance;
-        set => _creteChance = value;
+        set
+        {
+            _creteChance = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.CreteDamage = value;
+        }
     }
 
     public int Level
@@ -399,43 +454,78 @@ public class CharactersSettings : IData
     public int XpReward
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.XpReward : _xpReward;
-        set => _xpReward = value;
+        set
+        {
+            _xpReward = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.XpReward = value;
+        }
     }
 
     public int DamagePerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.DamagePerLevel : damagePerLevel;
-        set => damagePerLevel = value;
+        set
+        {
+            damagePerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.DamagePerLevel = value;
+        }
     }
 
     public int MaxHealthPerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.MaxHealthPerLevel : maxHealthPerLevel;
-        set => maxHealthPerLevel = value;
+        set
+        {
+            maxHealthPerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.MaxHealthPerLevel = value;
+        }
     }
 
     public int HealPerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.HealPerLevel : healPerLevel;
-        set => healPerLevel = value;
+        set
+        {
+            healPerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.HealPerLevel = value;
+        }
     }
 
     public int ArmorPerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.ArmorPerLevel : armorPerLevel;
-        set => armorPerLevel = value;
+        set
+        {
+            armorPerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.ArmorPerLevel = value;
+        }
     }
 
     public int MaxManaPerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.MaxManaPerLevel : maxManaPerLevel;
-        set => maxManaPerLevel = value;
+        set
+        {
+            maxManaPerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.MaxManaPerLevel = value;
+        }
     }
 
     public int XpRewardPerLevel
     {
         get => useCharacterData && RuntimeData != null ? RuntimeData.XpRewardPerLevel : xpRewardPerLevel;
-        set => xpRewardPerLevel = value;
+        set
+        {
+            xpRewardPerLevel = value;
+            if (useCharacterData && RuntimeData != null)
+                RuntimeData.XpRewardPerLevel = value;
+        }
     }
 
     [HideInInspector]

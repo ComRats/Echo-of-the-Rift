@@ -8,11 +8,11 @@ using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 public class FightDataLoader : MonoBehaviour
 {
-    [Title("�����")]
+    [Title("Враги")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private RectTransform spawnParent;
 
-    [Title("���������")]
+    [Title("Персонажи")]
     [SerializeField] private GameObject characterPrefab;
     [SerializeField] private RectTransform characterSpawnParent;
 
@@ -22,14 +22,14 @@ public class FightDataLoader : MonoBehaviour
         LoadCharactersData();
     }
 
-    [Button("��������� ������")]
+    [Button("Загрузить врагов")]
     private void LoadFightData()
     {
         FightData fightData = SaveLoadSystem.Load<FightData>(ENEMY_SAVE, GAME_DIRECTORY);
 
         if (fightData?.enemies == null || fightData.enemies.Count == 0)
         {
-            Debug.LogWarning("[�����] ������ ������ ���� ��� ����� ���.");
+            Debug.LogWarning("[Враги] Данные врагов пусты или равны нулю.");
             return;
         }
 
@@ -38,18 +38,37 @@ public class FightDataLoader : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, spawnParent);
             Enemy enemyComponent = newEnemy.GetComponent<Enemy>();
             enemyComponent.InitializeFromSettings(enemySettings);
-            Debug.Log($"[����] ������: {enemySettings.Name}");
+            Debug.Log($"[Враг] Создан: {enemySettings.Name}");
         }
     }
 
-    [Button("��������� ����������")]
+    [Button("Загрузить персонажей")]
     private void LoadCharactersData()
     {
+        if (GlobalLoader.Instance != null && 
+            GlobalLoader.Instance.playerInstance != null)
+        {
+            var team = GlobalLoader.Instance.playerInstance.team;
+            if (team != null && team.characters != null && team.characters.Count > 0)
+            {
+                Debug.Log("[Персонажи] Загрузка из Team с runtime данными");
+                foreach (var characterSettings in team.characters)
+                {
+                    GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
+                    Character characterComponent = newCharacter.GetComponent<Character>();
+                    characterComponent.InitializeFromSettings(characterSettings);
+                    Debug.Log($"[Персонаж] Создан: {characterSettings.Name} HP:{characterSettings.Health}/{characterSettings.MaxHealth} XP:{characterSettings.CurrentXP}/{characterSettings.MaxXP}");
+                }
+                return;
+            }
+        }
+
+        Debug.LogWarning("[Персонажи] GlobalLoader не найден, загрузка из файла");
         CharacterDataWrapper characterData = SaveLoadSystem.Load<CharacterDataWrapper>(CHARACTER_SAVE, GAME_DIRECTORY);
 
         if (characterData?.characters == null || characterData.characters.Count == 0)
         {
-            Debug.LogWarning("[���������] ������ ���������� ���� ��� ����� ���.");
+            Debug.LogWarning("[Персонажи] Данные персонажей пусты или равны нулю.");
             return;
         }
 
@@ -58,7 +77,7 @@ public class FightDataLoader : MonoBehaviour
             GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
             Character characterComponent = newCharacter.GetComponent<Character>();
             characterComponent.InitializeFromSettings(characterSettings);
-            Debug.Log($"[��������] ������: {characterSettings.Name}");
+            Debug.Log($"[Персонаж] Создан: {characterSettings.Name}");
         }
     }
 }

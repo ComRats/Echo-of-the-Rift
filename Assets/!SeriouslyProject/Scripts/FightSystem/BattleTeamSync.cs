@@ -63,7 +63,7 @@ public class BattleTeamSync : MonoBehaviour
             // Ищем персонажа по имени в сохраненных ссылках
             if (initialCharacters.TryGetValue(settings.Name, out var character))
             {
-                Debug.Log($"[BattleTeamSync] Syncing {settings.Name}: HP {character.Health}/{character.MaxHealth}");
+                Debug.Log($"[BattleTeamSync] Syncing {settings.Name}: Level {character.Level}, HP {character.Health}/{character.MaxHealth}, XP {character.CurrentXP}/{character.MaxXP}");
 
                 // Если используется ScriptableObject, обновляем runtime копию
                 if (settings.useCharacterData && settings.RuntimeData != null)
@@ -79,6 +79,8 @@ public class BattleTeamSync : MonoBehaviour
                     settings.RuntimeData.Armor = character.Armor;
                     settings.RuntimeData.MaxMana = character.MaxMana;
                     settings.RuntimeData.XpReward = character.XpReward;
+                    
+                    Debug.Log($"[BattleTeamSync] RuntimeData updated for {settings.Name}: Level {settings.RuntimeData.Level}, XP {settings.RuntimeData.CurrentXP}/{settings.RuntimeData.MaxXP}");
                 }
                 else
                 {
@@ -94,6 +96,8 @@ public class BattleTeamSync : MonoBehaviour
                     settings.Heal = character.Heal;
                     settings.Armor = character.Armor;
                     settings.XpReward = character.XpReward;
+                    
+                    Debug.Log($"[BattleTeamSync] Direct settings updated for {settings.Name}: Level {settings.Level}, XP {settings.CurrentXP}/{settings.MaxXP}");
                 }
             }
             else
@@ -104,6 +108,13 @@ public class BattleTeamSync : MonoBehaviour
 
         // Сохраняем обновленные данные команды
         var teamData = team.CreateSaveData();
+        
+        // Логируем данные перед сохранением
+        foreach (var charData in teamData.charactersData)
+        {
+            Debug.Log($"[BattleTeamSync] Saving to file: {charData.Name} - Level {charData.Level}, XP {charData.CurrentXP}/{charData.MaxXP}, HP {charData.Health}/{charData.MaxHealth}");
+        }
+        
         EchoRift.SaveLoadSystem.SaveLoadSystem.Save(
             EchoRift.SaveLoadSystem.SaveFileNames.TEAM_DATA, 
             teamData, 

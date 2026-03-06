@@ -328,6 +328,11 @@ public class Base : MonoBehaviour, IData
             Level++;
 
             CurrentXP -= MaxXP;
+            
+            // Запоминаем старые значения для анимации
+            int oldHealth = Health;
+            int oldMana = Mana;
+            
             Damage += data.DamagePerLevel * Level;
             MaxHealth += data.MaxHealthPerLevel * Level;
             Heal += data.HealPerLevel * Level;
@@ -336,8 +341,16 @@ public class Base : MonoBehaviour, IData
             XpReward += data.XpRewardPerLevel * Level;
             MaxXP += data.MaxXP * Level;
 
-            AnimateStatRestore();
+            Debug.Log($"[UpdateLevel] {Name} повысил уровень до {Level}! Damage:{Damage}, MaxHP:{MaxHealth}, Heal:{Heal}, Armor:{Armor}, MaxMana:{MaxMana}");
 
+            // Восстанавливаем HP и Mana
+            Health = MaxHealth;
+            Mana = MaxMana;
+            
+            // Запускаем анимацию от старых значений к новым
+            AnimateStatRestore(oldHealth, oldMana);
+
+            // Сохраняем с уже восстановленными характеристиками
             SaveCharacterProgress();
 
             OnXPChanged?.Invoke(CurrentXP, MaxXP);
@@ -346,28 +359,35 @@ public class Base : MonoBehaviour, IData
         }
     }
 
-    private void AnimateStatRestore()
+    private void AnimateStatRestore(int oldHealth, int oldMana)
     {
-        int startHealth = Health;
-        int startMana = Mana;
-        int targetHealth = MaxHealth;
-        int targetMana = MaxMana;
-
         float duration = 1.5f;
 
-        DOTween.To(() => startHealth, x => 
+        // Анимируем от старых значений к новым (Health и Mana уже установлены в MaxHealth и MaxMana)
+        DOTween.To(() => oldHealth, x => 
         {
-            Health = x;
-            UpdateUI();
-        }, targetHealth, duration)
-        .SetEase(Ease.OutBack);
+            // Обновляем только UI, не трогая реальное значение Health
+            healthText.text = $"{x}/{MaxHealth}";
+            healthBar.value = x;
+            SetGradient(healthGgradient, healthFill, (float)x / MaxHealth);
+            OnHealthChanged?.Invoke(x, MaxHealth);
+        }, Health, duration)
+        .SetEase(Ease.OutBack)
+        .OnComplete(() => {
+            UpdateUI(); // Финальное обновление UI
+        });
 
-        DOTween.To(() => startMana, x => 
+        DOTween.To(() => oldMana, x => 
         {
-            Mana = x;
-            UpdateUI();
-        }, targetMana, duration)
-        .SetEase(Ease.OutQuad);
+            // Обновляем только UI
+            manaText.text = $"{x}/{MaxMana}";
+            manaBar.value = x;
+            SetGradient(manaGgradient, manaFill, (float)x / MaxMana);
+        }, Mana, duration)
+        .SetEase(Ease.OutQuad)
+        .OnComplete(() => {
+            UpdateUI(); // Финальное обновление UI
+        });
     }
 
     private void SaveCharacterProgress()
@@ -376,21 +396,92 @@ public class Base : MonoBehaviour, IData
         {
             if (GlobalLoader.Instance != null && GlobalLoader.Instance.playerInstance != null)
             {
+                // Сохраняем главного персонажа через playerSaver
                 var playerSaver = GlobalLoader.Instance.playerInstance.playerSaver;
                 
-                playerSaver.Level = Level;
-                playerSaver.CurrentXP = CurrentXP;
-                playerSaver.MaxXP = MaxXP;
-                playerSaver.Damage = Damage;
-                playerSaver.MaxHealth = MaxHealth;
-                playerSaver.Health = Health;
-                playerSaver.Heal = Heal;
-                playerSaver.Armor = Armor;
-                playerSaver.MaxMana = MaxMana;
-                playerSaver.Mana = Mana;
-                playerSaver.XpReward = XpReward;
+                if (Name == playerSaver.Name)
+                {
+                    playerSaver.Level = Level;
+                    playerSaver.CurrentXP = CurrentXP;
+                    playerSaver.MaxXP = MaxXP;
+                    playerSaver.Damage = Damage;
+                    playerSaver.MaxHealth = MaxHealth;
+                    playerSaver.Health = Health;
+                    playerSaver.Heal = Heal;
+                    playerSaver.Armor = Armor;
+                    playerSaver.MaxMana = MaxMana;
+                    playerSaver.Mana = Mana;
+                    playerSaver.XpReward = XpReward;
+                    
+                    GlobalLoader.Instance.SavePlayer();
+                    Debug.Log($"[SaveCharacterProgress] Главный персонаж {Name} сохранён через playerSaver");
+                }
                 
-                GlobalLoader.Instance.SavePlayer();
+                // Сохраняем союзников через Team
+                var team = GlobalLoader.Instance.playerInstance.GetComponent<Team>();
+                if (team != null)
+                {
+                    foreach (var settings in team.characters)
+                    {
+                        if (settings.Name == Name)
+                        {
+                            Debug.Log($"[SaveCharacterProgress] Найден {Name} в Team. useCharacterData={settings.useCharacterData}, RuntimeData={(settings.RuntimeData != null ? "exists" : "null")}");
+                            
+                            // Обновляем RuntimeData или прямые поля
+                            if (settings.useCharacterData && settings.RuntimeData != null)
+                            {
+                                settings.RuntimeData.Level = Level;
+                                settings.RuntimeData.CurrentXP = CurrentXP;
+                                settings.RuntimeData.MaxXP = MaxXP;
+                                settings.RuntimeData.Damage = Damage;
+                                settings.RuntimeData.MaxHealth = MaxHealth;
+                                settings.RuntimeData.Health = Health;
+                                settings.RuntimeData.Heal = Heal;
+                                settings.RuntimeData.Armor = Armor;
+                                settings.RuntimeData.MaxMana = MaxMana;
+                                settings.RuntimeData.Mana = Mana;
+                                settings.RuntimeData.XpReward = XpReward;
+                                
+                                Debug.Log($"[SaveCharacterProgress] RuntimeData обновлён: Level {settings.RuntimeData.Level}, XP {settings.RuntimeData.CurrentXP}/{settings.RuntimeData.MaxXP}");
+                            }
+                            else
+                            {
+                                settings.Level = Level;
+                                settings.CurrentXP = CurrentXP;
+                                settings.MaxXP = MaxXP;
+                                settings.Damage = Damage;
+                                settings.MaxHealth = MaxHealth;
+                                settings.Health = Health;
+                                settings.Heal = Heal;
+                                settings.Armor = Armor;
+                                settings.MaxMana = MaxMana;
+                                settings.Mana = Mana;
+                                settings.XpReward = XpReward;
+                                
+                                Debug.Log($"[SaveCharacterProgress] Прямые поля обновлены: Level {settings.Level}, XP {settings.CurrentXP}/{settings.MaxXP}");
+                            }
+                            
+                            // Сохраняем данные команды
+                            var teamData = team.CreateSaveData();
+                            
+                            // Проверяем, что сохраняется
+                            var savedChar = teamData.charactersData.Find(c => c.Name == Name);
+                            if (savedChar != null)
+                            {
+                                Debug.Log($"[SaveCharacterProgress] В teamData для сохранения: {savedChar.Name} - Level {savedChar.Level}, XP {savedChar.CurrentXP}/{savedChar.MaxXP}, HP {savedChar.Health}/{savedChar.MaxHealth}");
+                            }
+                            
+                            EchoRift.SaveLoadSystem.SaveLoadSystem.Save(
+                                EchoRift.SaveLoadSystem.SaveFileNames.TEAM_DATA, 
+                                teamData, 
+                                EchoRift.SaveLoadSystem.SaveFileNames.GAME_DIRECTORY
+                            );
+                            
+                            Debug.Log($"[SaveCharacterProgress] Сохранён прогресс {Name}: Level {Level}, HP {Health}/{MaxHealth}, XP {CurrentXP}/{MaxXP}");
+                            break;
+                        }
+                    }
+                }
             }
         }
     }

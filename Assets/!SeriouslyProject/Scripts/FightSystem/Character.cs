@@ -43,15 +43,24 @@ namespace FightSystem.Character
         {
             if (settings.useCharacterData)
             {
-                characterData = settings.GetCharacterData();
-
-                if (characterData != null)
+                // Используем RuntimeData вместо базового characterData
+                if (settings.RuntimeData != null)
                 {
-                    Initialize(characterData, gameObject);
+                    Initialize(settings.RuntimeData, gameObject);
+                    characterData = settings.GetCharacterData();
                 }
                 else
                 {
-                    Debug.LogError($"�� ������ CharacterData � ������ {settings.characterDataName}");
+                    characterData = settings.GetCharacterData();
+
+                    if (characterData != null)
+                    {
+                        Initialize(characterData, gameObject);
+                    }
+                    else
+                    {
+                        Debug.LogError($"�� ������ CharacterData � ������ {settings.characterDataName}");
+                    }
                 }
             }
             else
