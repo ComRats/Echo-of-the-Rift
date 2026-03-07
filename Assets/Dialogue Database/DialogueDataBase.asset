@@ -54,7 +54,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: c9235e1fdc3982844a02eb9c804fc720, type: 3}
+    spritePortrait: {fileID: 3286163911610860551, guid: 60096b55baaa80e49a2d0da21a9808ca, type: 3}
     alternatePortraits: []
     spritePortraits: []
   - id: 3
@@ -120,7 +120,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 21300000, guid: 8dcc2b574829de544abb89e1828d1c63, type: 3}
+    spritePortrait: {fileID: 3286163911610860551, guid: 3d35a3c0ad15ef84c82a22aeee1481b4, type: 3}
     alternatePortraits: []
     spritePortraits: []
   - id: 6
@@ -3803,7 +3803,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: Continue()
         type: 0
         typeString: 
       conversationID: 5
@@ -4079,7 +4079,10 @@ MonoBehaviour:
       - title: Sequence
         value: 'SetActive(Women1, true);
 
-          MoveTo(Point1, Women1, 2f)'
+          PlaySound(DoorOpen1);
+
+          MoveTo(Point1,
+          Women1, 2f);'
         type: 0
         typeString: 
       - title: Response Menu Sequence
@@ -4366,10 +4369,10 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: "required SetActive(Women1, true);\r\nrequired MoveTo(Point2, \u0414\u0435\u0434_\u0413\u0413,
-          2);\r\nrequired MoveTo(Point1,Women1 , 2);\r\nrequired SetActive(Women1,
-          false)@2;\r\nrequired PlaySound(DoorOpen1)@2;\nrequired MoveTo(Point1,
-          \u0414\u0435\u0434_\u0413\u0413, 2)@2;\r\nrequired SetActive(\u0414\u0435\u0434_\u0413\u0413,
+        value: "required SetActive(Women1, true);\r\nrequired PlaySound(DoorOpen1);\nrequired
+          MoveTo(Point2, \u0414\u0435\u0434_\u0413\u0413, 2);\r\nrequired MoveTo(Point1,Women1
+          , 2);\r\nrequired SetActive(Women1, false)@2;\r\nrequired PlaySound(DoorOpen1)@2;\nrequired
+          MoveTo(Point1, \u0414\u0435\u0434_\u0413\u0413, 2)@2;\r\nrequired SetActive(\u0414\u0435\u0434_\u0413\u0413,
           false)@4;\nrequired PlaySound(DoorOpen1)@4;"
         type: 0
         typeString: 
@@ -4394,7 +4397,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 382.88974
+        x: 381.86935
         y: 483.44855
         width: 160
         height: 30
@@ -4719,7 +4722,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 160
-        y: 180
+        y: 181
         width: 160
         height: 30
     - id: 4
@@ -4733,11 +4736,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 5
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 5
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4793,11 +4796,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 5
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 5
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4849,11 +4852,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 5
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 5
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4904,11 +4907,11 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Actor
-        value: 5
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 1
+        value: 5
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -4976,8 +4979,12 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: "required MoveTo(Point1,Women1 , 2);\r\nrequired SetActive(Women1,
-          false)@2;\r"
+        value: 'required MoveTo(Point1,Women1 , 2);
+
+          required SetActive(Women1,
+          false)@2;
+
+          required PlaySound(DoorOpen1)@2;'
         type: 0
         typeString: 
       conversationID: 6

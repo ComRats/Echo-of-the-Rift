@@ -83,5 +83,6 @@ public class Movement : MonoBehaviour
     public void CanMoveFalse()
     {
         canMove = false;
+        service.Stop("Step");
     }
 }

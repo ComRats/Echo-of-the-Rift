@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using AudioManager.Locator;
+using AudioManager.Core;
 
 public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -9,6 +11,14 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private ItemDescriptionDisplay descriptionDisplay;
+    [SerializeField] private string equipSoundName = "Equipment1";
+
+    private IAudioManager audioManager;
+
+    private void Awake()
+    {
+        audioManager = ServiceLocator.GetService();
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -23,9 +33,18 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
         if (draggableItem == null || !IsTypeAllowed(draggableItem)) return;
 
+        // Проверяем, является ли это экипировкой (перемещение в слот экипировки)
+        bool isEquipping = IsEquipmentSlot();
+
         if (transform.childCount == 0)
         {
             draggableItem.parentAfterDrag = transform;
+            
+            // Воспроизводим звук только при экипировке
+            if (isEquipping)
+            {
+                PlayEquipSound();
+            }
         }
         else
         {
@@ -39,6 +58,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             }
 
             SwapItems(draggableItem, currentItem);
+            
+            // Воспроизводим звук только при экипировке
+            if (isEquipping)
+            {
+                PlayEquipSound();
+            }
         }
 
         SyncAfterChange();
@@ -141,6 +166,27 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if (descriptionDisplay != null)
         {
             descriptionDisplay.Hide();
+        }
+    }
+
+    private bool IsEquipmentSlot()
+    {
+        if (inventoryManager == null) return false;
+
+        // Проверяем, является ли этот слот слотом экипировки
+        return System.Array.IndexOf(inventoryManager.equipmentSlots, this) >= 0;
+    }
+
+    private void PlayEquipSound()
+    {
+        if (audioManager == null)
+        {
+            audioManager = ServiceLocator.GetService();
+        }
+
+        if (audioManager != null && !string.IsNullOrEmpty(equipSoundName))
+        {
+            audioManager.PlayOneShot(equipSoundName);
         }
     }
 }

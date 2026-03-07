@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using EchoRift.Shop;
+using AudioManager.Locator;
+using AudioManager.Core;
 
 public class InventoryContextMenu : MonoBehaviour
 {
@@ -16,9 +18,13 @@ public class InventoryContextMenu : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private Vector2 offset = new Vector2(10f, -10f);
 
+    [Header("Audio")]
+    [SerializeField] private string equipSoundName = "Equipment1";
+
     private DraggableItem currentItem;
     private InventorySlot currentSlot;
     private List<GameObject> activeButtons = new List<GameObject>();
+    private IAudioManager audioManager;
 
     private void Awake()
     {
@@ -31,16 +37,18 @@ public class InventoryContextMenu : MonoBehaviour
         {
             inventoryManager = FindObjectOfType<InventoryManager>();
         }
+
+        audioManager = ServiceLocator.GetService();
     }
 
     private void OnDestroy()
     {
         // Очищаем все кнопки при уничтожении объекта
         ClearButtons();
-        
+
         // Обнуляем ссылки
         currentItem = null;
-        currentSlot = null;        
+        currentSlot = null;
     }
 
     private void Update()
@@ -94,10 +102,10 @@ public class InventoryContextMenu : MonoBehaviour
         {
             contextMenuPanel.SetActive(false);
         }
-        
+
         // Очищаем кнопки перед обнулением ссылок
         ClearButtons();
-        
+
         currentItem = null;
         currentSlot = null;
     }
@@ -150,7 +158,7 @@ public class InventoryContextMenu : MonoBehaviour
     private void CreateBuyButtons(DraggableItem item)
     {
         if (shopUI == null || shopUI.ShopManager == null) return;
-        
+
         int buyPrice = shopUI.ShopManager.GetBuyPrice(item.itemData);
 
         // Кнопка "Купить 1"
@@ -181,7 +189,7 @@ public class InventoryContextMenu : MonoBehaviour
     private void CreateSellButtons(DraggableItem item)
     {
         if (shopUI == null || shopUI.ShopManager == null) return;
-        
+
         if (!shopUI.ShopManager.CurrentShop.acceptsPlayerItems)
         {
             CreateButton("Торговец не покупает предметы", null);
@@ -189,7 +197,7 @@ public class InventoryContextMenu : MonoBehaviour
         }
 
         int sellPrice = shopUI.ShopManager.GetSellPrice(item.itemData);
-        
+
         // Подсчитываем общее количество этого предмета во всех слотах
         int totalCount = GetTotalItemCount(item.itemData);
 
@@ -360,6 +368,9 @@ public class InventoryContextMenu : MonoBehaviour
             item.transform.SetParent(targetEquipSlot.transform);
             item.transform.localPosition = Vector3.zero;
             item.parentAfterDrag = targetEquipSlot.transform;
+
+            // Воспроизводим звук экипировки
+            PlayEquipSound();
         }
         else
         {
@@ -403,6 +414,9 @@ public class InventoryContextMenu : MonoBehaviour
                 item.transform.SetParent(targetEquipSlot.transform);
                 item.transform.localPosition = Vector3.zero;
                 item.parentAfterDrag = targetEquipSlot.transform;
+
+                // Воспроизводим звук экипировки
+                PlayEquipSound();
             }
         }
     }
@@ -445,7 +459,7 @@ public class InventoryContextMenu : MonoBehaviour
         if (item == null || shopUI == null || shopUI.ShopManager == null) return;
 
         bool success = shopUI.ShopManager.BuyItem(item.itemData, quantity);
-        
+
         if (success)
         {
             Debug.Log($"Успешно куплено: {item.itemData.itemName} x{quantity}");
@@ -458,7 +472,7 @@ public class InventoryContextMenu : MonoBehaviour
         if (item == null || shopUI == null || shopUI.ShopManager == null) return;
 
         bool success = shopUI.ShopManager.SellItem(item.itemData, quantity);
-        
+
         if (success)
         {
             Debug.Log($"Успешно продано: {item.itemData.itemName} x{quantity}");
@@ -474,7 +488,7 @@ public class InventoryContextMenu : MonoBehaviour
         if (itemData == null || shopUI == null || shopUI.ShopManager == null) return;
 
         bool success = shopUI.ShopManager.SellItem(itemData, totalCount);
-        
+
         if (success)
         {
             Debug.Log($"Успешно продано всё: {itemData.itemName} x{totalCount}");
@@ -537,5 +551,10 @@ public class InventoryContextMenu : MonoBehaviour
         }
 
         return null;
+    }
+
+    private void PlayEquipSound()
+    {
+        ServiceLocator.GetService().PlayOneShot(equipSoundName);
     }
 }

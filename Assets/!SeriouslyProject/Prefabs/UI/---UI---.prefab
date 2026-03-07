@@ -1139,8 +1139,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 738a30cc0b59b154b81d0dd9a11423ba, type: 3}
-  m_Type: 1
+  m_Sprite: {fileID: 1703239198, guid: d5b52f4a0d8cdc74c884539d1e61f7a8, type: 3}
+  m_Type: 2
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1148,7 +1148,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.5
 --- !u!1 &1277846513081113776
 GameObject:
   m_ObjectHideFlags: 0
@@ -7938,6 +7938,7 @@ MonoBehaviour:
   inventoryManager: {fileID: 1979945657100220229}
   shopUI: {fileID: 3422994083309555792}
   offset: {x: 10, y: -10}
+  equipSoundName: Equipment1
 --- !u!1 &7940449569545811136
 GameObject:
   m_ObjectHideFlags: 0
@@ -9640,6 +9641,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -9910,6 +9915,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -10057,6 +10066,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: b78ba1684e4650a4ea29093a8057afb6, type: 3}
       propertyPath: allowedType
       value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: b78ba1684e4650a4ea29093a8057afb6, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: b78ba1684e4650a4ea29093a8057afb6, type: 3}
       propertyPath: inventoryManager
@@ -10303,6 +10316,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -11096,6 +11113,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -11741,6 +11762,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -12378,6 +12403,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -12527,6 +12556,10 @@ PrefabInstance:
       value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -12674,6 +12707,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -13309,6 +13346,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -13583,6 +13624,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 717a9c641ddfe604c9da007e17867e2a, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 717a9c641ddfe604c9da007e17867e2a, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -13833,6 +13878,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -13980,6 +14029,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -15348,6 +15401,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -15495,6 +15552,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -15646,6 +15707,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -15793,6 +15858,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -16065,6 +16134,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -16212,6 +16285,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -16611,6 +16688,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2a155c87f72cbab428d71205c4244bc2, type: 3}
       propertyPath: allowedType
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2a155c87f72cbab428d71205c4244bc2, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2a155c87f72cbab428d71205c4244bc2, type: 3}
       propertyPath: inventoryManager
@@ -17222,6 +17303,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -17369,6 +17454,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -17639,6 +17728,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 63
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -17975,6 +18068,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
@@ -18372,6 +18469,10 @@ PrefabInstance:
       value: 63
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -18644,6 +18745,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: fdd66e6b9708be945a7fb035ff788c3f, type: 3}
       propertyPath: allowedType
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: fdd66e6b9708be945a7fb035ff788c3f, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: fdd66e6b9708be945a7fb035ff788c3f, type: 3}
       propertyPath: inventoryManager
@@ -19738,6 +19843,10 @@ PrefabInstance:
       value: 127
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
       value: 
       objectReference: {fileID: 1979945657100220229}
@@ -20502,6 +20611,10 @@ PrefabInstance:
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: allowedType
       value: 127
+      objectReference: {fileID: 0}
+    - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
+      propertyPath: equipSoundName
+      value: Equipment1
       objectReference: {fileID: 0}
     - target: {fileID: 966796179055672587, guid: 2e25ab0201893c645ae6e02b3982837d, type: 3}
       propertyPath: inventoryManager
