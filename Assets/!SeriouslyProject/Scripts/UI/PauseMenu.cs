@@ -17,6 +17,7 @@ public class PauseMenu : MonoBehaviour
     [Inject] private Player _playerInstance;
     [Inject] private MainUI _mainUIInstance;
 
+    private MusicTransitionManager _musicManager;
     private Animator settingsAnimator;
     private AnimatorStateInfo stateInfo;
 
@@ -26,6 +27,7 @@ public class PauseMenu : MonoBehaviour
         GameTimer.OnGameResumed += OnGameResumed;
 
         settingsAnimator = settingsPanel.GetComponent<Animator>();
+        _musicManager = FindObjectOfType<MusicTransitionManager>();
 
         ButtonInitialize();
     }
@@ -128,11 +130,20 @@ public class PauseMenu : MonoBehaviour
 
     private void OnGamePaused()
     {
+        // Приглушаем музыку при паузе
+        if (_musicManager != null)
+        {
+            _musicManager.DuckMusic();
+        }
     }
 
     private void OnGameResumed()
     {
-
+        // Восстанавливаем громкость музыки при возобновлении
+        if (_musicManager != null)
+        {
+            _musicManager.RestoreMusic();
+        }
     }
 
     [System.Serializable]

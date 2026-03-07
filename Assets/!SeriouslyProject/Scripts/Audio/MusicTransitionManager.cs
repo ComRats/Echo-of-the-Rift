@@ -19,9 +19,11 @@ public class MusicTransitionManager : MonoBehaviour
     [SerializeField] private List<SceneMusicConfig> sceneMusicSettings = new List<SceneMusicConfig>();
     [SerializeField] private float fadeDuration = 1.5f;
     [SerializeField] private float normalVolume = 1.0f;
+    [SerializeField] private float pausedVolume = 0.3f;
 
     private IAudioManager _am;
     private List<string> _currentMusicNames = new List<string>();
+    private bool _isPaused = false;
 
     private void Awake()
     {
@@ -129,5 +131,41 @@ public class MusicTransitionManager : MonoBehaviour
         // Ищем музыку для конкретной сцены
         var config = sceneMusicSettings.FirstOrDefault(s => s.scene != null && s.scene.SceneName == sceneName);
         return config?.musicNames ?? new List<string>();
+    }
+
+    /// <summary>
+    /// Приглушает текущую музыку (для меню паузы)
+    /// </summary>
+    public void DuckMusic(float duckDuration = 0.5f)
+    {
+        if (_am == null || _isPaused) return;
+
+        _isPaused = true;
+
+        foreach (var musicName in _currentMusicNames)
+        {
+            if (!string.IsNullOrEmpty(musicName))
+            {
+                _am.LerpVolume(musicName, pausedVolume, duckDuration);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Восстанавливает громкость музыки (при выходе из паузы)
+    /// </summary>
+    public void RestoreMusic(float restoreDuration = 0.5f)
+    {
+        if (_am == null || !_isPaused) return;
+
+        _isPaused = false;
+
+        foreach (var musicName in _currentMusicNames)
+        {
+            if (!string.IsNullOrEmpty(musicName))
+            {
+                _am.LerpVolume(musicName, normalVolume, restoreDuration);
+            }
+        }
     }
 }

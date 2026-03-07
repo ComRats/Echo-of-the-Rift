@@ -27,6 +27,7 @@ public class MainUI : MonoBehaviour
     private GameObject playerUIbackGround;
     private InventoryContextMenu contextMenu;
     private IAudioManager service;
+    private MusicTransitionManager musicManager;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class MainUI : MonoBehaviour
         }
 
         contextMenu = FindObjectOfType<InventoryContextMenu>();
+        musicManager = FindObjectOfType<MusicTransitionManager>();
     }
 
     private void Update()
@@ -113,6 +115,12 @@ public class MainUI : MonoBehaviour
         playerUI.OpenPlayerUI(3);
         questLogWindow.Open();
         GameTimer.PauseGame();
+
+        // Приглушаем музыку
+        if (musicManager != null)
+        {
+            musicManager.DuckMusic();
+        }
     }
 
     public void CloseQuestLog()
@@ -128,6 +136,12 @@ public class MainUI : MonoBehaviour
         {
             contextMenu.Hide();
         }
+
+        // Восстанавливаем громкость музыки
+        if (musicManager != null)
+        {
+            musicManager.RestoreMusic();
+        }
     }
 
     public void OpenInventory()
@@ -138,6 +152,12 @@ public class MainUI : MonoBehaviour
         isOpenUI = true;
         playerUI.OpenPlayerUI();
         GameTimer.PauseGame();
+
+        // Приглушаем музыку
+        if (musicManager != null)
+        {
+            musicManager.DuckMusic();
+        }
     }
 
     public void CloseInventory()
@@ -151,6 +171,12 @@ public class MainUI : MonoBehaviour
         if (contextMenu != null)
         {
             contextMenu.Hide();
+        }
+
+        // Восстанавливаем громкость музыки
+        if (musicManager != null)
+        {
+            musicManager.RestoreMusic();
         }
     }
 
