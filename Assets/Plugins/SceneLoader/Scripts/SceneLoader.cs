@@ -4,12 +4,11 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Zenject;
 
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] SerializableScene _serializableScene;
-    [SerializeField] float _loadingSpeed = 0.5f;
+    [SerializeField] float _loadingSpeed = 10f;
     [SerializeField] bool _preloadOnStart;
     [SerializeField] LoadSceneMode _loadSceneMode = LoadSceneMode.Single;
     [SerializeField] bool _useSceneManager = false;
@@ -129,9 +128,9 @@ public class SceneLoader : MonoBehaviour
         _onLoadingSceneLoad?.Invoke();
 
         if (loadingSlider == null)
-            loadingSlider = FindObjectOfType<Slider>();
+            loadingSlider = GameObject.Find("LoadingSlider").GetComponent<Slider>();
 
-        yield return new WaitForSeconds(0.5f);
+        yield return null;
 
         _asyncLoadOperation = SceneManager.LoadSceneAsync(targetScene, LoadSceneMode.Single);
         _asyncLoadOperation.allowSceneActivation = false;
@@ -140,10 +139,7 @@ public class SceneLoader : MonoBehaviour
 
         while (_asyncLoadOperation.progress < 0.9f)
         {
-            fakeProgress = Mathf.MoveTowards(fakeProgress, _asyncLoadOperation.progress, _loadingSpeed * Time.unscaledDeltaTime);
-
-            loadingSlider.value = fakeProgress;
-
+            loadingSlider.value = _asyncLoadOperation.progress;
             yield return null;
         }
 
