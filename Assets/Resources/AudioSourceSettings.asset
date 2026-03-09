@@ -321,3 +321,17 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: Horn1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 8d98f090081fde74f88cec01c358d399, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 0.9
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}

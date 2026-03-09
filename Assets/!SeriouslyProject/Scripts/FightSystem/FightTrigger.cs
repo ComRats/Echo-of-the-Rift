@@ -24,14 +24,14 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
 
-    private void Start()
-    {
-        if (transform.parent.TryGetComponent<FightNPC>(out FightNPC fNPC))
-        {
-            GetComponent<BoxCollider2D>().size = fNPC.GetComponent<BoxCollider2D>().size;
-            GetComponent<BoxCollider2D>().offset = fNPC.GetComponent<BoxCollider2D>().offset;
-        }
-    }
+    //private void Start()
+    //{
+    //    if (transform.parent.TryGetComponent<FightNPC>(out FightNPC fNPC))
+    //    {
+    //        GetComponent<BoxCollider2D>().size = fNPC.GetComponent<BoxCollider2D>().size;
+    //        GetComponent<BoxCollider2D>().offset = fNPC.GetComponent<BoxCollider2D>().offset;
+    //    }
+    //}
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

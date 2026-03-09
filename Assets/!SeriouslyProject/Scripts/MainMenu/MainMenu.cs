@@ -3,7 +3,6 @@ using static EchoRift.SaveLoadSystem.SaveFileNames;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -63,6 +62,7 @@ public class MainMenu : MonoBehaviour
         
         // Установка времени на 12:00 (12 часов * 60 минут * 60 секунд = 43200 секунд)
         GameTimer.SetTime(12f * 60f * 60f);
+        loadSceneLoader._onSceneActivated.AddListener(() => FindObjectOfType<NeedToEnable>().EnableComponent());
 
         startSceneLoader.LoadAsync();
     }

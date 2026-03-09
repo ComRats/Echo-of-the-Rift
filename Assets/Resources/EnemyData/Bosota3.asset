@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Bosota3
   _description: "\u041E\u0431\u043D\u0430\u0433\u043B\u0435\u0432\u0448\u0430\u044F
     \u0431\u043E\u0441\u043E\u0442\u0430"
-  _sprite: {fileID: 21300000, guid: f53b6335df6328b4f935c1fb83672550, type: 3}
+  _sprite: {fileID: 3286163911610860551, guid: b6c3ddc25aac6d54ab6057eea8abad61, type: 3}
   _damage: 3
   _magicDamage: 0
   _priority: 5
