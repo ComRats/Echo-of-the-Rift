@@ -58,7 +58,10 @@ public class UploadTarget : MonoBehaviour
 
             playerInstance.dialogActor.SaveNameForDialogueActor(inputField.text);
             playerInstance.dialogActor.ApplyName();
-            //nextSceneLoader._onSceneActivated.AddListener(() => { playerInstance.dialogActor.ApplyName(); });
+            nextSceneLoader._onSceneActivated.AddListener(() => 
+            {
+                FindObjectOfType<NeedToEnable>().EnableComponent();
+            });
 
             nextSceneLoader.LoadAsync();
         }

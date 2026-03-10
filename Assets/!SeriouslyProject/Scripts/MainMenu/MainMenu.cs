@@ -62,7 +62,12 @@ public class MainMenu : MonoBehaviour
         
         // Установка времени на 12:00 (12 часов * 60 минут * 60 секунд = 43200 секунд)
         GameTimer.SetTime(12f * 60f * 60f);
-        loadSceneLoader._onSceneActivated.AddListener(() => FindObjectOfType<NeedToEnable>().EnableComponent());
+        //loadSceneLoader._onSceneActivated.AddListener(() => 
+        //{
+        //    FindObjectOfType<NeedToEnable>().EnableComponent();
+        //    Debug.LogWarning(FindObjectOfType<NeedToEnable>().name);
+        //}
+        //);
 
         startSceneLoader.LoadAsync();
     }

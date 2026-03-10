@@ -1,12 +1,16 @@
 using PixelCrushers.DialogueSystem;
+using System.Collections;
 using UnityEngine;
 
 public class NeedToEnable : MonoBehaviour
 {
-    [SerializeField] private DialogueSystemTrigger dialogueTrigger;
+    [SerializeField] private MonoBehaviour component;
 
     public void EnableComponent()
     {
-        dialogueTrigger.enabled = true;
+        //component.enabled = true;
+
+        DialogueManager.StartConversation("StartConverastion");
+        
     }
 }

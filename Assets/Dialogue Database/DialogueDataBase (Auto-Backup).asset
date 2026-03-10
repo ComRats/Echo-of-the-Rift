@@ -3261,7 +3261,13 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetActive(TimeLine1, true)
+        value: 'PlaySound(Horn1);
+
+          SetActive(TimeLine1, true)@2;'
+        type: 0
+        typeString: 
+      - title: Response Menu Sequence
+        value: 
         type: 0
         typeString: 
       conversationID: 4
@@ -3340,7 +3346,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 91.920135}
+    canvasScrollPosition: {x: 0, y: 0}
     canvasZoom: 0.9100001
   - id: 5
     fields:
@@ -4530,7 +4536,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 8.163269, y: 0}
+    canvasScrollPosition: {x: 21.428589, y: 186.73471}
     canvasZoom: 0.98
   - id: 6
     fields:
