@@ -17,24 +17,30 @@ public class Choosing : MonoBehaviour, IUpdatableUI
 
     private void Start()
     {
-        leftButton.onClick.AddListener(() => ChangeValue(-1)); 
+        leftButton.onClick.AddListener(() => ChangeValue(-1));
         rightButton.onClick.AddListener(() => ChangeValue(1));
         UpdateUI();
     }
 
     private void ChangeValue(int step)
     {
-        if (step > 0 
-            && currentValue < maxStatValue 
-            && pointsManager.CanAddPoint())
+        int multiplier = 1;
+        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
         {
-            currentValue++;
-            pointsManager.AddPoint();
+            multiplier = 5;
+        }
+
+        if (step > 0 && currentValue < maxStatValue && pointsManager.CanAddPoint())
+        {
+            int add = Mathf.Min(multiplier, maxStatValue - currentValue);
+            currentValue += add;
+            for (int i = 0; i < add; i++) pointsManager.AddPoint();
         }
         else if (step < 0 && currentValue > 0)
         {
-            currentValue--;
-            pointsManager.RemovePoint();
+            int remove = Mathf.Min(multiplier, currentValue);
+            currentValue -= remove;
+            for (int i = 0; i < remove; i++) pointsManager.RemovePoint();
         }
 
         UpdateUI();

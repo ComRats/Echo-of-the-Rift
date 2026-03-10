@@ -21,19 +21,6 @@ public class UploadTarget : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-    private void Start()
-    {
-        TargetToPlayer();
-    }
-
-    public void TargetToPlayer()
-    {
-        if (playerInstance != null && SceneManager.GetActiveScene().name != sceneName)
-        {
-            transform.SetParent(playerInstance.transform);
-        }
-    }
-
     public void NextScene()
     {
         if (string.IsNullOrWhiteSpace(inputField.text))
@@ -47,20 +34,14 @@ public class UploadTarget : MonoBehaviour
             points.AddPointsToPlayer();
             descriptionStats.text = "Загрузка...";
 
-            //transform.SetParent(null);
-
-            //SceneManager.MoveGameObjectToScene(gameObject, SceneManager.GetActiveScene());
-
             RestoreValues();
-
-            TargetToPlayer();
-
 
             playerInstance.dialogActor.SaveNameForDialogueActor(inputField.text);
             playerInstance.dialogActor.ApplyName();
             nextSceneLoader._onSceneActivated.AddListener(() => 
             {
-                FindObjectOfType<NeedToEnable>().EnableComponent();
+                FindObjectOfType<TimeLineLogic>().StartConversationDelay();
+                playerInstance.movement.CanMoveTrue();
             });
 
             nextSceneLoader.LoadAsync();
