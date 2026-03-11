@@ -38,7 +38,6 @@ public class UploadTarget : MonoBehaviour
             playerInstance.dialogActor.ApplyName();
             nextSceneLoader._onSceneActivated.AddListener(() => 
             {
-                Debug.Log("OnSceneActivated");
                 FindObjectOfType<TimeLineLogic>().StartConversationDelay();
                 playerInstance.movement.CanMoveTrue();
             });

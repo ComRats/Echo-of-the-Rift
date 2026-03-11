@@ -7891,7 +7891,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: CurrentQuestState("HornOfWar") == "returnToNPC"
+      conditionsString: HasItem("rustChestplate")
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -7940,7 +7940,7 @@ MonoBehaviour:
       falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks: []
-      conditionsString: CurrentQuestState("HornOfWar") ~= "returnToNPC"
+      conditionsString: HasItem("rustChestplate") == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -7948,7 +7948,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 538.82416
-        y: 126.8421
+        y: 128.94736
         width: 160
         height: 30
     entryGroups: []
