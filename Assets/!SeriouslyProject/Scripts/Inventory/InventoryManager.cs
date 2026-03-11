@@ -252,6 +252,39 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    /// Удаляет предмет из конкретного слота инвентаря по индексу
+    /// Возвращает количество, которое осталось удалить после обработки слота
+    /// </summary>
+    public int RemoveItemFromInventorySlotIndex(int slotIndex, string itemName, int amount)
+    {
+        if (amount <= 0)
+            return 0;
+
+        if (slotIndex < 0 || slotIndex >= inventorySlots.Length)
+            return amount;
+
+        var item = inventorySlots[slotIndex].GetComponentInChildren<DraggableItem>();
+        if (item == null || item.itemData == null || item.itemData.itemName != itemName)
+            return amount;
+
+        if (item.count <= amount)
+        {
+            amount -= item.count;
+            Destroy(item.gameObject);
+            inventoryData.ClearInventorySlot(slotIndex);
+        }
+        else
+        {
+            item.count -= amount;
+            item.RefreshCount();
+            inventoryData.SetInventorySlot(slotIndex, itemName, item.count);
+            amount = 0;
+        }
+
+        return amount;
+    }
+
     public void SyncFromUI()
     {
         SyncSlotsToData(inventorySlots, true);
@@ -561,4 +594,5 @@ public class InventoryManager : MonoBehaviour
 
     #endregion
 }
+
 

@@ -471,7 +471,13 @@ public class InventoryContextMenu : MonoBehaviour
     {
         if (item == null || shopUI == null || shopUI.ShopManager == null) return;
 
-        bool success = shopUI.ShopManager.SellItem(item.itemData, quantity);
+        int preferredSlotIndex = -1;
+        if (currentSlot != null && shopUI != null)
+        {
+            preferredSlotIndex = System.Array.IndexOf(shopUI.PlayerSlots, currentSlot);
+        }
+
+        bool success = shopUI.ShopManager.SellItem(item.itemData, quantity, preferredSlotIndex);
 
         if (success)
         {

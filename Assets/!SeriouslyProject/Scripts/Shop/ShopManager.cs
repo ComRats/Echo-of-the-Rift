@@ -162,7 +162,7 @@ namespace EchoRift.Shop
         /// <summary>
         /// Продать предмет торговцу
         /// </summary>
-        public bool SellItem(ItemData item, int quantity = 1)
+        public bool SellItem(ItemData item, int quantity = 1, int preferredInventorySlotIndex = -1)
         {
             if (!IsShopOpen)
             {
@@ -199,7 +199,21 @@ namespace EchoRift.Shop
 
             // Удаление предмета из инвентаря
             Debug.Log($"[ShopManager] Удаление предмета: {item.itemName}");
-            if (!playerInventory.RemoveItem(item.itemName, quantity))
+            bool removed = false;
+            int remaining = quantity;
+
+            if (preferredInventorySlotIndex >= 0)
+            {
+                remaining = playerInventory.RemoveItemFromInventorySlotIndex(preferredInventorySlotIndex, item.itemName, remaining);
+                removed = remaining <= 0;
+            }
+
+            if (!removed)
+            {
+                removed = playerInventory.RemoveItem(item.itemName, remaining);
+            }
+
+            if (!removed)
             {
                 Debug.LogError("[ShopManager] Ошибка удаления предмета из инвентаря!");
                 return false;
