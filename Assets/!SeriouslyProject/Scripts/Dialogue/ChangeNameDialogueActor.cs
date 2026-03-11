@@ -36,6 +36,7 @@ public class ChangeNameDialogueActor : MonoBehaviour
             playerDialogueName = _cachedName
         };
 
+        DialogueLua.SetVariable("PlayerName", _cachedName);
         SaveLoadSystem.Save(PLAYER_NAME, playerNameData, GAME_DIRECTORY);
     }
 

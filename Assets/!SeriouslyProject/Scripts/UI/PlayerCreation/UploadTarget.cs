@@ -10,8 +10,6 @@ public class UploadTarget : MonoBehaviour
     [SerializeField] private PointsManager points;
     [SerializeField] private TextMeshProUGUI descriptionStats;
     [SerializeField] private TMP_InputField inputField;
-    [SerializeField] private string sceneName;
-    [SerializeField] private string nextScene;
 
     [Inject] private Player playerInstance;
     [Inject] private MainUI mainUiInstance;
@@ -40,6 +38,7 @@ public class UploadTarget : MonoBehaviour
             playerInstance.dialogActor.ApplyName();
             nextSceneLoader._onSceneActivated.AddListener(() => 
             {
+                Debug.Log("OnSceneActivated");
                 FindObjectOfType<TimeLineLogic>().StartConversationDelay();
                 playerInstance.movement.CanMoveTrue();
             });
@@ -68,8 +67,5 @@ public class UploadTarget : MonoBehaviour
         }
 
         GameTimer.ResumeGame();
-
-        transform.position = new Vector3(0f, 0.59f, 0f);
-        transform.localScale = Vector3.one * 0.0035f;
     }
 }
