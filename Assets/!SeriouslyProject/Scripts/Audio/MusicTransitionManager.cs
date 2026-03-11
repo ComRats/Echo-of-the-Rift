@@ -5,6 +5,7 @@ using AudioManager.Core;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using PixelCrushers.DialogueSystem;
 
 [Serializable]
 public class SceneMusicConfig
@@ -24,6 +25,7 @@ public class MusicTransitionManager : MonoBehaviour
     private IAudioManager _am;
     private List<string> _currentMusicNames = new List<string>();
     private bool _isPaused = false;
+    private bool _isDialogueActive = false;
 
     private void Awake()
     {
@@ -33,11 +35,18 @@ public class MusicTransitionManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
+        DialogueManager.instance.conversationStarted += OnConversationStarted;
+        DialogueManager.instance.conversationEnded += OnConversationEnded;
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+        if (DialogueManager.instance != null)
+        {
+            DialogueManager.instance.conversationStarted -= OnConversationStarted;
+            DialogueManager.instance.conversationEnded -= OnConversationEnded;
+        }
     }
 
     private void Start()
@@ -165,6 +174,36 @@ public class MusicTransitionManager : MonoBehaviour
             if (!string.IsNullOrEmpty(musicName))
             {
                 _am.LerpVolume(musicName, normalVolume, restoreDuration);
+            }
+        }
+    }
+
+    private void OnConversationStarted(Transform actor)
+    {
+        if (_am == null || _isDialogueActive) return;
+
+        _isDialogueActive = true;
+
+        foreach (var musicName in _currentMusicNames)
+        {
+            if (!string.IsNullOrEmpty(musicName))
+            {
+                _am.LerpVolume(musicName, pausedVolume, fadeDuration);
+            }
+        }
+    }
+
+    private void OnConversationEnded(Transform actor)
+    {
+        if (_am == null || !_isDialogueActive) return;
+
+        _isDialogueActive = false;
+
+        foreach (var musicName in _currentMusicNames)
+        {
+            if (!string.IsNullOrEmpty(musicName))
+            {
+                _am.LerpVolume(musicName, normalVolume, fadeDuration);
             }
         }
     }
