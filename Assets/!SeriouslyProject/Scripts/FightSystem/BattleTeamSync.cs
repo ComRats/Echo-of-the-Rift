@@ -9,14 +9,14 @@ using EchoRift;
 public class BattleTeamSync : MonoBehaviour
 {
     [SerializeField] private FightManager fightManager;
+    [SerializeField] private bool debugMode = false;
 
     private bool isSynced = false;
     private Dictionary<string, Character> initialCharacters = new Dictionary<string, Character>();
 
     private void Start()
     {
-        if (fightManager == null)
-            fightManager = GetComponent<FightManager>();
+        fightManager ??= GetComponent<FightManager>();
 
         // Сохраняем ссылки на всех персонажей в начале боя
         if (fightManager != null && fightManager.characters != null)
@@ -26,10 +26,86 @@ public class BattleTeamSync : MonoBehaviour
                 if (character != null)
                 {
                     initialCharacters[character.Name] = character;
-                    Debug.Log($"[BattleTeamSync] Registered character: {character.Name}");
+                    if (debugMode) Debug.Log($"[BattleTeamSync] Registered character: {character.Name}");
                 }
             }
         }
+    }
+
+    public void OnTeamManagerReady(TeamManager teamManager)
+    {
+        if (debugMode) Debug.Log("[BattleTeamSync] TeamManager is ready, linking battle characters");
+        LinkTeamManagerWithBattle(teamManager);
+    }
+
+    private System.Collections.IEnumerator LinkTeamManagerWithDelay()
+    {
+        // Ждем, пока TeamManager инициализируется
+        yield return new WaitForSeconds(0.1f);
+        
+        LinkTeamManagerWithBattle(null);
+    }
+
+    private void LinkTeamManagerWithBattle(TeamManager providedTeamManager)
+    {
+        TeamManager teamManager = providedTeamManager;
+        
+        if (teamManager == null)
+        {
+            if (GlobalLoader.Instance != null && GlobalLoader.Instance.mainUI != null)
+            {
+                teamManager = GlobalLoader.Instance.mainUI.teamManager;
+                if (debugMode) Debug.Log("[BattleTeamSync] Got TeamManager from GlobalLoader.mainUI");
+            }
+            
+            if (teamManager == null)
+            {
+                teamManager = FindObjectOfType<TeamManager>();
+                if (teamManager != null && debugMode)
+                {
+                    Debug.Log("[BattleTeamSync] Found TeamManager in scene using FindObjectOfType");
+                }
+            }
+        }
+        else if (debugMode)
+        {
+            Debug.Log("[BattleTeamSync] Using provided TeamManager");
+        }
+        
+        if (teamManager == null)
+        {
+            Debug.LogError("[BattleTeamSync] TeamManager not found!");
+            return;
+        }
+        
+        if (fightManager == null)
+        {
+            Debug.LogError("[BattleTeamSync] FightManager is null!");
+            return;
+        }
+        
+        if (fightManager.characters == null || fightManager.characters.Count == 0)
+        {
+            Debug.LogError("[BattleTeamSync] No characters in FightManager!");
+            return;
+        }
+        
+        teamManager.LinkBattleCharacters(fightManager.characters);
+        
+        foreach (var character in fightManager.characters)
+        {
+            if (character != null)
+            {
+                character.OnHealthChanged += (current, max) => 
+                {
+                    if (debugMode) Debug.Log($"[BattleTeamSync] HP changed for {character.Name}: {current}/{max}");
+                    teamManager.UpdateTeamUI();
+                };
+                if (debugMode) Debug.Log($"[BattleTeamSync] Subscribed to OnHealthChanged for {character.Name}");
+            }
+        }
+        
+        if (debugMode) Debug.Log($"[BattleTeamSync] Successfully linked TeamManager with {fightManager.characters.Count} battle characters");
     }
 
     public void SyncTeamAfterBattle()

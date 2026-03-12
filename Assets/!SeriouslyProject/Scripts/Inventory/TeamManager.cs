@@ -32,6 +32,13 @@ public class TeamManager : MonoBehaviour
         {
             CreateTeamMemberUI(characterSettings);
         }
+        
+        BattleTeamSync battleSync = FindObjectOfType<BattleTeamSync>();
+        if (battleSync != null)
+        {
+            if (debugMode) Debug.Log("[TeamManager] Notifying BattleTeamSync that team is ready");
+            battleSync.OnTeamManagerReady(this);
+        }
     }
 
     private void CreateTeamMemberUI(CharactersSettings characterSettings)
@@ -108,6 +115,8 @@ public class TeamManager : MonoBehaviour
 
     public void UpdateTeamUI()
     {
+        if (debugMode) Debug.Log($"[TeamManager] UpdateTeamUI called, updating {teamMembers.Count} members");
+        
         foreach (var member in teamMembers)
         {
             if (member != null)
@@ -115,13 +124,29 @@ public class TeamManager : MonoBehaviour
         }
     }
 
+    public int GetTeamMembersCount()
+    {
+        return teamMembers.Count;
+    }
+
     public void LinkBattleCharacters(List<Character> battleCharacters)
     {
-        for (int i = 0; i < Mathf.Min(teamMembers.Count, battleCharacters.Count); i++)
+        if (debugMode) Debug.Log($"[TeamManager] Linking {teamMembers.Count} team members with {battleCharacters.Count} battle characters");
+        
+        for (int i = 0; i < teamMembers.Count; i++)
         {
-            if (teamMembers[i] != null && battleCharacters[i] != null)
+            if (teamMembers[i] == null) continue;
+            
+            Character matchingCharacter = battleCharacters.Find(c => c != null && c.Name == team.characters[i].Name);
+            
+            if (matchingCharacter != null)
             {
-                teamMembers[i].SetCharacter(battleCharacters[i]);
+                teamMembers[i].SetCharacter(matchingCharacter);
+                if (debugMode) Debug.Log($"[TeamManager] Linked TeamMember[{i}] ({team.characters[i].Name}) with Character ({matchingCharacter.Name})");
+            }
+            else
+            {
+                Debug.LogWarning($"[TeamManager] No matching battle character found for {team.characters[i].Name}");
             }
         }
     }

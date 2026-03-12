@@ -8,6 +8,8 @@ using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 public class FightDataLoader : MonoBehaviour
 {
+    [SerializeField] private bool debugMode = false;
+    
     [Title("Враги")]
     [SerializeField] private GameObject enemyPrefab;
     [SerializeField] private RectTransform spawnParent;
@@ -38,7 +40,8 @@ public class FightDataLoader : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, spawnParent);
             Enemy enemyComponent = newEnemy.GetComponent<Enemy>();
             enemyComponent.InitializeFromSettings(enemySettings);
-            Debug.Log($"[Враг] Создан: {enemySettings.Name}");
+            if (debugMode)
+                Debug.Log($"[Враг] Создан: {enemySettings.Name}");
         }
     }
 
@@ -51,13 +54,15 @@ public class FightDataLoader : MonoBehaviour
             var team = GlobalLoader.Instance.playerInstance.team;
             if (team != null && team.characters != null && team.characters.Count > 0)
             {
-                Debug.Log("[Персонажи] Загрузка из Team с runtime данными");
+                if (debugMode)
+                    Debug.Log("[Персонажи] Загрузка из Team с runtime данными");
                 foreach (var characterSettings in team.characters)
                 {
                     GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
                     Character characterComponent = newCharacter.GetComponent<Character>();
                     characterComponent.InitializeFromSettings(characterSettings);
-                    Debug.Log($"[Персонаж] Создан: {characterSettings.Name} HP:{characterSettings.Health}/{characterSettings.MaxHealth} XP:{characterSettings.CurrentXP}/{characterSettings.MaxXP}");
+                    if (debugMode)
+                        Debug.Log($"[Персонаж] Создан: {characterSettings.Name} HP:{characterSettings.Health}/{characterSettings.MaxHealth} XP:{characterSettings.CurrentXP}/{characterSettings.MaxXP}");
                 }
                 return;
             }
@@ -77,7 +82,8 @@ public class FightDataLoader : MonoBehaviour
             GameObject newCharacter = Instantiate(characterPrefab, characterSpawnParent);
             Character characterComponent = newCharacter.GetComponent<Character>();
             characterComponent.InitializeFromSettings(characterSettings);
-            Debug.Log($"[Персонаж] Создан: {characterSettings.Name}");
+            if (debugMode)
+                Debug.Log($"[Персонаж] Создан: {characterSettings.Name}");
         }
     }
 }

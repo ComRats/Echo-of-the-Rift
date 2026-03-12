@@ -22,6 +22,7 @@ public class MainUI : MonoBehaviour
     public bool canOpenUI = true;
     public bool isOpenUI = false;
 
+    [SerializeField] private bool debugMode = false;
     [Inject] private GameSettings gameSettings;
 
     private GameObject playerUIbackGround;
@@ -143,18 +144,43 @@ public class MainUI : MonoBehaviour
 
     public void OpenInventory()
     {
-        if (playerUIbackGround == null || !canOpenUI || pauseMenu.isActive) return;
+        if (playerUIbackGround == null || !canOpenUI) return;
+        
+        // Если открыто меню паузы, не открываем инвентарь
+        if (pauseMenu != null && pauseMenu.isActive) return;
 
         service.PlayOneShot("OpenUI");
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
         playerUI.OpenPlayerUI();
+        
+        // Обновляем слоты персонажей при открытии инвентаря
+        UpdateCharacterSlots();
+        
         GameTimer.PauseGame();
 
         // Приглушаем музыку
         if (musicManager != null)
         {
             musicManager.DuckMusic();
+        }
+    }
+
+    private void UpdateCharacterSlots()
+    {
+        if (debugMode)
+            Debug.Log("[MainUI] UpdateCharacterSlots called");
+        
+        // Используем существующий TeamManager для обновления слотов
+        if (teamManager != null)
+        {
+            if (debugMode)
+                Debug.Log("[MainUI] Calling teamManager.UpdateTeamUI()");
+            teamManager.UpdateTeamUI();
+        }
+        else
+        {
+            Debug.LogWarning("[MainUI] TeamManager is null!");
         }
     }
 

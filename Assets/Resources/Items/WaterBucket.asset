@@ -23,3 +23,5 @@ MonoBehaviour:
     \u043F\u043E\u043B\u0435\u0437\u043D\u043E\u0435"
   isStackable: 0
   maxStackSize: 10
+  healthRestore: 1
+  manaRestore: 3

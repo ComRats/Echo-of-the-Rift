@@ -58,7 +58,7 @@ namespace FightSystem.Enemy
                 }
                 else
                 {
-                    Debug.LogError($"Не найден EnemyData с именем {settings.enemyDataName}");
+                    Debug.LogError($"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ EnemyData пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {settings.enemyDataName}");
                 }
             }
             else
@@ -93,7 +93,7 @@ namespace FightSystem.Enemy
                 Initialize(enemy, gameObject);
             }
 
-            // Обновление UI
+            // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ UI
             UpdateUI();
         }
     }

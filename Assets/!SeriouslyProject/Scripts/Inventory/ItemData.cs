@@ -79,6 +79,20 @@ public class ItemData : ScriptableObject
     [ProgressBar(1, 999, ColorGetter = "GetStackColor", Height = 20)]
     private int StackVisual => maxStackSize;
 
+    [TitleGroup("Эффекты использования")]
+    [ShowIf("@itemType.HasFlag(ItemType.Food) || itemType.HasFlag(ItemType.Potion)")]
+    [LabelText("Восстановление HP")]
+    [LabelWidth(150)]
+    [MinValue(0)]
+    public int healthRestore = 0;
+
+    [TitleGroup("Эффекты использования")]
+    [ShowIf("@itemType.HasFlag(ItemType.Food) || itemType.HasFlag(ItemType.Potion)")]
+    [LabelText("Восстановление маны")]
+    [LabelWidth(150)]
+    [MinValue(0)]
+    public int manaRestore = 0;
+
     private Color GetStackColor(int value)
     {
         return Color.Lerp(Color.green, Color.red, value / 999f);

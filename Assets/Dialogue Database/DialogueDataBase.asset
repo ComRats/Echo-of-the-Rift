@@ -8021,7 +8021,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["RecruitCount"] = Variable["RecruitCount"] + 1
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8183,18 +8183,18 @@ MonoBehaviour:
         priority: 2
       conditionsString: (not HasItem("rustChestplate") or not HasItem("brokeHelmet")
         or not HasItem("axe")) and Variable["RecruitCount"] == 2
-      userScript: Variable["RecruitCount"] = Variable["RecruitCount"] + 1
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 925.2632
+        x: 926.3158
         y: 132.63158
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 0, y: 0}
+    canvasScrollPosition: {x: 225.26318, y: 0}
     canvasZoom: 0.95
   syncInfo:
     syncActors: 0
