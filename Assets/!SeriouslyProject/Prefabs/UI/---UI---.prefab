@@ -8400,6 +8400,7 @@ MonoBehaviour:
     _buttonText: {fileID: 3507642230704764608}
   - _button: {fileID: 6210269072990552301}
     _buttonText: {fileID: 8461186631183839051}
+  isActive: 0
 --- !u!1 &8330912337731657390
 GameObject:
   m_ObjectHideFlags: 0

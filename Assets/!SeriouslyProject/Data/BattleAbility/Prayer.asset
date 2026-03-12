@@ -17,7 +17,7 @@ MonoBehaviour:
   targetType: 1
   animTrigger: Hit
   Description: "\u041C\u043E\u043B\u0438\u0442\u0432\u0430"
-  baseHealAmount: 5
+  baseHealAmount: 2
   useCharacterHealStat: 1
   healMultiplier: 1.5
   healVFX: {fileID: 0}

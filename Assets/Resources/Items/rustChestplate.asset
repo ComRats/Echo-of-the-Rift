@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: rustChestplate
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 4586250277f74fd48ace146085fd80f3, type: 3}
+  icon: {fileID: 3286163911610860551, guid: 76ed90b649d132d4486921e9acacf93b, type: 3}
   itemName: rustChestplate
   itemGameName: "\u0420\u0436\u0430\u0432\u0430\u044F \u041A\u0438\u0440\u0430\u0441\u0430"
   itemType: 16

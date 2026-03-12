@@ -36,6 +36,8 @@ public class MainUI : MonoBehaviour
             playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
         }
 
+        service ??= ServiceLocator.GetService();
+
         contextMenu = FindObjectOfType<InventoryContextMenu>();
         musicManager = FindObjectOfType<MusicTransitionManager>();
     }
@@ -76,7 +78,7 @@ public class MainUI : MonoBehaviour
         if (isOpen)
         {
             CloseQuestLog();
-            service.PlayOneShot("OpenUI_R");
+            service.PlayOneShot("OpenUI_R"); 
         }
         else
         {
@@ -91,18 +93,13 @@ public class MainUI : MonoBehaviour
 
         bool isOpen = playerUIbackGround.activeSelf;
 
-        service ??= ServiceLocator.GetService();
-
-
         if (isOpen)
         {
             CloseInventory();
-            service.PlayOneShot("OpenUI_R");
         }
         else
         {
             OpenInventory();
-            service.PlayOneShot("OpenUI");
         }
     }
 
@@ -146,8 +143,9 @@ public class MainUI : MonoBehaviour
 
     public void OpenInventory()
     {
-        if (playerUIbackGround == null || !canOpenUI) return;
+        if (playerUIbackGround == null || !canOpenUI || pauseMenu.isActive) return;
 
+        service.PlayOneShot("OpenUI");
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
         playerUI.OpenPlayerUI();
@@ -164,6 +162,7 @@ public class MainUI : MonoBehaviour
     {
         if (playerUIbackGround == null) return;
 
+        service.PlayOneShot("OpenUI_R");
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
         GameTimer.ResumeGame();

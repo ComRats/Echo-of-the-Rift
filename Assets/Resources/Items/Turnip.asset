@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01de3da4ec824ff4a9d07ad70201a080, type: 3}
   m_Name: Turnip
   m_EditorClassIdentifier: 
-  icon: {fileID: 21300000, guid: 5c09481414f302c429319ca41aba4adb, type: 3}
+  icon: {fileID: 3286163911610860551, guid: babdf2c8b54ae4245b78a78da8255c20, type: 3}
   itemName: Turnip
   itemGameName: "\u0420\u0435\u043F\u0430"
   itemType: 2

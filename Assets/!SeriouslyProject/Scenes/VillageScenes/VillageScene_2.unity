@@ -898,7 +898,7 @@ PolygonCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -18552,7 +18552,7 @@ MonoBehaviour:
   _serializableScene:
     Scene: {fileID: 102900000, guid: a528bf3a65804084b8df8f26577f7eff, type: 3}
     SceneName: VillageScene_1
-    _sceneIndexInBuildSettings: 6
+    _sceneIndexInBuildSettings: 5
     _isSceneEnabledInBuildSettings: 1
   _loadingSpeed: 0.5
   _preloadOnStart: 0
@@ -24449,6 +24449,10 @@ PrefabInstance:
       propertyPath: m_Offset.y
       value: 1.1521642
       objectReference: {fileID: 0}
+    - target: {fileID: 517190014555550560, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1186400862192045144, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_target
       value: 
@@ -24512,6 +24516,38 @@ PrefabInstance:
     - target: {fileID: 3972072975807863687, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629487950807759495, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_Size.x
+      value: 2.4104247
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629487950807759495, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6552862
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629487950807759495, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_Offset.x
+      value: 0.3931711
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629487950807759495, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.040565312
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834411456330063201, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834411456330063201, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834411456330063201, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 9.63
+      objectReference: {fileID: 0}
+    - target: {fileID: 5834411456330063201, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6069528994407380562, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}

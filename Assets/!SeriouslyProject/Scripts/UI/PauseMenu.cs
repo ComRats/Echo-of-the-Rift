@@ -21,6 +21,8 @@ public class PauseMenu : MonoBehaviour
     private Animator settingsAnimator;
     private AnimatorStateInfo stateInfo;
 
+    public bool isActive = false;
+
     private void Awake()
     {
         GameTimer.OnGamePaused += OnGamePaused;
@@ -42,57 +44,72 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(gameSettings.openPauseMenuKey))
         {
-            // Если магазин открыт - закрываем его вместо открытия меню паузы
             if (_mainUIInstance.shopUI != null && _mainUIInstance.shopUI.IsShopMode)
             {
                 _mainUIInstance.shopUI.CloseShop();
                 return;
             }
 
-            // Если инвентарь игрока открыт - закрываем его вместо открытия меню паузы
             if (_mainUIInstance.isOpenUI)
             {
                 _mainUIInstance.CloseInventory();
                 return;
             }
 
-            stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
-
-            if (stateInfo.IsName("ShowSettings") && _mainUIInstance.canOpenUI)
+            if (pauseMenu.activeSelf)
             {
-                settingsAnimator.SetTrigger("HideSettings");
-                pauseMenuBackGround.SetActive(true);
-                return;
+                isActive = false;
+                ClosePauseMenu();
             }
-
-            if (pauseMenu.activeSelf && _mainUIInstance.canOpenUI)
+            else
             {
-                GameTimer.ResumeGame();
-                pauseMenu.SetActive(false);
-            }
-            else if (!pauseMenu.activeSelf && _mainUIInstance.canOpenUI)
-            {
-                GameTimer.PauseGame();
-                pauseMenu.SetActive(true);
-                pauseMenuBackGround.SetActive(true);
-
-                if (stateInfo.IsName("ShowSettings"))
-                {
-                    settingsAnimator.SetTrigger("HideSettings");
-                }
+                isActive = true;
+                OpenPauseMenu();
             }
         }
+    }
+
+    public void OpenPauseMenu()
+    {
+        if (!_mainUIInstance.canOpenUI) return;
+
+        stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+
+        GameTimer.PauseGame();
+        pauseMenu.SetActive(true);
+        pauseMenuBackGround.SetActive(true);
+
+        if (stateInfo.IsName("ShowSettings"))
+        {
+            settingsAnimator.SetTrigger("HideSettings");
+        }
+    }
+
+    public void ClosePauseMenu()
+    {
+        if (!_mainUIInstance.canOpenUI) return;
+
+        stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (stateInfo.IsName("ShowSettings"))
+        {
+            settingsAnimator.SetTrigger("HideSettings");
+            pauseMenuBackGround.SetActive(true);
+            return;
+        }
+
+        GameTimer.ResumeGame();
+        pauseMenu.SetActive(false);
     }
 
     private void ButtonInitialize()
     {
         buttons[0]._button.onClick.AddListener(() =>
         {
-            GameTimer.ResumeGame();
-            pauseMenu.SetActive(false);
+            ClosePauseMenu();
         });
 
-        buttons[2]._button.onClick.AddListener(() => 
+        buttons[2]._button.onClick.AddListener(() =>
         {
             GlobalLoader.Instance.SavePlayer();
             GlobalLoader.Instance.SaveGlobal();
@@ -130,7 +147,6 @@ public class PauseMenu : MonoBehaviour
 
     private void OnGamePaused()
     {
-        // Приглушаем музыку при паузе
         if (_musicManager != null)
         {
             _musicManager.DuckMusic();
@@ -139,7 +155,6 @@ public class PauseMenu : MonoBehaviour
 
     private void OnGameResumed()
     {
-        // Восстанавливаем громкость музыки при возобновлении
         if (_musicManager != null)
         {
             _musicManager.RestoreMusic();
