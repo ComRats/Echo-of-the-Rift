@@ -17,6 +17,8 @@ public class BattleTeamSync : MonoBehaviour
     private void Start()
     {
         fightManager ??= GetComponent<FightManager>();
+        if (debugMode) Debug.Log($"[BattleTeamSync] Registered fightManager: {fightManager}");
+        if (debugMode) Debug.Log($"[BattleTeamSync] Registered fightManager.characters: {fightManager.characters}");
 
         // Сохраняем ссылки на всех персонажей в начале боя
         if (fightManager != null && fightManager.characters != null)
@@ -30,6 +32,8 @@ public class BattleTeamSync : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(LinkTeamManagerWithDelay());
     }
 
     public void OnTeamManagerReady(TeamManager teamManager)
@@ -122,7 +126,7 @@ public class BattleTeamSync : MonoBehaviour
             return;
         }
 
-        var team = GlobalLoader.Instance.playerInstance.GetComponent<Team>();
+        var team = GlobalLoader.Instance.playerInstance.team;
         if (team == null)
         {
             Debug.LogWarning("[BattleTeamSync] Team component not found on player");

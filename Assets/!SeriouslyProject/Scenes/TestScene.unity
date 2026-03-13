@@ -714,6 +714,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fightManager: {fileID: 517749535}
+  debugMode: 0
 --- !u!1 &555087642
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,6 +2104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37ac4b1b3f997cb4791dc6ea004f7eab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugMode: 0
   enemyPrefab: {fileID: 7246316069945834993, guid: afe7ddb3773464841b89a56bfda790ee, type: 3}
   spawnParent: {fileID: 2021956281}
   characterPrefab: {fileID: 316034605560409779, guid: 253169662347d7e42916cd2f43f2564d, type: 3}
