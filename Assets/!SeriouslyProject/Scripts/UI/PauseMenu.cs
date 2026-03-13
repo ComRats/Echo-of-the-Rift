@@ -75,6 +75,7 @@ public class PauseMenu : MonoBehaviour
 
         stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
 
+        _mainUIInstance.ShowCursor();
         GameTimer.PauseGame();
         pauseMenu.SetActive(true);
         pauseMenuBackGround.SetActive(true);
@@ -90,6 +91,7 @@ public class PauseMenu : MonoBehaviour
         if (!_mainUIInstance.canOpenUI) return;
 
         stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+        _mainUIInstance.HideCursor();
 
         if (stateInfo.IsName("ShowSettings"))
         {

@@ -84,7 +84,11 @@ public class MainMenu : MonoBehaviour
         var savedGameData = SaveSystem.Deserialize<SavedGameData>(globalData.dialogueData);
         SaveSystem.ApplySavedGameData(savedGameData);
 
-        loadSceneLoader._onSceneActivated.AddListener(() => GameTimer.ResumeGame());
+        loadSceneLoader._onSceneActivated.AddListener(() =>
+        {
+            GameTimer.ResumeGame();
+            GlobalLoader.Instance.mainUI.HideCursor();
+        });
         playerActor.SaveNameForDialogueActor(playerName.playerDialogueName, true);
         loadSceneLoader.LoadAsync(globalData.SceneIndex);
     }
@@ -92,5 +96,10 @@ public class MainMenu : MonoBehaviour
     public void Quit()
     {
         GameMassage.GameAlert(gameAlertPrefab, "Выйти из игры?", "Да", Application.Quit, "Нет", GameMassage.CloseAlert, 1f);
+    }
+
+    public void Credits()
+    {
+        Application.OpenURL("https://comrats.github.io");
     }
 }

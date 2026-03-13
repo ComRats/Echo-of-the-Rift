@@ -21,6 +21,7 @@ public class MainUI : MonoBehaviour
 
     public bool canOpenUI = true;
     public bool isOpenUI = false;
+    public bool isCursorVisible = true;
 
     [SerializeField] private bool debugMode = false;
     [Inject] private GameSettings gameSettings;
@@ -68,6 +69,29 @@ public class MainUI : MonoBehaviour
         }
     }
 
+    public void ToggleCursorVisible()
+    {
+        if (!isCursorVisible)
+        {
+            ShowCursor();
+        }
+        else HideCursor();
+    }
+
+    public void ShowCursor()
+    {
+        isCursorVisible = true;
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void HideCursor()
+    {
+        isCursorVisible = false;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
+
     public void ToggleQuestLog()
     {
         if (playerUIbackGround == null) return;
@@ -108,6 +132,8 @@ public class MainUI : MonoBehaviour
     {
         if (playerUIbackGround == null || !canOpenUI) return;
 
+        ShowCursor();
+
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
         playerUI.OpenPlayerUI(3);
@@ -124,6 +150,8 @@ public class MainUI : MonoBehaviour
     public void CloseQuestLog()
     {
         if (playerUIbackGround == null) return;
+
+        HideCursor();
 
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
@@ -149,6 +177,7 @@ public class MainUI : MonoBehaviour
         // Если открыто меню паузы, не открываем инвентарь
         if (pauseMenu != null && pauseMenu.isActive) return;
 
+        ShowCursor();
         service.PlayOneShot("OpenUI");
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
@@ -187,6 +216,8 @@ public class MainUI : MonoBehaviour
     public void CloseInventory()
     {
         if (playerUIbackGround == null) return;
+
+        HideCursor();
 
         service.PlayOneShot("OpenUI_R");
         playerUIbackGround.SetActive(false);

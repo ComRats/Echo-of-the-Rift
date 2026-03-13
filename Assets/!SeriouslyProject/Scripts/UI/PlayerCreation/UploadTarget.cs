@@ -1,7 +1,6 @@
 ﻿﻿using EchoRift;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using Zenject;
 
 public class UploadTarget : MonoBehaviour
@@ -17,6 +16,7 @@ public class UploadTarget : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
+        GlobalLoader.Instance.mainUI.HideCursor();
     }
 
     public void NextScene()

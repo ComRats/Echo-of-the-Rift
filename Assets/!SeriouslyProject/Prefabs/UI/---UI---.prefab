@@ -5243,6 +5243,7 @@ MonoBehaviour:
   teamManager: {fileID: 8164908599216311209}
   canOpenUI: 1
   isOpenUI: 0
+  isCursorVisible: 1
   debugMode: 0
 --- !u!1 &5479070883063013135
 GameObject:
