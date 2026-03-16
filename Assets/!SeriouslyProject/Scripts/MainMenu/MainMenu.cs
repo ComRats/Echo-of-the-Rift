@@ -48,6 +48,7 @@ public class MainMenu : MonoBehaviour
     private void Play()
     {
         SaveLoadSystem.ClearAllSaves(GAME_DIRECTORY);
+        SceneObjectsData.ResetCache();
         
         inventoryData.Clear();
         

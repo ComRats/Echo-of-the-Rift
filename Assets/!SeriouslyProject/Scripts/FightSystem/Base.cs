@@ -178,6 +178,7 @@ public class Base : MonoBehaviour, IData
         if (Random.Range(0, 100) < 10)
         {
             FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            service?.PlayOneShot("Miss1");
             return;
         }
 
@@ -198,6 +199,7 @@ public class Base : MonoBehaviour, IData
         if (Random.Range(0, 100) < 10)
         {
             FightAnimation.ShowText(textPrefab, "Промах", gameObject.transform, Color.gray);
+            service?.PlayOneShot("Miss1");
             return;
         }
 

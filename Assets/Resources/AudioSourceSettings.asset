@@ -335,13 +335,27 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: Miss1
+    type: 0
+    audioClip: {fileID: 8300000, guid: 390c4a87a98cf044990b21e051b37ef6, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 0.9
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
   - soundName: Horse1
     type: 0
     audioClip: {fileID: 8300000, guid: 2f447e3a99f56d643ae4da4b7643bc30, type: 3}
     mixerGroup: {fileID: 0}
     loop: 0
     volume: 1
-    pitch: 0.9
+    pitch: 1
     spatialBlend: 0.5
     dopplerLevel: 0
     spreadAngle: 0

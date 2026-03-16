@@ -16,15 +16,23 @@ public class MainMenuAnimator : MonoBehaviour
     private void Awake()
     {
         originalPositions = new Vector2[items.Length];
+    }
+
+    private void Start()
+    {
+        StartCoroutine(PlayOpenAnimationDelayed());
+    }
+
+    private System.Collections.IEnumerator PlayOpenAnimationDelayed()
+    {
+        // Ждём один кадр чтобы VerticalLayoutGroup успел пересчитать позиции
+        yield return null;
 
         for (int i = 0; i < items.Length; i++)
         {
             originalPositions[i] = items[i].anchoredPosition;
         }
-    }
 
-    private void Start()
-    {
         PlayOpenAnimation();
     }
 

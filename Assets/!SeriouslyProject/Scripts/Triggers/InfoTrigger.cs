@@ -4,19 +4,21 @@ using Zenject;
 using Sirenix.OdinInspector;
 using AudioManager.Core;
 using AudioManager.Locator;
+using UnityEngine.Events;
+using Unity.VisualScripting;
 
 public class InfoTrigger : BaseTrigger
 {
     [Title("Info Text")]
     [Tooltip(
-        "<br>  — перенос строки\n" +
-        "<b>text</b> — жирный текст\n" +
-        "<i>text</i> — курсив\n" +
-        "<u>text</u> — подчёркнутый\n" +
-        "<s>text</s> — зачёркнутый\n\n" +
-        "<color=red>text</color> — цвет\n" +
-        "<size=150%>text</size> — размер\n\n" +
-        "<sprite index=0> — иконка (TMP)"
+        "<br>  пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ\n" +
+        "<b>text</b> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ\n" +
+        "<i>text</i> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ\n" +
+        "<u>text</u> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\n" +
+        "<s>text</s> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ\n\n" +
+        "<color=red>text</color> пїЅ пїЅпїЅпїЅпїЅ\n" +
+        "<size=150%>text</size> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ\n\n" +
+        "<sprite index=0> пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ (TMP)"
     )]
     [SerializeField, TextArea(3, 6)]
     private string infoText;
@@ -27,7 +29,7 @@ public class InfoTrigger : BaseTrigger
 
     [ShowIf(nameof(useButton))]
     [SerializeField]
-    private string useButtText = "Осмотреть";
+    private string useButtText = "пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ";
 
     [Title("View")]
     [ShowIf(nameof(useButton))]
@@ -45,6 +47,15 @@ public class InfoTrigger : BaseTrigger
     [ShowIf(nameof(useButton))]
     [SerializeField]
     private string useButtonMusic = "LockDoor1";
+
+    [SerializeField]
+    private UnityEvent onPressedButton;
+    [SerializeField]
+    private UnityEvent onTriggerEnter;
+    [SerializeField]
+    private UnityEvent onTriggerExit;
+    [SerializeField]
+    private UnityEvent onExitAfterPressed;
 
     private bool playerInside;
     private bool textShown;
@@ -80,6 +91,7 @@ public class InfoTrigger : BaseTrigger
 
         if (player == null) return;
 
+        onPressedButton?.Invoke();
         service.PlayOneShot(useButtonMusic);
 
         isWasPressed = true;
@@ -93,6 +105,7 @@ public class InfoTrigger : BaseTrigger
 
         playerInside = true;
         textShown = false;
+        onTriggerEnter?.Invoke();
 
         if (useButton && !mainUI.isOpenUI)
             ShowButtonPrompt(true);
@@ -106,6 +119,12 @@ public class InfoTrigger : BaseTrigger
 
         playerInside = false;
         textShown = false;
+
+        onTriggerExit?.Invoke();
+
+        if (isWasPressed)
+            onExitAfterPressed?.Invoke();
+
         isWasPressed = false;
 
         player.thinking.SetThink("");

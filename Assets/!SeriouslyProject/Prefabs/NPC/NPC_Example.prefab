@@ -288,6 +288,7 @@ GameObject:
   - component: {fileID: 4707710278315821684}
   - component: {fileID: 216220103415226255}
   - component: {fileID: 3588780113717112792}
+  - component: {fileID: 6832456148883741646}
   m_Layer: 0
   m_Name: NPC_Example
   m_TagString: Untagged
@@ -436,3 +437,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!114 &6832456148883741646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6047160210205642727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a936c553accd43749a8a1981104f0374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentId: VillageScene_1_NPC_Example_-30,2_-0,9_0,0

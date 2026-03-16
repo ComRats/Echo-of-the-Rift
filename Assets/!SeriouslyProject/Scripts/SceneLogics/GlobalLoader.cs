@@ -44,6 +44,11 @@ public class GlobalLoader : MonoBehaviour
         playerInstance.SetListenerToEvents(OnConversationStart, OnConversationEnd);
     }
 
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     private void OnConversationStart(Transform actor)
     {
         mainUI.canOpenUI = false;
@@ -68,12 +73,25 @@ public class GlobalLoader : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
+        // Восстанавливаем dialogue переменные/квесты из сохранения при каждой загрузке сцены
+        RestoreDialogueState();
+
         LoadPlayer();
 
         // Обновляем UI команды после загрузки сцены
         if (mainUI != null && mainUI.teamManager != null)
         {
             mainUI.teamManager.UpdateTeamUI();
+        }
+    }
+
+    private void RestoreDialogueState()
+    {
+        var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
+        if (!string.IsNullOrEmpty(data.dialogueData))
+        {
+            var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
+            SaveSystem.ApplySavedGameData(savedGameData);
         }
     }
 
@@ -184,6 +202,9 @@ public class GlobalLoader : MonoBehaviour
 
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
             SaveLoadSystem.Save(GLOBAL_SAVE, data, GAME_DIRECTORY);
+
+        // Сохраняем состояния всех PersistentObject на сцене (NPC, объекты и т.д.)
+        PersistentObject.SaveAll();
 
         mainUI.inventoryManager.SaveInventory();
     }

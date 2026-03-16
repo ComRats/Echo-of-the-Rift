@@ -753,6 +753,7 @@ GameObject:
   - component: {fileID: 3085440078055820596}
   - component: {fileID: 7750611782946269593}
   - component: {fileID: 393238302073274705}
+  - component: {fileID: -9084127804647771636}
   m_Layer: 5
   m_Name: Enemy
   m_TagString: Untagged
@@ -985,6 +986,20 @@ MonoBehaviour:
     _xpRewardPerLevel: 1
   activeEffects: []
   enemyData: {fileID: 11400000, guid: 18bb3a63be584f1419ec9f88cb945b0c, type: 2}
+--- !u!114 &-9084127804647771636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7246316069945834993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86710e43de46f6f4bac7c8e50813a599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AspectMode: 2
+  m_AspectRatio: 0.7
 --- !u!1 &7620609953232619610
 GameObject:
   m_ObjectHideFlags: 0

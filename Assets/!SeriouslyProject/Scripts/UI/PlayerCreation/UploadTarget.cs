@@ -16,7 +16,6 @@ public class UploadTarget : MonoBehaviour
     private void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        GlobalLoader.Instance.mainUI.HideCursor();
     }
 
     public void NextScene()

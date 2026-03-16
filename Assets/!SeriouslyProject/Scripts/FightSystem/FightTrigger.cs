@@ -3,9 +3,9 @@ using Sirenix.OdinInspector;
 using FightSystem.Data;
 using UnityEngine;
 using System;
-using System.IO;
 using EchoRift;
 using EchoRift.SaveLoadSystem;
+using System.IO;
 using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 [RequireComponent(typeof(Collider2D))]
@@ -40,6 +40,7 @@ public class FightTrigger : MonoBehaviour
             characters = collision.GetComponent<Team>().characters;
 
             sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+            sceneLoader._onSceneActivated.AddListener(() => CursorManager.Show());
 
             EnterTrigger();
 
@@ -58,14 +59,14 @@ public class FightTrigger : MonoBehaviour
     {
         FightData data = new FightData { enemies = this.enemies };
         SaveLoadSystem.Save(ENEMY_SAVE, data, GAME_DIRECTORY);
-        Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
+        //Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
         SaveLoadSystem.Save(CHARACTER_SAVE, data, GAME_DIRECTORY);
-        Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
+        //Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     [Serializable]

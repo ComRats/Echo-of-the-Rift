@@ -1,6 +1,5 @@
 using UnityEngine;
 using EchoRift.Shop;
-using Zenject;
 
 namespace PixelCrushers.DialogueSystem.SequencerCommands
 {
@@ -11,7 +10,6 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
     /// </summary>
     public class SequencerCommandShop : SequencerCommand
     {
-        [Inject] MainUI mainUI;
         public void Awake()
         {
             string shopDataName = GetParameter(0);
@@ -23,8 +21,7 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                 return;
             }
 
-            // Найти MainUI на сцене
-            MainUI mainUI  = Object.FindObjectOfType<MainUI>(); 
+            MainUI mainUI = FindObjectOfType<MainUI>();
             if (mainUI == null)
             {
                 Debug.LogError("[SequencerCommandShop] MainUI не найден на сцене!");

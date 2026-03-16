@@ -96,7 +96,8 @@ public class ShopUI : MonoBehaviour
         inventoryManager?.SyncFromUI();
 
         shopManager.OpenShop(shopData);
-        mainUI.ShowCursor();
+        CursorManager.Show();
+        Debug.LogWarning("ShowCursorShop");
         currentShopData = shopData;
         isShopMode = true;
 
@@ -134,7 +135,7 @@ public class ShopUI : MonoBehaviour
             mainUI.canOpenUI = true;
 
         shopManager?.CloseShop();
-        mainUI.HideCursor();
+        CursorManager.Hide();
 
         isShopMode = false;
         currentShopData = null;

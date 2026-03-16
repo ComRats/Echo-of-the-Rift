@@ -1,6 +1,7 @@
 using AudioManager.Core;
 using AudioManager.Locator;
 using PixelCrushers.DialogueSystem;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using Zenject;
 
@@ -68,7 +69,7 @@ public class MainUI : MonoBehaviour
             ToggleQuestLog();
         }
     }
-
+    [Button]
     public void ToggleCursorVisible()
     {
         if (!isCursorVisible)
@@ -80,26 +81,14 @@ public class MainUI : MonoBehaviour
 
     public void ShowCursor()
     {
-        if (isCursorVisible) return;
-
         isCursorVisible = true;
-
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
-
-        Debug.LogWarning("CursorShow");
+        CursorManager.Show();
     }
 
     public void HideCursor()
     {
-        if (!isCursorVisible) return;
-
         isCursorVisible = false;
-
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-
-        Debug.LogWarning("CursorHide");
+        CursorManager.Hide();
     }
 
     public void ToggleQuestLog()

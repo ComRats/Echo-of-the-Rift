@@ -389,7 +389,7 @@ Transform:
   m_GameObject: {fileID: 4650786699909764950}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -575,7 +575,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 3688461251942003470}
           m_TargetAssemblyTypeName: PlayerEvents, Assembly-CSharp
-          m_MethodName: ToggleCursorVisible
+          m_MethodName: ShowCursor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -602,7 +602,7 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 3688461251942003470}
           m_TargetAssemblyTypeName: PlayerEvents, Assembly-CSharp
-          m_MethodName: ToggleCursorVisible
+          m_MethodName: HideCursor
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -725,7 +725,7 @@ Transform:
   m_GameObject: {fileID: 5244682795864369976}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -14.285713}
+  m_LocalPosition: {x: 0, y: 0, z: -14.285715}
   m_LocalScale: {x: 1.4285713, y: 1.4285713, z: 1.4285713}
   m_ConstrainProportionsScale: 0
   m_Children: []
