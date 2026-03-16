@@ -4991,7 +4991,6 @@ MonoBehaviour:
   playerCoinsText: {fileID: 600084838312666811}
   inventoryManager: {fileID: 1979945657100220229}
   playerWallet: {fileID: 7094627163202907554}
-  mainUI: {fileID: 5380684461530444215}
   contextMenu: {fileID: 0}
 --- !u!1 &5114504596500820402
 GameObject:

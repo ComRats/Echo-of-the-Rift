@@ -80,16 +80,26 @@ public class MainUI : MonoBehaviour
 
     public void ShowCursor()
     {
+        if (isCursorVisible) return;
+
         isCursorVisible = true;
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        Debug.LogWarning("CursorShow");
     }
 
     public void HideCursor()
     {
+        if (!isCursorVisible) return;
+
         isCursorVisible = false;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        Debug.LogWarning("CursorHide");
     }
 
     public void ToggleQuestLog()

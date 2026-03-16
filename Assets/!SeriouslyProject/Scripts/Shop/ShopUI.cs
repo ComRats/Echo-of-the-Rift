@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using EchoRift.Shop;
+using Zenject;
 
 /// <summary>
 /// UI панель магазина с двумя инвентарями
@@ -25,8 +26,9 @@ public class ShopUI : MonoBehaviour
     [Header("References")]
     [SerializeField] private InventoryManager inventoryManager;
     [SerializeField] private PlayerWallet playerWallet;
-    [SerializeField] private MainUI mainUI;
     [SerializeField] private InventoryContextMenu contextMenu;
+
+    [Inject] private MainUI mainUI;
 
     private ShopManager shopManager;
     private ShopData currentShopData;
@@ -45,9 +47,6 @@ public class ShopUI : MonoBehaviour
 
         if (playerWallet == null && inventoryManager != null)
             playerWallet = inventoryManager.Wallet;
-
-        if (mainUI == null)
-            mainUI = FindObjectOfType<MainUI>();
 
         if (contextMenu == null)
             contextMenu = FindObjectOfType<InventoryContextMenu>();
@@ -97,6 +96,7 @@ public class ShopUI : MonoBehaviour
         inventoryManager?.SyncFromUI();
 
         shopManager.OpenShop(shopData);
+        mainUI.ShowCursor();
         currentShopData = shopData;
         isShopMode = true;
 
@@ -134,6 +134,7 @@ public class ShopUI : MonoBehaviour
             mainUI.canOpenUI = true;
 
         shopManager?.CloseShop();
+        mainUI.HideCursor();
 
         isShopMode = false;
         currentShopData = null;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 6b3b614e5275d8f4e97fcdf510c88c77
+guid: c79824422546a594bb6584f601f4d6cd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -121,91 +121,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Weather_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 1003
-        width: 917
-        height: 917
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cedd3574371e20a4e97b428868db1f34
-      internalID: 1703030463
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Weather_1
-      rect:
-        serializedVersion: 2
-        x: 1003
-        y: 1003
-        width: 917
-        height: 917
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f36d72732e779fe4bbc70f0cb7c4cb4a
-      internalID: -805014635
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Weather_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 0
-        width: 917
-        height: 917
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed532b040114fc4428bd43053660fd9e
-      internalID: 82007375
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Weather_3
-      rect:
-        serializedVersion: 2
-        x: 1003
-        y: 0
-        width: 917
-        height: 917
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d7fc1f0b7bed1fc43b53e62fec250bc9
-      internalID: 1263058095
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -216,11 +132,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Weather_0: 1703030463
-      Weather_1: -805014635
-      Weather_2: 82007375
-      Weather_3: 1263058095
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
