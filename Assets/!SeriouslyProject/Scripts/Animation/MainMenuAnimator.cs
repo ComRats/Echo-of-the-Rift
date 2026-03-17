@@ -1,9 +1,11 @@
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuAnimator : MonoBehaviour
 {
     [SerializeField] private RectTransform[] items;
+    [SerializeField] private VerticalLayoutGroup group;
     [SerializeField] private float startOffset = 600f;
 
     [Header("Animation")]
@@ -15,12 +17,16 @@ public class MainMenuAnimator : MonoBehaviour
 
     private void Awake()
     {
+        group.enabled = true;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(
+        group.GetComponent<RectTransform>());
         originalPositions = new Vector2[items.Length];
     }
 
     private void Start()
     {
-        StartCoroutine(PlayOpenAnimationDelayed());
+        group.enabled = false;
+        StartCoroutine(PlayOpenAnimationDelayed()); 
     }
 
     private System.Collections.IEnumerator PlayOpenAnimationDelayed()
