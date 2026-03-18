@@ -82,6 +82,46 @@ namespace EchoRift.Shop
         public int buybackPercentage = 50;
 
         /// <summary>
+        /// Валидация данных магазина в редакторе
+        /// </summary>
+        private void OnValidate()
+        {
+            ValidateDuplicateItems();
+        }
+
+        /// <summary>
+        /// Проверка на дубликаты предметов в списке
+        /// </summary>
+        private void ValidateDuplicateItems()
+        {
+            if (items == null || items.Count == 0)
+                return;
+
+            var seenItems = new System.Collections.Generic.HashSet<ItemData>();
+            var duplicates = new System.Collections.Generic.List<string>();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item == null)
+                    continue;
+
+                if (seenItems.Contains(items[i].item))
+                {
+                    duplicates.Add($"'{items[i].item.itemName}' (индекс {i})");
+                }
+                else
+                {
+                    seenItems.Add(items[i].item);
+                }
+            }
+
+            if (duplicates.Count > 0)
+            {
+                Debug.LogWarning($"[ShopData: {shopName}] Обнаружены дубликаты предметов: {string.Join(", ", duplicates)}. Это может привести к проблемам!");
+            }
+        }
+
+        /// <summary>
         /// Найти товар в магазине по ItemData
         /// </summary>
         public ShopItem FindShopItem(ItemData itemData)

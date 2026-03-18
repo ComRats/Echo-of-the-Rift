@@ -471,13 +471,9 @@ public class InventoryContextMenu : MonoBehaviour
     {
         if (item == null || shopUI == null || shopUI.ShopManager == null) return;
 
-        int preferredSlotIndex = -1;
-        if (currentSlot != null && shopUI != null)
-        {
-            preferredSlotIndex = System.Array.IndexOf(shopUI.PlayerSlots, currentSlot);
-        }
-
-        bool success = shopUI.ShopManager.SellItem(item.itemData, quantity, preferredSlotIndex);
+        // Не используем preferredSlotIndex, так как индексы не совпадают между shopUI.PlayerSlots и inventoryManager.inventorySlots
+        // ShopManager.SellItem() сам корректно удалит предметы через InventoryManager.RemoveItem()
+        bool success = shopUI.ShopManager.SellItem(item.itemData, quantity);
 
         if (success)
         {

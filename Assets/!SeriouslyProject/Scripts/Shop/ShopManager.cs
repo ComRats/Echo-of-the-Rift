@@ -152,7 +152,11 @@ namespace EchoRift.Shop
             {
                 shopItem.quantity -= quantity;
             }
-            service.PlayOneShot("Shop1");
+
+            if (service != null)
+            {
+                service.PlayOneShot("Shop1");
+            }
 
             OnItemBought?.Invoke(item, quantity, totalPrice);
             Debug.Log($"[ShopManager] Куплено: {item.itemName} x{quantity} за {totalPrice} монет");
@@ -195,23 +199,10 @@ namespace EchoRift.Shop
             // Расчёт стоимости
             int pricePerItem = currentShop.GetSellPriceForItem(item);
             int totalPrice = pricePerItem * quantity;
-            service.PlayOneShot("Shop1");
 
             // Удаление предмета из инвентаря
             Debug.Log($"[ShopManager] Удаление предмета: {item.itemName}");
-            bool removed = false;
-            int remaining = quantity;
-
-            if (preferredInventorySlotIndex >= 0)
-            {
-                remaining = playerInventory.RemoveItemFromInventorySlotIndex(preferredInventorySlotIndex, item.itemName, remaining);
-                removed = remaining <= 0;
-            }
-
-            if (!removed)
-            {
-                removed = playerInventory.RemoveItem(item.itemName, remaining);
-            }
+            bool removed = playerInventory.RemoveItem(item.itemName, quantity);
 
             if (!removed)
             {
@@ -227,6 +218,11 @@ namespace EchoRift.Shop
             if (shopItem != null && !shopItem.infiniteStock)
             {
                 shopItem.quantity += quantity;
+            }
+
+            if (service != null)
+            {
+                service.PlayOneShot("Shop1");
             }
 
             OnItemSold?.Invoke(item, quantity, totalPrice);

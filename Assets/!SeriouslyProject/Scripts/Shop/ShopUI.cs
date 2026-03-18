@@ -51,10 +51,21 @@ public class ShopUI : MonoBehaviour
         if (contextMenu == null)
             contextMenu = FindObjectOfType<InventoryContextMenu>();
 
-        // Создаём ShopManager
-        GameObject shopManagerObj = new GameObject("ShopManager");
-        shopManagerObj.transform.SetParent(transform);
-        shopManager = shopManagerObj.AddComponent<ShopManager>();
+        // Проверяем, существует ли уже ShopManager
+        shopManager = GetComponentInChildren<ShopManager>();
+        
+        if (shopManager == null)
+        {
+            // Создаём ShopManager только если его нет
+            GameObject shopManagerObj = new GameObject("ShopManager");
+            shopManagerObj.transform.SetParent(transform);
+            shopManager = shopManagerObj.AddComponent<ShopManager>();
+            Debug.Log("[ShopUI] ShopManager создан");
+        }
+        else
+        {
+            Debug.Log("[ShopUI] ShopManager уже существует, используем существующий");
+        }
 
         // Инициализируем ShopManager
         if (inventoryManager != null && playerWallet != null)
@@ -68,6 +79,15 @@ public class ShopUI : MonoBehaviour
 
         if (shopPanel != null)
             shopPanel.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        // Очищаем подписки на события при уничтожении
+        if (shopManager != null)
+        {
+            shopManager.ClearEventSubscriptions();
+        }
     }
 
     private void OnEnable()
@@ -133,6 +153,9 @@ public class ShopUI : MonoBehaviour
 
         if (mainUI != null)
             mainUI.canOpenUI = true;
+
+        // Синхронизируем данные перед закрытием
+        inventoryManager?.SyncFromUI();
 
         shopManager?.CloseShop();
         CursorManager.Hide();

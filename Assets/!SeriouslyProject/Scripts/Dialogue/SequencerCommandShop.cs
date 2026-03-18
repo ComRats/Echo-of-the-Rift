@@ -41,9 +41,24 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
             ShopData shopData = Resources.Load<ShopData>(shopDataName);
             if (shopData == null)
             {
-                Debug.LogError($"[SequencerCommandShop] ShopData '{shopDataName}' не найден в Resources!");
-                Stop();
-                return;
+                // Попытка загрузить из всех возможных путей в Resources
+                ShopData[] allShops = Resources.LoadAll<ShopData>("");
+                foreach (var shop in allShops)
+                {
+                    if (shop.name == shopDataName)
+                    {
+                        shopData = shop;
+                        Debug.Log($"[SequencerCommandShop] ShopData '{shopDataName}' найден в альтернативном пути");
+                        break;
+                    }
+                }
+
+                if (shopData == null)
+                {
+                    Debug.LogError($"[SequencerCommandShop] ShopData '{shopDataName}' не найден в Resources! Убедитесь, что файл находится в папке Resources.");
+                    Stop();
+                    return;
+                }
             }
 
             shopUI.OpenShop(shopData);
