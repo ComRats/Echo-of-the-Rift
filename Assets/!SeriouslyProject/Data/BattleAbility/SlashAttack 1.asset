@@ -16,9 +16,9 @@ MonoBehaviour:
   ManaCost: 0
   targetType: 0
   animTrigger: SoloPunch
-  Description: "\u0420\u0443\u0431\u044F\u0449\u0430\u044F \u0430\u0442\u0430\u043A\u0430
-    2"
-  baseDamageMultiplier: 2
+  Description: "\u0420\u0443\u0431\u044F\u0449\u0430\u044F \u0430\u0442\u0430\u043A\u0430"
+  baseDamageMultiplier: 1
+  flatDamageBonus: 3
   hasStatusEffect: 0
   statusEffect: {fileID: 11400000, guid: cdb0b7c5c59ee2243b75fb8e18d2a8f5, type: 2}
   chanceToApply: 100

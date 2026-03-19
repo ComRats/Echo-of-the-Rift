@@ -33,6 +33,7 @@ public class Choosing : MonoBehaviour, IUpdatableUI
         if (step > 0 && currentValue < maxStatValue && pointsManager.CanAddPoint())
         {
             int add = Mathf.Min(multiplier, maxStatValue - currentValue);
+            add = Mathf.Min(add, pointsManager.maxPoints - pointsManager.usedPoints);
             currentValue += add;
             for (int i = 0; i < add; i++) pointsManager.AddPoint();
         }

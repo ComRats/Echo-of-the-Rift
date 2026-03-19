@@ -489,6 +489,17 @@ public class InventoryManager : MonoBehaviour
 
     #region Save/Load
 
+    /// <summary>
+    /// Полный сброс инвентаря при старте новой игры (вызывать вместо inventoryData.Clear())
+    /// </summary>
+    public void ResetForNewGame()
+    {
+        inventoryData.Initialize(inventorySlots.Length, equipmentSlots.Length);
+        ClearAllSlots();
+        if (playerWallet != null)
+            playerWallet.SetCoins(0);
+    }
+
     public void SaveInventory()
     {
         SyncFromUI();

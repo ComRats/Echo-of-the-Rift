@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WarriorAbilities
   m_EditorClassIdentifier: 
   abilities:
-  - ability: {fileID: 11400000, guid: f61d499b4953fb54c982d981e70dca5b, type: 2}
+  - ability: {fileID: 11400000, guid: e25755940f29a4d41b670f74aef9ade2, type: 2}
     requiredLevel: 1
     abilityType: 0
     abilityIcon: {fileID: 0}

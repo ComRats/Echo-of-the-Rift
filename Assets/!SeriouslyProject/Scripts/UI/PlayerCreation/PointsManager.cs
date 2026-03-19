@@ -15,7 +15,7 @@ public enum StatType
 public class PointsManager : MonoBehaviour
 {
     [Header("Points")]
-    public int maxPoints = 10;
+    public int maxPoints = 15;
     public int usedPoints = 0;
 
     [Header("Stats")]
@@ -28,24 +28,18 @@ public class PointsManager : MonoBehaviour
         characterData = Resources.Load<CharacterData>("CharacterData/Human");
 
         if (characterData == null)
-            Debug.LogError("Не удалось загрузить CharacterData/Human");
+            Debug.LogError("РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РіСЂСѓР·РёС‚СЊ CharacterData/Human");
+    }
+
+    private int Calc(int baseValue, int v, float multiplier)
+    {
+        return Mathf.RoundToInt(baseValue + multiplier * v);
     }
 
     #region Points control
-    public bool CanAddPoint()
-    {
-        return usedPoints < maxPoints;
-    }
-
-    public void AddPoint()
-    {
-        usedPoints++;
-    }
-
-    public void RemovePoint()
-    {
-        usedPoints = Mathf.Max(0, usedPoints - 1);
-    }
+    public bool CanAddPoint() => usedPoints < maxPoints;
+    public void AddPoint() => usedPoints++;
+    public void RemovePoint() => usedPoints = Mathf.Max(0, usedPoints - 1);
     #endregion
 
     #region Apply stats
@@ -60,31 +54,31 @@ public class PointsManager : MonoBehaviour
             switch (data.statType)
             {
                 case StatType.Power:
-                    characterData.Damage = 5 + v + (int)(0.5f * v);
+                    characterData.Damage = Calc(data.baseValue, v, data.multiplier);
                     break;
 
                 case StatType.Intellect:
-                    characterData.MagicDamage = 5 + v + (int)(0.5f * v);
+                    characterData.MagicDamage = Calc(data.baseValue, v, data.multiplier);
                     break;
 
                 case StatType.Charisma:
-                    characterData.Priority = 2 + v + (int)(0.2f * v);
-                    characterData.Armor = 1 + (int)(0.4f * v);
+                    characterData.Priority = Calc(data.baseValue, v, data.multiplier);
+                    characterData.Armor    = Calc(data.baseValue2, v, data.multiplier2);
                     break;
 
                 case StatType.Lucky:
-                    characterData.Lucky = 2 + v + (int)(0.2f * v);
-                    characterData.CreteDamage = 2 + v + (int)(0.2f * v);
+                    characterData.Lucky      = Calc(data.baseValue, v, data.multiplier);
+                    characterData.CreteDamage = Calc(data.baseValue2, v, data.multiplier2);
                     break;
 
                 case StatType.HP:
                     characterData.Health =
-                    characterData.MaxHealth = 10 + v + (int)(0.5f * v);
+                    characterData.MaxHealth = Calc(data.baseValue, v, data.multiplier);
                     break;
 
                 case StatType.MP:
                     characterData.Mana =
-                    characterData.MaxMana = 5 + v + (int)(0.5f * v);
+                    characterData.MaxMana = Calc(data.baseValue, v, data.multiplier);
                     break;
             }
         }
@@ -94,14 +88,17 @@ public class PointsManager : MonoBehaviour
     #region UI description
     public string GetDescription(StatType type, int value)
     {
+        var data = pointsData.Find(d => d.statType == type);
+        if (data == null) return "";
+
         return type switch
         {
-            StatType.Power => $"Увеличивает физический урон на {(int)(value * 1.5f)}",
-            StatType.Intellect => $"Увеличивает магический урон на {(int)(value * 1.5f)}",
-            StatType.Charisma => "Повышает приоритет и броню",
-            StatType.Lucky => "Увеличивает шанс и крит урон",
-            StatType.HP => $"Увеличивает здоровье на {value * 2}",
-            StatType.MP => $"Увеличивает ману на {value * 2}",
+            StatType.Power =>     $"Р¤РёР·РёС‡РµСЃРєРёР№ СѓСЂРѕРЅ: {Calc(data.baseValue, value, data.multiplier)}",
+            StatType.Intellect => $"РњР°РіРёС‡РµСЃРєРёР№ СѓСЂРѕРЅ: {Calc(data.baseValue, value, data.multiplier)}",
+            StatType.Charisma =>  $"РџСЂРёРѕСЂРёС‚РµС‚: {Calc(data.baseValue, value, data.multiplier)}, Р‘СЂРѕРЅСЏ: {Calc(data.baseValue2, value, data.multiplier2)}",
+            StatType.Lucky =>     $"РЈРґР°С‡Р°: {Calc(data.baseValue, value, data.multiplier)}, РљСЂРёС‚: {Calc(data.baseValue2, value, data.multiplier2)}",
+            StatType.HP =>        $"Р—РґРѕСЂРѕРІСЊРµ: {Calc(data.baseValue, value, data.multiplier)}",
+            StatType.MP =>        $"РњР°РЅР°: {Calc(data.baseValue, value, data.multiplier)}",
             _ => ""
         };
     }
@@ -112,6 +109,16 @@ public class PointsManager : MonoBehaviour
     {
         public StatType statType;
         public Choosing choosing;
+
+        [Tooltip("Р‘Р°Р·РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РїСЂРё 0 РѕС‡РєРѕРІ")]
+        public int baseValue;
+        [Tooltip("РњРЅРѕР¶РёС‚РµР»СЊ Р·Р° РєР°Р¶РґРѕРµ РѕС‡РєРѕ (РґСЂРѕР±РЅС‹Р№)")]
+        public float multiplier;
+
+        [Tooltip("Р‘Р°Р·РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РІС‚РѕСЂРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° (Charisma=Armor, Lucky=CreteDamage)")]
+        public int baseValue2;
+        [Tooltip("РњРЅРѕР¶РёС‚РµР»СЊ РІС‚РѕСЂРѕРіРѕ РїР°СЂР°РјРµС‚СЂР° (РґСЂРѕР±РЅС‹Р№)")]
+        public float multiplier2;
 
         public int UsedPoints => choosing.currentValue;
     }

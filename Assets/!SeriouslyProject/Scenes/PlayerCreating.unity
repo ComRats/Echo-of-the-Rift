@@ -247,16 +247,40 @@ MonoBehaviour:
   pointsData:
   - statType: 0
     choosing: {fileID: 874602860}
+    baseValue: 5
+    multiplier: 1.2
+    baseValue2: 0
+    multiplier2: 0
   - statType: 1
     choosing: {fileID: 220746505}
+    baseValue: 5
+    multiplier: 1.2
+    baseValue2: 0
+    multiplier2: 0
   - statType: 3
     choosing: {fileID: 2045038862}
+    baseValue: 3
+    multiplier: 1.1
+    baseValue2: 2
+    multiplier2: 1.1
   - statType: 4
     choosing: {fileID: 808369200}
+    baseValue: 7
+    multiplier: 1.2
+    baseValue2: 0
+    multiplier2: 0
   - statType: 5
     choosing: {fileID: 2056656437}
-  - statType: 5
+    baseValue: 10
+    multiplier: 1.2
+    baseValue2: 0
+    multiplier2: 0
+  - statType: 2
     choosing: {fileID: 658037219}
+    baseValue: 5
+    multiplier: 0
+    baseValue2: 1
+    multiplier2: 0.3
 --- !u!1 &109513752
 GameObject:
   m_ObjectHideFlags: 0
@@ -2029,7 +2053,7 @@ MonoBehaviour:
   _serializableScene:
     Scene: {fileID: 102900000, guid: a528bf3a65804084b8df8f26577f7eff, type: 3}
     SceneName: VillageScene_1
-    _sceneIndexInBuildSettings: 6
+    _sceneIndexInBuildSettings: 5
     _isSceneEnabledInBuildSettings: 1
   _loadingSpeed: 0.5
   _preloadOnStart: 0
@@ -4875,8 +4899,6 @@ MonoBehaviour:
   points: {fileID: 76523502}
   descriptionStats: {fileID: 870794089}
   inputField: {fileID: 2073026256}
-  sceneName: PlayerCreating
-  nextScene: VillageScene_1
 --- !u!1 &1802178788
 GameObject:
   m_ObjectHideFlags: 0

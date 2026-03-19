@@ -6,6 +6,8 @@ public class MagicAbility : BattleAbility
 {
     [Title("Magic Settings")]
     [SerializeField] private int magicDamage = 10;
+    [Tooltip("Плоский бонус урона, прибавляется к magicDamage независимо от стата атакующего")]
+    [SerializeField] private int flatDamageBonus = 0;
     [SerializeField] private GameObject vfxEffect;
 
     [Title("Status Effect Settings")]
@@ -19,7 +21,7 @@ public class MagicAbility : BattleAbility
 
         PlayHitAnimation(target);
 
-        target.TakeMagicDamage(magicDamage);
+        target.TakeMagicDamage(magicDamage + flatDamageBonus);
 
         if (vfxEffect != null)
             Instantiate(vfxEffect, target.transform.position, Quaternion.identity);

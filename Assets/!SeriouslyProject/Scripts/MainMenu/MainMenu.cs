@@ -14,6 +14,14 @@ public class MainMenu : MonoBehaviour
 
     private GlobalLoader.GlobalData globalData;
 
+    private void Awake()
+    {
+        if (!SaveLoadSystem.Exists(GLOBAL_SAVE, GAME_DIRECTORY) || SaveLoadSystem.Load<GlobalLoader.GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY).sceneIndex <= 1)
+        {
+            LoadButton.SetActive(false);
+        }
+    }
+
     private void Start()
     {
         Animator animator = GetComponent<Animator>();
@@ -49,8 +57,15 @@ public class MainMenu : MonoBehaviour
     {
         SaveLoadSystem.ClearAllSaves(GAME_DIRECTORY);
         SceneObjectsData.ResetCache();
-        
-        inventoryData.Clear();
+
+        if (GlobalLoader.Instance != null)
+            GlobalLoader.Instance.mainUI.inventoryManager.ResetForNewGame();
+        else
+            inventoryData.Clear();
+
+        // Сбрасываем CharacterData к дефолтным значениям
+        var characterData = Resources.Load<FightSystem.Data.CharacterData>("CharacterData/Human");
+        characterData?.ResetToDefaults();
         
         var data = new GlobalLoader.GlobalData
         {

@@ -14,7 +14,7 @@ public class PlayerEvents : MonoBehaviour
     public void ShowCursor()
     {
         CursorManager.Show();
-        Debug.LogWarning("ShowCursorEvent");
+        //Debug.LogWarning("ShowCursorEvent");
     }
 
     public void HideCursor()
@@ -27,6 +27,6 @@ public class PlayerEvents : MonoBehaviour
         }
 
         CursorManager.Hide();
-        Debug.LogWarning("HideCursorEvent");
+        //Debug.LogWarning("HideCursorEvent");
     }
 }

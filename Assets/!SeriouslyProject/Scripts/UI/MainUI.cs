@@ -37,6 +37,7 @@ public class MainUI : MonoBehaviour
         if (playerUI != null && playerUI.transform.childCount > 0)
         {
             playerUIbackGround = playerUI.transform.GetChild(0).gameObject;
+            playerUIbackGround.SetActive(false);
         }
 
         service ??= ServiceLocator.GetService();
@@ -253,5 +254,17 @@ public class MainUI : MonoBehaviour
         pauseMenu.enabled = true;
         playerUI.enabled = true;
         tonguesCanvas.enabled = true;
+    }
+
+    /// <summary>
+    /// Сбрасывает состояние UI при загрузке новой сцены (закрывает инвентарь, сбрасывает флаги)
+    /// </summary>
+    public void ResetUIState()
+    {
+        if (playerUIbackGround != null)
+            playerUIbackGround.SetActive(false);
+
+        isOpenUI = false;
+        canOpenUI = true;
     }
 }

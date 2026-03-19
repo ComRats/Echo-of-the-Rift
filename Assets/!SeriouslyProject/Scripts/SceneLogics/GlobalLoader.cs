@@ -78,6 +78,10 @@ public class GlobalLoader : MonoBehaviour
 
         LoadPlayer();
 
+        // Сбрасываем состояние инвентаря UI при загрузке новой сцены
+        if (mainUI != null)
+            mainUI.ResetUIState();
+
         // Обновляем UI команды после загрузки сцены
         if (mainUI != null && mainUI.teamManager != null)
         {
@@ -243,6 +247,27 @@ public class GlobalLoader : MonoBehaviour
     public void SaveInventory()
     {
         mainUI.inventoryManager.SaveInventory();
+    }
+
+    /// <summary>
+    /// Вызывается после PointsManager.AddPointsToPlayer() — обновляет playerSaver
+    /// и сбрасывает RuntimeData команды чтобы они пересоздались из обновлённого ScriptableObject.
+    /// </summary>
+    public void RefreshPlayerDataFromCharacterData()
+    {
+        var characterData = Resources.Load<FightSystem.Data.CharacterData>("CharacterData/Human");
+        if (characterData == null) return;
+
+        playerInstance.playerSaver.LoadFrom(characterData);
+        SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
+
+        // Сбрасываем RuntimeData у всех членов команды чтобы они пересоздались
+        var team = playerInstance.GetComponent<Team>();
+        if (team != null)
+        {
+            foreach (var character in team.characters)
+                character.ResetRuntimeData();
+        }
     }
 
     [Serializable]

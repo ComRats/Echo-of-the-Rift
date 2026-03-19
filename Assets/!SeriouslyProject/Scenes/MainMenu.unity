@@ -473,6 +473,137 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isShow: 1
+--- !u!1 &68904020 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4154309833336130942, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+  m_PrefabInstance: {fileID: 979315035}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &68904021 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3644329125364353352, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+  m_PrefabInstance: {fileID: 979315035}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68904020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1360375efe462cd4ab520d1661206035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &68904025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68904020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56deaa61d949dd4419763ffe437f4f16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultVoice: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
+  actorVoices:
+  - actorName: Player
+    voiceProfile: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
+  - actorName: "\u0414\u0435\u0434\u041A\u0443\u0437\u043D\u0435\u0446"
+    voiceProfile: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
+  typewriter: {fileID: 68904021}
+--- !u!82 &68904026
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 68904020}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &296335338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1650,12 +1781,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9168077416183622196, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000061035156
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4154309833336130942, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 68904026}
+    - targetCorrespondingSourceObject: {fileID: 4154309833336130942, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 68904025}
   m_SourcePrefab: {fileID: 100100000, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
 --- !u!224 &979315036 stripped
 RectTransform:

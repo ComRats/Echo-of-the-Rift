@@ -12,6 +12,13 @@ public class Movement : MonoBehaviour
 
     private Vector2 direction;
     private IAudioManager service;
+    private int _skipFrames;
+
+    private void OnEnable()
+    {
+        // Пропускаем первые 2 кадра после включения — Input ещё не готов
+        _skipFrames = 2;
+    }
 
     private void Start()
     {
@@ -20,6 +27,12 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        if (_skipFrames > 0)
+        {
+            _skipFrames--;
+            return;
+        }
+
         if (canMove && !GameTimer.IsPaused)
             Moving();
         else

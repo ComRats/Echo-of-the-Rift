@@ -6,6 +6,8 @@ public class MeleeAbility : BattleAbility
 {
     [Title("Damage Settings")]
     [SerializeField] private int baseDamageMultiplier = 1;
+    [Tooltip("РџР»РѕСЃРєРёР№ Р±РѕРЅСѓСЃ СѓСЂРѕРЅР°, РїСЂРёР±Р°РІР»СЏРµС‚СЃСЏ Рє РёС‚РѕРіСѓ РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ РјРѕРґРёС„РёРєР°С‚РѕСЂР°")]
+    [SerializeField] private int flatDamageBonus = 0;
 
     [Title("Status Effect Settings")]
     [SerializeField] private bool hasStatusEffect = false;
@@ -21,8 +23,8 @@ public class MeleeAbility : BattleAbility
     {
         PlayHitAnimation(target);
 
-        int finalDamage = attacker.GiveDamage() * baseDamageMultiplier;
-        Debug.Log($"{attacker.Name} использует {AbilityName} на {target.Name} с уроном {finalDamage}");
+        int finalDamage = attacker.GiveDamage() * baseDamageMultiplier + flatDamageBonus;
+        Debug.Log($"{attacker.Name} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {AbilityName} пїЅпїЅ {target.Name} пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {finalDamage}");
         target.TakeDamage(finalDamage);
 
         TryApplyEffect(target);
@@ -35,7 +37,7 @@ public class MeleeAbility : BattleAbility
             if (Random.Range(0f, 100f) <= chanceToApply)
             {
                 target.ApplyStatusEffect(statusEffect);
-                Debug.Log($"Наложен эффект {statusEffect.effectName}!");
+                Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ {statusEffect.effectName}!");
             }
         }
     }

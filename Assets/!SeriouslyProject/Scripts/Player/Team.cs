@@ -46,22 +46,26 @@ public class Team : MonoBehaviour
 
         foreach (var character in characters)
         {
+            var src = (character.useCharacterData && character.RuntimeData != null)
+                ? (IData)character.RuntimeData
+                : (IData)character;
+
             var charData = new CharacterSaveData
             {
                 characterDataName = character.characterDataName,
                 useCharacterData = character.useCharacterData,
-                Name = character.Name,
-                Health = character.Health,
-                MaxHealth = character.MaxHealth,
-                Mana = character.Mana,
-                MaxMana = character.MaxMana,
-                Level = character.Level,
-                CurrentXP = character.CurrentXP,
-                MaxXP = character.MaxXP,
-                Damage = character.Damage,
-                Heal = character.Heal,
-                Armor = character.Armor,
-                XpReward = character.XpReward
+                Name = src.Name,
+                Health = src.Health,
+                MaxHealth = src.MaxHealth,
+                Mana = src.Mana,
+                MaxMana = src.MaxMana,
+                Level = src.Level,
+                CurrentXP = src.CurrentXP,
+                MaxXP = src.MaxXP,
+                Damage = src.Damage,
+                Heal = src.Heal,
+                Armor = src.Armor,
+                XpReward = src.XpReward
             };
             saveData.charactersData.Add(charData);
         }
@@ -109,8 +113,6 @@ public class Team : MonoBehaviour
                 character.RuntimeData.Heal = charData.Heal;
                 character.RuntimeData.Armor = charData.Armor;
                 character.RuntimeData.XpReward = charData.XpReward;
-
-                character.RuntimeData.ValidateAndFixData();
             }
         }
     }
@@ -174,6 +176,11 @@ public class CharactersSettings : IData
             }
             return runtimeData;
         }
+    }
+
+    public void ResetRuntimeData()
+    {
+        runtimeData = null;
     }
 
     [HideIf("useCharacterData")]

@@ -77,6 +77,16 @@ namespace FightSystem.Data
         public CharacterAbilitySet _abilitySet;
         public CharacterAbilitySet AbilitySet { get => _abilitySet; set => _abilitySet = value; }
 
+        /// <summary>Сбрасывает боевые характеристики к нулю при новой игре.</summary>
+        public void ResetToDefaults()
+        {
+            _damage = _magicDamage = _priority = 0;
+            _maxMana = _mana = _maxHealth = _health = 0;
+            _heal = _armor = _lucky = _creteChance = 0;
+            _level = 1;
+            _currentXP = 0;
+        }
+
         private void UpdateStats()
         {
             _damage = _damagePerLevel * _level;
@@ -92,54 +102,14 @@ namespace FightSystem.Data
 
         public void ValidateAndFixData()
         {
-            // Если уровень 0 или не задан, устанавливаем минимум 1
-            if (_level <= 0)
-            {
-                _level = 1;
-                UpdateStats();
-            }
+            if (_maxHealth > 0)
+                _health = Mathf.Clamp(_health, 0, _maxHealth);
 
-            // Если MaxHealth не задан, вычисляем
-            if (_maxHealth <= 0)
-            {
-                _maxHealth = _maxHealthPerLevel * _level;
-            }
+            if (_maxMana > 0)
+                _mana = Mathf.Clamp(_mana, 0, _maxMana);
 
-            // Если MaxXP не задан, устанавливаем базовое значение
             if (_maxXP <= 0)
-            {
-                _maxXP = 100 * _level;
-            }
-
-            // Если MaxMana не задан, вычисляем
-            if (_maxMana <= 0)
-            {
-                _maxMana = _maxManaPerLevel * _level;
-            }
-
-            // Ограничиваем текущее здоровье максимальным
-            if (_health > _maxHealth)
-            {
-                _health = _maxHealth;
-            }
-
-            // Если здоровье 0 или меньше, восстанавливаем до максимума
-            if (_health <= 0)
-            {
-                _health = _maxHealth;
-            }
-
-            // Ограничиваем текущую ману максимальной
-            if (_mana > _maxMana)
-            {
-                _mana = _maxMana;
-            }
-
-            // Если мана 0 или меньше, восстанавливаем до максимума
-            if (_mana <= 0)
-            {
-                _mana = _maxMana;
-            }
+                _maxXP = 100;
         }
     }
 }

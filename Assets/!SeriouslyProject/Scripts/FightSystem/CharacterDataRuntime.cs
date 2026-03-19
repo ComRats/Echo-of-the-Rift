@@ -136,32 +136,15 @@ namespace FightSystem.Data
         /// </summary>
         public void ValidateAndFixData()
         {
-            if (_level <= 0)
-            {
-                _level = 1;
-                UpdateStats();
-            }
+            // Клэмпим только если значения уже были назначены (не нулевые)
+            if (_maxHealth > 0)
+                _health = Mathf.Clamp(_health, 0, _maxHealth);
 
-            if (_maxHealth <= 0)
-                _maxHealth = _maxHealthPerLevel * _level;
+            if (_maxMana > 0)
+                _mana = Mathf.Clamp(_mana, 0, _maxMana);
 
             if (_maxXP <= 0)
-                _maxXP = 100 * _level;
-
-            if (_maxMana <= 0)
-                _maxMana = _maxManaPerLevel * _level;
-
-            if (_health > _maxHealth)
-                _health = _maxHealth;
-
-            if (_health <= 0)
-                _health = _maxHealth;
-
-            if (_mana > _maxMana)
-                _mana = _maxMana;
-
-            if (_mana <= 0)
-                _mana = _maxMana;
+                _maxXP = 100;
         }
 
         private void UpdateStats()
