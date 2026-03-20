@@ -5,12 +5,6 @@ using EchoRift.Dialogue;
 /// <summary>
 /// Воспроизводит звуки-заменители речи ("mumble") при печати диалогового текста.
 /// Поддерживает разные голоса для разных NPC через VoiceProfile.
-///
-/// Установка:
-/// 1. Повесить на GameObject с TextMeshProTypewriterEffect (панель диалога)
-/// 2. Назначить defaultVoice
-/// 3. Для каждого NPC создать VoiceProfile (ПКМ → Create → EchoRift → Voice Profile)
-///    и добавить в список actorVoices с именем актора из Dialogue System
 /// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class DialogueMumble : MonoBehaviour
@@ -106,7 +100,6 @@ public class DialogueMumble : MonoBehaviour
         if (currentVoice == null) return;
         if (currentVoice.clips == null || currentVoice.clips.Length == 0) return;
 
-        // Пропуск пробелов и пунктуации
         if (currentVoice.skipWhitespaceAndPunctuation)
         {
             var subtitleText = DialogueManager.currentConversationState?.subtitle?.formattedText?.text;

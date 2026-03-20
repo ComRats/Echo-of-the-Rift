@@ -3,8 +3,7 @@ using UnityEngine;
 namespace EchoRift.Dialogue
 {
     /// <summary>
-    /// ScriptableObject с настройками голоса NPC.
-    /// Создать: ПКМ → Create → EchoRift → Voice Profile
+    /// ScriptableObject с настройками голоса NPCw
     /// </summary>
     [CreateAssetMenu(fileName = "VoiceProfile", menuName = "EchoRift/Voice Profile")]
     public class VoiceProfile : ScriptableObject

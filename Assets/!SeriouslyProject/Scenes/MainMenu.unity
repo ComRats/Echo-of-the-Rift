@@ -502,11 +502,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   defaultVoice: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
-  actorVoices:
-  - actorName: Player
-    voiceProfile: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
-  - actorName: "\u0414\u0435\u0434\u041A\u0443\u0437\u043D\u0435\u0446"
-    voiceProfile: {fileID: 11400000, guid: b3df806c948409e4f91cec2dae825f99, type: 2}
+  actorVoices: []
   typewriter: {fileID: 68904021}
 --- !u!82 &68904026
 AudioSource:
@@ -1574,6 +1570,14 @@ PrefabInstance:
     - target: {fileID: 3054237857817594138, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 2.0002441
+      objectReference: {fileID: 0}
+    - target: {fileID: 3120263775350756340, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_Color.a
+      value: 0.15686275
+      objectReference: {fileID: 0}
+    - target: {fileID: 3120263775350756340, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3944943503745241950, guid: a4721997b1c97724f89934ffa6406dcd, type: 3}
       propertyPath: m_enableAutoSizing
