@@ -89,7 +89,7 @@ public class ActionButtons : MonoBehaviour
         pendingAttacker = attacker;
 
         // Отображаем описание способности
-        ShowAbilityDescription(ability);
+        ShowAbilityDescription(ability, attacker);
 
         switch (ability.targetType)
         {
@@ -137,7 +137,7 @@ public class ActionButtons : MonoBehaviour
     /// <summary>
     /// Отображает описание способности в UI
     /// </summary>
-    public void ShowAbilityDescription(BattleAbility ability)
+    public void ShowAbilityDescription(BattleAbility ability, Base attacker = null)
     {
         if (descriptionText == null) return;
 
@@ -152,7 +152,7 @@ public class ActionButtons : MonoBehaviour
         }
 
         // Добавляем строку со статистикой способности
-        string statsLine = GenerateAbilityStats(ability);
+        string statsLine = GenerateAbilityStats(ability, attacker);
         if (!string.IsNullOrEmpty(statsLine))
         {
             textToShow += "\n" + statsLine;
@@ -174,7 +174,7 @@ public class ActionButtons : MonoBehaviour
     /// <summary>
     /// Генерирует строку со статистикой способности
     /// </summary>
-    private string GenerateAbilityStats(BattleAbility ability)
+    private string GenerateAbilityStats(BattleAbility ability, Base attacker = null)
     {
         System.Text.StringBuilder stats = new System.Text.StringBuilder();
 
@@ -187,13 +187,28 @@ public class ActionButtons : MonoBehaviour
         // Специфичные параметры в зависимости от типа способности
         if (ability is MeleeAbility meleeAbility)
         {
-            var multiplier = meleeAbility.GetType().GetField("baseDamageMultiplier", 
+            var multiplierField = meleeAbility.GetType().GetField("baseDamageMultiplier",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            if (multiplier != null)
+            var flatBonusField = meleeAbility.GetType().GetField("flatDamageBonus",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
+            if (multiplierField != null)
             {
-                int value = (int)multiplier.GetValue(meleeAbility);
+                int multiplier = (int)multiplierField.GetValue(meleeAbility);
+                int flatBonus = flatBonusField != null ? (int)flatBonusField.GetValue(meleeAbility) : 0;
+
                 if (stats.Length > 0) stats.Append(" | ");
-                stats.Append($"[dmg]x{value} урона[/dmg]");
+
+                if (attacker != null)
+                {
+                    // Итоговый урон = базовый урон атакующего * множитель + плоский бонус
+                    int finalDamage = attacker.Damage * multiplier + flatBonus;
+                    stats.Append($"[dmg]{finalDamage} урона[/dmg]");
+                }
+                else
+                {
+                    stats.Append($"[dmg]x{multiplier} урона[/dmg]");
+                }
             }
 
             var hasEffect = meleeAbility.GetType().GetField("hasStatusEffect",
@@ -204,7 +219,7 @@ public class ActionButtons : MonoBehaviour
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
                 var chanceField = meleeAbility.GetType().GetField("chanceToApply",
                     System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-                
+
                 if (effectField != null && chanceField != null)
                 {
                     var effect = effectField.GetValue(meleeAbility) as StatusEffectSO;
@@ -221,11 +236,15 @@ public class ActionButtons : MonoBehaviour
         {
             var damageField = magicAbility.GetType().GetField("magicDamage",
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            var flatBonusField = magicAbility.GetType().GetField("flatDamageBonus",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+
             if (damageField != null)
             {
                 int damage = (int)damageField.GetValue(magicAbility);
+                int flatBonus = flatBonusField != null ? (int)flatBonusField.GetValue(magicAbility) : 0;
                 if (stats.Length > 0) stats.Append(" | ");
-                stats.Append($"[dmg]{damage} маг. урона[/dmg]");
+                stats.Append($"[dmg]{damage + flatBonus} маг. урона[/dmg]");
             }
 
             var effectField = magicAbility.GetType().GetField("statusEffect",
@@ -256,7 +275,12 @@ public class ActionButtons : MonoBehaviour
                 float multiplier = (float)multiplierField.GetValue(healAbility);
 
                 if (stats.Length > 0) stats.Append(" | ");
-                if (useCharStat)
+                if (useCharStat && attacker != null)
+                {
+                    int finalHeal = Mathf.RoundToInt(attacker.GiveHeal() * multiplier);
+                    stats.Append($"[heal]+{finalHeal} HP[/heal]");
+                }
+                else if (useCharStat)
                 {
                     stats.Append($"[heal]Лечение x{multiplier:F1}[/heal]");
                 }
@@ -305,7 +329,16 @@ public class ActionButtons : MonoBehaviour
             {
                 float multiplier = (float)multiplierField.GetValue(statusAbility);
                 if (stats.Length > 0) stats.Append(" | ");
-                stats.Append($"[dmg]x{multiplier:F1} урона[/dmg]");
+
+                if (attacker != null)
+                {
+                    int finalDamage = Mathf.RoundToInt(attacker.Damage * multiplier);
+                    stats.Append($"[dmg]{finalDamage} урона[/dmg]");
+                }
+                else
+                {
+                    stats.Append($"[dmg]x{multiplier:F1} урона[/dmg]");
+                }
             }
 
             if (effectField != null)
