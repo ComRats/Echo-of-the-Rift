@@ -16,6 +16,16 @@ MonoBehaviour:
   itemName: testAmulet
   itemGameName: "\u0422\u0435\u0441\u0442 \u0410\u043C\u0443\u043B\u0435\u0442"
   itemType: 32
+  itemPrice: 10
   description: 
   isStackable: 0
   maxStackSize: 10
+  healthRestore: 0
+  manaRestore: 0
+  bonusDamage: 0
+  bonusMagicDamage: 5
+  bonusArmor: 0
+  bonusMaxHealth: 2
+  bonusMaxMana: 0
+  bonusHeal: 5
+  bonusLucky: 10

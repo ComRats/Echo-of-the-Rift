@@ -247,7 +247,7 @@ MonoBehaviour:
   pointsData:
   - statType: 0
     choosing: {fileID: 874602860}
-    baseValue: 5
+    baseValue: 3
     multiplier: 1.2
     baseValue2: 0
     multiplier2: 0
@@ -279,8 +279,8 @@ MonoBehaviour:
     choosing: {fileID: 658037219}
     baseValue: 5
     multiplier: 0
-    baseValue2: 1
-    multiplier2: 0.3
+    baseValue2: 20
+    multiplier2: 0.5
 --- !u!1 &109513752
 GameObject:
   m_ObjectHideFlags: 0

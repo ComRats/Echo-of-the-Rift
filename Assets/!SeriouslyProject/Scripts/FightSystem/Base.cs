@@ -182,10 +182,10 @@ public class Base : MonoBehaviour, IData
             return;
         }
 
-        int currentDamage = _damage - Armor;
-        if (currentDamage > 0)
-            Health -= currentDamage;
-        else currentDamage = 0;
+        float damageReduction = Mathf.Clamp(Armor, 0, 90) / 100f;
+        int currentDamage = Mathf.Max(1, Mathf.RoundToInt(_damage * (1f - damageReduction)));
+
+        Health -= currentDamage;
 
         FightAnimation.ShowText(textPrefab, currentDamage, gameObject.transform, PhysDamage);
         service.Play("MeleeDamage");
@@ -281,11 +281,10 @@ public class Base : MonoBehaviour, IData
         if (Health < MaxHealth)
         {
             FightAnimation.ShowText(textPrefab, _heal, transform, GameColorsDataBase.Heal);
-            Health += _heal;
+            Health = Mathf.Min(Health + _heal, MaxHealth);
             UpdateUI();
             OnHealthChanged?.Invoke(Health, MaxHealth);
         }
-        else Health = MaxHealth;
     }
 
     public IEnumerator Blinking()

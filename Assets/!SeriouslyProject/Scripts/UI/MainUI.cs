@@ -177,7 +177,9 @@ public class MainUI : MonoBehaviour
         // Если открыто меню паузы, не открываем инвентарь
         if (pauseMenu != null && pauseMenu.isActive) return;
 
-        ShowCursor();
+        bool inBattle = FindObjectOfType<FightManager>() != null;
+
+        if (!inBattle) ShowCursor();
         service.PlayOneShot("OpenUI");
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
@@ -186,7 +188,7 @@ public class MainUI : MonoBehaviour
         // Обновляем слоты персонажей при открытии инвентаря
         UpdateCharacterSlots();
         
-        GameTimer.PauseGame();
+        if (!inBattle) GameTimer.PauseGame();
 
         // Приглушаем музыку
         if (musicManager != null)
@@ -217,12 +219,14 @@ public class MainUI : MonoBehaviour
     {
         if (playerUIbackGround == null) return;
 
-        HideCursor();
+        bool inBattle = FindObjectOfType<FightManager>() != null;
+
+        if (!inBattle) HideCursor();
 
         service.PlayOneShot("OpenUI_R");
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
-        GameTimer.ResumeGame();
+        if (!inBattle) GameTimer.ResumeGame();
 
         if (contextMenu != null)
         {

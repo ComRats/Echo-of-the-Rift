@@ -23369,6 +23369,7 @@ PrefabInstance:
     - {fileID: 2234601220347033293, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
     m_RemovedGameObjects:
     - {fileID: 517190014555550560, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+    - {fileID: 1751939955892168074, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
@@ -24487,19 +24488,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3195229562992909689, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_Size.x
-      value: 2.4104247
+      value: 2.9729319
       objectReference: {fileID: 0}
     - target: {fileID: 3195229562992909689, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_Size.y
-      value: 1.6552862
+      value: 2.028488
       objectReference: {fileID: 0}
     - target: {fileID: 3195229562992909689, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_Offset.x
-      value: 0.3931711
+      value: 0.50134486
       objectReference: {fileID: 0}
     - target: {fileID: 3195229562992909689, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_Offset.y
-      value: 0.040565312
+      value: 0.0054086447
       objectReference: {fileID: 0}
     - target: {fileID: 3972072975807863687, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_LocalPosition.x

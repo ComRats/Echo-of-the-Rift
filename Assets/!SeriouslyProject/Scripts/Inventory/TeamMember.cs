@@ -232,6 +232,9 @@ public class TeamMember : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPo
         }
     }
 
+    public bool CanUseItemPublic(ItemData item) => CanUseItem(item);
+    public void UseItemPublic(ItemData item, DraggableItem draggable) => UseItem(item, draggable);
+
     private bool CanUseItem(ItemData item)
     {
         if (item == null || settings == null) return false;

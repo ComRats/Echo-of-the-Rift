@@ -24,7 +24,7 @@ MonoBehaviour:
   _maxHealth: 10
   _health: 10
   _heal: 1
-  _armor: 2
+  _armor: 10
   _lucky: 10
   _creteChance: 10
   _attackAnimationName: SoloPunch

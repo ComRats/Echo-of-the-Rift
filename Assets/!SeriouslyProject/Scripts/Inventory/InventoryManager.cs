@@ -289,6 +289,10 @@ public class InventoryManager : MonoBehaviour
     {
         SyncSlotsToData(inventorySlots, true);
         SyncSlotsToData(equipmentSlots, false);
+
+        // Пересчитываем бонусы экипировки для главного героя
+        if (EquipmentManager.Instance != null)
+            EquipmentManager.Instance.RecalculateEquipmentBonuses(equipmentSlots, this);
     }
 
     public void SyncInventorySlot(int index)
@@ -537,6 +541,10 @@ public class InventoryManager : MonoBehaviour
         LoadCoins(saver.coins);
         
         RefreshUI();
+
+        // Применяем бонусы экипировки сразу после загрузки
+        if (EquipmentManager.Instance != null)
+            EquipmentManager.Instance.RecalculateEquipmentBonuses(equipmentSlots, this);
     }
 
     private void LoadCoins(int coins)

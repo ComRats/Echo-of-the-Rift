@@ -306,24 +306,28 @@ public class InventoryContextMenu : MonoBehaviour
 
     private void UseItem(DraggableItem item)
     {
-        Debug.Log($"Использован предмет: {item.itemData.itemName}");
+        if (item == null || item.itemData == null) return;
 
-        // Применяем эффекты предмета здесь
-        // Например: восстановление HP для еды, баффы для зелий и т.д.
+        // Ищем первого TeamMember который может использовать предмет
+        TeamMember[] teamMembers = FindObjectsOfType<TeamMember>();
+        TeamMember target = null;
 
-        // Удаляем предмет из конкретного слота, с которым взаимодействовал игрок
-        if (inventoryManager != null && item.parentAfterDrag != null)
+        foreach (var member in teamMembers)
         {
-            InventorySlot slot = item.parentAfterDrag.GetComponent<InventorySlot>();
-            if (slot != null)
+            if (member.CanUseItemPublic(item.itemData))
             {
-                inventoryManager.RemoveItemFromSlot(slot, 1);
+                target = member;
+                break;
             }
-            else
-            {
-                // Fallback на старый метод, если слот не найден
-                inventoryManager.RemoveItem(item.itemData.itemName, 1);
-            }
+        }
+
+        if (target != null)
+        {
+            target.UseItemPublic(item.itemData, item);
+        }
+        else
+        {
+            Debug.Log($"[ContextMenu] Никто не нуждается в {item.itemData.itemName}");
         }
     }
 

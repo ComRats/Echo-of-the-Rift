@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: rustChestplate
   itemGameName: "\u0420\u0436\u0430\u0432\u0430\u044F \u041A\u0438\u0440\u0430\u0441\u0430"
   itemType: 16
-  itemPrice: 10
+  itemPrice: 30
   description: "\u041E\u043D\u0430 \u044F\u0432\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0430
     \u043B\u0443\u0447\u0448\u0438\u0435 \u0432\u0440\u0435\u043C\u0435\u043D\u0430,
     \u0441\u043F\u043E\u0441\u043E\u0431\u043D\u0430 \u0432\u044B\u0434\u0435\u0440\u0436\u0430\u0442\u044C
@@ -24,3 +24,12 @@ MonoBehaviour:
     \u043D\u0435 \u043F\u043E\u0434\u0441\u0442\u0430\u0432\u043B\u044F\u0442\u044C\u0441\u044F. "
   isStackable: 0
   maxStackSize: 10
+  healthRestore: 0
+  manaRestore: 0
+  bonusDamage: 0
+  bonusMagicDamage: 0
+  bonusArmor: 10
+  bonusMaxHealth: 5
+  bonusMaxMana: 0
+  bonusHeal: 0
+  bonusLucky: 0

@@ -17,6 +17,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private InventoryManager inventoryManager;
     private InventoryContextMenu contextMenu;
+    private bool dragBlocked;
 
     private float snapDistance = 70f;
     private float snapDistanceSqr;
@@ -81,14 +82,25 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        // Разрешаем перетаскивание только левой кнопкой мыши
+        dragBlocked = false;
+
         if (eventData.button != PointerEventData.InputButton.Left)
+        {
+            dragBlocked = true;
             return;
+        }
+
+        // Блокируем перетаскивание из слота экипировки во время боя
+        bool isFromEquipmentSlot = inventoryManager != null &&
+            System.Array.IndexOf(inventoryManager.equipmentSlots, transform.parent.GetComponent<InventorySlot>()) >= 0;
+        if (isFromEquipmentSlot && FindObjectOfType<FightManager>() != null)
+        {
+            dragBlocked = true;
+            return;
+        }
 
         if (contextMenu != null)
-        {
             contextMenu.Hide();
-        }
 
         parentAfterDrag = transform.parent;
 
@@ -101,18 +113,16 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnDrag(PointerEventData eventData)
     {
-        // Разрешаем перетаскивание только левой кнопкой мыши
-        if (eventData.button != PointerEventData.InputButton.Left)
-            return;
+        if (dragBlocked) return;
+        if (eventData.button != PointerEventData.InputButton.Left) return;
 
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Разрешаем перетаскивание только левой кнопкой мыши
-        if (eventData.button != PointerEventData.InputButton.Left)
-            return;
+        if (dragBlocked) return;
+        if (eventData.button != PointerEventData.InputButton.Left) return;
 
         image.raycastTarget = true;
 
@@ -124,11 +134,8 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(parentAfterDrag);
         transform.localPosition = Vector3.zero;
 
-        // Синхронизируем после перетаскивания
         if (inventoryManager != null)
-        {
             inventoryManager.SyncFromUI();
-        }
     }
 
     private void CheckForNearbySlot(PointerEventData eventData)

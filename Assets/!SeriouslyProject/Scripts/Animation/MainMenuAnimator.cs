@@ -31,7 +31,6 @@ public class MainMenuAnimator : MonoBehaviour
 
     private System.Collections.IEnumerator PlayOpenAnimationDelayed()
     {
-        // Ждём один кадр чтобы VerticalLayoutGroup успел пересчитать позиции
         yield return null;
 
         for (int i = 0; i < items.Length; i++)

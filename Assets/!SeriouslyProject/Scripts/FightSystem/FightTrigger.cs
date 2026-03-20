@@ -48,6 +48,22 @@ public class FightTrigger : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent<Player>(out var player) && canTriggered)
+        {
+            characters = collision.GetComponent<Team>().characters;
+
+            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+            sceneLoader._onSceneActivated.AddListener(() => CursorManager.Show());
+
+            EnterTrigger();
+
+            sceneLoader.LoadAsync();
+        }
+    }
+
+
     private void EnterTrigger()
     {
         SaveEnemiesToFile();

@@ -93,6 +93,53 @@ public class ItemData : ScriptableObject
     [MinValue(0)]
     public int manaRestore = 0;
 
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус урона")]
+    [LabelWidth(150)]
+    public int bonusDamage = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус маг. урона")]
+    [LabelWidth(150)]
+    public int bonusMagicDamage = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус брони")]
+    [LabelWidth(150)]
+    public int bonusArmor = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус макс. HP")]
+    [LabelWidth(150)]
+    public int bonusMaxHealth = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус макс. маны")]
+    [LabelWidth(150)]
+    public int bonusMaxMana = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус лечения")]
+    [LabelWidth(150)]
+    public int bonusHeal = 0;
+
+    [TitleGroup("Бонусы экипировки")]
+    [ShowIf("@itemType.HasFlag(ItemType.Weapon) || itemType.HasFlag(ItemType.Armor) || itemType.HasFlag(ItemType.Helmet) || itemType.HasFlag(ItemType.Amulet)")]
+    [LabelText("Бонус удачи")]
+    [LabelWidth(150)]
+    public int bonusLucky = 0;
+
+    public bool IsEquipable()
+    {
+        return (itemType & (ItemType.Weapon | ItemType.Armor | ItemType.Helmet | ItemType.Amulet)) != 0;
+    }
+
     private Color GetStackColor(int value)
     {
         return Color.Lerp(Color.green, Color.red, value / 999f);

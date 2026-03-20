@@ -36,7 +36,6 @@ public class FightManager : MonoBehaviour
     private int enemiesStartCount;
     private int pendingEnemyDeletions = 0;
 
-    //WARNING DELETE!!!!!!!!
 #if UNITY_EDITOR
     private void Update()
     {
@@ -49,6 +48,7 @@ public class FightManager : MonoBehaviour
     {
         InitializationLists();
         Initialization();
+        EquipmentManager.Instance.SetBattleState(true);
         StartCoroutine(StartFight());
     }
 
@@ -63,26 +63,23 @@ public class FightManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
 
             if (currentBase.Health <= 0) continue;
-                                                   
+
             if (currentBase is Enemy enemy)
             {
-                // Используем настройки из GameSettings
                 float enemyDelay = gameSettings != null ? gameSettings.enemyTurnDelay : damageDelay;
                 float enemySpeed = gameSettings != null ? gameSettings.enemyTurnSpeed : 1f;
-                
+
                 yield return new WaitForSeconds(enemyDelay);
-                
+
                 Character target = GetCharacterLowestHP();
-                
-                // Устанавливаем скорость анимации противника
+
                 enemy.SetAnimationSpeed(enemySpeed);
-                
+
                 target.TakeDamage(enemy.GiveDamage());
                 target.PlayAnimation(enemy.AttackAnimationName);
-                
-                // Возвращаем нормальную скорость анимации
+
                 enemy.SetAnimationSpeed(1f);
-                
+
                 DeleteCharacterOnList(GetCharacterLowestHP());
             }
             else if (currentBase is Character character)
@@ -90,13 +87,12 @@ public class FightManager : MonoBehaviour
                 yield return StartCoroutine(WaitCharacterTurn(character));
             }
         }
-        
-        // Ждем, пока все враги физически удалятся с экрана
+
         while (pendingEnemyDeletions > 0)
         {
             yield return null;
         }
-        
+
         contextText.ChangeTurnText();
         yield return StartCoroutine(EndFight());
     }
@@ -115,11 +111,10 @@ public class FightManager : MonoBehaviour
 
             Player.Result = FightResult.Win;
 
-            // Синхронизируем команду перед выходом
-            if (battleTeamSync != null)
-                battleTeamSync.SyncTeamAfterBattle();
+            battleTeamSync.SyncTeamAfterBattle();
 
-            //���������� UI � ������
+            EquipmentManager.Instance.SetBattleState(false);
+
             yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
         }
@@ -135,11 +130,10 @@ public class FightManager : MonoBehaviour
 
             Player.Result = FightResult.Lose;
 
-            // Синхронизируем команду перед выходом
-            if (battleTeamSync != null)
-                battleTeamSync.SyncTeamAfterBattle();
+            battleTeamSync.SyncTeamAfterBattle();
 
-            //���������� UI � ������
+            EquipmentManager.Instance.SetBattleState(false);
+
             yield return new WaitForSecondsRealtime(1f);
             GlobalLoader.Instance.LoadToScene();
 
@@ -189,7 +183,6 @@ public class FightManager : MonoBehaviour
         _character.IsTurn = true;
         ActiveCharacter = _character;
 
-        // Создаем кнопки способностей для активного персонажа
         if (abilityManager != null)
         {
             abilityManager.SetupAbilitiesForCharacter(_character);
@@ -240,29 +233,24 @@ public class FightManager : MonoBehaviour
     {
         if (enemy.Health <= 0)
         {
-            // Удаляем из списков сразу, чтобы логика боя работала правильно
             enemies.Remove(enemy);
             bases.Remove(enemy);
-            
-            // Увеличиваем счетчик ожидающих удаления врагов
+
             pendingEnemyDeletions++;
-            
-            // Но GameObject удаляем с задержкой, чтобы показать урон и анимацию
+
             StartCoroutine(DeleteEnemyGameObjectWithDelay(enemy));
         }
     }
 
     private IEnumerator DeleteEnemyGameObjectWithDelay(Enemy enemy)
     {
-        // Ждем, чтобы успели показаться урон и анимация
         yield return new WaitForSeconds(1.5f);
-        
+
         if (enemy != null)
         {
             Destroy(enemy.gameObject);
         }
-        
-        // Уменьшаем счетчик после удаления
+
         pendingEnemyDeletions--;
     }
 }

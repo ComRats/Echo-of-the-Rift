@@ -28,13 +28,21 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             return;
         }
 
+        // Блокируем изменение экипировки во время боя
+        bool isEquipmentSlot = IsEquipmentSlot();
+        if (isEquipmentSlot && FindObjectOfType<FightManager>() != null)
+        {
+            Debug.Log("[InventorySlot] Нельзя менять экипировку во время боя!");
+            return;
+        }
+
         GameObject dropped = eventData.pointerDrag;
         DraggableItem draggableItem = dropped.GetComponent<DraggableItem>();
 
         if (draggableItem == null || !IsTypeAllowed(draggableItem)) return;
 
         // Проверяем, является ли это экипировкой (перемещение в слот экипировки)
-        bool isEquipping = IsEquipmentSlot();
+        bool isEquipping = isEquipmentSlot;
 
         if (transform.childCount == 0)
         {
