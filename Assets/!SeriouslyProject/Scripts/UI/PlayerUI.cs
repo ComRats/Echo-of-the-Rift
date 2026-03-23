@@ -7,6 +7,12 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject playerPanel;
     [SerializeField] private GameObject overlayPanel;
 
+    // Индекс язычка квестов (соответствует позиции в списке tongues)
+    [SerializeField] private int questTongueIndex = 3;
+
+    public System.Action onQuestTongueSelected;
+    public System.Action onQuestTongueDeselected;
+
     public void OpenPlayerUI(int tongue = 0)
     {
         for (int i = 0; i < tongues.Count; i++)
@@ -23,7 +29,18 @@ public class PlayerUI : MonoBehaviour
 
     private void OnTongueSelected(int selectedIndex)
     {
+        bool wasQuestSelected = tongues.Count > questTongueIndex && tongues[questTongueIndex].IsSelected;
+
         SelectTongue(selectedIndex);
+
+        if (selectedIndex == questTongueIndex)
+        {
+            onQuestTongueSelected?.Invoke();
+        }
+        else if (wasQuestSelected)
+        {
+            onQuestTongueDeselected?.Invoke();
+        }
     }
 
     public void ToggleInventoryOnFight()

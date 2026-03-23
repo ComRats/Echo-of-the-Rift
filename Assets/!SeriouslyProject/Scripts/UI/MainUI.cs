@@ -44,6 +44,30 @@ public class MainUI : MonoBehaviour
 
         contextMenu = FindObjectOfType<InventoryContextMenu>();
         musicManager = FindObjectOfType<MusicTransitionManager>();
+
+        // Подписываемся на выбор язычка квестов
+        if (playerUI != null)
+        {
+            playerUI.onQuestTongueSelected = OnQuestTongueSelectedFromTab;
+            playerUI.onQuestTongueDeselected = OnQuestTongueDeselectedFromTab;
+        }
+    }
+
+    private void OnQuestTongueSelectedFromTab()
+    {
+        if (questLogWindow == null) return;
+        // Сбрасываем panelState если mainPanel неактивен, чтобы Open() не застрял
+        if (questLogWindow.mainPanel != null && !questLogWindow.mainPanel.gameObject.activeInHierarchy)
+            questLogWindow.mainPanel.panelState = PixelCrushers.UIPanel.PanelState.Closed;
+        if (!questLogWindow.isOpen)
+            questLogWindow.Open();
+    }
+
+    private void OnQuestTongueDeselectedFromTab()
+    {
+        if (questLogWindow == null) return;
+        if (questLogWindow.isOpen)
+            questLogWindow.Close();
     }
 
     private void Update()
@@ -96,9 +120,10 @@ public class MainUI : MonoBehaviour
     {
         if (playerUIbackGround == null) return;
 
-        bool isOpen = playerUIbackGround.activeSelf;
-
         service ??= ServiceLocator.GetService();
+
+        // Используем состояние questLogWindow как источник истины
+        bool isOpen = questLogWindow != null && questLogWindow.isOpen;
 
         if (isOpen)
         {
@@ -137,7 +162,10 @@ public class MainUI : MonoBehaviour
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
         playerUI.OpenPlayerUI(3);
-        questLogWindow.Open();
+
+        if (questLogWindow != null && !questLogWindow.isOpen)
+            questLogWindow.Open();
+
         GameTimer.PauseGame();
 
         // Приглушаем музыку
@@ -155,7 +183,8 @@ public class MainUI : MonoBehaviour
 
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
-        questLogWindow.Close();
+        if (questLogWindow != null && questLogWindow.isOpen)
+            questLogWindow.Close();
         GameTimer.ResumeGame();
 
         if (contextMenu != null)
@@ -227,6 +256,10 @@ public class MainUI : MonoBehaviour
         playerUIbackGround.SetActive(false);
         isOpenUI = false;
         if (!inBattle) GameTimer.ResumeGame();
+
+        // Закрываем questLogWindow если он был открыт
+        if (questLogWindow != null && questLogWindow.isOpen)
+            questLogWindow.Close();
 
         if (contextMenu != null)
         {
