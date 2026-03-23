@@ -19,6 +19,8 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
     [Range(0.5f, 3f)]
     public float enemyTurnSpeed = 1f;
 
+    public float loadingSceneSpeed = 10f;
+
     public override void InstallBindings()
     {
         Container.Bind<GameSettings>().FromInstance(this).AsSingle();

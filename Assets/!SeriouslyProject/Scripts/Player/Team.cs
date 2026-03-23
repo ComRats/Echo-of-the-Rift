@@ -50,21 +50,41 @@ public class Team : MonoBehaviour
                 ? (IData)character.RuntimeData
                 : (IData)character;
 
+            // Вычитаем бонусы экипировки из сохраняемых стат, чтобы при загрузке
+            // RecalculateEquipmentBonuses не накапливал их бесконечно
+            int saveDamage    = src.Damage;
+            int saveArmor     = src.Armor;
+            int saveMaxHealth = src.MaxHealth;
+            int saveMaxMana   = src.MaxMana;
+            int saveHeal      = src.Heal;
+
+            if (character.useCharacterData && character.RuntimeData != null
+                && EquipmentManager.Instance != null)
+            {
+                var (baseDmg, _, baseArmor, baseMaxHp, baseMaxMana, baseHeal, _) =
+                    EquipmentManager.Instance.GetBaseStats(character.RuntimeData);
+                saveDamage    = baseDmg;
+                saveArmor     = baseArmor;
+                saveMaxHealth = baseMaxHp;
+                saveMaxMana   = baseMaxMana;
+                saveHeal      = baseHeal;
+            }
+
             var charData = new CharacterSaveData
             {
                 characterDataName = character.characterDataName,
                 useCharacterData = character.useCharacterData,
                 Name = src.Name,
-                Health = src.Health,
-                MaxHealth = src.MaxHealth,
-                Mana = src.Mana,
-                MaxMana = src.MaxMana,
+                Health = Mathf.Clamp(src.Health, 1, saveMaxHealth),
+                MaxHealth = saveMaxHealth,
+                Mana = Mathf.Clamp(src.Mana, 0, saveMaxMana),
+                MaxMana = saveMaxMana,
                 Level = src.Level,
                 CurrentXP = src.CurrentXP,
                 MaxXP = src.MaxXP,
-                Damage = src.Damage,
-                Heal = src.Heal,
-                Armor = src.Armor,
+                Damage = saveDamage,
+                Heal = saveHeal,
+                Armor = saveArmor,
                 XpReward = src.XpReward
             };
             saveData.charactersData.Add(charData);

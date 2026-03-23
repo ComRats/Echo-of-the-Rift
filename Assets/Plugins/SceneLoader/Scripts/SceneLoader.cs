@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] SerializableScene _serializableScene;
-    [SerializeField] float _loadingSpeed = 10f;
     [SerializeField] bool _preloadOnStart;
     [SerializeField] LoadSceneMode _loadSceneMode = LoadSceneMode.Single;
     [SerializeField] bool _useSceneManager = false;
@@ -23,6 +22,12 @@ public class SceneLoader : MonoBehaviour
     private const string LoadingScene = "LoadingScene";
     private AsyncOperation _asyncLoadOperation;
     private AsyncOperation _asyncUnloadOperation;
+
+    /// <summary>
+    /// Р“Р»РѕР±Р°Р»СЊРЅР°СЏ СЃРєРѕСЂРѕСЃС‚СЊ Р·Р°РіСЂСѓР·РєРё. РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚СЃСЏ РёР· GameSettings РїСЂРё СЃС‚Р°СЂС‚Рµ РёРіСЂС‹.
+    /// РџСЂРёРјРµРЅСЏРµС‚СЃСЏ РєРѕ РІСЃРµРј СЌРєР·РµРјРїР»СЏСЂР°Рј SceneLoader Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРё.
+    /// </summary>
+    public static float GlobalLoadingSpeed = 10f;
 
     private bool _isListeningForLoadCompletedEvent = false;
     private bool _isListeningForUnloadCompletedEvent = false;
@@ -66,7 +71,7 @@ public class SceneLoader : MonoBehaviour
 
     private void OnActiveStateChanged(Scene oldScene, Scene newScene)
     {
-        // можно отследить смену активной сцены
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
     }
 
     public async void LoadAsync()
@@ -114,7 +119,7 @@ public class SceneLoader : MonoBehaviour
     }
 
     /// <summary>
-    /// Загружает сначала сцену "Loading", затем целевую сцену.
+    /// пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ "Loading", пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ.
     /// </summary>
     private IEnumerator LoadThroughIntermediateScene(string targetScene)
     {
@@ -145,7 +150,7 @@ public class SceneLoader : MonoBehaviour
 
         while (fakeProgress < 1f)
         {
-            fakeProgress = Mathf.MoveTowards(fakeProgress, 1f, _loadingSpeed * Time.unscaledDeltaTime);
+            fakeProgress = Mathf.MoveTowards(fakeProgress, 1f, GlobalLoadingSpeed * Time.unscaledDeltaTime);
 
             if (loadingSlider != null)
                 loadingSlider.value = fakeProgress;

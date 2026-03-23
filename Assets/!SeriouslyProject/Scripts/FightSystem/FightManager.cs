@@ -73,6 +73,8 @@ public class FightManager : MonoBehaviour
 
                 Character target = GetCharacterLowestHP();
 
+                if (target == null) break;
+
                 enemy.SetAnimationSpeed(enemySpeed);
 
                 target.TakeDamage(enemy.GiveDamage());

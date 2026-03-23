@@ -49,6 +49,9 @@ public class EquipmentManager : MonoBehaviour
         CharacterDataRuntime runtime = GetPlayerRuntime();
         if (runtime == null) return;
 
+        // Запоминаем HP/Mana до снятия старых бонусов
+        int baseHealth = runtime._health;
+        int baseMana   = runtime._mana;
         RemoveAppliedBonuses(runtime);
 
         int newDamage = 0, newMagicDamage = 0, newArmor = 0;
@@ -79,11 +82,20 @@ public class EquipmentManager : MonoBehaviour
         runtime._heal        += newHeal;
         runtime._lucky       += newLucky;
 
-        // Корректируем текущие HP/Mana пропорционально изменению максимума
-        if (newMaxHealth != 0)
-            runtime._health = Mathf.Clamp(runtime._health + newMaxHealth, 1, runtime._maxHealth);
-        if (newMaxMana != 0)
-            runtime._mana = Mathf.Clamp(runtime._mana + newMaxMana, 0, runtime._maxMana);
+        // Корректируем HP/Mana: если HP было равно старому максимуму (полное HP) — держим полным.
+        // Иначе сохраняем абсолютное значение, клампя по новому максимуму.
+        int oldMaxHealth = runtime._maxHealth - newMaxHealth; // базовый макс без новых бонусов
+        int oldMaxMana   = runtime._maxMana   - newMaxMana;
+
+        if (baseHealth >= oldMaxHealth)
+            runtime._health = runtime._maxHealth; // был на полном HP — остаётся полным
+        else
+            runtime._health = Mathf.Clamp(baseHealth, 1, runtime._maxHealth);
+
+        if (baseMana >= oldMaxMana)
+            runtime._mana = runtime._maxMana;
+        else
+            runtime._mana = Mathf.Clamp(baseMana, 0, runtime._maxMana);
 
         appliedDamage      = newDamage;
         appliedMagicDamage = newMagicDamage;
@@ -109,12 +121,27 @@ public class EquipmentManager : MonoBehaviour
         runtime._heal        -= appliedHeal;
         runtime._lucky       -= appliedLucky;
 
-        // Клэмпим HP/Mana чтобы не выйти за новый максимум
-        runtime._health = Mathf.Clamp(runtime._health, 1, Mathf.Max(1, runtime._maxHealth));
-        runtime._mana   = Mathf.Clamp(runtime._mana,   0, Mathf.Max(0, runtime._maxMana));
+        // HP/Mana не трогаем здесь — корректируем после применения новых бонусов
 
         appliedDamage = appliedMagicDamage = appliedArmor = 0;
         appliedMaxHealth = appliedMaxMana = appliedHeal = appliedLucky = 0;
+    }
+
+    /// <summary>
+    /// Возвращает базовые значения стата без учёта бонусов экипировки.
+    /// Используется при сохранении, чтобы не записывать бонусы в сейв.
+    /// </summary>
+    public (int damage, int magicDamage, int armor, int maxHealth, int maxMana, int heal, int lucky) GetBaseStats(CharacterDataRuntime runtime)
+    {
+        return (
+            runtime._damage      - appliedDamage,
+            runtime._magicDamage - appliedMagicDamage,
+            runtime._armor       - appliedArmor,
+            runtime._maxHealth   - appliedMaxHealth,
+            runtime._maxMana     - appliedMaxMana,
+            runtime._heal        - appliedHeal,
+            runtime._lucky       - appliedLucky
+        );
     }
 
     private CharacterDataRuntime GetPlayerRuntime()

@@ -248,24 +248,24 @@ MonoBehaviour:
   - statType: 0
     choosing: {fileID: 874602860}
     baseValue: 3
-    multiplier: 1.2
+    multiplier: 0.5
     baseValue2: 0
     multiplier2: 0
   - statType: 1
     choosing: {fileID: 220746505}
     baseValue: 5
     multiplier: 1.2
-    baseValue2: 0
+    baseValue2: 3
     multiplier2: 0
   - statType: 3
     choosing: {fileID: 2045038862}
     baseValue: 3
-    multiplier: 1.1
+    multiplier: 1.2
     baseValue2: 2
     multiplier2: 1.1
   - statType: 4
     choosing: {fileID: 808369200}
-    baseValue: 7
+    baseValue: 15
     multiplier: 1.2
     baseValue2: 0
     multiplier2: 0
@@ -277,10 +277,10 @@ MonoBehaviour:
     multiplier2: 0
   - statType: 2
     choosing: {fileID: 658037219}
-    baseValue: 5
-    multiplier: 0
+    baseValue: 3
+    multiplier: 1.1
     baseValue2: 20
-    multiplier2: 0.5
+    multiplier2: 0.7
 --- !u!1 &109513752
 GameObject:
   m_ObjectHideFlags: 0
@@ -5421,7 +5421,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

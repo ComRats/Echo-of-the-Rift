@@ -1,6 +1,7 @@
 using FightSystem.Data;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.Rendering.DebugUI;
 
 public enum StatType
 {
@@ -59,6 +60,7 @@ public class PointsManager : MonoBehaviour
 
                 case StatType.Intellect:
                     characterData.MagicDamage = Calc(data.baseValue, v, data.multiplier);
+                    characterData.Heal = Calc(data.baseValue2, v, data.multiplier);
                     break;
 
                 case StatType.Charisma:
@@ -94,9 +96,9 @@ public class PointsManager : MonoBehaviour
         return type switch
         {
             StatType.Power =>     $"Физический урон: {Calc(data.baseValue, value, data.multiplier)}",
-            StatType.Intellect => $"Магический урон: {Calc(data.baseValue, value, data.multiplier)}",
-            StatType.Charisma =>  $"Приоритет: {Calc(data.baseValue, value, data.multiplier)}, Броня: {Calc(data.baseValue2, value, data.multiplier2)}",
-            StatType.Lucky =>     $"Удача: {Calc(data.baseValue, value, data.multiplier)}, Крит: {Calc(data.baseValue2, value, data.multiplier2)}",
+            StatType.Intellect => $"Магический урон: {Calc(data.baseValue, value, data.multiplier)}, Сила эффектов: {Calc(data.baseValue2, value, data.multiplier)}",
+            StatType.Charisma =>  $"Приоритет хода: {Calc(data.baseValue, value, data.multiplier)}, Защита: {Calc(data.baseValue2, value, data.multiplier2)} %",
+            StatType.Lucky =>     $"Крит шанс: {Calc(data.baseValue, value, data.multiplier)}, Крит урон: {Calc(data.baseValue2, value, data.multiplier2)}",
             StatType.HP =>        $"Здоровье: {Calc(data.baseValue, value, data.multiplier)}",
             StatType.MP =>        $"Мана: {Calc(data.baseValue, value, data.multiplier)}",
             _ => ""

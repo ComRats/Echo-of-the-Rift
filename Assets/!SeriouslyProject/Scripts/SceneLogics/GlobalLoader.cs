@@ -23,6 +23,7 @@ public class GlobalLoader : MonoBehaviour
 
     [Inject, HideInInspector] public Player playerInstance;
     [Inject, HideInInspector] public MainUI mainUI;
+    [Inject] private GameSettings gameSettings;
 
     private bool isStart;
 
@@ -41,6 +42,9 @@ public class GlobalLoader : MonoBehaviour
 
         LoadGlobal();
         LoadPlayerData();
+
+        if (gameSettings != null)
+            SceneLoader.GlobalLoadingSpeed = gameSettings.loadingSceneSpeed;
 
         playerInstance.SetListenerToEvents(OnConversationStart, OnConversationEnd);
     }
@@ -236,7 +240,14 @@ public class GlobalLoader : MonoBehaviour
     public void LoadToScene()
     {
         var globalData = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
+        fightSceneLoader._onSceneActivated.AddListener(OnReturnFromBattle);
         fightSceneLoader.LoadAsync(globalData.SceneIndex);
+    }
+
+    private void OnReturnFromBattle()
+    {
+        fightSceneLoader._onSceneActivated.RemoveListener(OnReturnFromBattle);
+        Show();
     }
 
     public void LoadToScene(string sceneToLoad)

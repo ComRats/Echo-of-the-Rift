@@ -423,6 +423,8 @@ public class InventoryContextMenu : MonoBehaviour
                 PlayEquipSound();
             }
         }
+
+        inventoryManager.SyncFromUI();
     }
 
     private void DropItem(DraggableItem item)

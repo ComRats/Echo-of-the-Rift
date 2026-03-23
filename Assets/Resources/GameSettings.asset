@@ -18,3 +18,4 @@ MonoBehaviour:
   questWindowKey: 106
   enemyTurnDelay: 0.5
   enemyTurnSpeed: 0.5
+  loadingSceneSpeed: 1

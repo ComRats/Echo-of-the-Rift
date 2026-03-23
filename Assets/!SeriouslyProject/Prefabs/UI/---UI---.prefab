@@ -1539,7 +1539,6 @@ MonoBehaviour:
     SceneName: MainMenu
     _sceneIndexInBuildSettings: 0
     _isSceneEnabledInBuildSettings: 1
-  _loadingSpeed: 0.5
   _preloadOnStart: 0
   _loadSceneMode: 0
   _useSceneManager: 0
