@@ -1935,6 +1935,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FightScene_SceneLoader
       objectReference: {fileID: 0}
+    - target: {fileID: 3507270399480113937, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _loadingSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: _destroyOnLoad
       value: 0
@@ -1942,10 +1950,14 @@ PrefabInstance:
     - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: _serializableScene.Scene
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 102900000, guid: 27c91897e6b225b4b89a430d6f14a966, type: 3}
     - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: _serializableScene.SceneName
-      value: 
+      value: TestScene
+      objectReference: {fileID: 0}
+    - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
+      propertyPath: _serializableScene._sceneIndexInBuildSettings
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4621264074094065030, guid: f516dd6d3683a3a45aff9ef2beda4337, type: 3}
       propertyPath: _onSceneLoaded.m_PersistentCalls.m_Calls.Array.size
@@ -2349,7 +2361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa8e5e0369ba6e24e98fdf81f63eafe4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isShow: 1
+  isShow: 0
 --- !u!1 &1452349726
 GameObject:
   m_ObjectHideFlags: 0

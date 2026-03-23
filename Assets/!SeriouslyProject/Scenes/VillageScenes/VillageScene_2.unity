@@ -24486,6 +24486,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: "\u0411\u043E\u0441\u043E\u0442\u0430"
       objectReference: {fileID: 0}
+    - target: {fileID: 2754887482825296157, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3195229562992909689, guid: 7d6bc9981c4279c45b5fbb467e5c9209, type: 3}
       propertyPath: m_Size.x
       value: 2.9729319

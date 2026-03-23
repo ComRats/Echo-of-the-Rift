@@ -13,7 +13,8 @@ using PixelCrushers;
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
-    [SerializeField] private SceneLoader fightSceneLoader;
+    public SceneLoader fightSceneLoader;
+
     [SerializeField] private List<SerializableScene> notShowScene;
     [SerializeField] private AudioManagerSettings settings;
 

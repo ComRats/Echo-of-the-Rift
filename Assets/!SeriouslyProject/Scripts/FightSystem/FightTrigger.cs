@@ -5,7 +5,6 @@ using UnityEngine;
 using System;
 using EchoRift;
 using EchoRift.SaveLoadSystem;
-using System.IO;
 using static EchoRift.SaveLoadSystem.SaveFileNames;
 
 [RequireComponent(typeof(Collider2D))]
@@ -24,6 +23,8 @@ public class FightTrigger : MonoBehaviour
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     private List<CharactersSettings> characters = new List<CharactersSettings>();
 
+    private bool _isStartingFight = false;
+
     //private void Start()
     //{
     //    if (transform.parent.TryGetComponent<FightNPC>(out FightNPC fNPC))
@@ -33,33 +34,44 @@ public class FightTrigger : MonoBehaviour
     //    }
     //}
 
+    private void Start()
+    {
+        sceneLoader = GlobalLoader.Instance.fightSceneLoader;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out var player) && canTriggered)
         {
-            characters = collision.GetComponent<Team>().characters;
-
-            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
-            sceneLoader._onSceneActivated.AddListener(() => CursorManager.Show());
-
-            EnterTrigger();
-
-            sceneLoader.LoadAsync();
+            if (!_isStartingFight )
+            {
+                StartFight(collision);
+            }
         }
+    }
+
+    private void StartFight(Collider2D collision)
+    {
+        _isStartingFight = true;
+        canTriggered = false;
+
+        characters = collision.GetComponent<Team>().characters;
+
+        sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
+        sceneLoader._onSceneActivated.AddListener(() => CursorManager.Show());
+
+        EnterTrigger();
+        sceneLoader.LoadAsync();
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent<Player>(out var player) && canTriggered)
         {
-            characters = collision.GetComponent<Team>().characters;
-
-            sceneLoader._onLoadingSceneLoad.AddListener(() => GlobalLoader.Instance.Hide());
-            sceneLoader._onSceneActivated.AddListener(() => CursorManager.Show());
-
-            EnterTrigger();
-
-            sceneLoader.LoadAsync();
+            if (!_isStartingFight)
+            {
+                StartFight(collision);
+            }
         }
     }
 
