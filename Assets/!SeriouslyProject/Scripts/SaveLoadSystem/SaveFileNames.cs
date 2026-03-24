@@ -20,9 +20,20 @@ namespace EchoRift.SaveLoadSystem
         
         public const string ENEMY_SAVE = "EnemySave";
         public const string CHARACTER_SAVE = "CharacterSave";
-        
-        public const string AUDIO_SETTINGS = "AudioSettings";
-        
+
+        public const string SETTINGS = "GameSettings";
+
         public const string DEBUG_LOGS = "DebugLogs";
+
+        [System.Serializable]
+        public class GlobalSettingsData
+        {
+            public float musicVolume = 1f;
+            public float sfxVolume = 1f;
+
+            public float enemyTurnDelay = 1.5f;
+            public float enemyTurnSpeed = 1f;
+            public float loadingSceneSpeed = 10f;
+        }
     }
 }

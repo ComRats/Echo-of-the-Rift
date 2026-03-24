@@ -33,7 +33,7 @@ public class AudioSettingsUI : MonoBehaviour
         var am = ServiceLocator.GetService();
         if (am == null) return;
 
-        var savedData = SaveLoadSystem.Load<AudioSaveData>(AUDIO_SETTINGS) ?? new AudioSaveData();
+        var savedData = SaveLoadSystem.Load<GlobalSettingsData>(SETTINGS) ?? new GlobalSettingsData();
 
         Configure(sfxSlider, savedData.sfxVolume, SFX_INDEX);
         Configure(musicSlider, savedData.musicVolume, MUSIC_INDEX);
@@ -54,20 +54,13 @@ public class AudioSettingsUI : MonoBehaviour
         });
     }
 
-    private void SaveCurrentState()
+    public void SaveCurrentState()
     {
-        AudioSaveData data = new AudioSaveData
+        GlobalSettingsData data = new GlobalSettingsData
         {
             musicVolume = musicSlider.value,
             sfxVolume = sfxSlider.value
         };
-        SaveLoadSystem.Save(AUDIO_SETTINGS, data);
-    }
-
-    [System.Serializable]
-    public class AudioSaveData
-    {
-        public float musicVolume = 1f;
-        public float sfxVolume = 1f;
+        SaveLoadSystem.Save(SETTINGS, data);
     }
 }
