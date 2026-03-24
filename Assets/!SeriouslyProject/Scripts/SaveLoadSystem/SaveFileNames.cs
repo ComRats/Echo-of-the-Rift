@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace EchoRift.SaveLoadSystem
 {
     /// <summary>
@@ -33,7 +35,12 @@ namespace EchoRift.SaveLoadSystem
 
             public float enemyTurnDelay = 1.5f;
             public float enemyTurnSpeed = 1f;
-            public float loadingSceneSpeed = 10f;
+            public float loadingSceneSpeed = 1f;
+
+            public KeyCode openInventoryKey = KeyCode.E;
+            public KeyCode openPauseMenuKey = KeyCode.Escape;
+            public KeyCode useButton = KeyCode.F;
+            public KeyCode questWindowKey = KeyCode.J;
         }
     }
 }

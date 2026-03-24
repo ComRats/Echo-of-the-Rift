@@ -56,11 +56,9 @@ public class AudioSettingsUI : MonoBehaviour
 
     public void SaveCurrentState()
     {
-        GlobalSettingsData data = new GlobalSettingsData
-        {
-            musicVolume = musicSlider.value,
-            sfxVolume = sfxSlider.value
-        };
+        var data = SaveLoadSystem.Load<GlobalSettingsData>(SETTINGS) ?? new GlobalSettingsData();
+        data.musicVolume = musicSlider.value;
+        data.sfxVolume = sfxSlider.value;
         SaveLoadSystem.Save(SETTINGS, data);
     }
 }

@@ -85,7 +85,13 @@ public class GlobalLoader : MonoBehaviour
 
         // Сбрасываем состояние инвентаря UI при загрузке новой сцены
         if (mainUI != null)
+        {
             mainUI.ResetUIState();
+
+            // Запрещаем открывать UI в сценах главного меню и т.п.
+            bool isMenuScene = notShowScene.Exists(s => (string)s == scene.name);
+            mainUI.canOpenUI = !isMenuScene;
+        }
 
         // Обновляем UI команды после загрузки сцены
         if (mainUI != null && mainUI.teamManager != null)
