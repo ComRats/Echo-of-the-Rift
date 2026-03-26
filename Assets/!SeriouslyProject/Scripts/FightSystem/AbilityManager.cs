@@ -14,7 +14,7 @@ public class AbilityManager : MonoBehaviour
     [SerializeField] private Transform supportAbilitiesContainer;
     [SerializeField] private RectTransform abilitiesPanel;
 
-    [Title("Button Prefab")]
+    [Title("button Prefab")]
     [SerializeField] private GameObject abilityButtonPrefab;
 
     [Title("Animation Settings")]

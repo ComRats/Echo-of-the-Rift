@@ -45,11 +45,11 @@ public class MainUI : MonoBehaviour
         contextMenu = FindObjectOfType<InventoryContextMenu>();
         musicManager = FindObjectOfType<MusicTransitionManager>();
 
-        // Подписываемся на выбор язычка квестов
         if (playerUI != null)
         {
             playerUI.onQuestTongueSelected = OnQuestTongueSelectedFromTab;
             playerUI.onQuestTongueDeselected = OnQuestTongueDeselectedFromTab;
+            playerUI.onGuideTongueSelected = () => playerUI.mobGuide.UpdateMobsGrid();
         }
     }
 

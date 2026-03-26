@@ -262,7 +262,6 @@ GameObject:
   - component: {fileID: 4407830110612700531}
   - component: {fileID: 439978218544709087}
   - component: {fileID: 3611278994950707337}
-  - component: {fileID: 1186400862192045144}
   m_Layer: 0
   m_Name: DialogueTrigger
   m_TagString: Untagged
@@ -415,25 +414,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7462033337664677003}
   m_CullTransparentMesh: 1
---- !u!114 &1186400862192045144
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7462033337664677003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1af33a602e20a3d4ca46c8a6ef942618, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_key: 
-  m_appendSaverTypeToKey: 0
-  m_saveAcrossSceneChanges: 1
-  m_restoreStateOnStart: 0
-  m_target: {fileID: 0}
-  m_usePlayerSpawnpoint: 0
-  m_multiscene: 0
 --- !u!1001 &1260656587910412922
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -18,10 +18,15 @@ namespace PixelCrushers.DialogueSystem
     /// its virtual functions.
     /// </remarks>
     [AddComponentMenu("")] // Use wrapper.
-    public class DialogueSystemTrigger : MonoBehaviour
+    public class DialogueSystemTrigger : MonoBehaviour/*, IMobProvider*/
     {
 
         #region Serialized Variables
+
+        //[SerializeField] private Mob mobReference;
+
+        //// Реализация интерфейса: отдаем ссылку на наш ScriptableObject
+        //public Mob MobData => mobReference;
 
         /// <summary>
         /// The trigger that this component listens for.

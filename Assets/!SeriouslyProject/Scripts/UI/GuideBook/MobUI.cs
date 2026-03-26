@@ -6,5 +6,5 @@ public class MobUI : MonoBehaviour
 {
     public TextMeshProUGUI nickname;
     public TextMeshProUGUI shortDescription;
-    public Button Button;
+    public Button button;
 }
