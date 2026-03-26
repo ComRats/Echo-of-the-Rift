@@ -2,8 +2,8 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 namespace EchoRift.UI
 {
@@ -69,6 +69,13 @@ namespace EchoRift.UI
                 c.a = 1f;
                 mobImage.color = c;
             }
+        }
+
+        public void AddMob(Mob mob)
+        {
+            if (mob == null || mobs.Contains(mob)) return;
+            mobs.Add(mob);
+            UpdateMobsGrid();
         }
 
         private void ShowMob(Mob mob)

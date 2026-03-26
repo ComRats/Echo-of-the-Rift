@@ -26,7 +26,7 @@ public class SaveTrigger : MonoBehaviour
     private void SaveGame()
     {
         GlobalLoader.Instance.SavePlayer();
-        GlobalLoader.Instance.SaveGlobal(); // сохраняет Dialogue переменные, квесты, состояния
+        GlobalLoader.Instance.SaveGlobal();
         GlobalLoader.Instance.SaveInventory();
     }
 }
