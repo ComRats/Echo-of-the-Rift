@@ -4,16 +4,29 @@ using System.Linq;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
+using EchoRift.SaveLoadSystem;
+using System;
 
 namespace EchoRift.UI
 {
+    [Serializable]
+    public class BestiaryData
+    {
+        public List<string> mobNames = new List<string>();
+    }
+
     public class MobGuide : MonoBehaviour
     {
-        [SerializeField] private List<Mob> mobs;
-        [SerializeField] private List<MobUI> mobsUI;
+        [SerializeField] private List<Mob> mobs = new List<Mob>();
+        [SerializeField] private List<MobUI> mobsUI = new List<MobUI>();
         [SerializeField] private GameObject mobPrefab;
         [SerializeField] private Image mobImage;
         [SerializeField] private TextMeshProUGUI mobLongDescription;
+
+        private void Awake()
+        {
+            LoadBestiary();
+        }
 
         private void Start()
         {
@@ -40,18 +53,27 @@ namespace EchoRift.UI
                 Destroy(child.gameObject);
             }
 
-            if (mobs.Count == 0) return;
+            if (mobs == null || mobs.Count == 0) return;
+            if (mobPrefab == null) return;
 
             foreach (Mob mob in mobs)
             {
+                if (mob == null) continue; // guard against null entries
                 GameObject newMob = Instantiate(mobPrefab, transform);
                 MobUI mobUI = newMob.GetComponent<MobUI>();
 
-                mobUI.nickname.text = mob.nickname;
-                mobUI.shortDescription.text = mob.shortDescription;
+                if (mobUI == null) continue;
 
-                mobUI.button.onClick.RemoveAllListeners();
-                mobUI.button.onClick.AddListener(() => ShowMob(mob));
+                if (mobUI.nickname != null)
+                    mobUI.nickname.text = mob.nickname;
+                if (mobUI.shortDescription != null)
+                    mobUI.shortDescription.text = mob.shortDescription;
+
+                if (mobUI.button != null)
+                {
+                    mobUI.button.onClick.RemoveAllListeners();
+                    mobUI.button.onClick.AddListener(() => ShowMob(mob));
+                }
 
                 mobsUI.Add(mobUI);
             }
@@ -61,35 +83,76 @@ namespace EchoRift.UI
         {
             if (mobs.Count == 0)
             {
-                Color c = mobImage.color;
-                c.a = 0f;
-                mobImage.color = c;
-                mobLongDescription.text = "";
+                if (mobImage != null)
+                {
+                    Color c = mobImage.color;
+                    c.a = 0f;
+                    mobImage.color = c;
+                }
+                if (mobLongDescription != null)
+                    mobLongDescription.text = "";
             }
             else
             {
-                Color c = mobImage.color;
-                c.a = 1f;
-                mobImage.color = c;
+                if (mobImage != null)
+                {
+                    Color c = mobImage.color;
+                    c.a = 1f;
+                    mobImage.color = c;
+                }
             }
         }
 
         public void AddMob(Mob mob)
         {
-            if (mob == null || mobs.Contains(mob)) return;
+            if (mob == null) return;
+            if (mobs.Any(m => m != null && m.name == mob.name)) return;
+
             mobs.Add(mob);
             UpdateMobsGrid();
+            SaveBestiary();
         }
 
         private void ShowMob(Mob mob)
         {
             if (mobs.Count > 0)
             {
-                mobLongDescription.text = mob.longDescription;
-                mobImage.sprite = mob.sprite;
+                if (mobLongDescription != null)
+                    mobLongDescription.text = mob.longDescription;
+                if (mobImage != null)
+                    mobImage.sprite = mob.sprite;
             }
         }
+
+        private void LoadBestiary()
+        {
+            var data = SaveLoadSystem.SaveLoadSystem.Load<BestiaryData>("BestiaryData", SaveFileNames.GAME_DIRECTORY);
+            if (data != null && data.mobNames != null)
+            {
+                mobs.Clear();
+
+                var allMobs = Resources.LoadAll<Mob>("Mobs");
+                foreach (var name in data.mobNames)
+                {
+                    var mob = allMobs.FirstOrDefault(x => x.name == name);
+                    if (mob != null && !mobs.Any(x => x != null && x.name == name))
+                    {
+                        mobs.Add(mob);
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[MobGuide] Could not find Mob with name: {name}");
+                    }
+                }
+                UpdateMobsGrid();
+            }
+        }
+
+        private void SaveBestiary()
+        {
+            var data = new BestiaryData();
+            data.mobNames = mobs.Where(m => m != null).Select(m => m.name).ToList();
+            SaveLoadSystem.SaveLoadSystem.Save("BestiaryData", data, SaveFileNames.GAME_DIRECTORY);
+        }
     }
-
 }
-

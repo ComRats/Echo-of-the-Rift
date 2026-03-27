@@ -52,7 +52,6 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
                 Stop();
                 return;
             }
-
             guide.AddMob(mobProvider.MobData);
 
             Stop();

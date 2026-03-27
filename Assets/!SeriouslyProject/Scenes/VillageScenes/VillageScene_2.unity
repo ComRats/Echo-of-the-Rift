@@ -23263,7 +23263,7 @@ PrefabInstance:
     - target: {fileID: 4561398974099563800, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: mobData
       value: 
-      objectReference: {fileID: 11400000, guid: 4e09778a960ab3147a308304ec6d860f, type: 2}
+      objectReference: {fileID: 11400000, guid: a931b98b724cc28409edbab477f8e986, type: 2}
     - target: {fileID: 4707710278315821684, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Size.x
       value: 4.4355006
@@ -35875,7 +35875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d284e84ff4fd9040910f77634163bdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mobData: {fileID: 11400000, guid: e144963ad743b07448a4053024c79fec, type: 2}
+  mobData: {fileID: 11400000, guid: a308e3252c3175c46811388435eca554, type: 2}
 --- !u!1 &1738557362
 GameObject:
   m_ObjectHideFlags: 0
