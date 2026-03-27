@@ -12456,7 +12456,7 @@ BoxCollider2D:
   m_Offset: {x: 0.02892983, y: -0.06794357}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.50000006, y: 0.1}
     oldSize: {x: 6.4, y: 6.4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
@@ -18554,7 +18554,6 @@ MonoBehaviour:
     SceneName: VillageScene_1
     _sceneIndexInBuildSettings: 5
     _isSceneEnabledInBuildSettings: 1
-  _loadingSpeed: 0.5
   _preloadOnStart: 0
   _loadSceneMode: 0
   _useSceneManager: 0
@@ -23231,7 +23230,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Size.x
-      value: 8.104505
+      value: 13.17728
       objectReference: {fileID: 0}
     - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Size.y
@@ -23239,7 +23238,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Offset.x
-      value: 0.16724908
+      value: 0.13048911
       objectReference: {fileID: 0}
     - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Offset.y
@@ -23261,6 +23260,10 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4561398974099563800, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
+      propertyPath: mobData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4e09778a960ab3147a308304ec6d860f, type: 2}
     - target: {fileID: 4707710278315821684, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Size.x
       value: 4.4355006
@@ -35816,6 +35819,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 610602642997687415, guid: 3e9d331a88c66914f872e469e69efd52, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1735012076}
+    - targetCorrespondingSourceObject: {fileID: 6121210424288016640, guid: 3e9d331a88c66914f872e469e69efd52, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1735012079}
   m_SourcePrefab: {fileID: 100100000, guid: 3e9d331a88c66914f872e469e69efd52, type: 3}
 --- !u!4 &1735012074 stripped
 Transform:
@@ -35846,12 +35852,30 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 125758041810068363, guid: 3e9d331a88c66914f872e469e69efd52, type: 3}
   m_PrefabInstance: {fileID: 1735012073}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1735012078}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c593457cd8105e148906690e1707c592, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1735012078 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6121210424288016640, guid: 3e9d331a88c66914f872e469e69efd52, type: 3}
+  m_PrefabInstance: {fileID: 1735012073}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1735012079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735012078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d284e84ff4fd9040910f77634163bdf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mobData: {fileID: 11400000, guid: e144963ad743b07448a4053024c79fec, type: 2}
 --- !u!1 &1738557362
 GameObject:
   m_ObjectHideFlags: 0

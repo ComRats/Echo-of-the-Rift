@@ -18,7 +18,10 @@ namespace EchoRift.UI
         private void Start()
         {
             UpdateMobsGrid();
-            ShowMob(mobs.First());
+            if (mobs.Count > 0)
+            {
+                ShowMob(mobs.First());
+            }
         }
 
         [Button]
@@ -80,9 +83,11 @@ namespace EchoRift.UI
 
         private void ShowMob(Mob mob)
         {
-            if (mob == null) return;
-            mobLongDescription.text = mob.longDescription;
-            mobImage.sprite = mob.sprite;
+            if (mobs.Count > 0)
+            {
+                mobLongDescription.text = mob.longDescription;
+                mobImage.sprite = mob.sprite;
+            }
         }
     }
 

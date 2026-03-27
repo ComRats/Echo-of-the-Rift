@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,14 +30,23 @@ public class MainMenuAnimator : MonoBehaviour
         StartCoroutine(PlayOpenAnimationDelayed()); 
     }
 
-    private System.Collections.IEnumerator PlayOpenAnimationDelayed()
+    private IEnumerator PlayOpenAnimationDelayed()
     {
         yield return null;
+        yield return null;
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(group.GetComponent<RectTransform>());
 
         for (int i = 0; i < items.Length; i++)
         {
             originalPositions[i] = items[i].anchoredPosition;
+
+            LayoutElement le = items[i].GetComponent<LayoutElement>();
+            if (le != null)
+                le.ignoreLayout = true;
         }
+
+        group.enabled = false;
 
         PlayOpenAnimation();
     }
