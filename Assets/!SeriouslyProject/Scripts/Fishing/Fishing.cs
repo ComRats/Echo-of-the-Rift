@@ -7,6 +7,23 @@ using AudioManager.Locator;
 
 public class Fishing : MonoBehaviour
 {
+    [System.Serializable]
+    private class LakeFishConfig
+    {
+        public string fishName;
+        [Min(1)] public int amount = 1;
+        [Range(1, 100)] public int rarity = 1;
+    }
+
+    private class RuntimeFishState
+    {
+        public string fishName;
+        public int remaining;
+        public int rarity;
+
+        public float CatchWeight => 1f / Mathf.Max(1, rarity);
+    }
+
     private InventoryManager inventoryManager;
     private FishingUI fishingUI;
     private Movement playerMovement;
@@ -28,12 +45,20 @@ public class Fishing : MonoBehaviour
     [SerializeField] private float minigameDrainSpeed = 0.08f;
 
     [Header("Рыба")]
-    [SerializeField] private List<string> fishList;
+    [SerializeField] private List<LakeFishConfig> lakeFishConfigs;
+
+    [Header("Динамика ожидания")]
+    [SerializeField, Min(1f)] private float waitMultiplierWhenScarce = 2f;
 
     public bool IsFishing { get; private set; } = false;
-    private bool isMinigameActive = false;
     private ClickBarUI clickBar;
     private KeyCode fishingKey;
+    private List<RuntimeFishState> remainingFish;
+    private int initialFishCount;
+    private int currentFishCount;
+
+    public int RemainingFishCount => currentFishCount;
+    public bool HasFishRemaining => RemainingFishCount > 0;
 
     private void Start()
     {
@@ -42,10 +67,17 @@ public class Fishing : MonoBehaviour
         inventoryManager = _mainUI.inventoryManager;
         playerMovement = _player.movement;
         fishingKey = _settings.useButton;
+        InitializeFishPool();
     }
 
     public void StartFishingProcess(FishingTrigger trigger)
     {
+        if (!HasFishRemaining)
+        {
+            fishingUI?.ShowMinigameHint("В этом месте больше нет рыбы", 2f);
+            return;
+        }
+
         if (!IsFishing && playerMovement != null)
         {
             currentFishingTrigger = trigger;
@@ -66,7 +98,7 @@ public class Fishing : MonoBehaviour
         yield return null;
 
         float waitTimer = 0f;
-        float waitTime = Random.Range(minWaitTime, maxWaitTime);
+        float waitTime = CalculateWaitTime();
 
         // Ожидание поклевки
         while (waitTimer < waitTime)
@@ -119,7 +151,6 @@ public class Fishing : MonoBehaviour
 
     private IEnumerator StartMinigame()
     {
-        isMinigameActive = true;
         bool minigameCompleted = false;
         bool minigameFailed = false;
 
@@ -136,8 +167,6 @@ public class Fishing : MonoBehaviour
             }
             yield return null;
         }
-
-        isMinigameActive = false;
 
         if (minigameCompleted)
         {
@@ -158,22 +187,113 @@ public class Fishing : MonoBehaviour
 
     private string CatchRandomFish()
     {
-        if (fishList == null || fishList.Count == 0)
+        if (!HasFishRemaining)
         {
             Debug.LogWarning("Список рыбы пуст!");
             return "Неизвестная рыба";
         }
 
-        string randomFish = fishList[Random.Range(0, fishList.Count)];
+        var selectedFish = GetRandomFishByRarity();
+        if (selectedFish == null)
+        {
+            Debug.LogWarning("Не удалось выбрать рыбу для поимки.");
+            return "Неизвестная рыба";
+        }
+
+        string randomFish = selectedFish.fishName;
+        selectedFish.remaining = Mathf.Max(0, selectedFish.remaining - 1);
+        currentFishCount = Mathf.Max(0, currentFishCount - 1);
         inventoryManager?.AddItem(randomFish);
         Debug.Log($"Поймана рыба: {randomFish}!");
         return randomFish;
     }
 
+    private void InitializeFishPool()
+    {
+        remainingFish = new List<RuntimeFishState>();
+        initialFishCount = 0;
+        currentFishCount = 0;
+
+        if (lakeFishConfigs == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < lakeFishConfigs.Count; i++)
+        {
+            var config = lakeFishConfigs[i];
+            if (config == null || string.IsNullOrWhiteSpace(config.fishName) || config.amount <= 0)
+                continue;
+
+            remainingFish.Add(new RuntimeFishState
+            {
+                fishName = config.fishName,
+                remaining = config.amount,
+                rarity = Mathf.Max(1, config.rarity)
+            });
+
+            initialFishCount += config.amount;
+        }
+
+        currentFishCount = initialFishCount;
+    }
+
+    private RuntimeFishState GetRandomFishByRarity()
+    {
+        if (remainingFish == null || remainingFish.Count == 0)
+            return null;
+
+        float totalWeight = 0f;
+        for (int i = 0; i < remainingFish.Count; i++)
+        {
+            if (remainingFish[i].remaining > 0)
+                totalWeight += remainingFish[i].CatchWeight;
+        }
+
+        if (totalWeight <= 0f)
+            return null;
+
+        float roll = Random.Range(0f, totalWeight);
+        float cumulative = 0f;
+
+        for (int i = 0; i < remainingFish.Count; i++)
+        {
+            var fish = remainingFish[i];
+            if (fish.remaining <= 0)
+                continue;
+
+            cumulative += fish.CatchWeight;
+            if (roll <= cumulative)
+                return fish;
+        }
+
+        for (int i = 0; i < remainingFish.Count; i++)
+        {
+            if (remainingFish[i].remaining > 0)
+                return remainingFish[i];
+        }
+
+        return null;
+    }
+
+    private float CalculateWaitTime()
+    {
+        if (initialFishCount <= 0)
+            return maxWaitTime;
+
+        float remainingRatio = Mathf.Clamp01((float)RemainingFishCount / initialFishCount);
+        float scarcity = 1f - remainingRatio;
+        float waitMultiplier = Mathf.Lerp(1f, waitMultiplierWhenScarce, scarcity);
+
+        float dynamicMinWait = minWaitTime * waitMultiplier;
+        float dynamicMaxWait = maxWaitTime * waitMultiplier;
+
+        return Random.Range(dynamicMinWait, dynamicMaxWait);
+    }
+
     public void EndFishing()
     {
         IsFishing = false;
-        isMinigameActive = false;
         _mainUI.canOpenUI = true; // Разблокируем UI после рыбалки
         fishingUI?.HideText();
         clickBar?.Hide();

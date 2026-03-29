@@ -34,7 +34,7 @@ public class FishingTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out currentPlayer))
         {
             playerInside = true;
-            if (!mainUI.isOpenUI)
+            if (!mainUI.isOpenUI && fishing != null && fishing.HasFishRemaining)
                 ShowButtonPrompt(true);
         }
     }
@@ -68,9 +68,13 @@ public class FishingTrigger : MonoBehaviour
             {
                 ShowButtonPrompt(false);
             }
-            else if (fishing != null && !fishing.IsFishing)
+            else if (fishing != null && !fishing.IsFishing && fishing.HasFishRemaining)
             {
                 ShowButtonPrompt(true);
+            }
+            else
+            {
+                ShowButtonPrompt(false);
             }
         }
 
@@ -79,6 +83,12 @@ public class FishingTrigger : MonoBehaviour
 
         if (Input.GetKeyDown(gameSettings.useButton) && fishing != null && !fishing.IsFishing)
         {
+            if (!fishing.HasFishRemaining)
+            {
+                fishing.StartFishingProcess(this);
+                return;
+            }
+
             Debug.Log("Рыбалка началась");
 
             ShowButtonPrompt(false);
@@ -110,11 +120,17 @@ public class FishingTrigger : MonoBehaviour
 
     public void ShowButtonAfterFishing()
     {
-        if (playerInside)
+        if (playerInside && fishing != null && fishing.HasFishRemaining)
         {
             ShowButtonPrompt(true);
             if (buttonUI != null)
                 buttonUI.SetActive(true);
+        }
+        else
+        {
+            ShowButtonPrompt(false);
+            if (buttonUI != null)
+                buttonUI.SetActive(false);
         }
     }
 }

@@ -44984,6 +44984,34 @@ PrefabInstance:
       propertyPath: fishList.Array.data[2]
       value: Viun
       objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[0].amount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[0].rarity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[1].amount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[1].rarity
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[0].fishName
+      value: karas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740621090612845187, guid: f82d4a35f7d5b05459c8a8a81a7de920, type: 3}
+      propertyPath: lakeFishConfigs.Array.data[1].fishName
+      value: Viun
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

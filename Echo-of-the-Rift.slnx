@@ -17,6 +17,7 @@
   <Project Path="Unity.Mathematics.csproj" />
   <Project Path="Unity.RenderPipelines.Core.Editor.csproj" />
   <Project Path="Unity.2D.Common.Path.Editor.csproj" />
+  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="Unity.2D.Psdimporter.Editor.csproj" />
   <Project Path="UnityUIExtensions.csproj" />
   <Project Path="Unity.VisualScripting.Core.Editor.csproj" />
@@ -32,7 +33,6 @@
   <Project Path="Unity.Searcher.Editor.csproj" />
   <Project Path="Unity.Burst.csproj" />
   <Project Path="PsdPlugin.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="VHierarchy.csproj" />
   <Project Path="Unity.Collections.csproj" />
   <Project Path="Cinemachine.csproj" />
@@ -63,6 +63,7 @@
   <Project Path="Unity.2D.Aseprite.Common.csproj" />
   <Project Path="Unity.Burst.Editor.csproj" />
   <Project Path="Unity.2D.Common.Editor.csproj" />
+  <Project Path="Unity.Sysroot.Linux_x86_64.csproj" />
   <Project Path="UnityUIExtensions.editor.csproj" />
   <Project Path="VFolders.csproj" />
   <Project Path="NavMeshPlusEditor.csproj" />
@@ -85,10 +86,12 @@
   <Project Path="Zenject-PoolMonitor-Editor.csproj" />
   <Project Path="Unity.InternalAPIEngineBridge.003.csproj" />
   <Project Path="Unity.InputSystem.TestFramework.csproj" />
+  <Project Path="Unity.SysrootPackage.Editor.csproj" />
   <Project Path="Unity.InternalAPIEditorBridge.005.csproj" />
   <Project Path="Unity.ShaderGraph.Utilities.csproj" />
   <Project Path="Unity.VisualScripting.Shared.Editor.csproj" />
   <Project Path="Unity.InternalAPIEditorBridge.003.csproj" />
+  <Project Path="Unity.Toolchain.Win-x86_64-Linux-x86_64.csproj" />
   <Project Path="AudioManager.Locator.csproj" />
   <Project Path="Unity.Collections.DocCodeSamples.csproj" />
   <Project Path="Unity.Collections.BurstCompatibilityGen.csproj" />
