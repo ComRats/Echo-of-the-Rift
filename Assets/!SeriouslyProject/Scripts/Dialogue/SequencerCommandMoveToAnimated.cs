@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PixelCrushers.DialogueSystem.SequencerCommands
 {
-    [AddComponentMenu("")] // Hide from menu
+    [AddComponentMenu("")]
     public class SequencerCommandMoveToAnimated : SequencerCommand
     {
         private const float SmoothMoveCutoff = 0.05f;
@@ -19,7 +19,6 @@ namespace PixelCrushers.DialogueSystem.SequencerCommands
 
         public void Start()
         {
-            // Получаем параметры
             target = GetSubject(0);
             subject = GetSubject(1);
             duration = GetParameterAsFloat(2, 0);
