@@ -20,3 +20,7 @@ MonoBehaviour:
   - Assets/!SeriouslyProject/Scenes/MainMenu.unity
   - Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_1.unity
   - Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_2.unity
+  - Assets/!SeriouslyProject/Scenes/FightCampScenes/CampForest.unity
+  - Assets/!SeriouslyProject/Scenes/FightCampScenes/FghtCamp1.unity
+  - Assets/!SeriouslyProject/Scenes/TestScene.unity
+  - Assets/!SeriouslyProject/Scenes/PlayerCreating.unity

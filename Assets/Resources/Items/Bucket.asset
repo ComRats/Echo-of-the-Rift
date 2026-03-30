@@ -26,7 +26,7 @@ MonoBehaviour:
   manaRestore: 0
   bonusDamage: 0
   bonusMagicDamage: 0
-  bonusArmor: 1
+  bonusArmor: 5
   bonusMaxHealth: 0
   bonusMaxMana: 0
   bonusHeal: 0
