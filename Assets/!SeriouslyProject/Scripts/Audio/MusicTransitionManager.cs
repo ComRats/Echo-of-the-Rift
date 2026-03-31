@@ -24,6 +24,10 @@ public class MusicTransitionManager : MonoBehaviour
 
     private IAudioManager _am;
     private List<string> _currentMusicNames = new List<string>();
+
+    // 🔥 НОВОЕ — ambient звуки
+    private List<string> _ambientSounds = new List<string>();
+
     private bool _isPaused = false;
     private bool _isDialogueActive = false;
 
@@ -35,13 +39,18 @@ public class MusicTransitionManager : MonoBehaviour
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        DialogueManager.instance.conversationStarted += OnConversationStarted;
-        DialogueManager.instance.conversationEnded += OnConversationEnded;
+
+        if (DialogueManager.instance != null)
+        {
+            DialogueManager.instance.conversationStarted += OnConversationStarted;
+            DialogueManager.instance.conversationEnded += OnConversationEnded;
+        }
     }
 
     private void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
+
         if (DialogueManager.instance != null)
         {
             DialogueManager.instance.conversationStarted -= OnConversationStarted;
@@ -67,54 +76,35 @@ public class MusicTransitionManager : MonoBehaviour
 
         List<string> targetMusicList = GetMusicForScene(sceneName);
 
-        // Сценарий 1: Если нет музыки (например, LoadingScene) просто не трогаем
         if (targetMusicList == null || targetMusicList.Count == 0)
-        {
             return;
-        }
 
-        // Сценарий 2: Если список музыки тот же самый
         if (AreMusicListsEqual(_currentMusicNames, targetMusicList))
         {
-            // Проверяем и восстанавливаем громкость для всех треков
             foreach (var musicName in _currentMusicNames)
             {
                 if (_am.TryGetSource(musicName, out var wrapper) == AudioError.OK)
                 {
                     if (wrapper.Source.isPlaying)
-                    {
                         _am.LerpVolume(musicName, normalVolume, fadeDuration);
-                    }
                 }
             }
             return;
         }
 
-        // Если мы здесь, значит музыка действительно меняется
-
-        // 1. Затухание старой музыки
         foreach (var oldMusic in _currentMusicNames)
         {
-            if (!string.IsNullOrEmpty(oldMusic))
-            {
-                _am.LerpVolume(oldMusic, 0f, fadeDuration);
-            }
+            _am.LerpVolume(oldMusic, 0f, fadeDuration);
         }
 
-        // 2. Запуск новой музыки
         _currentMusicNames = new List<string>(targetMusicList);
-        
+
         foreach (var newMusic in _currentMusicNames)
         {
-            if (string.IsNullOrEmpty(newMusic)) continue;
-            
             _am.Play(newMusic);
 
-            // Устанавливаем громкость в 0 перед плавным нарастанием (Fade In)
-            if (_am.TryGetSource(newMusic, out var newWrapper) == AudioError.OK)
-            {
-                newWrapper.Source.volume = 0f;
-            }
+            if (_am.TryGetSource(newMusic, out var wrapper) == AudioError.OK)
+                wrapper.Source.volume = 0f;
 
             _am.LerpVolume(newMusic, normalVolume, fadeDuration);
         }
@@ -123,58 +113,55 @@ public class MusicTransitionManager : MonoBehaviour
     private bool AreMusicListsEqual(List<string> list1, List<string> list2)
     {
         if (list1.Count != list2.Count) return false;
-        
-        var sorted1 = list1.OrderBy(x => x).ToList();
-        var sorted2 = list2.OrderBy(x => x).ToList();
-        
-        for (int i = 0; i < sorted1.Count; i++)
-        {
-            if (sorted1[i] != sorted2[i]) return false;
-        }
-        
-        return true;
+        return list1.OrderBy(x => x).SequenceEqual(list2.OrderBy(x => x));
     }
 
     private List<string> GetMusicForScene(string sceneName)
     {
-        // Ищем музыку для конкретной сцены
         var config = sceneMusicSettings.FirstOrDefault(s => s.scene != null && s.scene.SceneName == sceneName);
         return config?.musicNames ?? new List<string>();
     }
 
-    /// <summary>
-    /// Приглушает текущую музыку (для меню паузы)
-    /// </summary>
+    // 🔥 РЕГИСТРАЦИЯ AMBIENT
+    public void RegisterAmbient(string soundName)
+    {
+        if (!_ambientSounds.Contains(soundName))
+            _ambientSounds.Add(soundName);
+    }
+
+    public void UnregisterAmbient(string soundName)
+    {
+        if (_ambientSounds.Contains(soundName))
+            _ambientSounds.Remove(soundName);
+    }
+
+    // 🔥 ОБЩИЙ СПИСОК
+    private IEnumerable<string> GetAllSounds()
+    {
+        return _currentMusicNames.Concat(_ambientSounds);
+    }
+
     public void DuckMusic(float duckDuration = 0.5f)
     {
         if (_am == null || _isPaused) return;
 
         _isPaused = true;
 
-        foreach (var musicName in _currentMusicNames)
+        foreach (var sound in GetAllSounds())
         {
-            if (!string.IsNullOrEmpty(musicName))
-            {
-                _am.LerpVolume(musicName, pausedVolume, duckDuration);
-            }
+            _am.LerpVolume(sound, pausedVolume, duckDuration);
         }
     }
 
-    /// <summary>
-    /// Восстанавливает громкость музыки (при выходе из паузы)
-    /// </summary>
     public void RestoreMusic(float restoreDuration = 0.5f)
     {
         if (_am == null || !_isPaused) return;
 
         _isPaused = false;
 
-        foreach (var musicName in _currentMusicNames)
+        foreach (var sound in GetAllSounds())
         {
-            if (!string.IsNullOrEmpty(musicName))
-            {
-                _am.LerpVolume(musicName, normalVolume, restoreDuration);
-            }
+            _am.LerpVolume(sound, normalVolume, restoreDuration);
         }
     }
 
@@ -184,12 +171,9 @@ public class MusicTransitionManager : MonoBehaviour
 
         _isDialogueActive = true;
 
-        foreach (var musicName in _currentMusicNames)
+        foreach (var sound in GetAllSounds())
         {
-            if (!string.IsNullOrEmpty(musicName))
-            {
-                _am.LerpVolume(musicName, pausedVolume, fadeDuration);
-            }
+            _am.LerpVolume(sound, pausedVolume, fadeDuration);
         }
     }
 
@@ -199,12 +183,9 @@ public class MusicTransitionManager : MonoBehaviour
 
         _isDialogueActive = false;
 
-        foreach (var musicName in _currentMusicNames)
+        foreach (var sound in GetAllSounds())
         {
-            if (!string.IsNullOrEmpty(musicName))
-            {
-                _am.LerpVolume(musicName, normalVolume, fadeDuration);
-            }
+            _am.LerpVolume(sound, normalVolume, fadeDuration);
         }
     }
 }
