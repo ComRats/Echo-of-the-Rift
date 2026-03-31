@@ -4,11 +4,9 @@ public class TestButtons : MonoBehaviour
 {
     [SerializeField] private InventoryManager inventoryManager;
 
-#if UNITY_EDITOR
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.F1))
         {
             inventoryManager.AddItem("axe", 1);
             inventoryManager.AddItem("testAmulet", 1);
@@ -16,11 +14,11 @@ public class TestButtons : MonoBehaviour
             inventoryManager.AddItem("brokeHelmet", 1);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.F2))
         {
             inventoryManager.AddItem("pig", 1);
             inventoryManager.AddItem("karas", 1);
         }
     }
-#endif
+
 }

@@ -117,7 +117,6 @@ public class ShopUI : MonoBehaviour
 
         shopManager.OpenShop(shopData);
         CursorManager.Show();
-        Debug.LogWarning("ShowCursorShop");
         currentShopData = shopData;
         isShopMode = true;
 

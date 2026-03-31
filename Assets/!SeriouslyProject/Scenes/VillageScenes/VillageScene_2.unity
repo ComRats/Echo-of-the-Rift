@@ -17164,7 +17164,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7754708835122394673, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: m_Size.y
-      value: 1.3870922
+      value: 1.3824979
       objectReference: {fileID: 0}
     - target: {fileID: 7754708835122394673, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: m_Offset.x
@@ -17172,7 +17172,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7754708835122394673, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: m_Offset.y
-      value: -0.59497684
+      value: -0.5926797
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: infoText
@@ -17182,7 +17182,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: useButton
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: useButtText
@@ -17190,15 +17190,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: useButtonMusic
-      value: LockDoor1
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
+      propertyPath: keyMassageOffset.x
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: keyMassageOffset.y
-      value: 1.4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: textMassageOffset.y
-      value: 0.25
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 8109550630443489489, guid: 2488e6602a04957479cccfc394c0efcf, type: 3}
       propertyPath: onPressedButton.m_PersistentCalls.m_Calls.Array.size
