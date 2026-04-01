@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 [Serializable]
 public class InventorySaver

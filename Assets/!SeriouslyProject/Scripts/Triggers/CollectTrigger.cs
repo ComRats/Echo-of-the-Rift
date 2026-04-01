@@ -9,6 +9,9 @@ using AudioManager.Core;
 using AudioManager.Locator;
 using UnityEngine.Events;
 using Unity.VisualScripting;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
+using UnityEngine.SceneManagement;
 
 public class CollectTrigger : BaseTrigger
 {
@@ -51,6 +54,9 @@ public class CollectTrigger : BaseTrigger
     [SerializeField] private UnityEvent onTriggerEnter;
     [SerializeField] private List<CollectEvent> eventQueue = new List<CollectEvent>();
 
+    // Исходное количество ивентов (заполняется при первом старте)
+    private int originalEventCount = -1;
+
     private int currentStepIndex;
     private bool playerInside;
     private bool minigameActive;
@@ -64,6 +70,45 @@ public class CollectTrigger : BaseTrigger
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
 
+    // --- Save/Load ---
+
+    [Serializable]
+    private class CollectTriggerSaveData
+    {
+        public int currentStepIndex;
+        public int remainingEventCount; // сколько ивентов осталось в очереди
+    }
+
+    private string SaveKey =>
+        $"collectTrigger_{SceneManager.GetActiveScene().name}_{gameObject.name}_{transform.position.x:F1}_{transform.position.y:F1}";
+
+    private void SaveState()
+    {
+        var data = new CollectTriggerSaveData
+        {
+            currentStepIndex = currentStepIndex,
+            remainingEventCount = eventQueue.Count
+        };
+        SaveLoadSystem.Save(SaveKey, data, GAME_DIRECTORY);
+    }
+
+    private void LoadState()
+    {
+        if (!SaveLoadSystem.Exists(SaveKey, GAME_DIRECTORY)) return;
+
+        var data = SaveLoadSystem.Load<CollectTriggerSaveData>(SaveKey, GAME_DIRECTORY);
+
+        // Восстанавливаем очередь: удаляем ивенты которые уже были выполнены
+        // originalEventCount - data.remainingEventCount = сколько было удалено с начала
+        if (originalEventCount < 0) originalEventCount = eventQueue.Count;
+
+        int removedCount = originalEventCount - data.remainingEventCount;
+        for (int i = 0; i < removedCount && eventQueue.Count > 0; i++)
+            eventQueue.RemoveAt(0);
+
+        currentStepIndex = data.currentStepIndex;
+    }
+
     private void Start()
     {
         sprites = mainUI.spriteCollection;
@@ -71,6 +116,9 @@ public class CollectTrigger : BaseTrigger
         fishingUI = mainUI.fishingUI;
         lastUIState = mainUI.isOpenUI;
         audioService = ServiceLocator.GetService();
+
+        originalEventCount = eventQueue.Count;
+        LoadState();
     }
 
     private void Update()
@@ -183,6 +231,7 @@ public class CollectTrigger : BaseTrigger
             UpdatePrompt();
         }
 
+        SaveState();
         DialogueManager.SendUpdateTracker();
     }
 

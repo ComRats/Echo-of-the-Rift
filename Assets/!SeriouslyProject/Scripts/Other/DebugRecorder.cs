@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 public class DebugRecorder : MonoBehaviour
 {

@@ -6,9 +6,10 @@ using EchoRift;
 using System;
 using UnityEngine;
 using Zenject;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using PixelCrushers;
+using EchoRift.Dialogue;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
@@ -81,6 +82,9 @@ public class GlobalLoader : MonoBehaviour
         // Восстанавливаем dialogue переменные/квесты из сохранения при каждой загрузке сцены
         RestoreDialogueState();
 
+        // Восстанавливаем состояние всех объектов сцены, включая изначально выключенные
+        PersistentObject.LoadAll();
+
         LoadPlayer();
 
         // Сбрасываем состояние инвентаря UI при загрузке новой сцены
@@ -102,12 +106,7 @@ public class GlobalLoader : MonoBehaviour
 
     private void RestoreDialogueState()
     {
-        var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
-        if (!string.IsNullOrEmpty(data.dialogueData))
-        {
-            var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
-            SaveSystem.ApplySavedGameData(savedGameData);
-        }
+        DialogueSaveManager.Load();
     }
 
 
@@ -210,13 +209,15 @@ public class GlobalLoader : MonoBehaviour
         var data = new GlobalData
         {
             sceneIndex = SceneManager.GetActiveScene().buildIndex,
-            dialogueData = SaveSystem.Serialize(SaveSystem.RecordSavedGameData()),
             isStart = false,
             gameTime = GameTimer.GameTime
         };
 
         if (data.sceneIndex != 0 && data.sceneIndex != 1)
+        {
             SaveLoadSystem.Save(GLOBAL_SAVE, data, GAME_DIRECTORY);
+            DialogueSaveManager.Save();
+        }
 
         // Сохраняем состояния всех PersistentObject на сцене (NPC, объекты и т.д.)
         PersistentObject.SaveAll();
@@ -228,8 +229,8 @@ public class GlobalLoader : MonoBehaviour
     {
         var data = SaveLoadSystem.Load<GlobalData>(GLOBAL_SAVE, GAME_DIRECTORY);
         isStart = data.isStart;
-        var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.dialogueData);
-        SaveSystem.ApplySavedGameData(savedGameData);
+
+        DialogueSaveManager.Load();
 
         GameTimer.SetTime(data.gameTime);
 
@@ -309,7 +310,6 @@ public class GlobalLoader : MonoBehaviour
         }
 
         public bool HasGameProgress => sceneIndex > 1;
-        public string dialogueData;
         public bool isStart;
         public float gameTime;
     }

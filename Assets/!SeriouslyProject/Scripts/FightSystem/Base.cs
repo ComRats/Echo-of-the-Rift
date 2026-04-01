@@ -472,10 +472,10 @@ public class Base : MonoBehaviour, IData
                                 Debug.Log($"[SaveCharacterProgress] В teamData для сохранения: {savedChar.Name} - Level {savedChar.Level}, XP {savedChar.CurrentXP}/{savedChar.MaxXP}, HP {savedChar.Health}/{savedChar.MaxHealth}");
                             }
                             
-                            EchoRift.SaveLoadSystem.SaveLoadSystem.Save(
-                                EchoRift.SaveLoadSystem.SaveFileNames.TEAM_DATA, 
+                            EchoRift.EchoRiftSaveLoadSystem.SaveLoadSystem.Save(
+                                EchoRift.EchoRiftSaveLoadSystem.SaveFileNames.TEAM_DATA, 
                                 teamData, 
-                                EchoRift.SaveLoadSystem.SaveFileNames.GAME_DIRECTORY
+                                EchoRift.EchoRiftSaveLoadSystem.SaveFileNames.GAME_DIRECTORY
                             );
                             
                             Debug.Log($"[SaveCharacterProgress] Сохранён прогресс {Name}: Level {Level}, HP {Health}/{MaxHealth}, XP {CurrentXP}/{MaxXP}");

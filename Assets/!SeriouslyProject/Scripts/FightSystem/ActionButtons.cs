@@ -1,6 +1,6 @@
 ﻿using EchoRift;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using FightSystem.Enemy;
 using Sirenix.OdinInspector;
 using System;

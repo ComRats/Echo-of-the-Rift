@@ -4,8 +4,8 @@ using FightSystem.Data;
 using UnityEngine;
 using System;
 using EchoRift;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 [RequireComponent(typeof(Collider2D))]
 public class FightTrigger : MonoBehaviour

@@ -195,10 +195,10 @@ public class BattleTeamSync : MonoBehaviour
             Debug.Log($"[BattleTeamSync] Saving to file: {charData.Name} - Level {charData.Level}, XP {charData.CurrentXP}/{charData.MaxXP}, HP {charData.Health}/{charData.MaxHealth}");
         }
         
-        EchoRift.SaveLoadSystem.SaveLoadSystem.Save(
-            EchoRift.SaveLoadSystem.SaveFileNames.TEAM_DATA, 
+        EchoRift.EchoRiftSaveLoadSystem.SaveLoadSystem.Save(
+            EchoRift.EchoRiftSaveLoadSystem.SaveFileNames.TEAM_DATA, 
             teamData, 
-            EchoRift.SaveLoadSystem.SaveFileNames.GAME_DIRECTORY
+            EchoRift.EchoRiftSaveLoadSystem.SaveFileNames.GAME_DIRECTORY
         );
 
         isSynced = true;

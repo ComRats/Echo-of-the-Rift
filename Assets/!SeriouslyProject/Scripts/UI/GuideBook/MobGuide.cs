@@ -4,7 +4,7 @@ using System.Linq;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
-using EchoRift.SaveLoadSystem;
+using EchoRift.EchoRiftSaveLoadSystem;
 using System;
 
 namespace EchoRift.UI
@@ -126,7 +126,7 @@ namespace EchoRift.UI
 
         private void LoadBestiary()
         {
-            var data = SaveLoadSystem.SaveLoadSystem.Load<BestiaryData>("BestiaryData", SaveFileNames.GAME_DIRECTORY);
+            var data = EchoRiftSaveLoadSystem.SaveLoadSystem.Load<BestiaryData>("BestiaryData", SaveFileNames.GAME_DIRECTORY);
             if (data != null && data.mobNames != null)
             {
                 mobs.Clear();
@@ -152,7 +152,7 @@ namespace EchoRift.UI
         {
             var data = new BestiaryData();
             data.mobNames = mobs.Where(m => m != null).Select(m => m.name).ToList();
-            SaveLoadSystem.SaveLoadSystem.Save("BestiaryData", data, SaveFileNames.GAME_DIRECTORY);
+            EchoRiftSaveLoadSystem.SaveLoadSystem.Save("BestiaryData", data, SaveFileNames.GAME_DIRECTORY);
         }
     }
 }

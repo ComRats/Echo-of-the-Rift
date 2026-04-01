@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 public class GameSettingsUI : MonoBehaviour
 {

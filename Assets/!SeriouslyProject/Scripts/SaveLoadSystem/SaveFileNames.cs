@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace EchoRift.SaveLoadSystem
+namespace EchoRift.EchoRiftSaveLoadSystem
 {
     /// <summary>
     /// Централизованное хранилище имен файлов сохранений.
@@ -22,6 +22,8 @@ namespace EchoRift.SaveLoadSystem
         
         public const string ENEMY_SAVE = "EnemySave";
         public const string CHARACTER_SAVE = "CharacterSave";
+
+        public const string DIALOGUE_STATE = "dialogueState";
 
         public const string SETTINGS = "GameSettings";
 

@@ -3,8 +3,8 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using FightSystem.Enemy;
 using FightSystem.Character;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 public class FightDataLoader : MonoBehaviour
 {

@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using System;
 
 /// <summary>
@@ -108,6 +108,21 @@ public class PersistentObject : MonoBehaviour
                 data.Set(obj.persistentId, obj.gameObject.activeSelf);
         }
         data.SaveToDisk();
+    }
+
+    /// <summary>
+    /// Восстанавливает состояние ВСЕХ PersistentObject на сцене, включая изначально выключенные.
+    /// Вызывается из GlobalLoader после загрузки сцены.
+    /// </summary>
+    public static void LoadAll()
+    {
+        // FindObjectsOfType с includeInactive=true находит даже выключенные объекты
+        var allObjects = UnityEngine.Object.FindObjectsOfType<PersistentObject>(includeInactive: true);
+        foreach (var obj in allObjects)
+        {
+            if (obj != null)
+                obj.Load();
+        }
     }
 }
 

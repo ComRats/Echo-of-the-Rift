@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
-namespace EchoRift.SaveLoadSystem
+namespace EchoRift.EchoRiftSaveLoadSystem
 {
     public static class SaveLoadSystem
     {

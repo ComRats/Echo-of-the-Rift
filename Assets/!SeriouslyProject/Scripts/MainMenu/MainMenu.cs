@@ -1,8 +1,9 @@
-﻿using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+﻿using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using PixelCrushers;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
+using EchoRift.Dialogue;
 
 public class MainMenu : MonoBehaviour
 {
@@ -57,6 +58,7 @@ public class MainMenu : MonoBehaviour
     {
         SaveLoadSystem.ClearAllSaves(GAME_DIRECTORY);
         SceneObjectsData.ResetCache();
+        DialogueSaveManager.Delete();
 
         if (GlobalLoader.Instance != null)
             GlobalLoader.Instance.mainUI.inventoryManager.ResetForNewGame();
@@ -97,8 +99,7 @@ public class MainMenu : MonoBehaviour
         var playerName = SaveLoadSystem.Load<ChangeNameDialogueActor.PLayerNameData>(PLAYER_NAME, GAME_DIRECTORY);
         var playerActor = GlobalLoader.Instance.playerInstance.dialogActor;
 
-        var savedGameData = SaveSystem.Deserialize<SavedGameData>(globalData.dialogueData);
-        SaveSystem.ApplySavedGameData(savedGameData);
+        DialogueSaveManager.Load();
 
         loadSceneLoader._onSceneActivated.AddListener(() =>
         {

@@ -1,5 +1,5 @@
-using EchoRift.SaveLoadSystem;
-using static EchoRift.SaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using UnityEngine.SceneManagement;
