@@ -1,13 +1,13 @@
 using UnityEngine;
 using PixelCrushers.DialogueSystem;
-
+//мне нужно добавить проверку на то сколько у игрока той или иной характеристики типа маны, урона, брони, приоритета и тд.
 namespace PixelCrushers.DialogueSystem
 {
     /// <summary>
     /// Регистрирует Lua функции для работы с инвентарем в Dialogue System
     /// Позволяет проверять наличие предметов и управлять ими через Conditions и Scripts
     /// </summary>
-    public class InventoryLuaFunctions : MonoBehaviour
+    public class LuaFunctions : MonoBehaviour
     {
         private InventoryManager inventoryManager;
 
@@ -35,7 +35,7 @@ namespace PixelCrushers.DialogueSystem
 
             if (inventoryManager == null)
             {
-                Debug.LogError("[InventoryLuaFunctions] InventoryManager не найден!");
+                Debug.LogError("[LuaFunctions] InventoryManager не найден!");
             }
         }
 

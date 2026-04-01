@@ -164,7 +164,7 @@ MonoBehaviour:
       type: 2
       typeString: CustomFieldType_Boolean
     portrait: {fileID: 0}
-    spritePortrait: {fileID: 3286163911610860551, guid: 3f35f304b552d1841b0cbd291f826bb6, type: 3}
+    spritePortrait: {fileID: 3286163911610860551, guid: 19b97fb6389dc274f99bb558568add7c, type: 3}
     alternatePortraits: []
     spritePortraits: []
   - id: 8
