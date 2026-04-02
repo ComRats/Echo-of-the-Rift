@@ -12,11 +12,10 @@ public class StatusAbility : BattleAbility
 
         int damage = Mathf.RoundToInt(attacker.GiveDamage() * damageMultiplier);
         target.TakeDamage(damage);
+        SpawnVFX(target);
 
         if (effect != null)
-        {
             target.ApplyStatusEffect(effect);
-        }
     }
 
     public override bool CanUse(Base attacker) => attacker.Mana >= ManaCost;

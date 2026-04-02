@@ -8,6 +8,9 @@ public class StatusEffectSO : ScriptableObject
     public int duration;
     public Color tickColor = Color.red;
     public int armorBonus;
+
+    [Tooltip("Prefab партикла, живёт пока эффект активен (looping)")]
+    public GameObject vfxPrefab;
 }
 
 [System.Serializable]
@@ -15,6 +18,7 @@ public class ActiveStatusEffect
 {
     public StatusEffectSO data;
     public int remainingTurns;
+    [System.NonSerialized] public GameObject vfxInstance;
 
     public ActiveStatusEffect(StatusEffectSO effectData)
     {

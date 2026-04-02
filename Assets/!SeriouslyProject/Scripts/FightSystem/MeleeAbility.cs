@@ -24,8 +24,9 @@ public class MeleeAbility : BattleAbility
         PlayHitAnimation(target);
 
         int finalDamage = attacker.GiveDamage() * baseDamageMultiplier + flatDamageBonus;
-        Debug.Log($"{attacker.Name} ���������� {AbilityName} �� {target.Name} � ������ {finalDamage}");
+        Debug.Log($"{attacker.Name} использует {AbilityName} на {target.Name} с уроном {finalDamage}");
         target.TakeDamage(finalDamage);
+        SpawnVFX(target);
 
         TryApplyEffect(target);
     }

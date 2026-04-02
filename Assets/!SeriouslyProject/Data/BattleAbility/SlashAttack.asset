@@ -16,6 +16,7 @@ MonoBehaviour:
   ManaCost: 0
   targetType: 0
   animTrigger: SoloPunch
+  vfxPrefab: {fileID: 1662071375277209848, guid: 9b84adb4263faa448860aa71a0d1e00d, type: 3}
   Description: "\u0420\u0443\u0431\u044F\u0449\u0430\u044F \u0430\u0442\u0430\u043A\u0430
     \u0441 \u043A\u0440\u043E\u0432\u043E\u0442\u0435\u0447\u0435\u043D\u0438\u0435\u043C"
   baseDamageMultiplier: 0

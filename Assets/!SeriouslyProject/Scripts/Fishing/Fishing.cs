@@ -44,6 +44,10 @@ public class Fishing : MonoBehaviour
     [SerializeField] private float minigameClickPower = 0.12f;
     [SerializeField] private float minigameDrainSpeed = 0.08f;
 
+    [Header("VFX")]
+    [SerializeField] private ParticleSystem catchVFX;
+    [SerializeField] private Transform[] catchVFXPoints;
+
     [Header("Рыба")]
     [SerializeField] private List<LakeFishConfig> lakeFishConfigs;
 
@@ -175,6 +179,8 @@ public class Fishing : MonoBehaviour
             var itemData = inventoryManager.FindItemDataByName(caughtFish);
             fishingUI?.ShowCatchResult(itemData?.itemGameName ?? caughtFish);
             ServiceLocator.GetService().PlayOneShot("CollectItem1");
+            ServiceLocator.GetService().PlayOneShot("WaterSplash");
+            PlayCatchVFX();
         }
         else
         {
@@ -289,6 +295,24 @@ public class Fishing : MonoBehaviour
         float dynamicMaxWait = maxWaitTime * waitMultiplier;
 
         return Random.Range(dynamicMinWait, dynamicMaxWait);
+    }
+
+    private void PlayCatchVFX()
+    {
+        if (catchVFX == null) return;
+
+        if (catchVFXPoints != null && catchVFXPoints.Length > 0)
+        {
+            var point = catchVFXPoints[Random.Range(0, catchVFXPoints.Length)];
+            catchVFX.transform.position = point.position;
+        }
+
+        // Убеждаемся что объект активен
+        if (!catchVFX.gameObject.activeInHierarchy)
+            catchVFX.gameObject.SetActive(true);
+
+        catchVFX.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        catchVFX.Play(true);
     }
 
     public void EndFishing()

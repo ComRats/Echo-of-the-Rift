@@ -14,9 +14,6 @@ public class HealAbility : BattleAbility
     [Tooltip("Множитель лечения")]
     [SerializeField] private float healMultiplier = 1.5f;
 
-    [Title("Visual Effects")]
-    [SerializeField] private GameObject healVFX;
-
     [Title("Status Effect")]
     [Tooltip("Дополнительный эффект (например, регенерация)")]
     [SerializeField] private StatusEffectSO healOverTimeEffect;
@@ -27,29 +24,17 @@ public class HealAbility : BattleAbility
 
         PlayHitAnimation(target);
 
-        int healAmount;
-        if (useCharacterHealStat)
-        {
-            healAmount = Mathf.RoundToInt(attacker.GiveHeal() * healMultiplier);
-        }
-        else
-        {
-            healAmount = baseHealAmount;
-        }
+        int healAmount = useCharacterHealStat
+            ? Mathf.RoundToInt(attacker.GiveHeal() * healMultiplier)
+            : baseHealAmount;
 
         target.TakeHeal(healAmount);
+        SpawnVFX(target);
 
         Debug.Log($"{attacker.Name} использует {AbilityName} на {target.Name}! Восстановлено {healAmount} HP");
 
-        if (healVFX != null)
-        {
-            Instantiate(healVFX, target.transform.position, Quaternion.identity);
-        }
-
         if (healOverTimeEffect != null)
-        {
             target.ApplyStatusEffect(healOverTimeEffect);
-        }
 
         attacker.UpdateUI();
         target.UpdateUI();

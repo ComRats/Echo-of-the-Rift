@@ -134,9 +134,18 @@ public class Base : MonoBehaviour, IData
         }
         else
         {
-            activeEffects.Add(new ActiveStatusEffect(effectData));
+            var activeEffect = new ActiveStatusEffect(effectData);
+
+            // Спавним looping VFX и держим его пока эффект активен
+            if (effectData.vfxPrefab != null)
+            {
+                activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform.position, Quaternion.identity);
+                activeEffect.vfxInstance.transform.SetParent(transform, true);
+            }
+
+            activeEffects.Add(activeEffect);
         }
-        Debug.Log($"{Name} ������� ������ {effectData.effectName}");
+        Debug.Log($"{Name} получил эффект {effectData.effectName}");
     }
 
     public void ProcessStatusEffects()
@@ -168,6 +177,11 @@ public class Base : MonoBehaviour, IData
                     Armor -= effect.data.armorBonus;
                     Debug.Log($"{Name} теряет бонус защиты {effect.data.armorBonus}. Текущая защита: {Armor}");
                 }
+
+                // Уничтожаем VFX эффекта
+                if (effect.vfxInstance != null)
+                    Destroy(effect.vfxInstance);
+
                 activeEffects.RemoveAt(i);
             }
         }
