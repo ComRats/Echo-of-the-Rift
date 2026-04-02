@@ -139,8 +139,15 @@ public class Base : MonoBehaviour, IData
             // Спавним looping VFX и держим его пока эффект активен
             if (effectData.vfxPrefab != null)
             {
-                activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform.position, Quaternion.identity);
-                activeEffect.vfxInstance.transform.SetParent(transform, true);
+                activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform);
+                activeEffect.vfxInstance.transform.localPosition = Vector3.zero;
+                activeEffect.vfxInstance.transform.SetSiblingIndex(transform.GetSiblingIndex() + 1);
+
+                var uiParticle = activeEffect.vfxInstance.GetComponent<Coffee.UIExtensions.UIParticle>();
+                if (uiParticle == null)
+                    uiParticle = activeEffect.vfxInstance.AddComponent<Coffee.UIExtensions.UIParticle>();
+
+                uiParticle.Play();
             }
 
             activeEffects.Add(activeEffect);
