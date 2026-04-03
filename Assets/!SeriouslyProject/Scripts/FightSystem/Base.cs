@@ -141,10 +141,6 @@ public class Base : MonoBehaviour, IData
             {
                 activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform);
                 activeEffect.vfxInstance.transform.localPosition = Vector3.zero;
-
-                var uiParticle = activeEffect.vfxInstance.GetComponent<Coffee.UIExtensions.UIParticle>();
-                if (uiParticle != null)
-                    uiParticle.Play();
             }
 
             activeEffects.Add(activeEffect);

@@ -19,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Player
-  - 
+  - VFX
   - 
   - 
   - 
@@ -62,4 +62,7 @@ TagManager:
     locked: 0
   - name: Effector
     uniqueID: 4029906477
+    locked: 0
+  - name: VFX
+    uniqueID: 997425789
     locked: 0

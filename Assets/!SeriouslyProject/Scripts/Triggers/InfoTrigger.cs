@@ -63,6 +63,7 @@ public class InfoTrigger : BaseTrigger
     private IAudioManager service;
 
     private SpriteCollection sprites;
+    private TimeManager timeManager;
 
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
@@ -72,6 +73,7 @@ public class InfoTrigger : BaseTrigger
     {
         sprites = mainUI.spriteCollection;
         service = ServiceLocator.GetService();
+        timeManager = GlobalLoader.Instance.timeManager;
     }
 
     private void Update()
@@ -163,4 +165,7 @@ public class InfoTrigger : BaseTrigger
             textColor: Color.yellow
         );
     }
+
+    public void SkipTimeToMorning() => timeManager.SkipToMorning();
+    public void SkipTimeToEvening() => timeManager.SkipToEvening();
 }

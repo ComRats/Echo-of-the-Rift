@@ -110,19 +110,17 @@ public class TimeManager : MonoBehaviour
     public void SkipToMorning()
     {
         int currentHour = GetCurrentHour();
-        int hoursToSkip;
-        
-        if (currentHour < 6)
-        {
-            hoursToSkip = 6 - currentHour;
-        }
-        else
-        {
-            hoursToSkip = 24 - currentHour + 6;
-        }
-        
+        int hoursToSkip = currentHour < 6 ? 6 - currentHour : 24 - currentHour + 6;
         SkipTime(hoursToSkip);
         Debug.Log("[TimeManager] Пропущено до утра (6:00)");
+    }
+
+    public void SkipToEvening()
+    {
+        int currentHour = GetCurrentHour();
+        int hoursToSkip = currentHour < 18 ? 18 - currentHour : 24 - currentHour + 18;
+        SkipTime(hoursToSkip);
+        Debug.Log("[TimeManager] Пропущено до вечера (18:00)");
     }
     public void SetTimeScale(float scale)
     {

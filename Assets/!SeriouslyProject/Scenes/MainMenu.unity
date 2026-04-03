@@ -808,6 +808,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1354076076}
     - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
+      propertyPath: timeManager
+      value: 
+      objectReference: {fileID: 301154068}
+    - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
       propertyPath: fightSceneLoader
       value: 
       objectReference: {fileID: 1354076076}
@@ -837,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
       propertyPath: notShowScene.Array.data[1]._sceneIndexInBuildSettings
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3959815115215625154, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
       propertyPath: notShowScene.Array.data[0]._isSceneEnabledInBuildSettings
@@ -869,6 +873,17 @@ PrefabInstance:
       addedObject: {fileID: 542196795}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
+--- !u!114 &301154068 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7215133197615967403, guid: 3b41e4b19f1f2234e9e52ded5d8db801, type: 3}
+  m_PrefabInstance: {fileID: 301154067}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcf7523ca6be5994fbccb1f1658cbbf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &329980028
 GameObject:
   m_ObjectHideFlags: 0

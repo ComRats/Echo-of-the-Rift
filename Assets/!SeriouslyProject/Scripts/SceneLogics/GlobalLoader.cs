@@ -14,10 +14,11 @@ using EchoRift.Dialogue;
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour
 {
+    public TimeManager timeManager;
     public SceneLoader fightSceneLoader;
 
-    [SerializeField] private List<SerializableScene> notShowScene;
     [SerializeField] private AudioManagerSettings settings;
+    [SerializeField] private List<SerializableScene> notShowScene;
 
     public static GlobalLoader Instance => instance;
     private static GlobalLoader instance;
