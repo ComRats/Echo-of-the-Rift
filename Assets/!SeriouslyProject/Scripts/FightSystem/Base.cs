@@ -141,13 +141,10 @@ public class Base : MonoBehaviour, IData
             {
                 activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform);
                 activeEffect.vfxInstance.transform.localPosition = Vector3.zero;
-                activeEffect.vfxInstance.transform.SetSiblingIndex(transform.GetSiblingIndex() + 1);
 
                 var uiParticle = activeEffect.vfxInstance.GetComponent<Coffee.UIExtensions.UIParticle>();
-                if (uiParticle == null)
-                    uiParticle = activeEffect.vfxInstance.AddComponent<Coffee.UIExtensions.UIParticle>();
-
-                uiParticle.Play();
+                if (uiParticle != null)
+                    uiParticle.Play();
             }
 
             activeEffects.Add(activeEffect);

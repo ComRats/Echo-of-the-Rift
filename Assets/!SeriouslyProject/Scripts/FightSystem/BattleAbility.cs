@@ -40,18 +40,25 @@ public abstract class BattleAbility : ScriptableObject
 
         var go = Object.Instantiate(vfxPrefab, target.transform);
         go.transform.localPosition = Vector3.zero;
-        go.transform.SetSiblingIndex(target.transform.GetSiblingIndex() + 1);
 
-        // UIParticle нужен чтобы ParticleSystem корректно рендерился внутри Canvas
         var uiParticle = go.GetComponent<Coffee.UIExtensions.UIParticle>();
-        if (uiParticle == null)
-            uiParticle = go.AddComponent<Coffee.UIExtensions.UIParticle>();
-
-        uiParticle.Play();
-
-        var ps = go.GetComponent<ParticleSystem>();
-        if (ps != null)
-            Object.Destroy(go, ps.main.duration + ps.main.startLifetime.constantMax);
+        if (uiParticle != null)
+        {
+            uiParticle.Play();
+            float duration = uiParticle.GetComponentsInChildren<ParticleSystem>() is { Length: > 0 } systems
+                ? Mathf.Max(System.Array.ConvertAll(systems, s => s.main.duration + s.main.startLifetime.constantMax))
+                : 2f;
+            Object.Destroy(go, duration);
+        }
+        else
+        {
+            // Fallback: обычный ParticleSystem без UIParticle (не будет виден в Canvas)
+            var ps = go.GetComponent<ParticleSystem>();
+            if (ps != null)
+                Object.Destroy(go, ps.main.duration + ps.main.startLifetime.constantMax);
+            else
+                Object.Destroy(go, 2f);
+        }
     }
 
     public virtual bool CanUse(Base attacker)
