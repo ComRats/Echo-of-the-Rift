@@ -36,15 +36,22 @@ public abstract class BattleAbility : ScriptableObject
 
     protected void SpawnVFX(Base target)
     {
-        if (vfxPrefab != null && target != null)
-        {
-            var go = Object.Instantiate(vfxPrefab, target.transform.position, Quaternion.identity);
-            go.transform.SetParent(target.transform, true);
-            // Авто-уничтожение если есть ParticleSystem
-            var ps = go.GetComponent<ParticleSystem>();
-            if (ps != null)
-                Object.Destroy(go, ps.main.duration + ps.main.startLifetime.constantMax);
-        }
+        if (vfxPrefab == null || target == null) return;
+
+        var go = Object.Instantiate(vfxPrefab, target.transform);
+        go.transform.localPosition = Vector3.zero;
+        go.transform.SetSiblingIndex(target.transform.GetSiblingIndex() + 1);
+
+        // UIParticle нужен чтобы ParticleSystem корректно рендерился внутри Canvas
+        var uiParticle = go.GetComponent<Coffee.UIExtensions.UIParticle>();
+        if (uiParticle == null)
+            uiParticle = go.AddComponent<Coffee.UIExtensions.UIParticle>();
+
+        uiParticle.Play();
+
+        var ps = go.GetComponent<ParticleSystem>();
+        if (ps != null)
+            Object.Destroy(go, ps.main.duration + ps.main.startLifetime.constantMax);
     }
 
     public virtual bool CanUse(Base attacker)
