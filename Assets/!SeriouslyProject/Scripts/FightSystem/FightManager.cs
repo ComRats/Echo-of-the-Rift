@@ -108,7 +108,7 @@ public class FightManager : MonoBehaviour
             foreach (var basic in bases)
             {
                 basic.GetXP(allEnemyXP / characterStartCount);
-                Debug.Log(basic.name + " ������� " + (allEnemyXP / characterStartCount) + " XP");
+                Debug.Log(basic.name + " получил " + (allEnemyXP / characterStartCount) + " XP");
             }
 
             Player.Result = FightResult.Win;
@@ -127,7 +127,7 @@ public class FightManager : MonoBehaviour
             foreach (var basic in bases)
             {
                 basic.GetXP(allCharacterXP / enemiesStartCount);
-                Debug.Log(basic.name + " ������� " + (allEnemyXP / enemiesStartCount) + " XP");
+                Debug.Log(basic.name + " получил " + (allEnemyXP / enemiesStartCount) + " XP");
             }
 
             Player.Result = FightResult.Lose;
