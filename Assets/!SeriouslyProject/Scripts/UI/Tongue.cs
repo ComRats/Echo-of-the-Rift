@@ -112,15 +112,12 @@ public class Tongue : SelectableTab,
 
     private void AnimateTo(Vector2 targetPosition, Vector3 targetScale)
     {
-        // Kill previous tweens
         positionTween?.Kill();
         scaleTween?.Kill();
 
-        // Animate position
         positionTween = rectTransform.DOAnchorPos(targetPosition, animationDuration)
             .SetEase(animationEase);
 
-        // Animate scale
         if (useScaleAnimation)
         {
             scaleTween = rectTransform.DOScale(targetScale, animationDuration)

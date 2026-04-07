@@ -30,7 +30,6 @@ public class EquipmentManager : MonoBehaviour
 
     private void Start()
     {
-        // Пересчитываем бонусы при старте — на случай если инвентарь загрузился раньше нас
         var inventoryManager = FindObjectOfType<InventoryManager>();
         if (inventoryManager != null)
             RecalculateEquipmentBonuses(inventoryManager.equipmentSlots, inventoryManager);
@@ -41,15 +40,11 @@ public class EquipmentManager : MonoBehaviour
         IsInBattle = inBattle;
     }
 
-    /// <summary>
-    /// Пересчитывает все бонусы от текущей экипировки.
-    /// </summary>
     public void RecalculateEquipmentBonuses(InventorySlot[] equipmentSlots, InventoryManager inventoryManager)
     {
         CharacterDataRuntime runtime = GetPlayerRuntime();
         if (runtime == null) return;
 
-        // Запоминаем HP/Mana до снятия старых бонусов
         int baseHealth = runtime._health;
         int baseMana   = runtime._mana;
         RemoveAppliedBonuses(runtime);
@@ -82,13 +77,11 @@ public class EquipmentManager : MonoBehaviour
         runtime._heal        += newHeal;
         runtime._lucky       += newLucky;
 
-        // Корректируем HP/Mana: если HP было равно старому максимуму (полное HP) — держим полным.
-        // Иначе сохраняем абсолютное значение, клампя по новому максимуму.
-        int oldMaxHealth = runtime._maxHealth - newMaxHealth; // базовый макс без новых бонусов
+        int oldMaxHealth = runtime._maxHealth - newMaxHealth;
         int oldMaxMana   = runtime._maxMana   - newMaxMana;
 
         if (baseHealth >= oldMaxHealth)
-            runtime._health = runtime._maxHealth; // был на полном HP — остаётся полным
+            runtime._health = runtime._maxHealth;
         else
             runtime._health = Mathf.Clamp(baseHealth, 1, runtime._maxHealth);
 
@@ -105,7 +98,6 @@ public class EquipmentManager : MonoBehaviour
         appliedHeal        = newHeal;
         appliedLucky       = newLucky;
 
-        // Обновляем UI команды чтобы отобразить новые значения
         GlobalLoader.Instance?.mainUI?.teamManager?.UpdateTeamUI();
 
         Debug.Log($"[EquipmentManager] Бонусы применены: DMG+{newDamage} ARM+{newArmor} HP+{newMaxHealth}");
@@ -121,16 +113,10 @@ public class EquipmentManager : MonoBehaviour
         runtime._heal        -= appliedHeal;
         runtime._lucky       -= appliedLucky;
 
-        // HP/Mana не трогаем здесь — корректируем после применения новых бонусов
-
         appliedDamage = appliedMagicDamage = appliedArmor = 0;
         appliedMaxHealth = appliedMaxMana = appliedHeal = appliedLucky = 0;
     }
 
-    /// <summary>
-    /// Возвращает базовые значения стата без учёта бонусов экипировки.
-    /// Используется при сохранении, чтобы не записывать бонусы в сейв.
-    /// </summary>
     public (int damage, int magicDamage, int armor, int maxHealth, int maxMana, int heal, int lucky) GetBaseStats(CharacterDataRuntime runtime)
     {
         return (

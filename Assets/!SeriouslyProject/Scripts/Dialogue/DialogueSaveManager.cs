@@ -6,11 +6,6 @@ using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 
 namespace EchoRift.Dialogue
 {
-    /// <summary>
-    /// Унифицированное сохранение/загрузка состояния Dialogue System (Pixel Crushers)
-    /// через тот же SaveLoadSystem что и все остальные данные игры.
-    /// Файл: GameProcess/dialogueState.json
-    /// </summary>
     public static class DialogueSaveManager
     {
         [Serializable]

@@ -3,10 +3,6 @@ using PixelCrushers.DialogueSystem;
 using UnityEngine;
 using Zenject;
 
-/// <summary>
-/// Вешается на NPC рядом с DialogueSystemTrigger.
-/// При начале диалога регистрирует моба в бестиарии.
-/// </summary>
 public class DialogueTriggerMobRegistrar : MonoBehaviour, IMobProvider
 {
     [SerializeField] private Mob mobData;

@@ -136,7 +136,6 @@ public class Base : MonoBehaviour, IData
         {
             var activeEffect = new ActiveStatusEffect(effectData);
 
-            // Спавним looping VFX и держим его пока эффект активен
             if (effectData.vfxPrefab != null)
             {
                 activeEffect.vfxInstance = Instantiate(effectData.vfxPrefab, transform);
@@ -178,7 +177,6 @@ public class Base : MonoBehaviour, IData
                     Debug.Log($"{Name} теряет бонус защиты {effect.data.armorBonus}. Текущая защита: {Armor}");
                 }
 
-                // Уничтожаем VFX эффекта
                 if (effect.vfxInstance != null)
                     Destroy(effect.vfxInstance);
 
@@ -344,7 +342,6 @@ public class Base : MonoBehaviour, IData
 
             CurrentXP -= MaxXP;
             
-            // Запоминаем старые значения для анимации
             int oldHealth = Health;
             int oldMana = Mana;
             
@@ -358,14 +355,11 @@ public class Base : MonoBehaviour, IData
 
             Debug.Log($"[UpdateLevel] {Name} повысил уровень до {Level}! Damage:{Damage}, MaxHP:{MaxHealth}, Heal:{Heal}, Armor:{Armor}, MaxMana:{MaxMana}");
 
-            // Восстанавливаем HP и Mana
             Health = MaxHealth;
             Mana = MaxMana;
             
-            // Запускаем анимацию от старых значений к новым
             AnimateStatRestore(oldHealth, oldMana);
 
-            // Сохраняем с уже восстановленными характеристиками
             SaveCharacterProgress();
 
             OnXPChanged?.Invoke(CurrentXP, MaxXP);
@@ -378,10 +372,8 @@ public class Base : MonoBehaviour, IData
     {
         float duration = 1.5f;
 
-        // Анимируем от старых значений к новым (Health и Mana уже установлены в MaxHealth и MaxMana)
         DOTween.To(() => oldHealth, x => 
         {
-            // Обновляем только UI, не трогая реальное значение Health
             healthText.text = $"{x}/{MaxHealth}";
             healthBar.value = x;
             SetGradient(healthGgradient, healthFill, (float)x / MaxHealth);
@@ -389,19 +381,18 @@ public class Base : MonoBehaviour, IData
         }, Health, duration)
         .SetEase(Ease.OutBack)
         .OnComplete(() => {
-            UpdateUI(); // Финальное обновление UI
+            UpdateUI();
         });
 
         DOTween.To(() => oldMana, x => 
         {
-            // Обновляем только UI
             manaText.text = $"{x}/{MaxMana}";
             manaBar.value = x;
             SetGradient(manaGgradient, manaFill, (float)x / MaxMana);
         }, Mana, duration)
         .SetEase(Ease.OutQuad)
         .OnComplete(() => {
-            UpdateUI(); // Финальное обновление UI
+            UpdateUI();
         });
     }
 
@@ -411,7 +402,6 @@ public class Base : MonoBehaviour, IData
         {
             if (GlobalLoader.Instance != null && GlobalLoader.Instance.playerInstance != null)
             {
-                // Сохраняем главного персонажа через playerSaver
                 var playerSaver = GlobalLoader.Instance.playerInstance.playerSaver;
                 
                 if (Name == playerSaver.Name)
@@ -432,7 +422,6 @@ public class Base : MonoBehaviour, IData
                     Debug.Log($"[SaveCharacterProgress] Главный персонаж {Name} сохранён через playerSaver");
                 }
                 
-                // Сохраняем союзников через Team
                 var team = GlobalLoader.Instance.playerInstance.GetComponent<Team>();
                 if (team != null)
                 {
@@ -442,7 +431,6 @@ public class Base : MonoBehaviour, IData
                         {
                             Debug.Log($"[SaveCharacterProgress] Найден {Name} в Team. useCharacterData={settings.useCharacterData}, RuntimeData={(settings.RuntimeData != null ? "exists" : "null")}");
                             
-                            // Обновляем RuntimeData или прямые поля
                             if (settings.useCharacterData && settings.RuntimeData != null)
                             {
                                 settings.RuntimeData.Level = Level;
@@ -476,10 +464,8 @@ public class Base : MonoBehaviour, IData
                                 Debug.Log($"[SaveCharacterProgress] Прямые поля обновлены: Level {settings.Level}, XP {settings.CurrentXP}/{settings.MaxXP}");
                             }
                             
-                            // Сохраняем данные команды
                             var teamData = team.CreateSaveData();
                             
-                            // Проверяем, что сохраняется
                             var savedChar = teamData.charactersData.Find(c => c.Name == Name);
                             if (savedChar != null)
                             {

@@ -85,11 +85,9 @@ public interface IColliderDebugDrawable2D
         Vector2 right = (direction == CapsuleDirection2D.Vertical) ? Vector2.right : Vector2.up;
         Vector2 offset = up * height / 2f;
 
-        // Прямоугольная часть
         Gizmos.DrawLine(center + right * radius + offset, center + right * radius - offset);
         Gizmos.DrawLine(center - right * radius + offset, center - right * radius - offset);
 
-        // Круги сверху и снизу
         DrawWireCircle(center + offset, radius);
         DrawWireCircle(center - offset, radius);
     }

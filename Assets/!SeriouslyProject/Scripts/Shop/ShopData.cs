@@ -150,7 +150,6 @@ namespace EchoRift.Shop
                 return shopItem.GetSellPrice();
             }
 
-            // Если предмета нет в магазине, используем процент выкупа
             if (acceptsPlayerItems)
             {
                 return Mathf.Max(1, (itemData.itemPrice * buybackPercentage) / 100);

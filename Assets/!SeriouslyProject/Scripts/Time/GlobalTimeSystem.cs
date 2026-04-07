@@ -19,19 +19,16 @@ public class GlobalTimeSystem : MonoBehaviour
     
     private void Awake()
     {
-        // Проверяем, что мы дочерний объект GlobalLoader
         if (transform.parent == null || transform.parent.GetComponent<GlobalLoader>() == null)
         {
             Debug.LogWarning("[GlobalTimeSystem] Должен быть дочерним объектом GlobalLoader!");
         }
         
-        // Инициализация компонентов
         InitializeComponents();
     }
     
     private void InitializeComponents()
     {
-        // Если компоненты не назначены, пытаемся найти их
         if (dayNightCycle == null)
         {
             dayNightCycle = GetComponent<DayNightCycle>();
@@ -52,7 +49,6 @@ public class GlobalTimeSystem : MonoBehaviour
             }
         }
         
-        // Настройка Light2D если не назначен
         if (globalLight == null)
         {
             globalLight = FindObjectOfType<Light2D>();
@@ -62,13 +58,11 @@ public class GlobalTimeSystem : MonoBehaviour
             }
         }
         
-        // Передаём ссылку на свет в DayNightCycle
         if (dayNightCycle != null && globalLight != null)
         {
             dayNightCycle.SetGlobalLight(globalLight);
         }
         
-        // Связываем TimeManager с DayNightCycle
         if (timeManager != null && dayNightCycle != null)
         {
             timeManager.SetDayNightCycle(dayNightCycle);

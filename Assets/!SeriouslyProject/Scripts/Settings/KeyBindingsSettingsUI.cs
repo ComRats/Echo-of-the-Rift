@@ -17,7 +17,7 @@ public class KeyBindingsSettingsUI : MonoBehaviour
      
     private Button _listeningButton;
     private System.Action<KeyCode> _onKeySelected;
-    private System.Func<KeyCode, bool> _keyFilter; // фильтр допустимых клавиш для текущей кнопки
+    private System.Func<KeyCode, bool> _keyFilter;
 
     private void Start()
     {
@@ -69,11 +69,9 @@ public class KeyBindingsSettingsUI : MonoBehaviour
         Event e = Event.current;
         if (e.type != EventType.KeyDown || e.keyCode == KeyCode.None) return;
 
-        // Проверяем фильтр допустимых клавиш
         if (_keyFilter != null && !_keyFilter(e.keyCode))
             return;
 
-        // Проверяем дубликат — клавиша уже занята другой кнопкой
         KeyCode currentForThis = GetCurrentKeyForButton(_listeningButton);
         foreach (var bound in _settings.AllBoundKeys)
         {

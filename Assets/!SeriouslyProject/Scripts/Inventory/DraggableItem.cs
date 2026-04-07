@@ -40,7 +40,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
         itemData = newItem;
         
-        // Устанавливаем SVG иконку (импортированную как Sprite)
         if (image != null && newItem.icon != null)
         {
             image.sprite = newItem.icon;
@@ -90,7 +89,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             return;
         }
 
-        // Блокируем перетаскивание из слота экипировки во время боя
         bool isFromEquipmentSlot = inventoryManager != null &&
             System.Array.IndexOf(inventoryManager.equipmentSlots, transform.parent.GetComponent<InventorySlot>()) >= 0;
         if (isFromEquipmentSlot && FindObjectOfType<FightManager>() != null)
@@ -145,7 +143,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         InventorySlot closestSlot = null;
         float minDistanceSqr = float.MaxValue;
 
-        // Проверяем слоты инвентаря
         foreach (InventorySlot slot in inventoryManager.inventorySlots)
         {
             float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
@@ -156,7 +153,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
         }
 
-        // Проверяем слоты экипировки
         foreach (InventorySlot slot in inventoryManager.equipmentSlots)
         {
             float distSqr = (transform.position - slot.transform.position).sqrMagnitude;
@@ -167,7 +163,6 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             }
         }
 
-        // Если нашли близкий слот и тип подходит - дропаем
         if (closestSlot != null && minDistanceSqr <= snapDistanceSqr)
         {
             if (closestSlot.IsTypeAllowed(this))

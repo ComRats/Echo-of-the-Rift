@@ -80,25 +80,20 @@ public class GlobalLoader : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Восстанавливаем dialogue переменные/квесты из сохранения при каждой загрузке сцены
         RestoreDialogueState();
 
-        // Восстанавливаем состояние всех объектов сцены, включая изначально выключенные
         PersistentObject.LoadAll();
 
         LoadPlayer();
 
-        // Сбрасываем состояние инвентаря UI при загрузке новой сцены
         if (mainUI != null)
         {
             mainUI.ResetUIState();
 
-            // Запрещаем открывать UI в сценах главного меню и т.п.
             bool isMenuScene = notShowScene.Exists(s => (string)s == scene.name);
             mainUI.canOpenUI = !isMenuScene;
         }
 
-        // Обновляем UI команды после загрузки сцены
         if (mainUI != null && mainUI.teamManager != null)
         {
             mainUI.teamManager.UpdateTeamUI();
@@ -129,7 +124,6 @@ public class GlobalLoader : MonoBehaviour
         SaveLoadSystem.Save(GetPlayerSceneSave(sceneName), data, GAME_DIRECTORY);
         SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
 
-        // Сохранение команды
         var team = playerInstance.GetComponent<Team>();
         var teamData = team.CreateSaveData();
         SaveLoadSystem.Save(TEAM_DATA, teamData, GAME_DIRECTORY);
@@ -151,14 +145,12 @@ public class GlobalLoader : MonoBehaviour
             SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
         }
 
-        // Загрузка команды
         var team = playerInstance.GetComponent<Team>();
         if (team != null && SaveLoadSystem.Exists(TEAM_DATA, GAME_DIRECTORY))
         {
             var teamData = SaveLoadSystem.Load<TeamSaveData>(TEAM_DATA, GAME_DIRECTORY);
             team.LoadFromSaveData(teamData);
 
-            // Обновляем UI команды после загрузки данных
             if (mainUI != null && mainUI.teamManager != null)
             {
                 mainUI.teamManager.UpdateTeamUI();
@@ -183,7 +175,6 @@ public class GlobalLoader : MonoBehaviour
         string sceneName = SceneManager.GetActiveScene().name;
         string fileName = GetPlayerSceneSave(sceneName);
 
-        // Приоритет 2: Сохраненная позиция для текущей сцены
         if (SaveLoadSystem.Exists(fileName, GAME_DIRECTORY))
         {
             var data = SaveLoadSystem.Load<PlayerData>(fileName, GAME_DIRECTORY);
@@ -195,7 +186,6 @@ public class GlobalLoader : MonoBehaviour
             }
         }
 
-        // Приоритет 3: Стартовая позиция
         ResetPlayerTransform();
     }
 
@@ -220,7 +210,6 @@ public class GlobalLoader : MonoBehaviour
             DialogueSaveManager.Save();
         }
 
-        // Сохраняем состояния всех PersistentObject на сцене (NPC, объекты и т.д.)
         PersistentObject.SaveAll();
 
         mainUI.inventoryManager.SaveInventory();
@@ -235,13 +224,11 @@ public class GlobalLoader : MonoBehaviour
 
         GameTimer.SetTime(data.gameTime);
 
-        // Принудительно возобновляем игру при загрузке, сбрасывая все состояния паузы
         GameTimer.ForceResumeGame();
     }
 
     public void LoadToScene(string sceneToLoad, Vector3 positionToLoad)
     {
-        //overridePosition = positionToLoad;
         SceneManager.LoadScene(sceneToLoad);
     }
 
@@ -260,7 +247,6 @@ public class GlobalLoader : MonoBehaviour
 
     public void LoadToScene(string sceneToLoad)
     {
-        //overridePosition = positionToLoad;
         fightSceneLoader.LoadAsync(sceneToLoad);
     }
 
@@ -269,10 +255,6 @@ public class GlobalLoader : MonoBehaviour
         mainUI.inventoryManager.SaveInventory();
     }
 
-    /// <summary>
-    /// Вызывается после PointsManager.AddPointsToPlayer() — обновляет playerSaver
-    /// и сбрасывает RuntimeData команды чтобы они пересоздались из обновлённого ScriptableObject.
-    /// </summary>
     public void RefreshPlayerDataFromCharacterData()
     {
         var characterData = Resources.Load<FightSystem.Data.CharacterData>("CharacterData/Human");
@@ -281,7 +263,6 @@ public class GlobalLoader : MonoBehaviour
         playerInstance.playerSaver.LoadFrom(characterData);
         SaveLoadSystem.Save(PLAYER_DATA, playerInstance.playerSaver, GAME_DIRECTORY);
 
-        // Сбрасываем RuntimeData у всех членов команды чтобы они пересоздались
         var team = playerInstance.GetComponent<Team>();
         if (team != null)
         {

@@ -72,7 +72,6 @@ public class UploadTarget : MonoBehaviour
             points.AddPointsToPlayer();
             descriptionStats.text = "Загрузка...";
 
-            // Обновляем playerSaver и RuntimeData команды из обновлённого ScriptableObject
             GlobalLoader.Instance.RefreshPlayerDataFromCharacterData();
 
             RestoreValues();

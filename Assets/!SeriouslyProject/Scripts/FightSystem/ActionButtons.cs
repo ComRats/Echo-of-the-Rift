@@ -59,16 +59,12 @@ public class ActionButtons : MonoBehaviour
     {
         currentEnemy = enemy;
 
-        // Выполняем ожидающее действие только если оно есть
         if (pendingAction != null)
         {
             ExecutePendingAction();
         }
     }
 
-    /// <summary>
-    /// Метод для установки ожидающей способности из AbilityManager
-    /// </summary>
     public void SetPendingAbility(BattleAbility ability, Base attacker)
     {
         if (!ability.CanUse(attacker))
@@ -88,7 +84,6 @@ public class ActionButtons : MonoBehaviour
         pendingAbility = ability;
         pendingAttacker = attacker;
 
-        // Отображаем описание способности
         ShowAbilityDescription(ability, attacker);
 
         switch (ability.targetType)
@@ -134,9 +129,6 @@ public class ActionButtons : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Отображает описание способности в UI
-    /// </summary>
     public void ShowAbilityDescription(BattleAbility ability, Base attacker = null)
     {
         if (descriptionText == null) return;
@@ -151,7 +143,6 @@ public class ActionButtons : MonoBehaviour
             textToShow = ability.AbilityName;
         }
 
-        // Добавляем строку со статистикой способности
         string statsLine = GenerateAbilityStats(ability, attacker);
         if (!string.IsNullOrEmpty(statsLine))
         {
@@ -171,20 +162,15 @@ public class ActionButtons : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Генерирует строку со статистикой способности
-    /// </summary>
     private string GenerateAbilityStats(BattleAbility ability, Base attacker = null)
     {
         System.Text.StringBuilder stats = new System.Text.StringBuilder();
 
-        // Стоимость маны
         if (ability.ManaCost > 0)
         {
             stats.Append($"[mana]{ability.ManaCost} маны[/mana]");
         }
 
-        // Специфичные параметры в зависимости от типа способности
         if (ability is MeleeAbility meleeAbility)
         {
             var multiplierField = meleeAbility.GetType().GetField("baseDamageMultiplier",
@@ -201,7 +187,6 @@ public class ActionButtons : MonoBehaviour
 
                 if (attacker != null)
                 {
-                    // Итоговый урон = базовый урон атакующего * множитель + плоский бонус
                     int finalDamage = attacker.Damage * multiplier + flatBonus;
                     stats.Append($"[dmg]{finalDamage} урона[/dmg]");
                 }
@@ -355,15 +340,10 @@ public class ActionButtons : MonoBehaviour
         return ProcessHighlightedText(stats.ToString());
     }
 
-    /// <summary>
-    /// Обрабатывает текст и применяет выделение к ключевым словам
-    /// Использование: [dmg]50[/dmg], [heal]30[/heal], [def]20[/def], [mana]15[/mana]
-    /// </summary>
     private string ProcessHighlightedText(string text)
     {
         if (string.IsNullOrEmpty(text)) return text;
 
-        // Конвертируем цвета в hex для TextMeshPro
         string damageHex = ColorUtility.ToHtmlStringRGB(damageColor);
         string healHex = ColorUtility.ToHtmlStringRGB(healColor);
         string defenseHex = ColorUtility.ToHtmlStringRGB(defenseColor);
@@ -371,7 +351,6 @@ public class ActionButtons : MonoBehaviour
 
         int sizePercent = Mathf.RoundToInt(highlightSizeMultiplier * 100);
 
-        // Заменяем кастомные теги на Rich Text теги TextMeshPro
         text = text.Replace("[dmg]", $"<size={sizePercent}%><color=#{damageHex}><b>");
         text = text.Replace("[/dmg]", "</b></color></size>");
 
@@ -387,9 +366,6 @@ public class ActionButtons : MonoBehaviour
         return text;
     }
 
-    /// <summary>
-    /// Очищает текст описания
-    /// </summary>
     public void ClearDescription()
     {
         if (descriptionText != null)
@@ -430,7 +406,6 @@ public class ActionButtons : MonoBehaviour
             chr.IsTurn = false;
         }
 
-        // Удаляем врага из списка, если он умер
         if (target is Enemy enemy)
         {
             fightManager.DeleteEnemyOnList(enemy);
@@ -449,7 +424,6 @@ public class ActionButtons : MonoBehaviour
             return;
         }
 
-        // Проверяем, что персонаж еще не завершил свой ход
         if (pendingAttacker is FightSystem.Character.Character character)
         {
             if (!character.IsTurn)
@@ -488,7 +462,6 @@ public class ActionButtons : MonoBehaviour
             return;
         }
 
-        // Проверяем, что персонаж еще не завершил свой ход
         if (pendingAttacker is FightSystem.Character.Character character)
         {
             if (!character.IsTurn)
@@ -521,7 +494,6 @@ public class ActionButtons : MonoBehaviour
 
     private void StartCharacterSelection()
     {
-        // Включаем подсветку персонажей для выбора
         foreach (var character in fightManager.characters)
         {
             character.IsBlinking = true;
@@ -535,7 +507,6 @@ public class ActionButtons : MonoBehaviour
         {
             ExecuteAbilityOnTarget(character);
 
-            // Выключаем подсветку персонажей
             foreach (var c in fightManager.characters)
             {
                 c.IsBlinking = false;
@@ -562,7 +533,6 @@ public class ActionButtons : MonoBehaviour
     {
         Player.Result = FightResult.Escape;
         
-        // Синхронизируем команду перед выходом из боя
         var battleSync = FindObjectOfType<BattleTeamSync>();
         if (battleSync != null)
         {

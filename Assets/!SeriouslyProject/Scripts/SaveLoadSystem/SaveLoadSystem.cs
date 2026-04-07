@@ -30,17 +30,13 @@ namespace EchoRift.EchoRiftSaveLoadSystem
             return Path.Combine(root, $"{fileName}.json");
         }
 
-        /// <summary>
-        /// Универсальное сохранение любых данных в JSON.
-        /// Обновляет кеш и файл.
-        /// </summary>
         public static void Save<T>(string fileName, T data)
         {
             string path = GetPath(fileName);
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(path, json);
 
-            cache[fileName] = data; // обновляем кеш
+            cache[fileName] = data;
         }
 
         public static void Save<T>(string fileName, T data, string folderName = "")
@@ -49,15 +45,10 @@ namespace EchoRift.EchoRiftSaveLoadSystem
             string json = JsonUtility.ToJson(data, true);
             File.WriteAllText(path, json);
 
-            // Кешируем с учетом папки в ключе, чтобы имена файлов не конфликтовали
             string cacheKey = string.IsNullOrEmpty(folderName) ? fileName : $"{folderName}/{fileName}";
             cache[cacheKey] = data;
         }
 
-        /// <summary>
-        /// Универсальная загрузка любых данных из JSON.
-        /// При первом вызове читает файл, дальше берёт из кеша.
-        /// </summary>
         public static T Load<T>(string fileName) where T : new()
         {
             if (cache.TryGetValue(fileName, out object cached) && cached is T cachedData)
@@ -106,9 +97,6 @@ namespace EchoRift.EchoRiftSaveLoadSystem
             return data;
         }
 
-        /// <summary>
-        /// Проверка существования файла сохранения.
-        /// </summary>
         public static bool Exists(string fileName)
         {
             return File.Exists(GetPath(fileName));
@@ -119,9 +107,6 @@ namespace EchoRift.EchoRiftSaveLoadSystem
             return File.Exists(GetPath(fileName, folderName));
         }
 
-        /// <summary>
-        /// Удаление сохранения (и из кеша тоже).
-        /// </summary>
         public static void Delete(string fileName)
         {
             string path = GetPath(fileName);
@@ -132,17 +117,11 @@ namespace EchoRift.EchoRiftSaveLoadSystem
                 cache.Remove(fileName);
         }
 
-        /// <summary>
-        /// Очистить весь кеш (например, при смене профиля игрока).
-        /// </summary>
         public static void ClearCache()
         {
             cache.Clear();
         }
 
-        /// <summary>
-        /// Полная очистка всех сохранений из папки и кеша.
-        /// </summary>
         public static void ClearAllSaves()
         {
             string dir = Application.persistentDataPath;
@@ -157,7 +136,7 @@ namespace EchoRift.EchoRiftSaveLoadSystem
                     }
                     catch (IOException e)
                     {
-                        Debug.LogWarning($"Не удалось удалить {file}: {e.Message}");
+                        Debug.LogWarning($"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {file}: {e.Message}");
                     }
                 }
             }
@@ -182,7 +161,7 @@ namespace EchoRift.EchoRiftSaveLoadSystem
                     }
                     catch (IOException e)
                     {
-                        Debug.LogWarning($"Не удалось удалить {file}: {e.Message}");
+                        Debug.LogWarning($"пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ {file}: {e.Message}");
                     }
                 }
             }

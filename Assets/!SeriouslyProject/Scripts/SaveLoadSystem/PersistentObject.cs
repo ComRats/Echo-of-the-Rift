@@ -17,7 +17,6 @@ using System;
 /// </summary>
 public class PersistentObject : MonoBehaviour
 {
-    // Все зарегистрированные объекты на текущей сцене
     private static readonly List<PersistentObject> all = new();
 
     [Tooltip("Уникальный ID объекта. Заполняется автоматически, не меняй вручную.")]
@@ -67,7 +66,6 @@ public class PersistentObject : MonoBehaviour
 
     private void Start()
     {
-        // Восстанавливаем состояние при старте
         Load();
     }
 
@@ -76,9 +74,6 @@ public class PersistentObject : MonoBehaviour
         return $"sceneObjects_{SceneManager.GetActiveScene().name}";
     }
 
-    /// <summary>
-    /// Сохраняет состояние этого объекта немедленно.
-    /// </summary>
     public void Save()
     {
         var data = SceneObjectsData.Load();
@@ -86,9 +81,6 @@ public class PersistentObject : MonoBehaviour
         data.SaveToDisk();
     }
 
-    /// <summary>
-    /// Восстанавливает состояние объекта из сохранения.
-    /// </summary>
     public void Load()
     {
         var data = SceneObjectsData.Load();
@@ -116,7 +108,6 @@ public class PersistentObject : MonoBehaviour
     /// </summary>
     public static void LoadAll()
     {
-        // FindObjectsOfType с includeInactive=true находит даже выключенные объекты
         var allObjects = UnityEngine.Object.FindObjectsOfType<PersistentObject>(includeInactive: true);
         foreach (var obj in allObjects)
         {
@@ -142,7 +133,6 @@ public class SceneObjectsData
     {
         string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
 
-        // Инвалидируем кэш при смене сцены
         if (cachedScene != scene)
         {
             cached = null;

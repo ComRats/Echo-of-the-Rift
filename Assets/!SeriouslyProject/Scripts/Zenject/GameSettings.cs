@@ -23,7 +23,6 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
         public int spriteIndex;
     }
 
-    // Допустимые клавиши для кнопки взаимодействия (useButton)
     public static readonly KeyCode[] AllowedUseKeys =
     {
         KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F,
@@ -33,16 +32,11 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
         KeyCode.Y, KeyCode.Z, KeyCode.Escape, KeyCode.Tab,
     };
 
-    // Все текущие занятые клавиши (для проверки дубликатов)
     public KeyCode[] AllBoundKeys => new[]
     {
         openInvenoryKey, openPauseMenuKey, useButton, questWindowKey
     };
 
-    /// <summary>
-    /// Возвращает индекс спрайта для указанной клавиши.
-    /// Если маппинг не найден — возвращает fallback (по умолчанию 14).
-    /// </summary>
     public int GetSpriteIndex(KeyCode key, int fallback = 14)
     {
         foreach (var entry in keySpriteMap)
@@ -64,6 +58,5 @@ public class GameSettings : ScriptableObjectInstaller<GameSettings>
     public override void InstallBindings()
     {
         Container.Bind<GameSettings>().FromInstance(this).AsSingle();
-        //Debug.Log("Succeful Binding GameSettings");
     }
 }

@@ -52,10 +52,6 @@ public class PlayerUI : MonoBehaviour
         {
             onGuideTongueSelected?.Invoke();
         }
-        //else if (wasGuideSelected)
-        //{
-        //    onGuideTongueDeselected?.Invoke();
-        //}
     }
 
     public void ToggleInventoryOnFight()

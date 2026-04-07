@@ -77,7 +77,6 @@ namespace FightSystem.Data
         public CharacterAbilitySet _abilitySet;
         public CharacterAbilitySet AbilitySet { get => _abilitySet; set => _abilitySet = value; }
 
-        /// <summary>Сбрасывает боевые характеристики к нулю при новой игре.</summary>
         public void ResetToDefaults()
         {
             _damage = _magicDamage = _priority = 0;

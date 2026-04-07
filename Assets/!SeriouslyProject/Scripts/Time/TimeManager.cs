@@ -85,8 +85,6 @@ public class TimeManager : MonoBehaviour
         }
     }
 
-    /// <param name="hour">Час (0-23)</param>
-    /// <param name="minute">Минута (0-59)</param>
     public void SetTime(int hour, int minute = 0)
     {
         hour = Mathf.Clamp(hour, 0, 23);
@@ -99,7 +97,6 @@ public class TimeManager : MonoBehaviour
         Debug.Log($"[TimeManager] Время установлено на {hour:00}:{minute:00}");
     }
 
-    /// <param name="hours">Количество часов для пропуска</param>
     public void SkipTime(float hours)
     {
         float secondsToSkip = hours * 3600f;
@@ -193,9 +190,6 @@ public class TimeManager : MonoBehaviour
         return (hour * 60 + minute) / (24f * 60f);
     }
     
-    /// <summary>
-    /// Установить ссылку на DayNightCycle (для динамической настройки)
-    /// </summary>
     public void SetDayNightCycle(DayNightCycle cycle)
     {
         dayNightCycle = cycle;

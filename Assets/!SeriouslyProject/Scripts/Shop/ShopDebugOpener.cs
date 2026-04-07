@@ -1,10 +1,6 @@
 using UnityEngine;
 using EchoRift.Shop;
 
-/// <summary>
-/// Отладочный скрипт для открытия магазина по нажатию клавиши B
-/// Используется для тестирования системы магазина
-/// </summary>
 public class ShopDebugOpener : MonoBehaviour
 {
     [Header("Settings")]
@@ -45,7 +41,6 @@ public class ShopDebugOpener : MonoBehaviour
             return;
         }
 
-        // Если магазин открыт - закрываем
         if (shopUI.IsShopMode)
         {
             shopUI.CloseShop();
@@ -54,7 +49,6 @@ public class ShopDebugOpener : MonoBehaviour
                 Debug.Log($"[ShopDebugOpener] Магазин закрыт (нажата клавиша {openShopKey})");
             }
         }
-        // Если магазин закрыт - открываем
         else
         {
             if (testShopData == null)

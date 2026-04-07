@@ -40,10 +40,6 @@ public class InfoTrigger : BaseTrigger
     private Vector3 textMassageOffset;
 
     [ShowIf(nameof(useButton))]
-    [SerializeField, Range(0, 30)]
-    private int spriteIndex = 14;
-
-    [ShowIf(nameof(useButton))]
     [SerializeField]
     private string useButtonMusic = "LockDoor1";
 

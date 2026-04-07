@@ -16,7 +16,6 @@ public class Movement : MonoBehaviour
 
     private void OnEnable()
     {
-        // Пропускаем первые 2 кадра после включения — Input ещё не готов
         _skipFrames = 2;
     }
 

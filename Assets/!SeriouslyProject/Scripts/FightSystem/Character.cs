@@ -43,7 +43,6 @@ namespace FightSystem.Character
         {
             if (settings.useCharacterData)
             {
-                // Используем RuntimeData вместо базового characterData
                 if (settings.RuntimeData != null)
                 {
                     Initialize(settings.RuntimeData, gameObject);
@@ -96,7 +95,6 @@ namespace FightSystem.Character
 
             AbilitySet = characterData?.AbilitySet;
 
-            // ���������� UI
             UpdateUI();
         }
     }

@@ -65,7 +65,6 @@ public class MainMenu : MonoBehaviour
         else
             inventoryData.Clear();
 
-        // Сбрасываем CharacterData к дефолтным значениям
         var characterData = Resources.Load<FightSystem.Data.CharacterData>("CharacterData/Human");
         characterData?.ResetToDefaults();
         
@@ -78,14 +77,7 @@ public class MainMenu : MonoBehaviour
         DialogueManager.ResetDatabase(DatabaseResetOptions.RevertToDefault);
         SaveSystem.ResetGameState();
         
-        // Установка времени на 12:00 (12 часов * 60 минут * 60 секунд = 43200 секунд)
         GameTimer.SetTime(12f * 60f * 60f);
-        //loadSceneLoader._onSceneActivated.AddListener(() => 
-        //{
-        //    FindObjectOfType<NeedToEnable>().EnableComponent();
-        //    Debug.LogWarning(FindObjectOfType<NeedToEnable>().name);
-        //}
-        //);
 
         startSceneLoader.LoadAsync();
     }

@@ -6,8 +6,7 @@ using Zenject;
 /// <summary>
 /// UI панель магазина с двумя инвентарями
 /// </summary>
-public class ShopUI : MonoBehaviour
-{
+public class ShopUI : MonoBehaviour{
     [Header("Panels")]
     [SerializeField] private GameObject shopPanel;
 
@@ -41,7 +40,6 @@ public class ShopUI : MonoBehaviour
 
     private void Awake()
     {
-        // Автопоиск компонентов
         if (inventoryManager == null)
             inventoryManager = FindObjectOfType<InventoryManager>();
 
@@ -51,12 +49,10 @@ public class ShopUI : MonoBehaviour
         if (contextMenu == null)
             contextMenu = FindObjectOfType<InventoryContextMenu>();
 
-        // Проверяем, существует ли уже ShopManager
         shopManager = GetComponentInChildren<ShopManager>();
         
         if (shopManager == null)
         {
-            // Создаём ShopManager только если его нет
             GameObject shopManagerObj = new GameObject("ShopManager");
             shopManagerObj.transform.SetParent(transform);
             shopManager = shopManagerObj.AddComponent<ShopManager>();
@@ -67,7 +63,6 @@ public class ShopUI : MonoBehaviour
             Debug.Log("[ShopUI] ShopManager уже существует, используем существующий");
         }
 
-        // Инициализируем ShopManager
         if (inventoryManager != null && playerWallet != null)
         {
             shopManager.Initialize(inventoryManager, playerWallet);
@@ -83,7 +78,6 @@ public class ShopUI : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Очищаем подписки на события при уничтожении
         if (shopManager != null)
         {
             shopManager.ClearEventSubscriptions();
@@ -102,9 +96,6 @@ public class ShopUI : MonoBehaviour
             playerWallet.OnCoinsChanged -= UpdateCoinsDisplay;
     }
 
-    /// <summary>
-    /// Открыть магазин
-    /// </summary>
     public void OpenShop(ShopData shopData)
     {
         if (shopData == null || shopManager == null)
@@ -136,14 +127,10 @@ public class ShopUI : MonoBehaviour
         if (playerWallet != null)
             UpdateCoinsDisplay(playerWallet.Coins);
 
-        // Показываем панель
         if (shopPanel != null)
             shopPanel.SetActive(true);
     }
 
-    /// <summary>
-    /// Закрыть магазин
-    /// </summary>
     public void CloseShop()
     {
         GameTimer.ResumeGame();
@@ -153,7 +140,6 @@ public class ShopUI : MonoBehaviour
         if (mainUI != null)
             mainUI.canOpenUI = true;
 
-        // Синхронизируем данные перед закрытием
         inventoryManager?.SyncFromUI();
 
         shopManager?.CloseShop();
@@ -169,18 +155,13 @@ public class ShopUI : MonoBehaviour
 
         inventoryManager?.RefreshUIFromData();
         
-        // Включаем обратно DraggableItem для всех предметов в основном инвентаре
         EnableDraggableItems();
     }
     
-    /// <summary>
-    /// Включает DraggableItem компоненты для всех предметов в инвентаре
-    /// </summary>
     private void EnableDraggableItems()
     {
         if (inventoryManager == null) return;
         
-        // Включаем для слотов инвентаря
         foreach (var slot in inventoryManager.inventorySlots)
         {
             if (slot != null)
@@ -193,7 +174,6 @@ public class ShopUI : MonoBehaviour
             }
         }
         
-        // Включаем для слотов экипировки
         foreach (var slot in inventoryManager.equipmentSlots)
         {
             if (slot != null)
@@ -207,9 +187,6 @@ public class ShopUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Обновить UI после транзакции
-    /// </summary>
     public void OnItemTransactionComplete()
     {
         LoadMerchantInventory();
@@ -261,14 +238,12 @@ public class ShopUI : MonoBehaviour
         if (inventoryManager == null || playerSlots == null)
             return;
 
-        // Очищаем слоты
         foreach (var slot in playerSlots)
         {
             if (slot != null && slot.transform.childCount > 0)
                 Destroy(slot.transform.GetChild(0).gameObject);
         }
 
-        // Загружаем из данных
         var invSlots = inventoryManager.Data.InventorySlots;
 
         for (int i = 0; i < playerSlots.Length && i < invSlots.Count; i++)

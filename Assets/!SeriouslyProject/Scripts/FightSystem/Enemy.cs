@@ -15,8 +15,6 @@ namespace FightSystem.Enemy
         {
             Sprite = GetComponent<Image>();
 
-            //LocalInizialize();
-
             StartCoroutine(Blinking());
 
             actionButtons = FindObjectOfType<ActionButtons>();
@@ -28,15 +26,6 @@ namespace FightSystem.Enemy
             });
 
         }
-
-        //public override int GiveDamage()
-        //{
-        //    if (!string.IsNullOrEmpty(AttackAnimationName))
-        //    {
-        //        PlayAnimation(AttackAnimationName);
-        //    }
-        //    return base.GiveDamage();
-        //}
 
         public void LocalInizialize()
         {
@@ -93,7 +82,6 @@ namespace FightSystem.Enemy
                 Initialize(enemy, gameObject);
             }
 
-            // ���������� UI
             UpdateUI();
         }
     }

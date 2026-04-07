@@ -56,7 +56,6 @@ public class MainUI : MonoBehaviour
     private void OnQuestTongueSelectedFromTab()
     {
         if (questLogWindow == null) return;
-        // Сбрасываем panelState если mainPanel неактивен, чтобы Open() не застрял
         if (questLogWindow.mainPanel != null && !questLogWindow.mainPanel.gameObject.activeInHierarchy)
             questLogWindow.mainPanel.panelState = PixelCrushers.UIPanel.PanelState.Closed;
         if (!questLogWindow.isOpen)
@@ -125,7 +124,6 @@ public class MainUI : MonoBehaviour
 
         service ??= ServiceLocator.GetService();
 
-        // Используем состояние questLogWindow как источник истины
         bool isOpen = questLogWindow != null && questLogWindow.isOpen;
 
         if (isOpen)
@@ -171,7 +169,6 @@ public class MainUI : MonoBehaviour
 
         GameTimer.PauseGame();
 
-        // Приглушаем музыку
         if (musicManager != null)
         {
             musicManager.DuckMusic();
@@ -195,7 +192,6 @@ public class MainUI : MonoBehaviour
             contextMenu.Hide();
         }
 
-        // Восстанавливаем громкость музыки
         if (musicManager != null)
         {
             musicManager.RestoreMusic();
@@ -206,7 +202,6 @@ public class MainUI : MonoBehaviour
     {
         if (playerUIbackGround == null || !canOpenUI) return;
         
-        // Если открыто меню паузы, не открываем инвентарь
         if (pauseMenu != null && pauseMenu.isActive) return;
 
         bool inBattle = FindObjectOfType<FightManager>() != null;
@@ -217,12 +212,10 @@ public class MainUI : MonoBehaviour
         isOpenUI = true;
         playerUI.OpenPlayerUI();
         
-        // Обновляем слоты персонажей при открытии инвентаря
         UpdateCharacterSlots();
         
         if (!inBattle) GameTimer.PauseGame();
 
-        // Приглушаем музыку
         if (musicManager != null)
         {
             musicManager.DuckMusic();
@@ -234,7 +227,6 @@ public class MainUI : MonoBehaviour
         if (debugMode)
             Debug.Log("[MainUI] UpdateCharacterSlots called");
         
-        // Используем существующий TeamManager для обновления слотов
         if (teamManager != null)
         {
             if (debugMode)
@@ -260,7 +252,6 @@ public class MainUI : MonoBehaviour
         isOpenUI = false;
         if (!inBattle) GameTimer.ResumeGame();
 
-        // Закрываем questLogWindow если он был открыт
         if (questLogWindow != null && questLogWindow.isOpen)
             questLogWindow.Close();
 
@@ -269,7 +260,6 @@ public class MainUI : MonoBehaviour
             contextMenu.Hide();
         }
 
-        // Восстанавливаем громкость музыки
         if (musicManager != null)
         {
             musicManager.RestoreMusic();
@@ -278,8 +268,6 @@ public class MainUI : MonoBehaviour
 
     public void Hide()
     {
-        //Debug.LogWarning("Hide UI");
-
         canvas.enabled = false;
         pauseMenu.enabled = false;
         playerUI.enabled = false;
@@ -288,17 +276,12 @@ public class MainUI : MonoBehaviour
 
     public void Show()
     {
-        //Debug.LogWarning("Show IU");
-
         canvas.enabled = true;
         pauseMenu.enabled = true;
         playerUI.enabled = true;
         tonguesCanvas.enabled = true;
     }
 
-    /// <summary>
-    /// Сбрасывает состояние UI при загрузке новой сцены (закрывает инвентарь, сбрасывает флаги)
-    /// </summary>
     public void ResetUIState()
     {
         if (playerUIbackGround != null)

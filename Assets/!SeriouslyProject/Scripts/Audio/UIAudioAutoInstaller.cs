@@ -15,10 +15,8 @@ public class UIAudioAutoInstaller : MonoBehaviour
 
     private IEnumerator InitializeWithDelay()
     {
-        // Ждем несколько кадров, чтобы AudioManager точно инициализировался
         yield return new WaitForSeconds(0.1f);
         
-        // Получаем AudioManager
         var audioManager = ServiceLocator.GetService();
         
         if (audioManager == null)
@@ -27,14 +25,12 @@ public class UIAudioAutoInstaller : MonoBehaviour
             yield break;
         }
 
-        // Проверяем, что звук зарегистрирован
         if (audioManager.TryGetSource(clickSoundName, out _) != AudioError.OK)
         {
             Debug.LogWarning($"[UIAudioAutoInstaller] Sound '{clickSoundName}' not registered. Buttons will be silent.");
             yield break;
         }
 
-        // Добавляем обработчики к кнопкам
         Button[] buttons = GetComponentsInChildren<Button>(true);
         foreach (var btn in buttons)
         {

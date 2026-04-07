@@ -2,10 +2,6 @@ using UnityEngine;
 
 namespace EchoRift.EchoRiftSaveLoadSystem
 {
-    /// <summary>
-    /// Централизованное хранилище имен файлов сохранений.
-    /// Использование констант предотвращает опечатки при обращении к файлам.
-    /// </summary>
     public static class SaveFileNames
     {
         public const string GAME_DIRECTORY = "GameProcess";

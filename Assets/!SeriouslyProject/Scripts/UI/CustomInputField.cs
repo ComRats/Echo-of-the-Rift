@@ -10,7 +10,6 @@ public class CustomInputField : TMP_InputField
 {
     private bool _isDragging;
 
-    // Двойной клик — просто ставим каретку, без выделения слова
     public override void OnPointerClick(PointerEventData eventData)
     {
         if (eventData.clickCount >= 2)
@@ -37,7 +36,6 @@ public class CustomInputField : TMP_InputField
     {
         base.LateUpdate();
 
-        // Сбрасываем выделение если оно появилось не от drag-а мышью
         if (isFocused && !_isDragging && !Input.GetMouseButton(0))
         {
             if (selectionAnchorPosition != selectionFocusPosition)

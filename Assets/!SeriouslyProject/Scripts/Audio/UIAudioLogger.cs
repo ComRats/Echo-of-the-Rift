@@ -3,11 +3,7 @@ using UnityEngine.UI;
 using AudioManager.Logger;
 
 public class UIAudioLogger : IAudioLogger {
-    // Private readonly member variables.
-    // Holds the text we want to log into.
     private readonly Text m_logOutput = null;
-    // Holds the minmum log level that must be passed to the Log method,
-    // so that the message actually gets printed to the console.
     private readonly LoggingLevel m_logLevel = LoggingLevel.NONE;
 
     /// <summary>

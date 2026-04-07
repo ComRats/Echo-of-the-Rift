@@ -49,12 +49,10 @@ public class CollectTrigger : BaseTrigger
 
     [SerializeField, BoxGroup("View")] private Vector3 keyMassageOffset;
     [SerializeField, BoxGroup("View")] private Vector3 textMassageOffset;
-    [SerializeField, BoxGroup("View"), Range(0, 30)] private int spriteIndex = 14;
 
     [SerializeField] private UnityEvent onTriggerEnter;
     [SerializeField] private List<CollectEvent> eventQueue = new List<CollectEvent>();
 
-    // Исходное количество ивентов (заполняется при первом старте)
     private int originalEventCount = -1;
 
     private int currentStepIndex;
@@ -69,8 +67,6 @@ public class CollectTrigger : BaseTrigger
 
     [Inject] private MainUI mainUI;
     [Inject] private GameSettings gameSettings;
-
-    // --- Save/Load ---
 
     [Serializable]
     private class CollectTriggerSaveData
@@ -98,8 +94,6 @@ public class CollectTrigger : BaseTrigger
 
         var data = SaveLoadSystem.Load<CollectTriggerSaveData>(SaveKey, GAME_DIRECTORY);
 
-        // Восстанавливаем очередь: удаляем ивенты которые уже были выполнены
-        // originalEventCount - data.remainingEventCount = сколько было удалено с начала
         if (originalEventCount < 0) originalEventCount = eventQueue.Count;
 
         int removedCount = originalEventCount - data.remainingEventCount;
@@ -125,7 +119,6 @@ public class CollectTrigger : BaseTrigger
     {
         if (!playerInside) return;
 
-        // Обновляем видимость промпта только при изменении состояния UI
         if (lastUIState != mainUI.isOpenUI)
         {
             lastUIState = mainUI.isOpenUI;
@@ -186,7 +179,6 @@ public class CollectTrigger : BaseTrigger
         mainUI.canOpenUI = true;
         var ev = eventQueue[currentStepIndex];
 
-        // Воспроизведение музыки если указана
         if (!string.IsNullOrEmpty(ev.musicName))
         {
             audioService?.Play(ev.musicName);

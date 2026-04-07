@@ -25,7 +25,6 @@ public class MusicTransitionManager : MonoBehaviour
     private IAudioManager _am;
     private List<string> _currentMusicNames = new List<string>();
 
-    // 🔥 НОВОЕ — ambient звуки
     private List<string> _ambientSounds = new List<string>();
 
     private bool _isPaused = false;
@@ -122,7 +121,6 @@ public class MusicTransitionManager : MonoBehaviour
         return config?.musicNames ?? new List<string>();
     }
 
-    // 🔥 РЕГИСТРАЦИЯ AMBIENT
     public void RegisterAmbient(string soundName)
     {
         if (!_ambientSounds.Contains(soundName))
@@ -135,7 +133,6 @@ public class MusicTransitionManager : MonoBehaviour
             _ambientSounds.Remove(soundName);
     }
 
-    // 🔥 ОБЩИЙ СПИСОК
     private IEnumerable<string> GetAllSounds()
     {
         return _currentMusicNames.Concat(_ambientSounds);

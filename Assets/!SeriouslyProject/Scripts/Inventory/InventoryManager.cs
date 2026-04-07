@@ -136,9 +136,6 @@ public class InventoryManager : MonoBehaviour
         return inventoryData.GetItemCount(itemName) >= requiredAmount;
     }
 
-    /// <summary>
-    /// Проверяет, полностью ли заполнен инвентарь (нет пустых слотов)
-    /// </summary>
     public bool IsInventoryFull()
     {
         foreach (var slot in inventorySlots)
@@ -149,9 +146,6 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Проверяет, можно ли добавить указанное количество предмета
-    /// </summary>
     public bool CanAddItem(string itemName, int amount = 1)
     {
         ItemData item = FindItemDataByName(itemName);
@@ -161,9 +155,6 @@ public class InventoryManager : MonoBehaviour
         return HasSpaceForItem(item, amount);
     }
 
-    /// <summary>
-    /// Проверяет, есть ли место для добавления предмета
-    /// </summary>
     public bool HasSpaceForItem(ItemData item, int amount)
     {
         if (item == null || amount <= 0)
@@ -171,7 +162,6 @@ public class InventoryManager : MonoBehaviour
 
         int remaining = amount;
 
-        // Проверяем существующие стаки
         if (item.isStackable)
         {
             foreach (var slot in inventorySlots)
@@ -187,7 +177,6 @@ public class InventoryManager : MonoBehaviour
             }
         }
 
-        // Проверяем пустые слоты
         int emptySlots = 0;
         foreach (var slot in inventorySlots)
         {
@@ -206,9 +195,6 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Удаляет предмет из конкретного слота (для исправления бага с использованием)
-    /// </summary>
     public bool RemoveItemFromSlot(InventorySlot slot, int amount = 1)
     {
         if (slot == null || amount <= 0)
@@ -252,10 +238,6 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    /// <summary>
-    /// Удаляет предмет из конкретного слота инвентаря по индексу
-    /// Возвращает количество, которое осталось удалить после обработки слота
-    /// </summary>
     public int RemoveItemFromInventorySlotIndex(int slotIndex, string itemName, int amount)
     {
         if (amount <= 0)
@@ -290,7 +272,6 @@ public class InventoryManager : MonoBehaviour
         SyncSlotsToData(inventorySlots, true);
         SyncSlotsToData(equipmentSlots, false);
 
-        // Пересчитываем бонусы экипировки для главного героя
         if (EquipmentManager.Instance != null)
             EquipmentManager.Instance.RecalculateEquipmentBonuses(equipmentSlots, this);
     }
@@ -317,9 +298,6 @@ public class InventoryManager : MonoBehaviour
             inventoryData.ClearEquipmentSlot(index);
     }
 
-    /// <summary>
-    /// Обновляет UI инвентаря из InventoryData (после закрытия магазина)
-    /// </summary>
     public void RefreshUIFromData()
     {
         ClearAllSlots();
@@ -493,9 +471,6 @@ public class InventoryManager : MonoBehaviour
 
     #region Save/Load
 
-    /// <summary>
-    /// Полный сброс инвентаря при старте новой игры (вызывать вместо inventoryData.Clear())
-    /// </summary>
     public void ResetForNewGame()
     {
         inventoryData.Initialize(inventorySlots.Length, equipmentSlots.Length);
@@ -542,7 +517,6 @@ public class InventoryManager : MonoBehaviour
         
         RefreshUI();
 
-        // Применяем бонусы экипировки сразу после загрузки
         if (EquipmentManager.Instance != null)
             EquipmentManager.Instance.RecalculateEquipmentBonuses(equipmentSlots, this);
     }
@@ -557,7 +531,6 @@ public class InventoryManager : MonoBehaviour
         else
         {
             Debug.LogWarning("PlayerWallet не назначен! Монеты не загружены. Назначь PlayerWallet в InventoryManager.");
-            // Попробуем найти автоматически
             playerWallet = FindObjectOfType<PlayerWallet>();
             if (playerWallet != null)
             {

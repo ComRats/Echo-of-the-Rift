@@ -85,7 +85,7 @@ public class Fishing : MonoBehaviour
         if (!IsFishing && playerMovement != null)
         {
             currentFishingTrigger = trigger;
-            _mainUI.canOpenUI = false; // Блокируем UI во время рыбалки
+            _mainUI.canOpenUI = false;
             fishingCoroutine = StartCoroutine(FishingCoroutine());
         }
     }
@@ -104,7 +104,6 @@ public class Fishing : MonoBehaviour
         float waitTimer = 0f;
         float waitTime = CalculateWaitTime();
 
-        // Ожидание поклевки
         while (waitTimer < waitTime)
         {
             if (Input.GetKeyDown(fishingKey))
@@ -117,7 +116,6 @@ public class Fishing : MonoBehaviour
             yield return null;
         }
 
-        // Поклевка!
         Debug.Log("Клюёт!");
         fishingUI?.ShowBite();
 
@@ -140,7 +138,6 @@ public class Fishing : MonoBehaviour
             Debug.Log("Рыба на крючке! Начинается мини-игра!");
             fishingUI?.ShowMinigameHint("Кликайте мышью, чтобы удержать рыбу!");
 
-            // Запускаем мини-игру
             yield return StartMinigame();
         }
         else
@@ -162,7 +159,6 @@ public class Fishing : MonoBehaviour
             () => { minigameCompleted = true; },
             () => { minigameFailed = true; });
 
-        // Ждём завершения мини-игры
         while (!minigameCompleted && !minigameFailed)
         {
             if (Input.GetMouseButtonDown(0))
@@ -307,7 +303,6 @@ public class Fishing : MonoBehaviour
             catchVFX.transform.position = point.position;
         }
 
-        // Убеждаемся что объект активен
         if (!catchVFX.gameObject.activeInHierarchy)
             catchVFX.gameObject.SetActive(true);
 
@@ -318,7 +313,7 @@ public class Fishing : MonoBehaviour
     public void EndFishing()
     {
         IsFishing = false;
-        _mainUI.canOpenUI = true; // Разблокируем UI после рыбалки
+        _mainUI.canOpenUI = true;
         fishingUI?.HideText();
         clickBar?.Hide();
 

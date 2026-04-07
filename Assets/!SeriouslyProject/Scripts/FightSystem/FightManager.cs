@@ -149,7 +149,6 @@ public class FightManager : MonoBehaviour
     private void ContinueFight()
     {
     }
-
     private void InitializationLists()
     {
         enemies.AddRange(GetComponentsInChildren<Enemy>());

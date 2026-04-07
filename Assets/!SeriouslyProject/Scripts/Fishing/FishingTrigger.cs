@@ -47,7 +47,6 @@ public class FishingTrigger : MonoBehaviour
             currentPlayer = null;
             ShowButtonPrompt(false);
             
-            // Если рыбалка не активна, разблокируем UI
             if (fishing == null || !fishing.IsFishing)
             {
                 mainUI.canOpenUI = true;
@@ -59,7 +58,6 @@ public class FishingTrigger : MonoBehaviour
     {
         if (!playerInside) return;
 
-        // Обновляем видимость промпта только при изменении состояния UI
         if (lastUIState != mainUI.isOpenUI)
         {
             lastUIState = mainUI.isOpenUI;
@@ -78,7 +76,6 @@ public class FishingTrigger : MonoBehaviour
             }
         }
 
-        // Блокируем взаимодействие при открытом UI
         if (mainUI.isOpenUI) return;
 
         if (Input.GetKeyDown(gameSettings.useButton) && fishing != null && !fishing.IsFishing)

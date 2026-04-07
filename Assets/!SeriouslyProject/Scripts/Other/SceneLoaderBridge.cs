@@ -18,10 +18,6 @@ public class SceneLoaderBridge : MonoBehaviour
 
     private void OnPreloadLogic()
     {
-        //if (player != null)
-        //{
-        //    player.cameraSettings.Initialize();
-        //}
     }
 
     private async void OnActivatedLogic()

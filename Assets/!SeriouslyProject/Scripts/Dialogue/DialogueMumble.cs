@@ -2,10 +2,6 @@ using UnityEngine;
 using PixelCrushers.DialogueSystem;
 using EchoRift.Dialogue;
 
-/// <summary>
-/// Воспроизводит звуки-заменители речи ("mumble") при печати диалогового текста.
-/// Поддерживает разные голоса для разных NPC через VoiceProfile.
-/// </summary>
 [RequireComponent(typeof(AudioSource))]
 public class DialogueMumble : MonoBehaviour
 {
@@ -63,10 +59,6 @@ public class DialogueMumble : MonoBehaviour
         RefreshVoiceForCurrentSpeaker();
     }
 
-    /// <summary>
-    /// Вызывается Dialogue System когда начинается новая реплика.
-    /// Можно вызвать вручную из Sequencer: SendMessage(RefreshVoice)
-    /// </summary>
     public void RefreshVoiceForCurrentSpeaker()
     {
         charCount = 0;

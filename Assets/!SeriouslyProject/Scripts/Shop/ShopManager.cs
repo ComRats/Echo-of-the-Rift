@@ -5,10 +5,6 @@ using AudioManager.Locator;
 
 namespace EchoRift.Shop
 {
-    /// <summary>
-    /// Менеджер системы магазина
-    /// Управляет транзакциями купли-продажи
-    /// </summary>
     public class ShopManager : MonoBehaviour
     {
         private InventoryManager playerInventory;
@@ -20,8 +16,8 @@ namespace EchoRift.Shop
 
         public event Action<ShopData> OnShopOpened;
         public event Action OnShopClosed;
-        public event Action<ItemData, int, int> OnItemBought;  // item, quantity, totalPrice
-        public event Action<ItemData, int, int> OnItemSold;    // item, quantity, totalPrice
+        public event Action<ItemData, int, int> OnItemBought;
+        public event Action<ItemData, int, int> OnItemSold;
 
         private IAudioManager service;
 
@@ -34,12 +30,8 @@ namespace EchoRift.Shop
         {
             playerInventory = inventory;
             playerWallet = wallet;
-            //Debug.Log($"[ShopManager] Инициализирован. InventoryManager: {(inventory != null ? "OK" : "NULL")}, PlayerWallet: {(wallet != null ? "OK" : "NULL")}");
         }
 
-        /// <summary>
-        /// Открыть магазин
-        /// </summary>
         public void OpenShop(ShopData shopData)
         {
             Debug.Log($"[ShopManager] OpenShop вызван с shopData: {(shopData != null ? shopData.shopName : "NULL")}");
@@ -68,9 +60,6 @@ namespace EchoRift.Shop
             Debug.Log($"[ShopManager] Открыт магазин: {shopData.shopName}");
         }
 
-        /// <summary>
-        /// Закрыть магазин
-        /// </summary>
         public void CloseShop()
         {
             if (currentShop == null) return;
@@ -80,9 +69,6 @@ namespace EchoRift.Shop
             OnShopClosed?.Invoke();
         }
 
-        /// <summary>
-        /// Купить предмет у торговца
-        /// </summary>
         public bool BuyItem(ItemData item, int quantity = 1)
         {
             if (!IsShopOpen)
@@ -104,14 +90,12 @@ namespace EchoRift.Shop
                 return false;
             }
 
-            // Проверка наличия товара
             if (!shopItem.infiniteStock && shopItem.quantity < quantity)
             {
                 Debug.LogWarning($"[ShopManager] Недостаточно товара! Доступно: {shopItem.quantity}");
                 return false;
             }
 
-            // Проверка места в инвентаре
             bool canAdd = playerInventory.CanAddItem(item.itemName, quantity);
             Debug.Log($"[ShopManager] Проверка покупки: {item.itemName} (GameName: {item.itemGameName}). Можно добавить: {canAdd}, Количество: {quantity}");
             
@@ -121,18 +105,15 @@ namespace EchoRift.Shop
                 return false;
             }
 
-            // Расчёт стоимости
             int pricePerItem = shopItem.GetBuyPrice();
             int totalPrice = pricePerItem * quantity;
 
-            // Проверка денег
             if (!playerWallet.HasEnoughCoins(totalPrice))
             {
                 Debug.LogWarning($"[ShopManager] Недостаточно денег! Нужно: {totalPrice}, Есть: {playerWallet.Coins}");
                 return false;
             }
 
-            // Выполнение транзакции
             if (!playerWallet.TrySpendCoins(totalPrice))
             {
                 return false;
@@ -141,13 +122,11 @@ namespace EchoRift.Shop
             Debug.Log($"[ShopManager] Добавление предмета: {item.itemName}");
             if (!playerInventory.AddItem(item.itemName, quantity))
             {
-                // Откат транзакции
                 playerWallet.AddCoins(totalPrice);
                 Debug.LogError("[ShopManager] Ошибка добавления предмета в инвентарь!");
                 return false;
             }
 
-            // Уменьшение запаса товара
             if (!shopItem.infiniteStock)
             {
                 shopItem.quantity -= quantity;
@@ -163,9 +142,6 @@ namespace EchoRift.Shop
             return true;
         }
 
-        /// <summary>
-        /// Продать предмет торговцу
-        /// </summary>
         public bool SellItem(ItemData item, int quantity = 1, int preferredInventorySlotIndex = -1)
         {
             if (!IsShopOpen)
@@ -186,7 +162,6 @@ namespace EchoRift.Shop
                 return false;
             }
 
-            // Проверка наличия предмета у игрока
             int availableCount = playerInventory.GetItemCount(item.itemName);
             Debug.Log($"[ShopManager] Проверка продажи: {item.itemName} (GameName: {item.itemGameName}). Доступно: {availableCount}, Нужно: {quantity}");
             
@@ -196,11 +171,9 @@ namespace EchoRift.Shop
                 return false;
             }
 
-            // Расчёт стоимости
             int pricePerItem = currentShop.GetSellPriceForItem(item);
             int totalPrice = pricePerItem * quantity;
 
-            // Удаление предмета из инвентаря
             Debug.Log($"[ShopManager] Удаление предмета: {item.itemName}");
             bool removed = playerInventory.RemoveItem(item.itemName, quantity);
 
@@ -210,10 +183,8 @@ namespace EchoRift.Shop
                 return false;
             }
 
-            // Добавление денег игроку
             playerWallet.AddCoins(totalPrice);
 
-            // Добавление предмета в магазин (если он там продаётся)
             ShopItem shopItem = currentShop.FindShopItem(item);
             if (shopItem != null && !shopItem.infiniteStock)
             {
@@ -230,9 +201,6 @@ namespace EchoRift.Shop
             return true;
         }
 
-        /// <summary>
-        /// Получить цену покупки предмета
-        /// </summary>
         public int GetBuyPrice(ItemData item)
         {
             if (!IsShopOpen || item == null) return 0;
@@ -241,18 +209,12 @@ namespace EchoRift.Shop
             return shopItem?.GetBuyPrice() ?? 0;
         }
 
-        /// <summary>
-        /// Получить цену продажи предмета
-        /// </summary>
         public int GetSellPrice(ItemData item)
         {
             if (!IsShopOpen || item == null) return 0;
             return currentShop.GetSellPriceForItem(item);
         }
 
-        /// <summary>
-        /// Очистить все подписки на события (для предотвращения утечек памяти)
-        /// </summary>
         public void ClearEventSubscriptions()
         {
             OnShopOpened = null;

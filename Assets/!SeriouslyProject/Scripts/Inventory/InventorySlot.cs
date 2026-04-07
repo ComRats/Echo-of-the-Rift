@@ -28,7 +28,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             return;
         }
 
-        // Блокируем изменение экипировки во время боя
         bool isEquipmentSlot = IsEquipmentSlot();
         if (isEquipmentSlot && FindObjectOfType<FightManager>() != null)
         {
@@ -41,14 +40,12 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
         if (draggableItem == null || !IsTypeAllowed(draggableItem)) return;
 
-        // Проверяем, является ли это экипировкой (перемещение в слот экипировки)
         bool isEquipping = isEquipmentSlot;
 
         if (transform.childCount == 0)
         {
             draggableItem.parentAfterDrag = transform;
             
-            // Воспроизводим звук только при экипировке
             if (isEquipping)
             {
                 PlayEquipSound();
@@ -67,7 +64,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
             SwapItems(draggableItem, currentItem);
             
-            // Воспроизводим звук только при экипировке
             if (isEquipping)
             {
                 PlayEquipSound();
@@ -181,7 +177,6 @@ public class InventorySlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     {
         if (inventoryManager == null) return false;
 
-        // Проверяем, является ли этот слот слотом экипировки
         return System.Array.IndexOf(inventoryManager.equipmentSlots, this) >= 0;
     }
 

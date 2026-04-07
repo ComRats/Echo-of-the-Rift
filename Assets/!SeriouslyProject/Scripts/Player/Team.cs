@@ -50,8 +50,6 @@ public class Team : MonoBehaviour
                 ? (IData)character.RuntimeData
                 : (IData)character;
 
-            // Вычитаем бонусы экипировки из сохраняемых стат, чтобы при загрузке
-            // RecalculateEquipmentBonuses не накапливал их бесконечно
             int saveDamage    = src.Damage;
             int saveArmor     = src.Armor;
             int saveMaxHealth = src.MaxHealth;
@@ -119,7 +117,6 @@ public class Team : MonoBehaviour
 
             characters.Add(character);
 
-            // Теперь RuntimeData гарантированно создаётся
             if (character.useCharacterData && character.RuntimeData != null)
             {
                 character.RuntimeData.Health = charData.Health;
@@ -181,11 +178,9 @@ public class CharactersSettings : IData
     [InlineEditor(InlineEditorModes.GUIOnly)]
     public CharacterData characterData;
 
-    // Runtime копия для изменений во время игры
     [System.NonSerialized]
     private CharacterDataRuntime runtimeData;
 
-    // Геттер для runtime данных
     public CharacterDataRuntime RuntimeData
     {
         get

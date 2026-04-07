@@ -25,15 +25,6 @@ public class FightTrigger : MonoBehaviour
 
     private bool _isStartingFight = false;
 
-    //private void Start()
-    //{
-    //    if (transform.parent.TryGetComponent<FightNPC>(out FightNPC fNPC))
-    //    {
-    //        GetComponent<BoxCollider2D>().size = fNPC.GetComponent<BoxCollider2D>().size;
-    //        GetComponent<BoxCollider2D>().offset = fNPC.GetComponent<BoxCollider2D>().offset;
-    //    }
-    //}
-
     private void Start()
     {
         sceneLoader = GlobalLoader.Instance.fightSceneLoader;
@@ -87,14 +78,12 @@ public class FightTrigger : MonoBehaviour
     {
         FightData data = new FightData { enemies = this.enemies };
         SaveLoadSystem.Save(ENEMY_SAVE, data, GAME_DIRECTORY);
-        //Debug.Log($"[FightTrigger] Враги сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     private void SaveCharactersToFile()
     {
         CharacterDataWrapper data = new CharacterDataWrapper { characters = this.characters };
         SaveLoadSystem.Save(CHARACTER_SAVE, data, GAME_DIRECTORY);
-        //Debug.LogError($"[FightTrigger] Персонажи сохранены: {Path.Combine(Application.persistentDataPath, CHARACTER_SAVE)}");
     }
 
     [Serializable]

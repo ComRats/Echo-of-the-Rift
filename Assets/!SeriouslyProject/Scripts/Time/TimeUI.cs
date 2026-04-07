@@ -140,7 +140,6 @@ public class TimeUI : MonoBehaviour
     
     private void OnGamePaused()
     {
-        // Можно добавить визуальный эффект паузы
     }
     
     private void OnGameResumed()

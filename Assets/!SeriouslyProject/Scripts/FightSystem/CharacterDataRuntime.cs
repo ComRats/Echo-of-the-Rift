@@ -2,17 +2,11 @@ using UnityEngine;
 
 namespace FightSystem.Data
 {
-    /// <summary>
-    /// Runtime копия CharacterData которая не изменяет оригинальный ScriptableObject
-    /// </summary>
     [System.Serializable]
     public class CharacterDataRuntime : IData
     {
-        // Ссылка на оригинальный ScriptableObject (только для чтения)
         [System.NonSerialized]
         public CharacterData originalData;
-
-        // Runtime данные (изменяемые)
         public string _name;
         public string _description;
         [System.NonSerialized]
@@ -46,7 +40,6 @@ namespace FightSystem.Data
         [System.NonSerialized]
         public CharacterAbilitySet _abilitySet;
 
-        // Свойства IData
         public string Name { get => _name; set => _name = value; }
         public string Description { get => _description; set => _description = value; }
         public Sprite Sprite 
@@ -87,9 +80,6 @@ namespace FightSystem.Data
 
         public CharacterAbilitySet AbilitySet { get => _abilitySet; set => _abilitySet = value; }
 
-        /// <summary>
-        /// Создает runtime копию из ScriptableObject
-        /// </summary>
         public static CharacterDataRuntime CreateFromScriptableObject(CharacterData data)
         {
             var runtime = new CharacterDataRuntime
@@ -131,12 +121,8 @@ namespace FightSystem.Data
             return runtime;
         }
 
-        /// <summary>
-        /// Валидация и исправление данных
-        /// </summary>
         public void ValidateAndFixData()
         {
-            // Клэмпим только если значения уже были назначены (не нулевые)
             if (_maxHealth > 0)
                 _health = Mathf.Clamp(_health, 0, _maxHealth);
 

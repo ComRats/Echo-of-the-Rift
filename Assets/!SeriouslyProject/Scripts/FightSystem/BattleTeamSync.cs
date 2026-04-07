@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using EchoRift;
 
-/// <summary>
-/// Синхронизирует данные персонажей между боевой системой и командой игрока
-/// </summary>
 public class BattleTeamSync : MonoBehaviour
 {
     [SerializeField] private FightManager fightManager;
@@ -20,7 +17,6 @@ public class BattleTeamSync : MonoBehaviour
         if (debugMode) Debug.Log($"[BattleTeamSync] Registered fightManager: {fightManager}");
         if (debugMode) Debug.Log($"[BattleTeamSync] Registered fightManager.characters: {fightManager.characters}");
 
-        // Сохраняем ссылки на всех персонажей в начале боя
         if (fightManager != null && fightManager.characters != null)
         {
             foreach (var character in fightManager.characters)
@@ -44,7 +40,6 @@ public class BattleTeamSync : MonoBehaviour
 
     private System.Collections.IEnumerator LinkTeamManagerWithDelay()
     {
-        // Ждем, пока TeamManager инициализируется
         yield return new WaitForSeconds(0.1f);
         
         LinkTeamManagerWithBattle(null);
@@ -135,17 +130,14 @@ public class BattleTeamSync : MonoBehaviour
 
         Debug.Log($"[BattleTeamSync] Syncing {team.characters.Count} team members");
 
-        // Синхронизируем данные из боевых персонажей в настройки команды
         foreach (var settings in team.characters)
         {
             if (settings == null) continue;
 
-            // Ищем персонажа по имени в сохраненных ссылках
             if (initialCharacters.TryGetValue(settings.Name, out var character))
             {
                 Debug.Log($"[BattleTeamSync] Syncing {settings.Name}: Level {character.Level}, HP {character.Health}/{character.MaxHealth}, XP {character.CurrentXP}/{character.MaxXP}");
 
-                // Если используется ScriptableObject, обновляем runtime копию
                 if (settings.useCharacterData && settings.RuntimeData != null)
                 {
                     settings.RuntimeData.Health = character.Health;
@@ -164,7 +156,6 @@ public class BattleTeamSync : MonoBehaviour
                 }
                 else
                 {
-                    // Для ручных настроек используем сеттеры
                     settings.Health = character.Health;
                     settings.MaxHealth = character.MaxHealth;
                     settings.Mana = character.Mana;
@@ -186,10 +177,8 @@ public class BattleTeamSync : MonoBehaviour
             }
         }
 
-        // Сохраняем обновленные данные команды
         var teamData = team.CreateSaveData();
         
-        // Логируем данные перед сохранением
         foreach (var charData in teamData.charactersData)
         {
             Debug.Log($"[BattleTeamSync] Saving to file: {charData.Name} - Level {charData.Level}, XP {charData.CurrentXP}/{charData.MaxXP}, HP {charData.Health}/{charData.MaxHealth}");
@@ -207,7 +196,6 @@ public class BattleTeamSync : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Автоматически синхронизируем при выходе из боя если еще не синхронизировали
         if (!isSynced && (Player.Result == FightResult.Win || Player.Result == FightResult.Lose || Player.Result == FightResult.Escape))
         {
             SyncTeamAfterBattle();

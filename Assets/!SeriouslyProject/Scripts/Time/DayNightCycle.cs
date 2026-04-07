@@ -151,48 +151,12 @@ public class DayNightCycle : MonoBehaviour
     {
         return new TimeOfDay[]
         {
-            new TimeOfDay
-            {
-                periodName = "Ночь",
-                startHour = 0f,
-                lightColor = new Color(0.2f, 0.2f, 0.4f, 1f), // Тёмно-синий
-                lightIntensity = 0.3f
-            },
-            new TimeOfDay
-            {
-                periodName = "Рассвет",
-                startHour = 5f,
-                lightColor = new Color(1f, 0.7f, 0.5f, 1f), // Оранжево-розовый
-                lightIntensity = 0.6f
-            },
-            new TimeOfDay
-            {
-                periodName = "Утро",
-                startHour = 7f,
-                lightColor = new Color(1f, 0.95f, 0.8f, 1f), // Светло-жёлтый
-                lightIntensity = 0.9f
-            },
-            new TimeOfDay
-            {
-                periodName = "День",
-                startHour = 12f,
-                lightColor = new Color(1f, 1f, 1f, 1f), // Яркий белый
-                lightIntensity = 1f
-            },
-            new TimeOfDay
-            {
-                periodName = "Вечер",
-                startHour = 18f,
-                lightColor = new Color(1f, 0.6f, 0.3f, 1f), // Оранжевый
-                lightIntensity = 0.7f
-            },
-            new TimeOfDay
-            {
-                periodName = "Сумерки",
-                startHour = 20f,
-                lightColor = new Color(0.4f, 0.3f, 0.6f, 1f), // Фиолетовый
-                lightIntensity = 0.4f
-            }
+            new TimeOfDay { periodName = "Ночь", startHour = 0f, lightColor = new Color(0.2f, 0.2f, 0.4f, 1f), lightIntensity = 0.3f },
+            new TimeOfDay { periodName = "Рассвет", startHour = 5f, lightColor = new Color(1f, 0.7f, 0.5f, 1f), lightIntensity = 0.6f },
+            new TimeOfDay { periodName = "Утро", startHour = 7f, lightColor = new Color(1f, 0.95f, 0.8f, 1f), lightIntensity = 0.9f },
+            new TimeOfDay { periodName = "День", startHour = 12f, lightColor = new Color(1f, 1f, 1f, 1f), lightIntensity = 1f },
+            new TimeOfDay { periodName = "Вечер", startHour = 18f, lightColor = new Color(1f, 0.6f, 0.3f, 1f), lightIntensity = 0.7f },
+            new TimeOfDay { periodName = "Сумерки", startHour = 20f, lightColor = new Color(0.4f, 0.3f, 0.6f, 1f), lightIntensity = 0.4f }
         };
     }
     
@@ -216,9 +180,6 @@ public class DayNightCycle : MonoBehaviour
         return currentTimeSettings?.periodName ?? "Неизвестно";
     }
     
-    /// <summary>
-    /// Установить глобальный свет (для динамической настройки)
-    /// </summary>
     public void SetGlobalLight(Light2D light)
     {
         globalLight = light;
