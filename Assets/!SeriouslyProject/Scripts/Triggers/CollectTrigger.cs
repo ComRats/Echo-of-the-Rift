@@ -278,9 +278,11 @@ public class CollectTrigger : BaseTrigger
     private void ShowButtonPrompt(bool show, string text)
     {
         GameMassage.ButtonMassageWithText(gameObject, false, null, "", Vector3.zero, Vector3.zero);
-        if (show && sprites?.sprites != null && spriteIndex < sprites.sprites.Count)
+        if (show && sprites?.sprites != null)
         {
-            GameMassage.ButtonMassageWithText(gameObject, true, sprites.sprites[spriteIndex], text, keyMassageOffset, textMassageOffset, textColor: Color.yellow);
+            int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
+            if (idx < sprites.sprites.Count)
+                GameMassage.ButtonMassageWithText(gameObject, true, sprites.sprites[idx], text, keyMassageOffset, textMassageOffset, textColor: Color.yellow);
         }
     }
 }

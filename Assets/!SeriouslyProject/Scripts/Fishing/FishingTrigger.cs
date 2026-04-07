@@ -102,9 +102,11 @@ public class FishingTrigger : MonoBehaviour
 
     private void ShowButtonPrompt(bool show)
     {
-        if (sprites != null && sprites.sprites != null && spriteIndex < sprites.sprites.Count)
+        if (sprites != null && sprites.sprites != null)
         {
-            GameMassage.ButtonMassage(gameObject, show, sprites.sprites[spriteIndex], keyMassageOffset);
+            int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
+            if (idx < sprites.sprites.Count)
+                GameMassage.ButtonMassage(gameObject, show, sprites.sprites[idx], keyMassageOffset);
         }
     }
 

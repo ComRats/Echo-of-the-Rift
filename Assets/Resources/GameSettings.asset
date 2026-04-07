@@ -16,6 +16,63 @@ MonoBehaviour:
   openPauseMenuKey: 27
   useButton: 102
   questWindowKey: 106
+  keySpriteMap:
+  - key: 97
+    spriteIndex: 9
+  - key: 98
+    spriteIndex: 10
+  - key: 99
+    spriteIndex: 11
+  - key: 100
+    spriteIndex: 12
+  - key: 101
+    spriteIndex: 13
+  - key: 102
+    spriteIndex: 14
+  - key: 103
+    spriteIndex: 15
+  - key: 104
+    spriteIndex: 16
+  - key: 105
+    spriteIndex: 17
+  - key: 106
+    spriteIndex: 18
+  - key: 107
+    spriteIndex: 19
+  - key: 108
+    spriteIndex: 20
+  - key: 109
+    spriteIndex: 21
+  - key: 110
+    spriteIndex: 22
+  - key: 111
+    spriteIndex: 23
+  - key: 112
+    spriteIndex: 24
+  - key: 113
+    spriteIndex: 25
+  - key: 114
+    spriteIndex: 26
+  - key: 115
+    spriteIndex: 27
+  - key: 116
+    spriteIndex: 28
+  - key: 117
+    spriteIndex: 29
+  - key: 118
+    spriteIndex: 30
+  - key: 119
+    spriteIndex: 31
+  - key: 120
+    spriteIndex: 32
+  - key: 121
+    spriteIndex: 33
+  - key: 122
+    spriteIndex: 34
+  - key: 27
+    spriteIndex: 35
+  - key: 9
+    spriteIndex: 36
   enemyTurnDelay: 0.5
   enemyTurnSpeed: 0.5
   loadingSceneSpeed: 1

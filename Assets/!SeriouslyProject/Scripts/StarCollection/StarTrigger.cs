@@ -10,14 +10,13 @@ public class StarTrigger : MonoBehaviour
 {
     [SerializeField] private Image backPanel;
     [SerializeField] private Vector3 keyMassageOffset;
-    [SerializeField, Range(0, 30)] private int spriteIndex;
 
     [ValueDropdown("GetSpriteNames")]
     [SerializeField] private SpriteCollection sprites;
 
     private bool playerInside = false;
     [Inject] private MainUI mainUI;
-
+    [Inject] private GameSettings gameSettings;
 
     private void Start()
     {
@@ -30,7 +29,7 @@ public class StarTrigger : MonoBehaviour
         if (collision.TryGetComponent<Player>(out var player))
         {
             playerInside = true;
-            GameMassage.ButtonMassage(gameObject, playerInside, sprites.sprites[spriteIndex], keyMassageOffset);
+            ShowPrompt(true);
         }
     }
 
@@ -40,16 +39,24 @@ public class StarTrigger : MonoBehaviour
         {
             playerInside = false;
             backPanel.gameObject.SetActive(false);
-            GameMassage.ButtonMassage(gameObject, playerInside, sprites.sprites[spriteIndex], keyMassageOffset);
+            ShowPrompt(false);
         }
     }
 
     private void Update()
     {
-        if (playerInside && Input.GetKeyDown(KeyCode.F))
+        if (playerInside && Input.GetKeyDown(gameSettings.useButton))
         {
             backPanel.gameObject.SetActive(!backPanel.gameObject.activeSelf);
         }
+    }
+
+    private void ShowPrompt(bool show)
+    {
+        if (sprites?.sprites == null) return;
+        int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
+        if (idx < sprites.sprites.Count)
+            GameMassage.ButtonMassage(gameObject, show, sprites.sprites[idx], keyMassageOffset);
     }
 
     private string[] GetSpriteNames()

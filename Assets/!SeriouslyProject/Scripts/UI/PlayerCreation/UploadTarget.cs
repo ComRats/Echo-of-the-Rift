@@ -22,10 +22,20 @@ public class UploadTarget : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start()
+    {
+        if (mainUiInstance != null)
+            mainUiInstance.canOpenUI = false;
+        else
+        {
+            GlobalLoader.Instance.mainUI.canOpenUI = false;
+        }
+    }
+
     private void OnEnable()
     {
         inputField.characterLimit = maxNameLength;
-        inputField.richText = false;          // отключает авто-выделение слов
+        inputField.richText = false;
         inputField.onValueChanged.AddListener(OnNameChanged);
         inputField.onSubmit.AddListener(_ => NextScene());
 
@@ -38,13 +48,12 @@ public class UploadTarget : MonoBehaviour
 
     private void OnDisable()
     {
-        inputField.onValueChanged.RemoveListener(OnNameChanged);
+        inputField.onValueChanged?.RemoveListener(OnNameChanged);
         inputField.onSubmit.RemoveListener(_ => NextScene());
     }
 
     private void OnNameChanged(string value)
     {
-        // Сбрасываем сообщение об ошибке при вводе
         if (!string.IsNullOrWhiteSpace(value))
             descriptionStats.text = string.Empty;
     }

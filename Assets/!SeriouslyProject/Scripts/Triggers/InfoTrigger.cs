@@ -5,7 +5,6 @@ using Sirenix.OdinInspector;
 using AudioManager.Core;
 using AudioManager.Locator;
 using UnityEngine.Events;
-using Unity.VisualScripting;
 
 public class InfoTrigger : BaseTrigger
 {
@@ -152,13 +151,15 @@ public class InfoTrigger : BaseTrigger
             Vector3.zero
         );
 
-        if (!show || sprites?.sprites == null || spriteIndex >= sprites.sprites.Count)
-            return;
+        if (!show || sprites?.sprites == null) return;
+
+        int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
+        if (idx >= sprites.sprites.Count) return;
 
         GameMassage.ButtonMassageWithText(
             gameObject,
             true,
-            sprites.sprites[spriteIndex],
+            sprites.sprites[idx],
             useButtText,
             keyMassageOffset,
             textMassageOffset,
@@ -168,4 +169,5 @@ public class InfoTrigger : BaseTrigger
 
     public void SkipTimeToMorning() => timeManager.SkipToMorning();
     public void SkipTimeToEvening() => timeManager.SkipToEvening();
+    public void Skip6hour() => timeManager.SkipTime(6);
 }

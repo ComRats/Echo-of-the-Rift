@@ -4897,7 +4897,7 @@ MonoBehaviour:
   nextSceneLoader: {fileID: 681012212}
   points: {fileID: 76523502}
   descriptionStats: {fileID: 870794089}
-  inputField: {fileID: 0}
+  inputField: {fileID: 2073026259}
   maxNameLength: 20
   focusOnEnable: 1
 --- !u!1 &1802178788

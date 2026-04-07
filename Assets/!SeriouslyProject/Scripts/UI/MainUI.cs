@@ -91,6 +91,9 @@ public class MainUI : MonoBehaviour
             if (shopUI != null && shopUI.IsShopMode)
                 return;
 
+            if (pauseMenu != null && pauseMenu.isActive)
+                return;
+
             ToggleQuestLog();
         }
     }

@@ -14,9 +14,10 @@ public class KeyBindingsSettingsUI : MonoBehaviour
 
     [Inject]
     private GameSettings _settings;
-
+     
     private Button _listeningButton;
     private System.Action<KeyCode> _onKeySelected;
+    private System.Func<KeyCode, bool> _keyFilter; // фильтр допустимых клавиш для текущей кнопки
 
     private void Start()
     {
@@ -34,26 +35,30 @@ public class KeyBindingsSettingsUI : MonoBehaviour
 
         Configure(inventoryKeyButton, _settings.openInvenoryKey, val => _settings.openInvenoryKey = val);
         Configure(pauseMenuKeyButton, _settings.openPauseMenuKey, val => _settings.openPauseMenuKey = val);
-        Configure(useKeyButton, _settings.useButton, val => _settings.useButton = val);
+        Configure(useKeyButton, _settings.useButton, val => _settings.useButton = val, GameSettings.AllowedUseKeys);
         Configure(questWindowKeyButton, _settings.questWindowKey, val => _settings.questWindowKey = val);
     }
 
-    private void Configure(Button button, KeyCode currentKey, System.Action<KeyCode> applyKey)
+    private void Configure(Button button, KeyCode currentKey, System.Action<KeyCode> applyKey, KeyCode[] allowedKeys = null)
     {
         if (button == null) return;
 
         SetButtonLabel(button, currentKey);
         button.onClick.RemoveAllListeners();
-        button.onClick.AddListener(() => StartListening(button, applyKey));
+        button.onClick.AddListener(() => StartListening(button, applyKey, allowedKeys));
     }
 
-    private void StartListening(Button button, System.Action<KeyCode> applyKey)
+    private void StartListening(Button button, System.Action<KeyCode> applyKey, KeyCode[] allowedKeys = null)
     {
         if (_listeningButton != null)
             SetButtonLabel(_listeningButton, GetCurrentKeyForButton(_listeningButton));
 
         _listeningButton = button;
         _onKeySelected = applyKey;
+        _keyFilter = allowedKeys != null
+            ? key => System.Array.IndexOf(allowedKeys, key) >= 0
+            : _ => true;
+
         SetButtonLabel(button, KeyCode.None, listening: true);
     }
 
@@ -64,19 +69,41 @@ public class KeyBindingsSettingsUI : MonoBehaviour
         Event e = Event.current;
         if (e.type != EventType.KeyDown || e.keyCode == KeyCode.None) return;
 
+        // Проверяем фильтр допустимых клавиш
+        if (_keyFilter != null && !_keyFilter(e.keyCode))
+            return;
+
+        // Проверяем дубликат — клавиша уже занята другой кнопкой
+        KeyCode currentForThis = GetCurrentKeyForButton(_listeningButton);
+        foreach (var bound in _settings.AllBoundKeys)
+        {
+            if (bound == e.keyCode && bound != currentForThis)
+            {
+                SetButtonLabel(_listeningButton, currentForThis, conflict: true);
+                return;
+            }
+        }
+
         _onKeySelected?.Invoke(e.keyCode);
         SetButtonLabel(_listeningButton, e.keyCode);
         _listeningButton = null;
         _onKeySelected = null;
+        _keyFilter = null;
 
         SaveCurrentState();
     }
 
-    private void SetButtonLabel(Button button, KeyCode key, bool listening = false)
+    private void SetButtonLabel(Button button, KeyCode key, bool listening = false, bool conflict = false)
     {
         var label = button.GetComponentInChildren<TMP_Text>();
         if (label == null) return;
-        label.text = listening ? "�������� ����� �������" : key.ToString();
+
+        if (listening)
+            label.text = "Нажмите клавишу";
+        else if (conflict)
+            label.text = "Уже занято!";
+        else
+            label.text = key.ToString();
     }
 
     private KeyCode GetCurrentKeyForButton(Button button)

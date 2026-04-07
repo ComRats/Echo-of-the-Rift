@@ -88,8 +88,6 @@ public class PauseMenu : MonoBehaviour
 
     public void ClosePauseMenu()
     {
-        if (!_mainUIInstance.canOpenUI) return;
-
         stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
         _mainUIInstance.HideCursor();
 
