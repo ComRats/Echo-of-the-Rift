@@ -40,6 +40,13 @@ public static class DebugCommands
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.AfterSceneLoad)]
     private static void RegisterCommands()
     {
+        // Блокируем игровой ввод когда консоль открыта
+        if (IngameDebugConsole.DebugLogManager.Instance != null)
+            SubscribeToConsoleEvents();
+        else
+            // Если консоль ещё не проинициализировалась — ждём следующего кадра
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoadedSubscribe;
+
         DebugLogConsole.AddCommand<string>  ("scene.load",    "Загрузить сцену по имени",              LoadScene);
         DebugLogConsole.AddCommand          ("scene.reload",  "Перезагрузить текущую сцену",           ReloadScene);
         DebugLogConsole.AddCommand          ("scene.info",    "Показать текущую сцену",                SceneInfo);
@@ -76,6 +83,34 @@ public static class DebugCommands
         Debug.Log("[DebugCommands] Зарегистрировано. Введите 'help' для списка команд.");
     }
 
+    private static void OnSceneLoadedSubscribe(UnityEngine.SceneManagement.Scene s, UnityEngine.SceneManagement.LoadSceneMode m)
+    {
+        if (IngameDebugConsole.DebugLogManager.Instance != null)
+        {
+            SubscribeToConsoleEvents();
+            UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoadedSubscribe;
+        }
+    }
+
+    private static void SubscribeToConsoleEvents()
+    {
+        var console = IngameDebugConsole.DebugLogManager.Instance;
+        console.OnLogWindowShown  += OnConsoleOpened;
+        console.OnLogWindowHidden += OnConsoleClosed;
+    }
+
+    private static void OnConsoleOpened()
+    {
+        if (UI != null) UI.canOpenUI = false;
+        if (Player?.movement != null) Player.movement.canMove = false;
+    }
+
+    private static void OnConsoleClosed()
+    {
+        if (UI != null) UI.canOpenUI = true;
+        if (Player?.movement != null) Player.movement.canMove = true;
+    }
+
     // ── Сцены ─────────────────────────────────────────────────────────────────
 
     static void LoadScene(string name)  => SceneManager.LoadScene(name);
@@ -94,22 +129,49 @@ public static class DebugCommands
     static void SetPlayerHP(int value)
     {
         if (Player == null) { Debug.LogWarning("[Debug] Player не найден"); return; }
-        Player.playerSaver.Health = Mathf.Clamp(value, 0, Player.playerSaver.MaxHealth);
-        Debug.Log($"[Player] HP = {Player.playerSaver.Health}");
+        var p = Player.playerSaver;
+        p.Health = Mathf.Clamp(value, 0, p.MaxHealth);
+        // Синхронизируем RuntimeData первого персонажа команды (это игрок)
+        SyncPlayerSaverToTeam();
+        Debug.Log($"[Player] HP = {p.Health}");
     }
 
     static void SetPlayerMana(int value)
     {
         if (Player == null) { Debug.LogWarning("[Debug] Player не найден"); return; }
-        Player.playerSaver.Mana = Mathf.Clamp(value, 0, Player.playerSaver.MaxMana);
-        Debug.Log($"[Player] Mana = {Player.playerSaver.Mana}");
+        var p = Player.playerSaver;
+        p.Mana = Mathf.Clamp(value, 0, p.MaxMana);
+        SyncPlayerSaverToTeam();
+        Debug.Log($"[Player] Mana = {p.Mana}");
     }
 
     static void AddPlayerXP(int amount)
     {
         if (Player == null) { Debug.LogWarning("[Debug] Player не найден"); return; }
         Player.playerSaver.CurrentXP += amount;
+        SyncPlayerSaverToTeam();
         Debug.Log($"[Player] XP +{amount} → {Player.playerSaver.CurrentXP}");
+    }
+
+    // Синхронизирует playerSaver → RuntimeData первого члена команды и обновляет UI
+    static void SyncPlayerSaverToTeam()
+    {
+        if (Team == null || Team.characters.Count == 0) return;
+        var p = Player.playerSaver;
+        var rt = Team.characters[0].RuntimeData;
+        if (rt != null)
+        {
+            rt.Health     = p.Health;
+            rt.MaxHealth  = p.MaxHealth;
+            rt.Mana       = p.Mana;
+            rt.MaxMana    = p.MaxMana;
+            rt.CurrentXP  = p.CurrentXP;
+            rt.MaxXP      = p.MaxXP;
+            rt.Level      = p.Level;
+            rt.Damage     = p.Damage;
+            rt.Armor      = p.Armor;
+        }
+        UI?.teamManager?.UpdateTeamUI();
     }
 
     static void TeleportPlayer(float x, float y)
