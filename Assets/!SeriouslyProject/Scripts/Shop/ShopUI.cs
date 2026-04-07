@@ -56,11 +56,6 @@ public class ShopUI : MonoBehaviour{
             GameObject shopManagerObj = new GameObject("ShopManager");
             shopManagerObj.transform.SetParent(transform);
             shopManager = shopManagerObj.AddComponent<ShopManager>();
-            Debug.Log("[ShopUI] ShopManager создан");
-        }
-        else
-        {
-            Debug.Log("[ShopUI] ShopManager уже существует, используем существующий");
         }
 
         if (inventoryManager != null && playerWallet != null)

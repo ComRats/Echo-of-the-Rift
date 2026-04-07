@@ -22,14 +22,12 @@ namespace EchoRift.Dialogue
                 serializedState = SaveSystem.Serialize(savedGameData)
             };
             SaveLoadSystem.Save(DIALOGUE_STATE, data, GAME_DIRECTORY);
-            Debug.Log("[DialogueSaveManager] Saved.");
         }
 
         public static void Load()
         {
             if (!SaveLoadSystem.Exists(DIALOGUE_STATE, GAME_DIRECTORY))
             {
-                Debug.Log("[DialogueSaveManager] No save found, skipping.");
                 return;
             }
 
@@ -42,13 +40,11 @@ namespace EchoRift.Dialogue
 
             var savedGameData = SaveSystem.Deserialize<SavedGameData>(data.serializedState);
             SaveSystem.ApplySavedGameData(savedGameData);
-            Debug.Log("[DialogueSaveManager] Loaded.");
         }
 
         public static void Delete()
         {
             SaveLoadSystem.Delete(DIALOGUE_STATE);
-            Debug.Log("[DialogueSaveManager] Deleted.");
         }
 
         public static bool Exists()

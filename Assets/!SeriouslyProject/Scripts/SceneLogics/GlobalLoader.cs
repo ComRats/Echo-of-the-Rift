@@ -1,15 +1,14 @@
+using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
+using EchoRift.EchoRiftSaveLoadSystem;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using AudioManager.Provider;
-using FightSystem.Data;
-using EchoRift;
-using System;
-using UnityEngine;
-using Zenject;
-using EchoRift.EchoRiftSaveLoadSystem;
-using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
-using PixelCrushers;
 using EchoRift.Dialogue;
+using FightSystem.Data;
+using UnityEngine;
+using EchoRift;
+using Zenject;
+using System;
 
 [DisallowMultipleComponent]
 public class GlobalLoader : MonoBehaviour

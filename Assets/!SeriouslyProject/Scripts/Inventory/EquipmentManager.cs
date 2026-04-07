@@ -99,8 +99,6 @@ public class EquipmentManager : MonoBehaviour
         appliedLucky       = newLucky;
 
         GlobalLoader.Instance?.mainUI?.teamManager?.UpdateTeamUI();
-
-        Debug.Log($"[EquipmentManager] Бонусы применены: DMG+{newDamage} ARM+{newArmor} HP+{newMaxHealth}");
     }
 
     private void RemoveAppliedBonuses(CharacterDataRuntime runtime)

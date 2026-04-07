@@ -15,11 +15,11 @@ MonoBehaviour:
   audioClips:
   - soundName: ButtonClick1
     type: 0
-    audioClip: {fileID: 8300000, guid: 9c285986b4a0dd147a4f27df1f2ac3cb, type: 3}
+    audioClip: {fileID: 8300000, guid: 3dfc037a0f584bf4b9b874170a572ea2, type: 3}
     mixerGroup: {fileID: 0}
     loop: 0
     volume: 1
-    pitch: 1.5
+    pitch: 1
     spatialBlend: 0.5
     dopplerLevel: 0
     spreadAngle: 0

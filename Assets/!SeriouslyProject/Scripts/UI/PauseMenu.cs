@@ -73,29 +73,32 @@ public class PauseMenu : MonoBehaviour
     {
         if (!_mainUIInstance.canOpenUI) return;
 
-        stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
-
         _mainUIInstance.ShowCursor();
         GameTimer.PauseGame();
         pauseMenu.SetActive(true);
         pauseMenuBackGround.SetActive(true);
 
-        if (stateInfo.IsName("ShowSettings"))
+        if (settingsAnimator.isActiveAndEnabled)
         {
-            settingsAnimator.SetTrigger("HideSettings");
+            stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("ShowSettings"))
+                settingsAnimator.SetTrigger("HideSettings");
         }
     }
 
     public void ClosePauseMenu()
     {
-        stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
         _mainUIInstance.HideCursor();
 
-        if (stateInfo.IsName("ShowSettings"))
+        if (settingsAnimator.isActiveAndEnabled)
         {
-            settingsAnimator.SetTrigger("HideSettings");
-            pauseMenuBackGround.SetActive(true);
-            return;
+            stateInfo = settingsAnimator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("ShowSettings"))
+            {
+                settingsAnimator.SetTrigger("HideSettings");
+                pauseMenuBackGround.SetActive(true);
+                return;
+            }
         }
 
         GameTimer.ResumeGame();
