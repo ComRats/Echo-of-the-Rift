@@ -89,7 +89,11 @@ public class InfoTrigger : BaseTrigger
         if (player == null) return;
 
         onPressedButton?.Invoke();
-        service.PlayOneShot(useButtonMusic);
+        if(!string.IsNullOrEmpty(useButtonMusic))
+        {
+            service = ServiceLocator.GetService();
+            service.PlayOneShot(useButtonMusic);
+        }
 
         isWasPressed = true;
         ShowButtonPrompt(false);

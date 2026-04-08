@@ -20,7 +20,6 @@ public class PlayerEvents : MonoBehaviour
     {
         if (GlobalLoader.Instance?.mainUI?.shopUI != null && GlobalLoader.Instance.mainUI.shopUI.IsShopMode)
         {
-            Debug.LogWarning("HideCursorEvent skipped - shop is open");
             return;
         }
 

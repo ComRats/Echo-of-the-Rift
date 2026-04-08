@@ -129,11 +129,13 @@ public class MainUI : MonoBehaviour
         if (isOpen)
         {
             CloseQuestLog();
+            service = ServiceLocator.GetService();
             service.PlayOneShot("OpenUI_R"); 
         }
         else
         {
             OpenQuestLog();
+            service = ServiceLocator.GetService();
             service.PlayOneShot("OpenUI");
         }
     }
@@ -207,6 +209,7 @@ public class MainUI : MonoBehaviour
         bool inBattle = FindObjectOfType<FightManager>() != null;
 
         if (!inBattle) ShowCursor();
+        service = ServiceLocator.GetService();
         service.PlayOneShot("OpenUI");
         playerUIbackGround.SetActive(true);
         isOpenUI = true;
@@ -247,6 +250,7 @@ public class MainUI : MonoBehaviour
 
         if (!inBattle) HideCursor();
 
+        service = ServiceLocator.GetService();
         service.PlayOneShot("OpenUI_R");
         playerUIbackGround.SetActive(false);
         isOpenUI = false;

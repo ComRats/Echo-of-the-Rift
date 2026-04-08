@@ -68,7 +68,11 @@ public class AreaAmbientSound : MonoBehaviour
         _isPlaying = false;
 
         _am.LerpVolume(soundName, 0f, fadeDuration);
-        StartCoroutine(StopAfterFade());
+
+        if (gameObject.activeInHierarchy)
+            StartCoroutine(StopAfterFade());
+        else
+            _am.Stop(soundName);
 
         _musicManager?.UnregisterAmbient(soundName);
     }

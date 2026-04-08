@@ -77,8 +77,13 @@ public static class DebugCommands
         DebugLogConsole.AddCommand          ("fight.info",    "Показать состояние боя",                FightInfo);
         DebugLogConsole.AddCommand          ("fight.win",     "Убить всех врагов",                     ForceFightWin);
 
-        DebugLogConsole.AddCommand          ("time.info",     "Показать игровое время",                TimeInfo);
-        DebugLogConsole.AddCommand<float>   ("time.scale",    "Установить Time.timeScale",             SetTimeScale);
+        DebugLogConsole.AddCommand          ("time.info",      "Показать игровое время",                    TimeInfo);
+        DebugLogConsole.AddCommand<float>   ("time.scale",    "Установить Time.timeScale",                 SetTimeScale);
+        DebugLogConsole.AddCommand<float>   ("time.skip",     "Пропустить N часов (1, 6, 12, 24...)",      SkipTime);
+        DebugLogConsole.AddCommand<int>     ("time.skipdays", "Пропустить N дней",                         SkipDays);
+        DebugLogConsole.AddCommand          ("time.morning",  "Пропустить до утра (6:00)",                 SkipToMorning);
+        DebugLogConsole.AddCommand          ("time.evening",  "Пропустить до вечера (18:00)",              SkipToEvening);
+        DebugLogConsole.AddCommand<int,int> ("time.set",      "Установить время (hour [minute])",          SetTime);
 
         Debug.Log("[DebugCommands] Зарегистрировано. Введите 'help' для списка команд.");
     }
@@ -305,5 +310,54 @@ public static class DebugCommands
     {
         Time.timeScale = Mathf.Clamp(scale, 0f, 10f);
         Debug.Log($"[Time] scale = {Time.timeScale}");
+    }
+
+    static TimeManager GetTimeManager()
+    {
+        var gts = UnityEngine.Object.FindObjectOfType<GlobalTimeSystem>();
+        if (gts != null) return gts.TimeManager;
+        return UnityEngine.Object.FindObjectOfType<TimeManager>();
+    }
+
+    // SkipTime <hours> — пропустить произвольное кол-во часов
+    static void SkipTime(float hours)
+    {
+        var tm = GetTimeManager();
+        if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
+        tm.SkipTime(hours);
+        Debug.Log($"[Time] Пропущено {hours}ч → {tm.GetCurrentHour():00}:{tm.GetCurrentMinute():00}, день {tm.GetCurrentDay()}");
+    }
+
+    // SkipDays <days> — пропустить N дней
+    static void SkipDays(int days)
+    {
+        var tm = GetTimeManager();
+        if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
+        tm.SkipTime(days * 24f);
+        Debug.Log($"[Time] Пропущено {days} дн. → {tm.GetCurrentHour():00}:{tm.GetCurrentMinute():00}, день {tm.GetCurrentDay()}");
+    }
+
+    // SkipToMorning — пропустить до 6:00
+    static void SkipToMorning()
+    {
+        var tm = GetTimeManager();
+        if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
+        tm.SkipToMorning();
+    }
+
+    // SkipToEvening — пропустить до 18:00
+    static void SkipToEvening()
+    {
+        var tm = GetTimeManager();
+        if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
+        tm.SkipToEvening();
+    }
+
+    // SetTime <hour> [minute] — установить конкретное время
+    static void SetTime(int hour, int minute = 0)
+    {
+        var tm = GetTimeManager();
+        if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
+        tm.SetTime(hour, minute);
     }
 }
