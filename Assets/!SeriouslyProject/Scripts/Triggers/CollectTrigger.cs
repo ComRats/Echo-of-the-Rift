@@ -235,6 +235,8 @@ public class CollectTrigger : BaseTrigger
         bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) ||
             (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
 
+        Debug.Log($"[CollectTrigger] CanExecute: quest='{ev.questCode}' needState={ev.needQuestState} actualState={QuestLog.GetQuestState(ev.questCode)} questOK={questConditionsMet} | item='{ev.itemNameToHas}' hasItem={mainUI.inventoryManager?.HasItem(ev.itemNameToHas)} inventoryOK={inventoryConditionsMet}");
+
         return questConditionsMet && inventoryConditionsMet;
     }
 
@@ -250,6 +252,7 @@ public class CollectTrigger : BaseTrigger
         if (collision.TryGetComponent<Player>(out _))
         {
             playerInside = true;
+            Debug.Log($"[CollectTrigger] Player entered. eventQueue.Count={eventQueue.Count}, currentStepIndex={currentStepIndex}, isOpenUI={mainUI.isOpenUI}");
             if (!mainUI.isOpenUI)
                 UpdatePrompt();
         }
@@ -262,17 +265,19 @@ public class CollectTrigger : BaseTrigger
             playerInside = false;
             minigameActive = false;
             mainUI.canOpenUI = true;
-            clickBar.Hide();
+            if (clickBar != null) clickBar.Hide();
             ShowButtonPrompt(false, "");
         }
     }
 
     private void ShowButtonPrompt(bool show, string text)
     {
+        Debug.Log($"[CollectTrigger] ShowButtonPrompt: show={show}, text='{text}', sprites={(sprites?.sprites != null ? sprites.sprites.Count.ToString() : "null")}");
         GameMassage.ButtonMassageWithText(gameObject, false, null, "", Vector3.zero, Vector3.zero);
         if (show && sprites?.sprites != null)
         {
             int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
+            Debug.Log($"[CollectTrigger] Sprite index={idx}, sprites.Count={sprites.sprites.Count}");
             if (idx < sprites.sprites.Count)
                 GameMassage.ButtonMassageWithText(gameObject, true, sprites.sprites[idx], text, keyMassageOffset, textMassageOffset, textColor: Color.yellow);
         }

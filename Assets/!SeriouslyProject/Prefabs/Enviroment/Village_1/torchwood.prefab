@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4386462153810923764}
   - component: {fileID: 7767465036467074715}
   - component: {fileID: 4413419991622252218}
+  - component: {fileID: 1298012722755714748}
   m_Layer: 0
   m_Name: torchwood
   m_TagString: Untagged
@@ -120,3 +121,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0.014619216, y: -0.13686515}
   m_Size: {x: 1.1240083, y: 0.50214374}
   m_Direction: 1
+--- !u!114 &1298012722755714748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642681531378572011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000d5b71dc937ba7c0b7d6d8564011ebfe62d7e33f07d82733b
+  m_ShapePath:
+  - {x: -0.4875002, y: -0.16235256, z: 0}
+  - {x: -0.23614979, y: 0.05334997, z: 0}
+  - {x: -0.13041782, y: 0.31726265, z: 0}
+  - {x: 0.21710587, y: 0.3096254, z: 0}
+  - {x: 0.2862587, y: -0.0032442808, z: 0}
+  - {x: 0.48076248, y: -0.26341367, z: 0}
+  - {x: 0.1643629, y: -0.116432786, z: 0}
+  - {x: -0.14908218, y: -0.09901917, z: 0}
+  m_ShapePathHash: -49856571
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 86596
+  m_LocalBounds:
+    m_Center: {x: -0.0033688545, y: 0.02692449, z: 0}
+    m_Extent: {x: 0.48413134, y: 0.29033816, z: 0}

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8054358485722146967}
   - component: {fileID: 2330313411346840796}
   - component: {fileID: 2528054254053403798}
+  - component: {fileID: 5931930176281840929}
   m_Layer: 0
   m_Name: needmoreenglishpractice
   m_TagString: Untagged
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: -423682559
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: e5b83e2c1ff0b664f92f2a1120a297ce, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9be23a91cea5f5e4da2a9a5f83c4f133, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.64869463, y: 1.4905581}
+  m_Size: {x: 0.65, y: 1.49}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -121,6 +122,35 @@ CircleCollider2D:
   m_Offset: {x: 0.004648517, y: -0.009692066}
   serializedVersion: 2
   m_Radius: 0.051979262
+--- !u!114 &5931930176281840929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6955373757179151126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000d5b71dc937ba7c0b7d6d8564011ebfe62d7e33f07d82733b
+  m_ShapePath:
+  - {x: -0.013482678, y: -0.14900017, z: -0.000000008642617}
+  - {x: -0.105106495, y: 1.3410002, z: -0.000000008642617}
+  - {x: 0.17840077, y: 1.3318378, z: -0.000000008642617}
+  m_ShapePathHash: -401998812
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -122136
+  m_LocalBounds:
+    m_Center: {x: 0.036647134, y: 0.596, z: 0}
+    m_Extent: {x: 0.14175363, y: 0.7450002, z: 0}
 --- !u!1001 &577344317560856049
 PrefabInstance:
   m_ObjectHideFlags: 0

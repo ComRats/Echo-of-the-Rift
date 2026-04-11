@@ -4,42 +4,66 @@ using Sirenix.OdinInspector;
 
 public class RandomEnviroment : MonoBehaviour
 {
-    [Title("Ссылки на объекты")]
-    [SerializeField] private GameObject backGrass;
+    [Title("РћР±СЉРµРєС‚С‹ РґР»СЏ СЃРїР°РІРЅР°")]
+    [SerializeField] private List<GameObject> backGrass;
     [SerializeField] private List<GameObject> stone;
     [SerializeField] private List<GameObject> grass;
     [SerializeField] private List<GameObject> flowers;
 
-    [Title("Настройки спавна")]
+    [Title("РќР°СЃС‚СЂРѕР№РєРё СЃРїР°РІРЅР°")]
     [SerializeField, Min(1)] private int spawnCount = 100;
 
     [SerializeField, Range(0f, 1f)] private float stoneSpawnChance = 0.5f;
     [SerializeField, Range(0f, 1f)] private float grassSpawnChance = 0.5f;
     [SerializeField, Range(0f, 1f)] private float flowerSpawnChance = 0.5f;
 
-    [Button("Сгенерировать окружение")]
+    [Button("РЎРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ РѕРєСЂСѓР¶РµРЅРёРµ")]
     private void GenerateEnvironment()
     {
-        if (backGrass == null)
+        if (backGrass == null || backGrass.Count == 0)
         {
-            Debug.LogWarning("BackGrass не назначен!");
+            Debug.LogWarning("BackGrass РЅРµ РЅР°Р·РЅР°С‡РµРЅ!");
             return;
         }
 
-        SpriteRenderer spriteRenderer = backGrass.GetComponent<SpriteRenderer>();
-        if (spriteRenderer == null)
+        // РћР±СЉРµРґРёРЅСЏРµРј combined bounds РёР· РІСЃРµС… backGrass РѕР±СЉРµРєС‚РѕРІ
+        Bounds combinedBounds = new Bounds();
+        bool boundsInitialized = false;
+
+        foreach (var bg in backGrass)
         {
-            Debug.LogWarning("У объекта BackGrass отсутствует SpriteRenderer!");
+            if (bg == null) continue;
+
+            SpriteRenderer sr = bg.GetComponent<SpriteRenderer>();
+            if (sr == null)
+            {
+                Debug.LogWarning($"РЈ РѕР±СЉРµРєС‚Р° {bg.name} РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ SpriteRenderer!");
+                continue;
+            }
+
+            if (!boundsInitialized)
+            {
+                combinedBounds = sr.bounds;
+                boundsInitialized = true;
+            }
+            else
+            {
+                combinedBounds.Encapsulate(sr.bounds);
+            }
+        }
+
+        if (!boundsInitialized)
+        {
+            Debug.LogWarning("РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР±СЂР°С‚СЊ bounds!");
             return;
         }
 
-        Bounds bounds = spriteRenderer.bounds;
+        float z = backGrass[0].transform.position.z;
 
         for (int i = 0; i < spawnCount; i++)
         {
-            float randomX = Random.Range(bounds.min.x, bounds.max.x);
-            float randomY = Random.Range(bounds.min.y, bounds.max.y);
-            float z = backGrass.transform.position.z;
+            float randomX = Random.Range(combinedBounds.min.x, combinedBounds.max.x);
+            float randomY = Random.Range(combinedBounds.min.y, combinedBounds.max.y);
 
             Vector3 spawnPos = new Vector3(randomX, randomY, z);
 
