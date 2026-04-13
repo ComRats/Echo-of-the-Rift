@@ -23,9 +23,8 @@ public class CollectTrigger : BaseTrigger
         [BoxGroup("General")] public QuestState setStateAfterStep = (QuestState)0;
         [BoxGroup("General")] public string itemNameToCollect;
         [BoxGroup("General")] public string collectTextHelper;
-        [BoxGroup("General")] public string getItemText = "�� ��������: ";
+        [BoxGroup("General")] public string getItemText = "Вы получили: ";
         [BoxGroup("General")] public float textVisibleDelay = 2.5f;
-        [BoxGroup("Logic")] public bool removeEventAfterStep = true;
         [BoxGroup("Logic")] public bool isRepeatable = false;
 
         [BoxGroup("Inventory Requirement")] public string itemNameToHas;
@@ -44,16 +43,18 @@ public class CollectTrigger : BaseTrigger
         [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
         public float drainSpeed = 0.05f;
         [ShowIf("isMinigame"), BoxGroup("Minigame Settings")]
-        public string minigameStartText = "������ ������� ���!";
+        public string minigameStartText = "Нажми быстрее!";
+
+        [BoxGroup("State"), ReadOnly]
+        public bool isDone; // выставляется в рантайме, сохраняется
     }
 
     [SerializeField, BoxGroup("View")] private Vector3 keyMassageOffset;
     [SerializeField, BoxGroup("View")] private Vector3 textMassageOffset;
+    [SerializeField, BoxGroup("View")] private bool debugMode = false;
 
     [SerializeField] private UnityEvent onTriggerEnter;
     [SerializeField] private List<CollectEvent> eventQueue = new List<CollectEvent>();
-
-    private int originalEventCount = -1;
 
     private int currentStepIndex;
     private bool playerInside;
@@ -72,7 +73,7 @@ public class CollectTrigger : BaseTrigger
     private class CollectTriggerSaveData
     {
         public int currentStepIndex;
-        public int remainingEventCount; // сколько ивентов осталось в очереди
+        public List<bool> doneFlags; // по индексу совпадает с eventQueue
     }
 
     private string SaveKey =>
@@ -80,10 +81,13 @@ public class CollectTrigger : BaseTrigger
 
     private void SaveState()
     {
+        var flags = new List<bool>(eventQueue.Count);
+        foreach (var ev in eventQueue) flags.Add(ev.isDone);
+
         var data = new CollectTriggerSaveData
         {
             currentStepIndex = currentStepIndex,
-            remainingEventCount = eventQueue.Count
+            doneFlags = flags
         };
         SaveLoadSystem.Save(SaveKey, data, GAME_DIRECTORY);
     }
@@ -94,13 +98,16 @@ public class CollectTrigger : BaseTrigger
 
         var data = SaveLoadSystem.Load<CollectTriggerSaveData>(SaveKey, GAME_DIRECTORY);
 
-        if (originalEventCount < 0) originalEventCount = eventQueue.Count;
-
-        int removedCount = originalEventCount - data.remainingEventCount;
-        for (int i = 0; i < removedCount && eventQueue.Count > 0; i++)
-            eventQueue.RemoveAt(0);
+        if (data.doneFlags != null)
+        {
+            for (int i = 0; i < data.doneFlags.Count && i < eventQueue.Count; i++)
+                eventQueue[i].isDone = data.doneFlags[i];
+        }
 
         currentStepIndex = data.currentStepIndex;
+
+        // Если текущий шаг уже выполнен — ищем следующий невыполненный
+        AdvanceToNextPending();
     }
 
     private void Start()
@@ -111,7 +118,6 @@ public class CollectTrigger : BaseTrigger
         lastUIState = mainUI.isOpenUI;
         audioService = ServiceLocator.GetService();
 
-        originalEventCount = eventQueue.Count;
         LoadState();
     }
 
@@ -133,7 +139,7 @@ public class CollectTrigger : BaseTrigger
             }
         }
 
-        if (currentStepIndex < eventQueue.Count && CanExecute(eventQueue[currentStepIndex]))
+        if (currentStepIndex < eventQueue.Count && !eventQueue[currentStepIndex].isDone && CanExecute(eventQueue[currentStepIndex]))
         {
             onTriggerEnter?.Invoke();
         }
@@ -158,7 +164,7 @@ public class CollectTrigger : BaseTrigger
         if (currentStepIndex >= eventQueue.Count) return;
 
         var ev = eventQueue[currentStepIndex];
-        if (!CanExecute(ev)) return;
+        if (ev.isDone || !CanExecute(ev)) return;
 
         if (ev.isMinigame) StartMinigame(ev);
         else FinishCurrentStep();
@@ -205,14 +211,12 @@ public class CollectTrigger : BaseTrigger
             QuestLog.SetQuestState(ev.questCode, ev.setStateAfterStep);
         }
 
-        if (ev.removeEventAfterStep && !ev.isRepeatable)
+        if (!ev.isRepeatable)
         {
-            eventQueue.RemoveAt(currentStepIndex);
+            ev.isDone = true;
         }
-        else
-        {
-            currentStepIndex++;
-        }
+
+        AdvanceToNextPending();
 
         if (currentStepIndex >= eventQueue.Count)
         {
@@ -227,6 +231,13 @@ public class CollectTrigger : BaseTrigger
         DialogueManager.SendUpdateTracker();
     }
 
+    // Двигаем currentStepIndex вперёд до первого невыполненного ивента
+    private void AdvanceToNextPending()
+    {
+        while (currentStepIndex < eventQueue.Count && eventQueue[currentStepIndex].isDone)
+            currentStepIndex++;
+    }
+
     private bool CanExecute(CollectEvent ev)
     {
         bool questConditionsMet = string.IsNullOrEmpty(ev.questCode) ||
@@ -235,7 +246,7 @@ public class CollectTrigger : BaseTrigger
         bool inventoryConditionsMet = string.IsNullOrEmpty(ev.itemNameToHas) ||
             (mainUI.inventoryManager?.HasItem(ev.itemNameToHas) ?? false);
 
-        Debug.Log($"[CollectTrigger] CanExecute: quest='{ev.questCode}' needState={ev.needQuestState} actualState={QuestLog.GetQuestState(ev.questCode)} questOK={questConditionsMet} | item='{ev.itemNameToHas}' hasItem={mainUI.inventoryManager?.HasItem(ev.itemNameToHas)} inventoryOK={inventoryConditionsMet}");
+        if (debugMode) Debug.Log($"[CollectTrigger] CanExecute: quest='{ev.questCode}' needState={ev.needQuestState} actualState={QuestLog.GetQuestState(ev.questCode)} questOK={questConditionsMet} | item='{ev.itemNameToHas}' hasItem={mainUI.inventoryManager?.HasItem(ev.itemNameToHas)} inventoryOK={inventoryConditionsMet}");
 
         return questConditionsMet && inventoryConditionsMet;
     }
@@ -244,6 +255,7 @@ public class CollectTrigger : BaseTrigger
     {
         if (currentStepIndex >= eventQueue.Count) return;
         var ev = eventQueue[currentStepIndex];
+        if (ev.isDone) return;
         ShowButtonPrompt(CanExecute(ev), ev.collectTextHelper);
     }
 
@@ -252,7 +264,7 @@ public class CollectTrigger : BaseTrigger
         if (collision.TryGetComponent<Player>(out _))
         {
             playerInside = true;
-            Debug.Log($"[CollectTrigger] Player entered. eventQueue.Count={eventQueue.Count}, currentStepIndex={currentStepIndex}, isOpenUI={mainUI.isOpenUI}");
+            if (debugMode) Debug.Log($"[CollectTrigger] Player entered. eventQueue.Count={eventQueue.Count}, currentStepIndex={currentStepIndex}, isOpenUI={mainUI.isOpenUI}");
             if (!mainUI.isOpenUI)
                 UpdatePrompt();
         }
@@ -272,12 +284,12 @@ public class CollectTrigger : BaseTrigger
 
     private void ShowButtonPrompt(bool show, string text)
     {
-        Debug.Log($"[CollectTrigger] ShowButtonPrompt: show={show}, text='{text}', sprites={(sprites?.sprites != null ? sprites.sprites.Count.ToString() : "null")}");
+        if (debugMode) Debug.Log($"[CollectTrigger] ShowButtonPrompt: show={show}, text='{text}', sprites={(sprites?.sprites != null ? sprites.sprites.Count.ToString() : "null")}");
         GameMassage.ButtonMassageWithText(gameObject, false, null, "", Vector3.zero, Vector3.zero);
         if (show && sprites?.sprites != null)
         {
             int idx = gameSettings.GetSpriteIndex(gameSettings.useButton);
-            Debug.Log($"[CollectTrigger] Sprite index={idx}, sprites.Count={sprites.sprites.Count}");
+            if (debugMode) Debug.Log($"[CollectTrigger] Sprite index={idx}, sprites.Count={sprites.sprites.Count}");
             if (idx < sprites.sprites.Count)
                 GameMassage.ButtonMassageWithText(gameObject, true, sprites.sprites[idx], text, keyMassageOffset, textMassageOffset, textColor: Color.yellow);
         }
