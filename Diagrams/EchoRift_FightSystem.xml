@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_5DD6934D_2815_57F5_90EC_C947B61B2A21" name="FightSystem">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_5FFBF150_F5DE_5B8E_BEA1_BA12A46A84CE" name="FightSystem">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" name="IData" visibility="public">
+      <ownedAttribute xmi:id="EAID_81297177_7833_5E7F_A152_6AFFB6217334" name="Name" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_AB8BA059_0DEC_5821_8D2F_425EECFC05EA" name="Description" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_D628A1C8_8FF2_5940_A819_38109065F5A0" name="Sprite" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_8D68A637_B7BC_56C5_B0F5_A1046F6D08E4" name="Damage" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_5B5168E7_63B0_57C4_8466_BBACA1EFCD02" name="MagicDamage" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_EC6BBDF8_2FBD_5FD0_B1BF_BB4F07712A86" name="Priority" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_8653D8F9_006D_557E_9334_3A1A693B61A9" name="MaxMana" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_05567386_1DC2_55DC_AAD7_ECBD16588FF4" name="Mana" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_254741E3_7C3E_5014_B9AD_1CBE673D42A3" name="MaxHealth" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_F3AD7A13_0D77_5703_A0C7_4B234C1AFC3E" name="Health" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_F2826FD7_0D2B_576B_81AC_E8BE2692DA99" name="Heal" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_DA7CB197_4222_58DF_AB9C_BAB636C94668" name="Armor" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_23D53501_5B77_578A_8385_BD9FB749C24D" name="Lucky" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_B6E84304_AE18_56B0_B3ED_2F896A4DD140" name="CreteDamage" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_6FD062E5_B48B_5851_93D0_9E4A812C6B8C" name="AttackAnimationName" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_AE25CF20_643A_5BD6_A168_D642A90B61F8" name="Level" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_5D0D44C9_DD91_5AAA_812E_46631121E5AC" name="CurrentXP" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_049D474D_358D_5B64_98CC_4A27A20D656A" name="MaxXP" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_479C864C_75A7_5AD0_AEE5_46115D6F833D" name="XpReward" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_3E61FB49_222E_53BF_89F2_A75CA3BFEBAE" name="DamagePerLevel" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_88603CA1_17B1_5638_B587_561D7FC0549E" name="MaxHealthPerLevel" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_1DDF588E_F2F5_5C3B_AF33_5624AA64E78A" name="HealPerLevel" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_C95685BB_F821_5D99_8835_2B1BE3EE303D" name="ArmorPerLevel" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_B98CD39F_12BA_50A0_B9B7_419D40965FCA" name="MaxManaPerLevel" visibility="public" type="property"/>
+      <ownedAttribute xmi:id="EAID_4A983C73_8297_5FEF_B142_C8DF032442F9" name="XpRewardPerLevel" visibility="public" type="property"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_D240BDE0_A6DC_5501_8F11_2A2A4C978C37" name="EntityStats" visibility="public">
+      <interfaceRealization xmi:id="EAID_224CE02F_5B60_5489_B839_E737A41F690B" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_D240BDE0_A6DC_5501_8F11_2A2A4C978C37"/>
+      <ownedAttribute xmi:id="EAID_250F4B6B_7062_5356_8411_DA68E2746935" name="_name" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_EE0825BF_FC6C_5B75_8E29_CB98E7E0D5D4" name="_description" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_1B5C3072_DA27_5FD7_8C45_C0AC2B44CFB7" name="_damage" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_497FF129_B945_547B_9674_D7699B1C1779" name="_magicDamage" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_E7C945B2_DCFC_5BA0_82C0_A629E4CA2CE2" name="_priority" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_24B081EC_2723_58B8_90CC_D75C8167C000" name="_maxMana" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_E8BD54BA_FE53_5032_BCCF_55E1031B87BF" name="_mana" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_5BC682B8_8980_5AD8_B956_3CC3D66CCF16" name="_maxHealth" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_17A1F146_DC1F_5319_871F_E3F21F055C54" name="_health" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_282106DB_1266_5036_81E7_5BC08A2CE9AE" name="_heal" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_FBEBE983_76DC_54C4_92EB_2FFA52365398" name="_armor" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_EBB53143_670D_5B8E_A153_43F8E6CDC589" name="_lucky" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_AD4D871A_7915_54A0_A329_04C95A31DE02" name="_creteDamage" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_0DEB515C_950A_544B_8DB3_F2D474376952" name="_attackAnimationName" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_61AAF936_D1F6_5D54_86F8_74BAC997158C" name="_level" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_A200912C_F8A1_5D74_8F02_AD00D82D8387" name="_currentXP" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_6D7D6920_EB3C_56EB_93FA_49FA2060D480" name="_maxXP" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_A95C8EDD_0A73_533B_B43E_35DD07479943" name="_xpReward" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_2216C1A0_6B31_5710_9D5D_622E339B46A7" name="_damagePerLevel" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_D808DA7D_A776_5D1E_AFEA_17687E1B5899" name="_maxHealthPerLevel" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_C8457913_B75F_5701_8382_BB5E7797F451" name="_healPerLevel" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_6509F52A_4E22_5624_916A_F3AC32FEBB27" name="_armorPerLevel" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_2A8ADF83_635E_51F0_B7C0_CF7465310C45" name="_maxManaPerLevel" visibility="protected" type="field"/>
+      <ownedAttribute xmi:id="EAID_2991900E_DFE1_585D_B204_331A724BBAF9" name="_xpRewardPerLevel" visibility="protected" type="field"/>
+      <ownedOperation xmi:id="EAID_D4B5E9FE_81E0_58F6_9890_DF142869E61A" name="CaptureBaseStats" visibility="public"/>
+      <ownedOperation xmi:id="EAID_4EADD0D6_5D37_588F_B04F_5C8C248B8C45" name="RecalculateStats" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" name="StatusEffectSO" visibility="public">
+      <ownedAttribute xmi:id="EAID_D41BB321_DFCB_5F0D_8487_E22E0956229F" name="effectName" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_8982E875_C8E7_5973_A2EF_B70922F4E59B" name="damagePerTurn" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_63A34241_A3FC_5804_8E71_D99FBB2CB679" name="duration" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_BEE1BC7C_A58D_5179_B452_46C677D17461" name="tickColor" visibility="public" type="Color"/>
+      <ownedAttribute xmi:id="EAID_E2A0B044_DF05_5D98_B931_6F7F248ABCA5" name="armorBonus" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_E09AAB21_32C0_522F_8FC8_8591C29A6409" name="vfxPrefab" visibility="public" type="GameObject"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_56AE7BF4_045D_53DC_877E_42A798B7916D" name="ActiveStatusEffect" visibility="public">
+      <ownedAttribute xmi:id="EAID_815987B6_1C48_57C2_9F69_1ACB4965693A" name="data" visibility="public" type="StatusEffectSO"/>
+      <ownedAttribute xmi:id="EAID_83D7BB4B_61DC_5A53_B14B_FFC09E096A00" name="remainingTurns" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_C03C1789_7519_5C89_B052_01997F7CE0A7" name="vfxInstance" visibility="public" type="GameObject"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" name="Base" visibility="public">
+      <interfaceRealization xmi:id="EAID_8D189482_BF31_5AC7_98DC_D270E395EFCD" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048"/>
+      <ownedAttribute xmi:id="EAID_BB01A848_A9EC_5455_8C83_2BAD7EC8F048" name="stats" visibility="private" type="EntityStats"/>
+      <ownedAttribute xmi:id="EAID_6358F155_C8D5_55FB_9C3C_426E74198A94" name="activeEffects" visibility="public" type="List[ActiveStatusEffect]"/>
+      <ownedAttribute xmi:id="EAID_F355526E_FA94_55FC_84F7_F46AE80BC115" name="IsBlinking" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_FDD9E212_2276_5EF5_8264_C477638BA6D3" name="healthText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_9187EB90_1DA6_51C6_BD11_21E1631138F8" name="healthBar" visibility="public" type="Slider"/>
+      <ownedAttribute xmi:id="EAID_F61822AB_79C5_5C08_93A2_E79C81B8BF76" name="manaText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_DE3C1C37_47C4_5A99_91A1_43CC1BE767C7" name="manaBar" visibility="public" type="Slider"/>
+      <ownedAttribute xmi:id="EAID_EAF3CAEC_1C32_55EA_800E_15D6CDBB2205" name="animator" visibility="private" type="Animator"/>
+      <ownedAttribute xmi:id="EAID_E7E12605_5BB6_52C7_B8A7_E4F07714B9C8" name="textPrefab" visibility="public" type="GameObject"/>
+      <ownedOperation xmi:id="EAID_DEDDDC4F_D3EC_5C7F_8E69_64C4DBD0A3E9" name="Initialize" visibility="public"/>
+      <ownedOperation xmi:id="EAID_CABE51C2_5841_5766_BCAA_ACD475F154D9" name="TakeDamage" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C7DDF103_22D0_566C_94DE_CB5909D99DB1" name="TakeMagicDamage" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7C70320A_B873_5CDB_8C4F_584C434D636E" name="TakeHeal" visibility="public"/>
+      <ownedOperation xmi:id="EAID_30680BF0_A709_52F3_80F5_CB5C3768197D" name="GiveDamage" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B665C783_FAAC_5EDF_8688_2A688B8F444D" name="GiveHeal" visibility="public"/>
+      <ownedOperation xmi:id="EAID_679E686C_2389_573C_8C21_9F299D70CFB7" name="PlayAnimation" visibility="public"/>
+      <ownedOperation xmi:id="EAID_20D03B9E_6D17_5ACF_B4EE_4CCD2823B31F" name="SetAnimationSpeed" visibility="public"/>
+      <ownedOperation xmi:id="EAID_79BD353B_0A62_53AE_B8B0_F1FC01830DE7" name="ApplyStatusEffect" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A671AE48_F418_5A0A_8D42_19B5248F5553" name="ProcessStatusEffects" visibility="public"/>
+      <ownedOperation xmi:id="EAID_97A2358E_3279_55A3_ADF6_79216BF79E41" name="UpdateUI" visibility="public"/>
+      <ownedOperation xmi:id="EAID_242F1D33_DD06_5871_913E_9B585B24BCB0" name="GetXP" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DFC289EF_803D_5409_956A_F5355E70606B" name="TryDeath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_23DC2BFD_46D6_50B4_B5CE_04E8A9051A52" name="Blinking" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_347F4CAD_7E4C_527D_BCF7_EA4F8BE792D4" name="CharacterData" visibility="public">
+      <interfaceRealization xmi:id="EAID_896CE421_8B86_5C73_9AC0_5D6E07E0BC91" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_347F4CAD_7E4C_527D_BCF7_EA4F8BE792D4"/>
+      <ownedAttribute xmi:id="EAID_6F8EC4E3_3839_5582_92CD_B4CE5C6060C5" name="_abilitySet" visibility="public" type="CharacterAbilitySet"/>
+      <ownedAttribute xmi:id="EAID_B6F2E009_B573_5401_A7B1_50C169AF4ECE" name="_name" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_10941D08_F378_52A0_82BF_CC9E8C940A6C" name="_damage" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_93DA1D58_4A13_59CA_A2AA_053290F9C580" name="_maxHealth" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_C0CB226D_BC12_5C01_88EE_CBC2EB506455" name="_level" visibility="public" type="int"/>
+      <ownedOperation xmi:id="EAID_C063F25D_A35D_5420_A7AB_2AC72EDB0ECF" name="ResetToDefaults" visibility="public"/>
+      <ownedOperation xmi:id="EAID_48D91804_E9A2_57DF_8306_C34F79CB6D43" name="ValidateAndFixData" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_07E82AE9_426F_5F75_8838_DD8F719AEB4C" name="CharacterDataRuntime" visibility="public">
+      <interfaceRealization xmi:id="EAID_CBDD5AB7_A117_5FFB_A062_D3112505F059" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_07E82AE9_426F_5F75_8838_DD8F719AEB4C"/>
+      <ownedAttribute xmi:id="EAID_BA1659F5_87CD_5879_932F_84B38BF5AD6D" name="originalData" visibility="public" type="CharacterData"/>
+      <ownedAttribute xmi:id="EAID_D454984D_467E_539C_A2A7_EFA9047B3B9A" name="_abilitySet" visibility="public" type="CharacterAbilitySet"/>
+      <ownedAttribute xmi:id="EAID_92E9B23E_09B8_570A_9604_18AC21C0F187" name="spritePath" visibility="public" type="string"/>
+      <ownedOperation xmi:id="EAID_6D5FACED_BFF9_5EDB_95FD_5ACF0362A2A5" name="CreateFromScriptableObject" visibility="public"/>
+      <ownedOperation xmi:id="EAID_70F7D345_3674_5685_A255_80C460EB8ED8" name="ValidateAndFixData" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_64071144_0CD4_5088_975B_EC4D7940F4CD" name="EnemyData" visibility="public">
+      <interfaceRealization xmi:id="EAID_48D38E27_9BEB_5E23_A508_1EECFD7E1B04" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_64071144_0CD4_5088_975B_EC4D7940F4CD"/>
+      <ownedAttribute xmi:id="EAID_4D3496DF_AAAF_5DFB_AFC0_DA2369156D4E" name="_name" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_6A0B9BCF_718D_5F4A_B482_AD7489A443DC" name="_damage" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_62CD3593_5469_5402_BFE5_BC95D642F1F7" name="_maxHealth" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_75A76702_0000_58CF_B86C_3796AD08671D" name="_attackAnimationName" visibility="public" type="string"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135" name="BattleAbility" visibility="public" isAbstract="true">
+      <ownedAttribute xmi:id="EAID_0A00EF83_57EA_5764_9BF8_679BFD652DC6" name="AbilityName" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_6F035879_B356_5F75_8639_2EBD8EB1C329" name="ManaCost" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_76CF8E0B_3281_5938_90D5_54EDC16EDD64" name="targetType" visibility="public" type="TargetType"/>
+      <ownedAttribute xmi:id="EAID_91CEA9DD_A823_5483_9A2D_47DAF626AF13" name="animTrigger" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_2B775EE0_5F68_52FB_9152_126E216EAA89" name="vfxPrefab" visibility="public" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_2DE9410B_F410_5B38_A804_44346B0A5701" name="Description" visibility="public" type="string"/>
+      <ownedOperation xmi:id="EAID_728E0440_3BA4_518C_AF60_11A16117C994" name="Execute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_821471B5_3C6C_5ED6_A03D_622D14D48C79" name="CanUse" visibility="public"/>
+      <ownedOperation xmi:id="EAID_558CFF36_C868_50FE_8648_41B108D13DFC" name="PlayHitAnimation" visibility="protected"/>
+      <ownedOperation xmi:id="EAID_3CCFA59E_21D6_5ABB_9B8D_EAACE28B764D" name="SpawnVFX" visibility="protected"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_09D7DC8F_EC84_5949_9607_D0CB991F9C00" name="MeleeAbility" visibility="public">
+      <generalization xmi:id="EAID_20CC88AD_6235_5206_B766_8E8AED5E8C6B" general="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135"/>
+      <ownedAttribute xmi:id="EAID_15B9F8D3_98CC_5B8D_B4E7_EC8F0F282E42" name="baseDamageMultiplier" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_25A83A16_AEC2_5D68_847C_98CA83E6C37D" name="flatDamageBonus" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_511C8E76_F96A_508A_A6B6_79E4DE679BEB" name="hasStatusEffect" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_986967F1_F63C_530D_9FC5_5690B5F29A3F" name="statusEffect" visibility="private" type="StatusEffectSO"/>
+      <ownedAttribute xmi:id="EAID_7ADBE3D3_9534_5585_A837_0E083B3FCA3A" name="chanceToApply" visibility="private" type="float"/>
+      <ownedOperation xmi:id="EAID_63A1C97A_6B6D_5D2F_A5B7_EB87BB62B49C" name="Execute" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_4BD096F5_C7AA_5ECD_AA5B_1707F0F049E0" name="MagicAbility" visibility="public">
+      <generalization xmi:id="EAID_7CF5E621_70A5_5096_A980_44F2CE40E933" general="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135"/>
+      <ownedAttribute xmi:id="EAID_6D86FE41_9E91_5819_AEB2_B7717574622E" name="magicDamage" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_A178EF21_2636_5EDB_9B8F_2520BB2D5781" name="flatDamageBonus" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_07EDEA55_CA1F_5817_B5CA_6A1CB18573E3" name="statusEffect" visibility="private" type="StatusEffectSO"/>
+      <ownedAttribute xmi:id="EAID_E0233C55_0EA4_5283_A26A_EDFABCB30740" name="chance" visibility="private" type="float"/>
+      <ownedOperation xmi:id="EAID_93AC9486_B422_59A6_919E_EEF79F20BA9A" name="Execute" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_ED19D3AF_AA85_5BC5_B244_F1695E99CF64" name="HealAbility" visibility="public">
+      <generalization xmi:id="EAID_FB5F0812_9F70_5C9F_B9FD_9E364AF1D50E" general="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135"/>
+      <ownedAttribute xmi:id="EAID_2862A6BC_5425_52E0_9DB5_443D66617A3C" name="baseHealAmount" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_3703475A_BEA7_59B2_8B8B_89C1DB3BB002" name="useCharacterHealStat" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_FE959143_2671_53A8_B09A_AA032BFE57CD" name="healMultiplier" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_ACBDE1C5_2446_5C10_B3CE_33A6733A7A0D" name="healOverTimeEffect" visibility="private" type="StatusEffectSO"/>
+      <ownedOperation xmi:id="EAID_44986D4A_BF6F_5E09_A369_98479B64D809" name="Execute" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8DE4AC89_EE82_55CA_8595_587769222BD0" name="DefenseAbility" visibility="public">
+      <generalization xmi:id="EAID_CD3DFD9E_99F7_5647_AD99_BEA4D2630354" general="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135"/>
+      <ownedAttribute xmi:id="EAID_0A878A6D_09E7_5213_8CD3_0E47AF9A235B" name="bonusDefense" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_BF7E8A1B_2F45_5713_9274_F2168D16B82F" name="duration" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_FFDDD43C_29EB_5E8B_9EC9_F3878CD53BBF" name="defenseEffect" visibility="private" type="StatusEffectSO"/>
+      <ownedOperation xmi:id="EAID_A8BDD458_BE2D_5318_BBBF_9BD093883726" name="Execute" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_2FD72E7D_C95C_5564_B830_29CC46E68447" name="StatusAbility" visibility="public">
+      <generalization xmi:id="EAID_C81E15BF_6C1A_5028_95A3_19F55AE21316" general="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135"/>
+      <ownedAttribute xmi:id="EAID_FDE7D80F_580F_5D5C_909D_EEE351A468BD" name="effect" visibility="public" type="StatusEffectSO"/>
+      <ownedAttribute xmi:id="EAID_8C4CEB36_9AB0_5992_8D40_5381F19DEA13" name="damageMultiplier" visibility="public" type="float"/>
+      <ownedOperation xmi:id="EAID_9E143FC1_D3AC_5FAB_81E6_B0F4C9EF159F" name="Execute" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_E20212D6_9F5C_5F74_B9C2_57EABD7EC805" name="CharacterAbility" visibility="public">
+      <ownedAttribute xmi:id="EAID_8DC1B375_A8CC_5574_AE21_2860F2339782" name="ability" visibility="public" type="BattleAbility"/>
+      <ownedAttribute xmi:id="EAID_CC78943C_368E_5DC9_A900_3E75AF15B7CA" name="requiredLevel" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_97589C1A_2A64_514D_A619_77EEA199015C" name="abilityType" visibility="public" type="AbilityType"/>
+      <ownedAttribute xmi:id="EAID_539F298A_620A_5460_80EE_A42C65264CF5" name="abilityIcon" visibility="public" type="Sprite"/>
+      <ownedAttribute xmi:id="EAID_C83C6B1A_B600_5027_83DB_11BD71C4F4F5" name="isActiveByDefault" visibility="public" type="bool"/>
+      <ownedOperation xmi:id="EAID_CEBE6B7A_4ED8_50E7_BBDF_B258FE44D530" name="IsUnlocked" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_5E3C9F22_7533_5B86_8894_1BB5520DD6E7" name="CharacterAbilitySet" visibility="public">
+      <ownedAttribute xmi:id="EAID_CEE5B4B8_8EEA_5CBC_9715_19A681CC4CBB" name="abilities" visibility="public" type="List[CharacterAbility]"/>
+      <ownedAttribute xmi:id="EAID_9F71A032_B8C4_5679_B1CC_564DCABFBBA1" name="activeAbilityIndices" visibility="public" type="List[int]"/>
+      <ownedOperation xmi:id="EAID_F012530C_350F_54D8_A979_096B0681D25F" name="GetUnlockedAbilities" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A04B5AFD_348A_5CF1_BCF5_4A4DDB662C6B" name="GetActiveAbilities" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0C751D92_3100_5F44_8973_7F31CD6FF4F0" name="GetAbilitiesByType" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2AFF11EF_1D9C_5981_8016_3167CBC4673E" name="ActivateAbility" visibility="public"/>
+      <ownedOperation xmi:id="EAID_186CCF11_9971_5CC2_AB12_DC184504CE21" name="DeactivateAbility" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" name="Character" visibility="public">
+      <generalization xmi:id="EAID_76577061_CBEA_5FA3_A136_B60E847058DF" general="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048"/>
+      <ownedAttribute xmi:id="EAID_C2004875_FFEF_5505_A81A_06E598564B14" name="IsTurn" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_56D87E06_EF14_57BB_9646_A0981F7145AC" name="characterData" visibility="private" type="CharacterData"/>
+      <ownedAttribute xmi:id="EAID_18C59388_9C55_5F61_9DEC_BCBBBCA63EE1" name="AbilitySet" visibility="public" type="CharacterAbilitySet"/>
+      <ownedAttribute xmi:id="EAID_ADBEA7D2_D108_5C86_9DFF_5896CF000C93" name="actionButtons" visibility="private" type="ActionButtons"/>
+      <ownedOperation xmi:id="EAID_F85FC541_B3BC_5840_886C_2A9D565993BC" name="InitializeFromSettings" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" name="Enemy" visibility="public">
+      <generalization xmi:id="EAID_B26C0B03_FC18_5115_B6C1_D2CEC84C8206" general="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048"/>
+      <ownedAttribute xmi:id="EAID_2DCCB5EE_47E4_57A1_B7BD_3554E1820149" name="enemyData" visibility="private" type="EnemyData"/>
+      <ownedAttribute xmi:id="EAID_ECCA41BA_5949_5C8C_A6CE_7F115106CB0E" name="actionButtons" visibility="private" type="ActionButtons"/>
+      <ownedOperation xmi:id="EAID_4AD2FF32_4CBF_5A32_BC48_D07F8EA2FEAD" name="InitializeFromSettings" visibility="public"/>
+      <ownedOperation xmi:id="EAID_570D4161_C3D9_5634_940D_75010DF57050" name="LocalInizialize" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_38C1C113_1D68_5847_9A1E_9362C4421C76" name="EnemiesSettings" visibility="public">
+      <interfaceRealization xmi:id="EAID_38E7EEA7_7797_5800_857D_AA6C68D64305" supplier="EAID_B975F1EF_AB34_50C8_A234_93D7D3027FFD" client="EAID_38C1C113_1D68_5847_9A1E_9362C4421C76"/>
+      <ownedAttribute xmi:id="EAID_3373EF34_437B_50CF_AA26_70A0B206AFCA" name="useEnemyData" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_E79AF67A_56B0_5350_B134_6D12532E5C33" name="enemyDataName" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_FBCD9E5D_A185_5FFB_B127_7355C0D9B2C7" name="enemyData" visibility="public" type="EnemyData"/>
+      <ownedAttribute xmi:id="EAID_B7EA3797_EFF2_5AF8_B4E5_99A84E859CB1" name="spritePath" visibility="public" type="string"/>
+      <ownedOperation xmi:id="EAID_CF41C694_3AFB_5593_9362_8C62EFB1F44A" name="GetSprite" visibility="public"/>
+      <ownedOperation xmi:id="EAID_98231850_5020_5F02_9888_F96305AFBDAF" name="GetEnemyData" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_A32C41B5_2D0D_5EC4_8DC2_F0E04FFA332D" name="AbilityButton" visibility="public">
+      <ownedAttribute xmi:id="EAID_A05C0A60_078C_50E8_938F_82C91855A821" name="ability" visibility="private" type="BattleAbility"/>
+      <ownedAttribute xmi:id="EAID_70208D9B_A439_5AF4_BA59_2F662B700149" name="character" visibility="private" type="Base"/>
+      <ownedAttribute xmi:id="EAID_645A38C7_CEEA_5CA6_903D_9F032BE764E3" name="actionButtons" visibility="private" type="ActionButtons"/>
+      <ownedAttribute xmi:id="EAID_0D47555A_5DC5_59FA_8C36_14DA147826C1" name="abilityNameText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_A67F53EE_EEE2_510B_A634_0A50B65E3747" name="manaCostText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_28B6633A_AA0C_55B4_83B9_1CEFD5FD8AE4" name="abilityIcon" visibility="private" type="Image"/>
+      <ownedOperation xmi:id="EAID_F43379A0_ED9A_5D13_8DCD_1AA45671EFAE" name="Setup" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A3B3EDFC_9BA9_5B69_94DB_0FC8819ACBAB" name="UpdateVisuals" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DC74B391_720F_5072_81C2_AB52FBF963C3" name="GetAbility" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_B2014B37_F940_5196_B514_DFC68FBBDB2F" name="AbilityManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_6E3AB0A5_E332_57AF_9CD7_8A92325D076D" name="fightManager" visibility="private" type="FightManager"/>
+      <ownedAttribute xmi:id="EAID_A6F38C34_B98A_5F7C_A6A6_7D517A639606" name="currentCharacter" visibility="private" type="Character"/>
+      <ownedAttribute xmi:id="EAID_C6FE2EDB_B158_5714_B67A_EF3889ACEE77" name="buttonAbilityMap" visibility="private" type="Dictionary[Button,BattleAbility]"/>
+      <ownedAttribute xmi:id="EAID_0BC70EE6_8F8B_565C_84D3_6B9B60E9D863" name="physicalAbilitiesContainer" visibility="private" type="Transform"/>
+      <ownedAttribute xmi:id="EAID_1870C792_FC47_519A_8B2F_155BB3E14EC7" name="magicAbilitiesContainer" visibility="private" type="Transform"/>
+      <ownedAttribute xmi:id="EAID_038EC9C4_F510_524E_9B87_1E90828E3CE9" name="defenseAbilitiesContainer" visibility="private" type="Transform"/>
+      <ownedAttribute xmi:id="EAID_BBD74727_2A73_5BD8_8201_5B6C06D44A44" name="supportAbilitiesContainer" visibility="private" type="Transform"/>
+      <ownedOperation xmi:id="EAID_F61288B6_6EA6_5C50_8474_A8834785CF29" name="SetupAbilitiesForCharacter" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1752E40A_43EF_548A_AAB1_7D34B546B924" name="CreateAbilityButton" visibility="private"/>
+      <ownedOperation xmi:id="EAID_43828D6F_A807_51AF_A656_4346ADD90BCA" name="RefreshAbilities" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" name="ActionButtons" visibility="public">
+      <ownedAttribute xmi:id="EAID_32E8BA58_FE20_5B31_95AC_454473B96F7F" name="currentEnemy" visibility="public" type="Enemy"/>
+      <ownedAttribute xmi:id="EAID_5604F48B_F75F_5AD6_A411_6F1A50855063" name="fightManager" visibility="private" type="FightManager"/>
+      <ownedAttribute xmi:id="EAID_A11EC083_E4DD_5091_B3C9_024F3E423505" name="sceneLoader" visibility="private" type="SceneLoader"/>
+      <ownedAttribute xmi:id="EAID_35E7ED8E_8427_5E2D_8CA7_090C235738BF" name="abilityManager" visibility="private" type="AbilityManager"/>
+      <ownedAttribute xmi:id="EAID_08750CD4_0567_516C_BCC3_4FB938FCB845" name="pendingAbility" visibility="private" type="BattleAbility"/>
+      <ownedAttribute xmi:id="EAID_9CFC970A_67BB_50D6_B5C2_747037189EE5" name="pendingAttacker" visibility="private" type="Base"/>
+      <ownedAttribute xmi:id="EAID_02315676_C2BB_5E6E_B9E9_6E3260816697" name="descriptionText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedOperation xmi:id="EAID_FD578BEA_6F87_5FE8_A557_AC2E03DA4A5B" name="OnEnemySelected" visibility="public"/>
+      <ownedOperation xmi:id="EAID_ECDF8210_7EEE_564E_A69C_FCAB02D6C0CE" name="OnCharacterSelected" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8A560A5F_8B51_507C_B808_E5F825E344DE" name="SetPendingAbility" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E98AB350_CCCD_57D6_9DA4_88344C6D0374" name="ShowAbilityDescription" visibility="public"/>
+      <ownedOperation xmi:id="EAID_CD7BB7AA_4842_57A9_9B8A_82230AD6C69A" name="ClearDescription" visibility="public"/>
+      <ownedOperation xmi:id="EAID_14551456_51BB_5819_9208_EA7258FA064F" name="EscapeFight" visibility="public"/>
+      <ownedOperation xmi:id="EAID_22351513_EF36_5859_B5FC_01F7AAD05462" name="OpenInventory" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" name="FightManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_C65DC7DA_0D5C_5C55_8DEB_E2D7C4D2DDEE" name="ActiveCharacter" visibility="public" type="Character"/>
+      <ownedAttribute xmi:id="EAID_D21C2715_1BF1_539C_9B9E_9CB8D49306DF" name="enemies" visibility="public" type="List[Enemy]"/>
+      <ownedAttribute xmi:id="EAID_B641C10F_F939_5A61_96A3_69D4E96634A7" name="characters" visibility="public" type="List[Character]"/>
+      <ownedAttribute xmi:id="EAID_2142106D_A13E_55EA_B621_4C168DF1B5A2" name="bases" visibility="private" type="List[Base]"/>
+      <ownedAttribute xmi:id="EAID_CB1E0DEA_ADF6_5957_9FA5_52DE88E36CB3" name="abilityManager" visibility="private" type="AbilityManager"/>
+      <ownedAttribute xmi:id="EAID_362A6A51_4756_5501_89F7_753D2292305D" name="battleTeamSync" visibility="private" type="BattleTeamSync"/>
+      <ownedAttribute xmi:id="EAID_96FD1172_640B_5D11_B315_74C26BD7C079" name="gameSettings" visibility="private" type="GameSettings"/>
+      <ownedOperation xmi:id="EAID_20F77C88_3907_50F8_A4CF_96D91B733422" name="StartFight" visibility="private"/>
+      <ownedOperation xmi:id="EAID_4785EF98_985B_54CC_8507_4CDFEFE869AF" name="EndFight" visibility="private"/>
+      <ownedOperation xmi:id="EAID_CF40C609_5941_53A3_A35B_F8F872C13B95" name="WaitCharacterTurn" visibility="private"/>
+      <ownedOperation xmi:id="EAID_F9439A31_BB42_590E_80B0_DB18A2A4F7C5" name="GetCharacterLowestHP" visibility="public"/>
+      <ownedOperation xmi:id="EAID_28B1AC31_B56F_5D22_8D2D_8C88684069D6" name="DeleteEnemyOnList" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0A5AEF6B_B3FB_5D69_8355_CFF756A85C5F" name="StopEnemyBlinking" visibility="public"/>
+      <ownedOperation xmi:id="EAID_CA68AEBB_F3AE_576E_83A6_D2F7AFFB145A" name="StartEnemyBlinking" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_5E398E11_6D9A_592B_B3F1_A4BC10EACF85" name="BattleTeamSync" visibility="public">
+      <ownedAttribute xmi:id="EAID_81AF0FFE_6D76_5AC2_B6CF_B19BC8E7AB78" name="fightManager" visibility="private" type="FightManager"/>
+      <ownedAttribute xmi:id="EAID_97B720AA_4499_5A8E_99B6_F00C0C90867E" name="initialCharacters" visibility="private" type="Dictionary[string,Character]"/>
+      <ownedOperation xmi:id="EAID_AA249E6C_A15E_5B9A_B5C8_75C55DB25713" name="OnTeamManagerReady" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F5F3DE75_ECA6_5D2E_9359_B527B98D5844" name="LinkTeamManagerWithBattle" visibility="private"/>
+      <ownedOperation xmi:id="EAID_08EC92F4_2F15_504B_BF76_8A762B7C8119" name="SyncTeamAfterBattle" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_87A3237F_8CE9_5A7A_9B6B_13CAA0FBC8D1" name="FightTrigger" visibility="public">
+      <ownedAttribute xmi:id="EAID_FF6CE5DC_CCBB_5471_854C_262338714B57" name="canTriggered" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_DD37FA6D_496A_5BE4_A2ED_73BA3125C14E" name="sceneLoader" visibility="private" type="SceneLoader"/>
+      <ownedAttribute xmi:id="EAID_7B55CDAE_74D0_5C43_8D01_EA311E5EDB3B" name="enemies" visibility="private" type="List[EnemiesSettings]"/>
+      <ownedOperation xmi:id="EAID_D75E3B2D_D212_5F24_B609_A5539FAC3451" name="OnTriggerEnter2D" visibility="private"/>
+      <ownedOperation xmi:id="EAID_D2AB07B5_1E95_5AB0_AA3E_4D70A29545DF" name="StartFight" visibility="private"/>
+      <ownedOperation xmi:id="EAID_4E8A4AAD_4747_5183_A988_3CF518C2CDAF" name="SaveEnemiesToFile" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_AB7E3FA9_7E10_5E6E_8422_AFFEB3D9E683" name="FightDataLoader" visibility="public">
+      <ownedAttribute xmi:id="EAID_7D5A7DDC_BBF2_5EF3_AD8D_91C1B485516A" name="enemyPrefab" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_192D7880_4C4D_5605_A8C3_0E29E4F9B2A0" name="characterPrefab" visibility="private" type="GameObject"/>
+      <ownedOperation xmi:id="EAID_0B1C058D_27C5_5D72_ADB5_D5F3A2AE396F" name="LoadFightData" visibility="private"/>
+      <ownedOperation xmi:id="EAID_A86381D4_B862_58E5_A63D_BB78EBE35894" name="LoadCharactersData" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_02F95AF1_F300_5F3F_972F_CF52D839A29F" name="TargetType" visibility="public">
+      <ownedLiteral xmi:id="EAID_CC6202E3_6772_560B_BD46_7873A62322F8" name="Enemy"/>
+      <ownedLiteral xmi:id="EAID_4BA8F087_BD0A_5A46_BC2A_40DD1E693391" name="Ally"/>
+      <ownedLiteral xmi:id="EAID_3B48B9A8_ED2A_590B_9995_AFA153A31D02" name="Self"/>
+      <ownedLiteral xmi:id="EAID_29D00DB7_368F_5856_980D_272541619ED5" name="AllEnemies"/>
+      <ownedLiteral xmi:id="EAID_E6B630F2_3F0A_598F_8E58_832108B9EB8F" name="AllAllies"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_A9C55324_4FDE_54BE_AD63_DC74DFCC9A25" name="AbilityType" visibility="public">
+      <ownedLiteral xmi:id="EAID_65FEA4DC_3A3B_59D7_B9E0_473E85BF685D" name="Physical"/>
+      <ownedLiteral xmi:id="EAID_7BB79434_9B1D_5066_9C91_40778124897B" name="Magic"/>
+      <ownedLiteral xmi:id="EAID_2C117B06_021C_58AD_AEC0_4D0B5E6C0AAB" name="Defense"/>
+      <ownedLiteral xmi:id="EAID_9CA41A57_F7E4_5D5D_8867_2A69231DA485" name="Support"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_C8B9518B_FBF1_561F_B624_D1AE29241A93" name="StateEffect" visibility="public">
+      <ownedLiteral xmi:id="EAID_5904B9FF_62F0_5715_8125_A1D8B25E675F" name="None"/>
+      <ownedLiteral xmi:id="EAID_17D67D93_714E_5101_A35A_DE979993F627" name="Fire"/>
+      <ownedLiteral xmi:id="EAID_075F12E2_B3B3_5824_99C2_E26DED453E7B" name="Water"/>
+      <ownedLiteral xmi:id="EAID_2DBF8CF1_B221_59F0_B516_40E1FAA4A1DE" name="Air"/>
+      <ownedLiteral xmi:id="EAID_B44DF974_C130_5E37_BDB6_C59133A91DB9" name="Ground"/>
+    </packagedElement>
+  </packagedElement>
+
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_07285DAA_F2F1_5157_8FC6_2FEC1A6F588E" name="Base__stats">
+    <ownedEnd xmi:id="EAID_4C86F2FA_D451_531A_8BDC_AC6421766924" type="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" aggregation="composite" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_9F52BAD4_DB87_523F_861B_B0CA4CEDF440" name="stats" type="EAID_D240BDE0_A6DC_5501_8F11_2A2A4C978C37" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_D0AF8AE6_6FF5_573F_B58B_092481728F80" name="Base__activeEffects">
+    <ownedEnd xmi:id="EAID_294E27EC_0554_53DC_AC2A_40C70A2A504D" type="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" aggregation="composite" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_B226B669_4081_5D8F_A2A9_94A542436F3F" name="activeEffects" type="EAID_56AE7BF4_045D_53DC_877E_42A798B7916D" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_7E756C19_908B_521C_A418_8C2372A51819" name="ActiveStatusEffect__data">
+    <ownedEnd xmi:id="EAID_24208346_D631_5D43_A78C_6BF2D7099668" type="EAID_56AE7BF4_045D_53DC_877E_42A798B7916D" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_4C3EFA7B_E9B1_5CFE_9FA3_C6C30A4537DD" name="data" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_57EF0DE3_9F73_5D83_9DFC_C03734E691F0" name="Character__characterData">
+    <ownedEnd xmi:id="EAID_2BFE822C_B455_5094_A030_260EA343ED46" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_1EE144F0_B960_501C_831F_73ED5DC014E4" name="characterData" type="EAID_347F4CAD_7E4C_527D_BCF7_EA4F8BE792D4" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_65EB09C4_4E74_57BC_9D6E_AD3FEBE7804C" name="Character__AbilitySet">
+    <ownedEnd xmi:id="EAID_B209F559_628B_5B09_A79D_A67C999200BA" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_63BC533B_BAB5_57A7_9F83_CCED34BD05B0" name="AbilitySet" type="EAID_5E3C9F22_7533_5B86_8894_1BB5520DD6E7" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_65BC119B_98F4_5165_8831_091A976CE03A" name="Character__actionButtons">
+    <ownedEnd xmi:id="EAID_C51A35F0_DC53_51B3_81F6_F332A8577D3A" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_1FB22764_378D_5F0C_A220_31B24EE8C4F6" name="actionButtons" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_FEACD7FD_FE4B_5FA8_82B8_BEA53E9CDB6A" name="Enemy__enemyData">
+    <ownedEnd xmi:id="EAID_9F291A10_96F3_5A92_8613_AB240C23260C" type="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_3452DF3E_C926_566B_A799_3D5887154D51" name="enemyData" type="EAID_64071144_0CD4_5088_975B_EC4D7940F4CD" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_078B5D2D_4E83_52AB_B6B1_861D774947BA" name="Enemy__actionButtons">
+    <ownedEnd xmi:id="EAID_A3E6D775_57C8_5D06_9CFF_BA7E0EC11937" type="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_1B4C1DC6_2C72_5A65_98D5_404FCA82BCF5" name="actionButtons" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_07DDD608_D5FD_5451_82E2_50FFEA28D7AE" name="CharacterData__AbilitySet">
+    <ownedEnd xmi:id="EAID_C7773FF3_AC1A_5EF2_A6B4_AA9366092CD1" type="EAID_347F4CAD_7E4C_527D_BCF7_EA4F8BE792D4" aggregation="composite" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_96B22E33_52F1_551B_9F60_B4B5BDBDC43A" name="AbilitySet" type="EAID_5E3C9F22_7533_5B86_8894_1BB5520DD6E7" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_C6456453_782E_5433_92EB_62B49A6A056F" name="CharacterDataRuntime__originalData">
+    <ownedEnd xmi:id="EAID_4DD36C59_B374_54D6_A4ED_63106842CCEE" type="EAID_07E82AE9_426F_5F75_8838_DD8F719AEB4C" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_5DA7A297_E62B_57F6_9029_262A0B8EEEB7" name="originalData" type="EAID_347F4CAD_7E4C_527D_BCF7_EA4F8BE792D4" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_CB6EA692_1896_5474_9391_9C069AB74787" name="CharacterDataRuntime___abilitySet">
+    <ownedEnd xmi:id="EAID_ED6BF7A0_876C_557E_9145_46809D6B7199" type="EAID_07E82AE9_426F_5F75_8838_DD8F719AEB4C" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_696DD73D_F425_55D0_8137_B81F9C98FA6F" name="_abilitySet" type="EAID_5E3C9F22_7533_5B86_8894_1BB5520DD6E7" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_060D9827_EC76_502C_957C_E118BE79C9BF" name="CharacterAbilitySet__abilities">
+    <ownedEnd xmi:id="EAID_2DA314D2_D53B_55FB_9924_F119128E75CB" type="EAID_5E3C9F22_7533_5B86_8894_1BB5520DD6E7" aggregation="composite" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_074D3B21_59E2_555F_863C_B5B036EC1BEA" name="abilities" type="EAID_E20212D6_9F5C_5F74_B9C2_57EABD7EC805" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_9591F811_067E_5AD2_B926_76F7274EDF36" name="CharacterAbility__ability">
+    <ownedEnd xmi:id="EAID_CA20B88E_F461_53C2_A9D8_FBE9785BF83A" type="EAID_E20212D6_9F5C_5F74_B9C2_57EABD7EC805" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_2E1C08AB_B58B_511D_8C55_51FA6CFA6477" name="ability" type="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_AD9C2AB6_3AA3_510C_BDA3_EB8090A61C78" name="MeleeAbility__statusEffect">
+    <ownedEnd xmi:id="EAID_7E36200D_1DFF_543D_9827_3A95587B3A09" type="EAID_09D7DC8F_EC84_5949_9607_D0CB991F9C00" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_C4B556DD_B960_59A7_930E_27E89DA76920" name="statusEffect" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_215C8623_4C22_53A4_B8A4_9F6010214BCF" name="MagicAbility__statusEffect">
+    <ownedEnd xmi:id="EAID_1E9DE94E_0199_50C1_A5B8_9ACB96D55C59" type="EAID_4BD096F5_C7AA_5ECD_AA5B_1707F0F049E0" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_DBC734F1_DF3B_5879_A7AB_7C885613AC44" name="statusEffect" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_00AFD652_1DA3_5AAE_A505_7B1C46188F9A" name="HealAbility__healOverTimeEffect">
+    <ownedEnd xmi:id="EAID_C86A0CAF_D496_51C2_B89D_94910CB21B6F" type="EAID_ED19D3AF_AA85_5BC5_B244_F1695E99CF64" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_803F05A7_854F_52A9_98B0_BC08E34D3D4A" name="healOverTimeEffect" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_8795BABE_4DE0_500E_BC17_9956F6E9F175" name="DefenseAbility__defenseEffect">
+    <ownedEnd xmi:id="EAID_AA9C2988_C0CA_5C21_947F_AD4FC53D7BB8" type="EAID_8DE4AC89_EE82_55CA_8595_587769222BD0" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_1DCA9AA1_F3DC_5132_BE01_C42AE30736D9" name="defenseEffect" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_3D1C1E4C_206F_5C37_876C_421BB165FD75" name="StatusAbility__effect">
+    <ownedEnd xmi:id="EAID_5DF6CAFD_B8FC_5A21_BA56_B73E55F6B8ED" type="EAID_2FD72E7D_C95C_5564_B830_29CC46E68447" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_51ED580C_FAF5_5FC2_BBE8_BC19996E4E8C" name="effect" type="EAID_04B2EB81_5C88_5677_B259_F971A02B5B82" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_C939212E_B89F_5B9A_9D58_053FD9A7BB78" name="EnemiesSettings__enemyData">
+    <ownedEnd xmi:id="EAID_79BD1B76_1AD4_5520_A09F_25D635FA1C81" type="EAID_38C1C113_1D68_5847_9A1E_9362C4421C76" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_3762F9FA_3E9E_5BA1_BAF4_D7C44CF93B66" name="enemyData" type="EAID_64071144_0CD4_5088_975B_EC4D7940F4CD" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_36B22C68_8636_5BB9_9684_5D740F86F56F" name="AbilityButton__ability">
+    <ownedEnd xmi:id="EAID_B8AC111B_E45C_58C3_A395_3BBE06625D26" type="EAID_A32C41B5_2D0D_5EC4_8DC2_F0E04FFA332D" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_CA8C110C_927A_5F12_8BB6_1DA93D296FA7" name="ability" type="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_1DD6F2AA_7097_563C_BF46_8B681160EE7B" name="AbilityButton__character">
+    <ownedEnd xmi:id="EAID_A2AFBB8E_EDE0_5EB8_A96E_98EDD5D3D3C0" type="EAID_A32C41B5_2D0D_5EC4_8DC2_F0E04FFA332D" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_FDCA70A8_5B14_5A51_BF8C_15ACC4650ACB" name="character" type="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_63152F9D_B0CE_521F_ADFC_166BBAD36D28" name="AbilityButton__actionButtons">
+    <ownedEnd xmi:id="EAID_04DCF250_B9CF_502E_9E1A_D27E0418E28B" type="EAID_A32C41B5_2D0D_5EC4_8DC2_F0E04FFA332D" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_BF1750D0_11D8_596A_A33D_CC92638A2767" name="actionButtons" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_E3EF6DBB_9DA5_52B2_8ACF_62A219DD5279" name="AbilityManager__fightManager">
+    <ownedEnd xmi:id="EAID_37F09106_EE22_559D_903F_5874DDB015B1" type="EAID_B2014B37_F940_5196_B514_DFC68FBBDB2F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_1F71C27C_AF7E_5E38_B363_AFCDE6364936" name="fightManager" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_306C3984_2E66_5F28_A27C_F365FD03C61C" name="AbilityManager__currentCharacter">
+    <ownedEnd xmi:id="EAID_87B20AF1_772E_5F8B_B9AE_24587BD553A7" type="EAID_B2014B37_F940_5196_B514_DFC68FBBDB2F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_015FDED3_524D_5B45_8E9A_AA849742BC15" name="currentCharacter" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_DDD5A468_668F_54E9_B6F9_CA4802487235" name="ActionButtons__fightManager">
+    <ownedEnd xmi:id="EAID_7E5466A6_8253_59D9_9E9D_487C5B2CAB82" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_AC6E9040_9265_59BA_B1F3_D81DA8DF8FED" name="fightManager" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_B0BE625E_76C7_5B33_B89D_2D942D12AFBB" name="ActionButtons__currentEnemy">
+    <ownedEnd xmi:id="EAID_F0BC8342_D5AC_5EEB_9AAA_C9A0F2C295AA" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_AD736428_A912_5D1D_8472_EA9A62895EEA" name="currentEnemy" type="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_6649E3BC_E04E_5867_9D12_AA0900668BD1" name="ActionButtons__abilityManager">
+    <ownedEnd xmi:id="EAID_52BA5DDB_6B89_5AE8_BC8E_E736D9A7D624" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_5DAA81B1_3008_5F86_94A6_FC87F85A4B48" name="abilityManager" type="EAID_B2014B37_F940_5196_B514_DFC68FBBDB2F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_843E3C4F_0B4D_5174_A274_41455B38ACD1" name="ActionButtons__pendingAbility">
+    <ownedEnd xmi:id="EAID_E83174C2_9399_5495_B164_C6409AF5A90F" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_3D643D2A_B67C_5B08_886C_6CABCEA963D6" name="pendingAbility" type="EAID_4040E914_B73A_5BEB_B40A_C3BAEFF3E135" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_F2CB3EFA_4F9D_546F_9340_54AA4F765B24" name="ActionButtons__pendingAttacker">
+    <ownedEnd xmi:id="EAID_65FF6368_CB43_5AF1_9FD6_AD778A605175" type="EAID_A4FA36D1_80FA_5DF0_A02A_A3DDC2E9844F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_C78571AD_5B72_502D_BFC6_DB73BA5FDF27" name="pendingAttacker" type="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_8FAF26E6_63CD_59C1_AE20_F6C0C99992C3" name="FightManager__characters">
+    <ownedEnd xmi:id="EAID_48A9371D_9BB0_5388_9845_FBB934466E3C" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" aggregation="shared" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_A3A31F5A_7249_5B88_B144_8516012E1B09" name="characters" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_718CD129_73CF_5247_8BF9_102FEDA3BA1A" name="FightManager__enemies">
+    <ownedEnd xmi:id="EAID_2DDF81A0_E52F_58F8_B2B8_156FBB1CF5E2" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" aggregation="shared" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_944884B1_3977_5AE3_A2E5_4C205779DD5E" name="enemies" type="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_1A0A40E0_B731_5772_A6A5_A0358857A732" name="FightManager__bases">
+    <ownedEnd xmi:id="EAID_D707AF17_C392_520D_B7B2_7D38337F4C0C" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" aggregation="shared" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_5B1429ED_89E1_54D0_972B_5BB43F2695EB" name="bases" type="EAID_61ADF08F_E816_55AC_943D_6A63B1EB4048" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_65D5653F_4A7E_5326_B1D3_54BBDD954561" name="FightManager__abilityManager">
+    <ownedEnd xmi:id="EAID_00BEDB55_E047_5A20_8D41_2647CE0387B4" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_31FCB24B_549A_52DE_A92B_B6D78CD6A5C5" name="abilityManager" type="EAID_B2014B37_F940_5196_B514_DFC68FBBDB2F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_2A283C16_AFE6_54B6_96E9_0BE83F1E7CD8" name="FightManager__battleTeamSync">
+    <ownedEnd xmi:id="EAID_0ACA3A2F_4D5A_59EF_B503_C606F30B69EA" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_2E64AA05_E967_5F3E_954A_F06C4FA4260E" name="battleTeamSync" type="EAID_5E398E11_6D9A_592B_B3F1_A4BC10EACF85" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_87C7EF73_1776_5CDB_BF2F_95F433FA97D6" name="BattleTeamSync__fightManager">
+    <ownedEnd xmi:id="EAID_19AE866C_4078_5820_A021_9358B30A591D" type="EAID_5E398E11_6D9A_592B_B3F1_A4BC10EACF85" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_D942EDB5_E742_5C1C_B962_DB4294E1DB0F" name="fightManager" type="EAID_79E951D5_DAB8_52C6_8B76_329FC6FDB31F" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_11EBB10A_C334_5EFF_80F9_00B6577631F8" name="BattleTeamSync__initialCharacters">
+    <ownedEnd xmi:id="EAID_BEF5B701_D1D3_5D4F_9292_E923945B311F" type="EAID_5E398E11_6D9A_592B_B3F1_A4BC10EACF85" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_0778ABBD_29D7_502C_BE7B_D14EC123B357" name="initialCharacters" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_D96CFD47_2DEF_5EF6_ABFE_1FDF9A8665E7" name="FightTrigger__enemies">
+    <ownedEnd xmi:id="EAID_6739010A_BE0E_5725_BD3B_25065E7BBDF7" type="EAID_87A3237F_8CE9_5A7A_9B6B_13CAA0FBC8D1" aggregation="composite" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_C3033CD8_808B_5DA6_898B_F99FDB8925A0" name="enemies" type="EAID_38C1C113_1D68_5847_9A1E_9362C4421C76" isNavigable="true" multiplicity="0..*"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_3712333B_FA83_575E_9FE7_9ABD7C100089" name="FightDataLoader__creates">
+    <ownedEnd xmi:id="EAID_9831D02B_EE99_50BD_AA1E_5CE1FE26C5C7" type="EAID_AB7E3FA9_7E10_5E6E_8422_AFFEB3D9E683" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_D8D54A3D_3F0B_556C_9E96_2B18269135E2" name="creates" type="EAID_6E5A7848_6AB8_586C_8497_23E01F207383" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="EAID_CEC13E8B_E265_5F1E_9A97_EAFB3D013906" name="FightDataLoader__creates">
+    <ownedEnd xmi:id="EAID_A9052E13_C388_5859_A0D3_9AC9E24C5E91" type="EAID_AB7E3FA9_7E10_5E6E_8422_AFFEB3D9E683" aggregation="none" isNavigable="false"/>
+    <ownedEnd xmi:id="EAID_B78ED40C_3CCF_5080_90BF_2FCE22885AEC" name="creates" type="EAID_419DA336_797B_5F8F_9A2D_99515EF4549B" isNavigable="true" multiplicity="1"/>
+  </packagedElement>
+</uml:Model>

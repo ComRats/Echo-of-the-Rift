@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_08A9DB09_1183_59EF_85E5_CB39326BEA18" name="AudioSystem">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_0E76A53A_8235_57D3_BBF0_DC326EFE387D" name="Core">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" name="IAudioManager" visibility="public">
+      <ownedOperation xmi:id="EAID_3064387D_9775_5340_A847_C47B7113BDF0" name="AddSoundFromPath" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_B4AC8802_79EF_5ED4_83E0_922E8188ACC9" name="GetEnumerator" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_DD4BC0EC_8A06_510C_973D_5D904529A2FE" name="Play" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_9E1254E6_B409_5DBC_882D_E8A1CE338762" name="PlayAtTimeStamp" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C3F5E68C_B01B_521F_A8C0_ED92EB440DFB" name="PlayOneShot" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_2B7E813C_E4EE_5E56_9D6A_34E990AA37CA" name="PlayDelayed" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_052A3BA3_1562_56F2_B4EB_58E1801B7896" name="PlayScheduled" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_931724C3_7479_5853_9D48_8C36033A57E6" name="Stop" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_1C154BC0_3DD0_5F8E_BBE6_2B8AF5CE257C" name="ToggleMute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_115861FA_BD81_5969_A876_D1F9855DA214" name="TogglePause" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_1535FA5E_926C_5D37_9294_873392AE5F0D" name="LerpVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_655D6F85_C583_5684_9B89_768C304FA262" name="LerpPitch" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_A31EB7A5_C841_5C41_85D5_0C6DEB9D3BE3" name="TryGetSource" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_04B09DC4_F60B_57BD_B957_2C7829BD326A" name="GetProgress" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_D1034FFE_0C5D_5DAA_940B_4FF57F682889" name="GetPlaybackPosition" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_869A6B41_6804_5F5E_87FE_D3443129A589" name="SetPlaybackDirection" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_48A3BFC7_C9EB_5D65_B7A7_FEFBA0189C65" name="ChangePitch" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_66AFE6C4_7F51_5532_8B9C_92AA1B192D8D" name="GetClipLength" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_8C67C4AB_64E2_59D0_B0C5_73595FBC08DE" name="SubscribeSourceChanged" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C35491B8_8662_5BEE_BFA5_216B76A73D2C" name="UnsubscribeSourceChanged" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7E5A8C42_4287_502F_934B_E1D797601801" name="SubscribeProgressCoroutine" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_DFEE59D4_0B57_591E_924E_BAAB8D7D2F04" name="UnsubscribeProgressCoroutine" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F88E45BF_0218_5EFA_B6C3_6210BD5DC459" name="RegisterChildAt3DPos" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_9E6E62DB_9F1D_5077_85A7_D7E9A51E8B15" name="RegisterChildAttachedToGo" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_30ACE216_978C_5A06_8E96_98C5AE40C6FF" name="DeregisterChild" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_DBA7B919_8A16_5FBA_9687_C0180AD55203" name="ChangeGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_A7F17DCE_2E77_5BE9_B749_DD54831BE65E" name="GetGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_5794438E_B3CC_51E2_8A6F_C9C1DD8CA322" name="ResetGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7D0AC9C9_7546_58C2_9647_4C94A578F0B1" name="LerpGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F985534B_5653_5E33_BCE5_2AFE98FA07A6" name="RemoveGroup" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_E0C91E43_7447_5E02_AFE2_FA2A4F64AD38" name="AddGroup" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C5B68B36_1DA0_51B1_AFBD_D9FED3F31409" name="RemoveSound" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_76EDF207_21A5_5981_939A_453A52461934" name="Set3DAudioOptions" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_A5FFC150_DC88_5D01_A546_84800018AF68" name="SetStartTime" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_288C5188_1D0E_5285_A0FA_AF9E9B56DB76" name="SkipTime" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_322E3D98_914E_508E_A3B9_469C7C1DB64A" name="SetTypeVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_1907A417_A40E_53AF_B1DF_00A8C600670B" name="GetTypeVolume" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_B7F94013_7514_51DA_8CFE_F4FFEB2FE008" name="IFluentAudioManager" visibility="public">
+      <ownedOperation xmi:id="EAID_88066CD9_2A1E_51C7_82C3_0D97CDDC45BF" name="Execute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_361FF2F1_2341_5666_A2D0_22F9CD823437" name="Play" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_CA03CDAA_7973_59A4_BC28_5F9942AFEDBD" name="PlayAtTimeStamp" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C2BDABCE_4131_5625_BCA9_2EB1A7FC74EF" name="PlayDelayed" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F2F50A9E_8AA5_5554_BBC8_8169E39F1D1C" name="PlayOneShot" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_63FF8B44_7ED0_58F5_BE9E_F8CE4770C11E" name="PlayScheduled" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F9E82105_094B_5429_B6D2_030B07B8C17D" name="Stop" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_42193520_D17D_5FA4_9A6B_29528962B03D" name="RemoveSound" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_0B903BA2_6611_5F69_AADA_3C2ACBD9FC9D" name="DeregisterChild" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_6EC25C1E_0E2D_5201_9193_7A6744B82942" name="GetPlaybackPosition" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_A219D9CE_50BC_5406_ABEA_813DDFE58014" name="SetPlaybackDirection" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7480264F_A6FD_5F1F_8676_832843D1C640" name="ChangePitch" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_439B51FB_1307_503C_A29F_1ED4962C1BF1" name="GetClipLength" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_5F401330_C9E5_523B_A7F7_0D815B640B6B" name="ToggleMute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_A04318D2_D0D5_51F1_BF7E_C909100DFB48" name="TogglePause" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_00B4225F_6D50_5A90_A334_5159CC194D00" name="SubscribeSourceChanged" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_D109BE4C_EE4A_53EA_9C9C_9ECE63BB24BE" name="UnsubscribeSourceChanged" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_315880F8_3343_58FC_8EDF_4A157BADC824" name="SubscribeProgressCoroutine" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_0359C512_74CF_5A24_8212_4773D06D424D" name="UnsubscribeProgressCoroutine" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_D54E6404_AC90_567B_95B8_8EB0989245DA" name="GetProgress" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_EFF18979_06E1_5522_B269_858C1A325E9A" name="TryGetSource" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_D25A0F1A_C7D8_53BA_8D64_43526FFEA158" name="LerpPitch" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_BE24C973_0C34_571D_9626_6DEEFBA22BEE" name="LerpVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_AB2725FC_313F_51AC_B911_ECEA9C71A158" name="ChangeGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_BA236ABF_0CEE_5CF7_8D42_FDD0424CEDAF" name="GetGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_290AD967_EFBA_5374_B94D_1032F2ED3060" name="ResetGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_9A1D9842_C5CC_52E4_BC57_48CE9735A77E" name="LerpGroupValue" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_E0A6865A_B03D_5757_BF37_20022893800B" name="RemoveGroup" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_39E78E86_8CC6_5A03_8597_84A61CA2B53A" name="AddGroup" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_5DC8E9CF_A87C_5698_B8C1_0BCAD6B594A7" name="Set3DAudioOptions" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F2252E04_479C_5A30_8231_6EC568D34F20" name="SetStartTime" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_29F33390_4398_5D1C_9FB7_F86BB6F1C1E4" name="SkipTime" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_EFEC2082_93F0_5DBF_9977_F2CF59F13ECB" name="AudioSourceWrapper" visibility="public">
+      <ownedAttribute xmi:id="EAID_D1048907_DBD2_5A17_8A06_A88D3DDBA44B" name="m_wrappedSource" visibility="private" type="AudioSource"/>
+      <ownedAttribute xmi:id="EAID_6591E629_AE08_588D_A8D2_3F61F923CF2D" name="m_childrenDictionary" visibility="private" type="IDictionary[ChildType,AudioSource]"/>
+      <ownedAttribute xmi:id="EAID_18323379_5130_5E76_85E0_6E0B4BEF69AB" name="m_cb" visibility="private" type="SourceChangedCallback"/>
+      <ownedAttribute xmi:id="EAID_9E760F05_E6FE_5EB1_A656_CAC3DA215CB1" name="soundTypeIndex" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_32499E1F_7207_56AC_851D_B8A48308608C" name="lastTypeVolume" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_D4FD15B9_BFDE_50D3_A7DD_3219051EBE34" name="lerpAlpha" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_24B476D0_E64F_5547_A795_67E5DA899782" name="Source" visibility="public" type="AudioSource"/>
+      <ownedAttribute xmi:id="EAID_199AFE48_C86B_5487_96E5_FDA3B39BB2F2" name="Volume" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_B56BB3C2_1C9B_5018_B531_8EE288B1C4C2" name="Pitch" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_8DC42DE4_8337_5F2F_85DA_68DEA94CB1BC" name="Loop" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_2FF27968_E66A_5AD6_9365_4300395F4C84" name="Mute" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_92E4C522_3CC5_5B8D_98C7_96749979E510" name="MixerGroup" visibility="public" type="AudioMixerGroup"/>
+      <ownedOperation xmi:id="EAID_A2FE85B4_B1DD_5383_B900_BB8ACF7AD903" name="GetChildren" visibility="public"/>
+      <ownedOperation xmi:id="EAID_AFF3D621_0456_5B4F_A648_519BB11B3A71" name="TryGetRegisteredChild" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D8C3357D_2A2B_5460_B6DB_A259127C4DDF" name="DeregisterChildren" visibility="public"/>
+      <ownedOperation xmi:id="EAID_217B0B88_41EB_5B1F_9DDC_81FC4B7724D7" name="DeregisterChild" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C4D35935_E3F1_5155_AEF0_C641CEB795FB" name="RegisterNewChild" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B2281A99_C5E8_5475_9530_B985D204120F" name="RegisterCallback" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2F3EB8AC_C0D2_5504_B167_09E2DDBB1916" name="DeregisterCallback" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2F4EFDC8_54F1_51BD_BEB6_39B0CF268427" name="SetChildrenVolume" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_98786467_CE0A_5274_B34F_434F5608BBAF" name="Constants" visibility="public">
+      <ownedAttribute xmi:id="EAID_3CDF4658_3FB3_5B6B_B956_281BF06DE107" name="DEFAULT_VOLUME" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_ABFC418F_EEA3_5D9C_931C_D8986E508A1B" name="DEFAULT_PITCH" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_88BC385E_BB24_5844_976B_A552C8310C3B" name="DEFAULT_LOOP" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_680C7A05_4E04_50AD_B77D_2F0CD4C023FA" name="DEFAULT_DURATION" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_3057CF51_3B43_56EC_A4C0_1E210F9E3683" name="DEFAULT_CHILD_TYPE" visibility="public" type="ChildType"/>
+      <ownedAttribute xmi:id="EAID_1E0794E9_496C_599D_9632_D660961A5D0D" name="NULL_AUDIO_ERROR" visibility="public" type="AudioError"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_A37AF708_B59F_5278_8679_46478C6BFBDF" name="AudioError" visibility="public">
+      <ownedLiteral xmi:id="EAID_AA0855E8_CB64_565F_9F6A_73426D82234B" name="OK"/>
+      <ownedLiteral xmi:id="EAID_494C3FD2_62FE_5B5F_B446_DBE697072097" name="DOES_NOT_EXIST"/>
+      <ownedLiteral xmi:id="EAID_A019DA34_F5D1_513B_B994_DAC290A97FDA" name="ALREADY_EXISTS"/>
+      <ownedLiteral xmi:id="EAID_EADFADE7_BD88_55EF_816C_E94E4C1F234A" name="INVALID_PATH"/>
+      <ownedLiteral xmi:id="EAID_EF0132A5_B5F2_5F00_A2F6_0610CC4A94C1" name="INVALID_END_VALUE"/>
+      <ownedLiteral xmi:id="EAID_CD58318C_DB46_58FA_A887_68065766B7D0" name="INVALID_TIME"/>
+      <ownedLiteral xmi:id="EAID_3D289AD5_8B0D_5034_8052_E039298E29E8" name="INVALID_PROGRESS"/>
+      <ownedLiteral xmi:id="EAID_DAF024BB_F1F8_57CC_9B6B_84811B9BED65" name="MIXER_NOT_EXPOSED"/>
+      <ownedLiteral xmi:id="EAID_C7DC75CE_925B_5D4F_87AD_485EB0F0F2A4" name="MISSING_SOURCE"/>
+      <ownedLiteral xmi:id="EAID_6165E4A3_500C_59CB_8EA8_CF30BB4F24E1" name="MISSING_MIXER_GROUP"/>
+      <ownedLiteral xmi:id="EAID_2FBEFCEB_C637_5B1D_B9CA_CBB9944041B0" name="CAN_NOT_BE_3D"/>
+      <ownedLiteral xmi:id="EAID_025F98ED_E777_5185_93CF_44CF542A164D" name="NOT_INITIALIZED"/>
+      <ownedLiteral xmi:id="EAID_1B08962F_CCD9_5905_892D_36E0F84B679D" name="MISSING_CLIP"/>
+      <ownedLiteral xmi:id="EAID_F17B41F3_03A3_5528_8105_C442416EEEEC" name="MISSING_PARENT"/>
+      <ownedLiteral xmi:id="EAID_E488DD70_90B5_534B_90EC_5D42B8BAB8B2" name="INVALID_PARENT"/>
+      <ownedLiteral xmi:id="EAID_872B6F2F_41F1_5996_8ED5_CEAAD593C71D" name="ALREADY_SUBSCRIBED"/>
+      <ownedLiteral xmi:id="EAID_C8DFB4CE_36CC_52D8_A795_B767364405F1" name="NOT_SUBSCRIBED"/>
+      <ownedLiteral xmi:id="EAID_0FD8701C_4405_5B5D_AE5B_80117F96855C" name="MISSING_WRAPPER"/>
+      <ownedLiteral xmi:id="EAID_1819A2CA_1FE6_5350_9ABF_20478E028AB4" name="INVALID_CHILD"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_57187B03_A67D_571F_A85D_57A52C6502B1" name="ChildType" visibility="public">
+      <ownedLiteral xmi:id="EAID_B0954675_4EFE_533B_8870_980D3821FA7B" name="ALL"/>
+      <ownedLiteral xmi:id="EAID_014A4712_68EA_5BF6_AEE3_853CADD5FDFE" name="PARENT"/>
+      <ownedLiteral xmi:id="EAID_34324249_5673_5952_9668_627C2FFC477F" name="AT_3D_POS"/>
+      <ownedLiteral xmi:id="EAID_849D184F_B825_50E0_AE22_B5A6D9D4E68F" name="ATTCHD_TO_GO"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_C29D4999_269F_5F0E_BC78_30C0511D3950" name="ProgressResponse" visibility="public">
+      <ownedLiteral xmi:id="EAID_CB5BA317_0BF2_5835_910F_FAF58133D4FE" name="UNSUB"/>
+      <ownedLiteral xmi:id="EAID_953DDFCA_D7FD_5B0B_86EE_02CF32695F3C" name="RESUB_IN_LOOP"/>
+      <ownedLiteral xmi:id="EAID_C464A3D1_499C_5F00_9D92_B8E6FF4459FE" name="RESUB_IMMEDIATE"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_448015CC_C588_5300_9FD2_4F743E76987D" name="Locator">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA" name="ServiceLocator" visibility="public">
+      <ownedAttribute xmi:id="EAID_5339DA5E_1A00_59EE_82A7_B60D19BFC466" name="s_audioManagerService" visibility="private" type="IAudioManager"/>
+      <ownedAttribute xmi:id="EAID_F9BD7301_B2E3_5DC4_8BEC_766BB9E67E2B" name="s_nullAudioManagerService" visibility="private" type="NullAudioManager"/>
+      <ownedOperation xmi:id="EAID_F67623CA_1569_5AA1_96CF_79991D6DC7FB" name="GetService" visibility="public"/>
+      <ownedOperation xmi:id="EAID_30748E76_C14D_56F4_B065_50CB7CBD1BE9" name="RegisterService" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9CE0754B_012C_53E2_BAF1_8B5D9E6AA493" name="RegisterLogger" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_15185029_FF90_5139_A255_EC03755D3B71" name="NullAudioManager" visibility="public">
+      <ownedOperation xmi:id="EAID_51DB01BA_A2FE_5C6A_9A23_FB1DA8CC08E4" name="AddSoundFromPath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B845F123_4222_5D02_961E_C72E0A03F258" name="Play" visibility="public"/>
+      <ownedOperation xmi:id="EAID_00668956_0898_5D8D_B508_DCE3287687CF" name="PlayAtTimeStamp" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A32E5606_DBCE_5B74_B03D_384E924235C1" name="PlayOneShot" visibility="public"/>
+      <ownedOperation xmi:id="EAID_370DD7D5_8642_5E6B_8D75_8B82DE376516" name="PlayDelayed" visibility="public"/>
+      <ownedOperation xmi:id="EAID_628BC2A1_E3DF_576A_8E17_5548400BD27B" name="PlayScheduled" visibility="public"/>
+      <ownedOperation xmi:id="EAID_96E81DD8_7C27_5679_A518_EB0D55FAAB57" name="Stop" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9E0E9A7C_811F_518B_9032_60661DBE894C" name="ToggleMute" visibility="public"/>
+      <ownedOperation xmi:id="EAID_49CF0182_EE0F_5942_9AC6_519F7C005644" name="TogglePause" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7EF2A28E_46D2_5863_AD15_6CD9D021E799" name="LerpVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_5E4C3FAD_863E_5514_8B36_0B0AAB4AA424" name="LerpPitch" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3B824286_2AE6_5E6D_9881_BA3340D8C2B5" name="TryGetSource" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1DE73C58_82E8_5B40_B843_BB030FF4C5B6" name="GetProgress" visibility="public"/>
+      <ownedOperation xmi:id="EAID_6AF8AD8A_8382_53C8_8271_ADA768D79FEC" name="GetPlaybackPosition" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E3A5FDCC_9CCE_5499_967B_D0C02E2C89CB" name="SetPlaybackDirection" visibility="public"/>
+      <ownedOperation xmi:id="EAID_37B9AE33_D75A_569E_829A_6B7B08DE7752" name="ChangePitch" visibility="public"/>
+      <ownedOperation xmi:id="EAID_ABAF1E7A_782C_5EB3_8E4F_DFF66CEF5A94" name="GetClipLength" visibility="public"/>
+      <ownedOperation xmi:id="EAID_11244C76_DE98_5BC7_B255_9AFB6B0A04CA" name="SubscribeSourceChanged" visibility="public"/>
+      <ownedOperation xmi:id="EAID_083D129A_D5AD_51A5_8C2A_C8F4511CF32E" name="UnsubscribeSourceChanged" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B53F87EB_0FE7_5346_8580_25083A54042A" name="SubscribeProgressCoroutine" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0CD3DDDA_54BD_5367_A556_EAE419B17607" name="UnsubscribeProgressCoroutine" visibility="public"/>
+      <ownedOperation xmi:id="EAID_6AD3312D_F904_5AE7_AD51_0396ECF42C6E" name="RegisterChildAt3DPos" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8B96DDE5_93F5_55DE_A0B2_CCF7C627344A" name="RegisterChildAttachedToGo" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0B3A9386_32AA_59D1_946D_8911975841DA" name="DeregisterChild" visibility="public"/>
+      <ownedOperation xmi:id="EAID_195C4ED9_03E1_5427_AC53_7DBFE5D563C0" name="ChangeGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A52248CE_E8FB_5233_9A52_0470395B206C" name="GetGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2985DFF6_92D1_5F19_8229_A72B6C241AC4" name="ResetGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_963F70B2_A150_56EC_B464_D8A7D41396AB" name="LerpGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_123F9F43_2E24_58C0_AA73_FDD488B3FB1C" name="RemoveGroup" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3D0A1D42_3AAC_5BCC_94EE_7FAB4E4D4BDF" name="AddGroup" visibility="public"/>
+      <ownedOperation xmi:id="EAID_96DDE372_A7A3_57CE_8306_5D3C0EB199B7" name="RemoveSound" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C798C715_7F26_54F4_815A_C9F191C9AC04" name="Set3DAudioOptions" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B28D2E3D_862B_5BA8_AD20_E6E262E5EF69" name="SetStartTime" visibility="public"/>
+      <ownedOperation xmi:id="EAID_730E1110_09F5_506D_85FA_06F50A2B0F0A" name="SkipTime" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8666E0C2_514D_539E_A1FC_064642707E77" name="SetTypeVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1C935568_3811_5A18_9EB5_BF05D8BE5FD2" name="GetTypeVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_32A50E91_6CA2_5AED_9C67_FFFE38ADF6BC" name="GetEnumerator" visibility="public"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_9EF02AC7_1DBD_53ED_8DA8_69B8FF8FA991" name="Logger">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_0EBD9310_D29A_533A_895D_823819D339B5" name="IAudioLogger" visibility="public">
+      <ownedOperation xmi:id="EAID_3E5918C5_A7C2_5FBB_A85E_9AAA75368539" name="Log" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_04B17A92_9FC5_5154_8FDD_6501C39433E4" name="LogFormat" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7BE7C059_5759_5416_97A3_E35E6E784E60" name="LogException" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_99320304_86E9_5A75_9ED1_6FB8F6243655" name="LogAssert" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7850016F_305A_5A7E_85F4_A0ABC16331CA" name="LogAssertFormat" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_669E246A_3246_51AD_BABE_F363CA0BDEF0" name="AudioLogger" visibility="public">
+      <ownedAttribute xmi:id="EAID_5123DAF1_400F_59FA_9BB8_EC4FE61A8529" name="m_logLevel" visibility="private" type="LoggingLevel"/>
+      <ownedOperation xmi:id="EAID_3AEC3133_92D4_54A4_BA9E_0860FF82C407" name="Log" visibility="public"/>
+      <ownedOperation xmi:id="EAID_474BA326_D9A0_575F_98F7_3C0CBD44CD57" name="LogFormat" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E44335E4_80B5_5D73_A511_C4E165D30CFB" name="LogException" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DCA26FDC_156A_5B8A_9FD1_FB1AD0DF3C25" name="LogAssert" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7029E55E_6DAB_5550_980C_87268B054351" name="LogAssertFormat" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8745663E_CE4B_526C_9C1C_28BEB8A2F7D5" name="LoggedAudioManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_8AA5B4D3_3E85_5BDC_872C_9F23D2EDDE94" name="m_logger" visibility="private" type="IAudioLogger"/>
+      <ownedAttribute xmi:id="EAID_6953FDF0_9818_50FB_A5DB_60C2321A40B0" name="m_wrappedInstance" visibility="private" type="IAudioManager"/>
+      <ownedAttribute xmi:id="EAID_FEF47B4B_090A_526D_8857_E98C7AA4A39E" name="m_logContext" visibility="private" type="Object"/>
+      <ownedAttribute xmi:id="EAID_1C86E9BE_1C13_506E_A563_99836442DD07" name="m_enterMethodTime" visibility="private" type="float"/>
+      <ownedOperation xmi:id="EAID_24AE17CB_737F_57BE_8D9A_F3D5C9DD9B2C" name="AddSoundFromPath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_98FCB5E6_4C3F_5CA4_B670_F3DA68F39BBC" name="Play" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2E5C2308_33CD_5D89_98AD_1E641AEE46F8" name="PlayAtTimeStamp" visibility="public"/>
+      <ownedOperation xmi:id="EAID_48B840DD_4D4C_5EEC_9CE4_A52A3A2F8316" name="Stop" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8A9B6BFA_2197_571E_940A_2622E6681435" name="LerpVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_05F72787_1245_5BD1_8F2A_F866BE3FC7C0" name="LerpPitch" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2115B32B_BBB3_5CBE_9D8F_1F04BAA38A04" name="TryGetSource" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D8D40F66_4A2D_5480_AC5D_3B6B74B965A8" name="SetTypeVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D8AFF253_6E4D_5295_8713_2E3307F56153" name="GetTypeVolume" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_9BBBA8B7_409C_505B_B959_3194489F806F" name="LoggingLevel" visibility="public">
+      <ownedLiteral xmi:id="EAID_9284D3AF_486D_57D4_803D_6C3D5D33CB59" name="NONE"/>
+      <ownedLiteral xmi:id="EAID_12C8E9A6_46DE_573A_B91A_0F52A192AA69" name="LOW"/>
+      <ownedLiteral xmi:id="EAID_4C4D3CEE_B788_5C9F_B311_337A70BAE049" name="INTERMEDIATE"/>
+      <ownedLiteral xmi:id="EAID_3714725F_EBAC_52D3_BD7A_A2A8C76B41D7" name="HIGH"/>
+      <ownedLiteral xmi:id="EAID_26C19734_FED6_5D24_BB9D_D212281EE599" name="STOPWATCH"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_716F5693_5EE7_5E0B_8068_439ABB1F1C7A" name="LoggingType" visibility="public">
+      <ownedLiteral xmi:id="EAID_7A5B94A7_715D_5BD9_A1EE_CA73F198D37B" name="NORMAL"/>
+      <ownedLiteral xmi:id="EAID_178DA49D_058B_54FF_AA7D_4D8AAEC2243A" name="WARNING"/>
+      <ownedLiteral xmi:id="EAID_72795FE1_2FEC_5A6D_9411_13238AB578CF" name="ERROR"/>
+      <ownedLiteral xmi:id="EAID_65B60473_C59E_505B_BFAD_5B3CFF9F55A7" name="ASSERTION"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_E3E9D220_1C46_525F_AA8C_F946E8FE687A" name="Service">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_E0C7BD36_EA03_549F_89F8_0B38409E55F8" name="DefaultAudioManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_DAFD9B75_E1AB_5324_ABDB_8E811EF3B51C" name="m_parentGameObject" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_4F342B7A_A171_5443_B323_54ACED31B84F" name="m_parentBehaviour" visibility="private" type="MonoBehaviour"/>
+      <ownedAttribute xmi:id="EAID_448B5337_A7DD_559D_B768_1237F198FAAA" name="m_soundDictionary" visibility="private" type="IDictionary[string,AudioSourceWrapper]"/>
+      <ownedAttribute xmi:id="EAID_843766D3_3906_5A86_A382_FEE0B37FCF6F" name="m_soundProgressDictionary" visibility="private" type="IDictionary[string,IDictionary]"/>
+      <ownedAttribute xmi:id="EAID_967140E2_D298_503C_92D3_38E74CF36DE4" name="_typeVolumes" visibility="private" type="Dictionary[int,float]"/>
+      <ownedOperation xmi:id="EAID_54AF2444_2334_55B9_9D58_5F23B50C4AC3" name="AddSoundFromPath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_04AB9C84_40E2_5E17_A5AB_947CC733C4B5" name="Play" visibility="public"/>
+      <ownedOperation xmi:id="EAID_6F7B80CC_7D2D_59EF_ACFF_68F16ACDEA16" name="PlayAtTimeStamp" visibility="public"/>
+      <ownedOperation xmi:id="EAID_4789034A_FF25_5D4F_B510_13699A07524D" name="PlayOneShot" visibility="public"/>
+      <ownedOperation xmi:id="EAID_AA2BA662_7F04_5AB6_9FC1_A7A7C1760389" name="PlayDelayed" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B8BA39DA_C741_51B3_887C_2783D3A6DFB1" name="PlayScheduled" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3F37C6CB_85FF_5D66_A00E_997EBDEA70E3" name="Stop" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8B1CDCF5_0896_53B8_9326_0C40011A430C" name="ToggleMute" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3B761D70_D9E2_5802_96B1_36EA7051789E" name="TogglePause" visibility="public"/>
+      <ownedOperation xmi:id="EAID_609E792F_99C5_596E_A166_9579FCF07501" name="LerpVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2375912E_34CB_52E7_B72B_FE2D0225702D" name="LerpPitch" visibility="public"/>
+      <ownedOperation xmi:id="EAID_4D2FF2DF_CB46_527D_8831_2A8139B4850A" name="TryGetSource" visibility="public"/>
+      <ownedOperation xmi:id="EAID_A52F2293_7A9A_585A_BA1E_57F99204130E" name="GetProgress" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B82BEB2C_F43F_5CB4_9F03_E86C57868F9E" name="GetPlaybackPosition" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1C795402_D2F3_5105_A9F5_C92C790CB097" name="SetPlaybackDirection" visibility="public"/>
+      <ownedOperation xmi:id="EAID_62D9A8C2_0A46_5310_B5C4_77AD18462AB8" name="ChangePitch" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3BFAB02D_10CC_5EC4_9A77_28CAA952645F" name="GetClipLength" visibility="public"/>
+      <ownedOperation xmi:id="EAID_6A3F0C52_D22A_53F8_8833_20EBECABF064" name="SubscribeSourceChanged" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E8D6C9DB_FA4C_5E48_8E23_86FBF21C5332" name="UnsubscribeSourceChanged" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2B25C889_CA4A_5A71_814D_1CE4D9E395E2" name="SubscribeProgressCoroutine" visibility="public"/>
+      <ownedOperation xmi:id="EAID_EFBB3C00_0D11_50C0_82C5_48C404A78F67" name="UnsubscribeProgressCoroutine" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F97DC03A_FC14_5518_8A28_B8B06662C2EC" name="RegisterChildAt3DPos" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F08D1EFB_D535_5588_B6E2_C91322ED573C" name="RegisterChildAttachedToGo" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1A5EDA88_7795_5F02_8FEE_DC924B1FBC15" name="DeregisterChild" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C0912DF0_DE7B_5A8C_8990_A4F16F959436" name="ChangeGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_143C95FB_65C3_5E0C_B303_92DD8BAF574C" name="GetGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8F30A62D_9FED_526F_A95F_4C130A50EA48" name="ResetGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_64E0A882_6AB6_5486_8CEF_80DFE769B2F6" name="LerpGroupValue" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2684A2E6_FA44_53A4_8E27_EE8FE2308365" name="RemoveGroup" visibility="public"/>
+      <ownedOperation xmi:id="EAID_5B276038_65DB_50E2_A02F_2C65297D7CBF" name="AddGroup" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D288F8C9_F606_59D6_9CF1_E44CDDB6FA11" name="RemoveSound" visibility="public"/>
+      <ownedOperation xmi:id="EAID_BE78BCDF_445D_506C_96AD_E75E35FBFF11" name="Set3DAudioOptions" visibility="public"/>
+      <ownedOperation xmi:id="EAID_B39488E3_5D11_5119_A46D_051C9BB938CD" name="SetStartTime" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9D59F711_373C_5407_88DD_65B7492B45EA" name="SkipTime" visibility="public"/>
+      <ownedOperation xmi:id="EAID_13FDA886_1AC3_519D_A499_EBE2B0FBFF3E" name="SetTypeVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F4D64D86_EAEB_54CA_B86F_E870034D2D7B" name="GetTypeVolume" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2FC12855_DF26_5B7A_981E_303F55522305" name="GetEnumerator" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_4A371BED_7FF0_5CC5_97F6_3ABCB3A2DCC3" name="FluentAudioManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_1E115A1A_AEAC_5C8C_B1A0_618C5C8E3145" name="m_wrappedInstance" visibility="private" type="IAudioManager"/>
+      <ownedAttribute xmi:id="EAID_63AE7E67_B36B_5177_8D6B_748D8E80E454" name="m_name" visibility="private" type="string"/>
+      <ownedAttribute xmi:id="EAID_4AF9A3C9_876D_549A_A9E1_52F52FE04C6D" name="m_child" visibility="private" type="ChildType"/>
+      <ownedAttribute xmi:id="EAID_177E8F13_99C7_5361_B142_84955983DBEE" name="m_error" visibility="private" type="AudioError"/>
+      <ownedOperation xmi:id="EAID_008EBED8_681F_5014_AA00_2FAAF382EB56" name="ReuseInstance" visibility="public"/>
+      <ownedOperation xmi:id="EAID_03B3F5AF_7BDB_54A1_BBD1_3E4B7BFADFC5" name="Execute" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F35FD7F0_0BC1_521E_8024_E29DC97A879E" name="Play" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DC8863D7_6823_5FC7_A3DE_B8A25763B4C0" name="Stop" visibility="public"/>
+      <ownedOperation xmi:id="EAID_3AC0C4C9_D677_514E_B715_E1CC65C3308A" name="LerpVolume" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_EB54D3A9_0AFF_5FF2_A0DF_FAA61D00C6BB" name="AudioChainer" visibility="public">
+      <ownedOperation xmi:id="EAID_12742369_00AC_598F_B83F_2E235D8FE09B" name="AddSoundFromPath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_EDEFE4F2_7877_58A0_A0DC_3A68353F8B6B" name="SelectSound" visibility="public"/>
+      <ownedOperation xmi:id="EAID_4CD6E9FB_3BC0_5C0B_A4B8_CC05D5B56E19" name="RegisterChildAt3DPos" visibility="public"/>
+      <ownedOperation xmi:id="EAID_853AD3CD_B712_558A_A9B8_E84B7BFE3116" name="RegisterChildAttachedToGo" visibility="public"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_61B68C0A_1631_5EA4_A589_9E4BEF2BDD0E" name="Provider">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_CD70E80D_34A1_5D2D_A9D3_6E1E41D3672B" name="AudioManagerSettings" visibility="public">
+      <ownedAttribute xmi:id="EAID_5C1800EA_8192_53B2_9BCE_30FA372E1AE1" name="loggingLevel" visibility="private" type="LoggingLevel"/>
+      <ownedAttribute xmi:id="EAID_739DD82E_3B3C_5642_9B20_57294F5DC20F" name="settings" visibility="private" type="AudioSourceSetting[]"/>
+      <ownedAttribute xmi:id="EAID_21540A5D_B2B2_5D14_8F7A_F77F932E7C03" name="customHideFlags" visibility="private" type="HideFlags"/>
+      <ownedOperation xmi:id="EAID_0350F1A6_465A_52C9_B37A_12239EA019E9" name="Awake" visibility="private"/>
+      <ownedOperation xmi:id="EAID_3A892944_8BDE_55BB_9623_85706B6F2DD8" name="OnEnable" visibility="private"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_48021EB1_A75A_55C1_A8A1_10576EC861F5" name="Settings">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8DA354F7_FDCA_539E_8974_E7AFCF04F648" name="AudioSourceSetting" visibility="public">
+      <ownedAttribute xmi:id="EAID_7066128A_AE1E_57D9_95E3_9DADDE28E5DB" name="audioClips" visibility="public" type="List[AudioClips]"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_E11F1E22_45C4_56B7_B291_6E3E09040B45" name="AudioClips" visibility="public">
+      <ownedAttribute xmi:id="EAID_492CFBE1_A6E4_5C73_9EB5_B0627A975AEF" name="soundName" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_7E7849E1_35E4_5F5B_9BD8_63DCE65BC189" name="type" visibility="public" type="SoundType"/>
+      <ownedAttribute xmi:id="EAID_1A9E820E_0D85_5E16_A232_E9943794EC87" name="audioClip" visibility="public" type="AudioClip"/>
+      <ownedAttribute xmi:id="EAID_D28F6219_C210_52C5_830C_996A4F41EE9C" name="mixerGroup" visibility="public" type="AudioMixerGroup"/>
+      <ownedAttribute xmi:id="EAID_F5661E3A_6F0C_5A19_8CC4_E1D7133EB717" name="loop" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_E254CC86_E5A5_5015_B27F_C1367FB1D310" name="volume" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_5097970A_52AF_51D0_AC42_2784F03F8B3C" name="pitch" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_144C94A7_40E5_55A6_989B_CDB4419FA052" name="spatialBlend" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_11A0A556_ECCC_5DCB_B8C9_BDD557F647CE" name="source" visibility="public" type="AudioSource"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_A810CF31_30A5_5CD1_8200_C4633E03647D" name="SoundType" visibility="public">
+      <ownedLiteral xmi:id="EAID_E46A2177_51B5_5A49_B6AE_6D7C57FD71D4" name="SFX"/>
+      <ownedLiteral xmi:id="EAID_9EFA9FC3_4105_57A2_8979_F39B5B12B7F9" name="Music"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_E65A6F01_E8E1_5D3F_BF66_8502A5C9095C" name="Helper">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_1966F09F_0A18_5EC5_935D_7AFC4D9EEB17" name="AudioHelper" visibility="public">
+      <ownedOperation xmi:id="EAID_100D1FCD_A9EA_50F6_8A4C_F03C0BB7CD3E" name="LoadAudioClipFromPath" visibility="public"/>
+      <ownedOperation xmi:id="EAID_2F1BDF37_1FA5_52CD_BED5_DE803FAB6936" name="AttachAudioSource" visibility="public"/>
+      <ownedOperation xmi:id="EAID_97EDEE4D_CA91_5A93_8F01_416DB520B184" name="AddAudioSourceComponent" visibility="public"/>
+      <ownedOperation xmi:id="EAID_FA1D06F7_0675_57D8_A001_B9AF21A7EF33" name="IsSound2D" visibility="public"/>
+      <ownedOperation xmi:id="EAID_42C07109_8007_534A_9988_F5D8792F176D" name="IsEndValueValid" visibility="public"/>
+      <ownedOperation xmi:id="EAID_495395F5_8914_5066_A531_0FB9648093AB" name="ConvertToAudioError" visibility="public"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_1480AFF2_C398_56A7_B969_678A90C57645" name="GameScripts">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_A8A6726C_9DC5_5A16_AF55_F259B4BFE562" name="UIAudioLogger" visibility="public">
+      <ownedAttribute xmi:id="EAID_F11FBA4D_0EC2_5002_91BB_330FFCCCEC7C" name="m_logOutput" visibility="private" type="Text"/>
+      <ownedAttribute xmi:id="EAID_B3A1631B_4F6F_5E0C_B434_DE373788C41C" name="m_logLevel" visibility="private" type="LoggingLevel"/>
+      <ownedOperation xmi:id="EAID_7CD17430_12EA_5E9A_96E7_D51820348728" name="Log" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0AB0DCB7_3A5B_5CBA_AAE6_B5339D581956" name="LogFormat" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0C8EA8AF_33D6_5D01_B0E7_279DC47A3767" name="LogException" visibility="public"/>
+      <ownedOperation xmi:id="EAID_EED2FAF2_FA59_546A_85F9_3CEEFA543CAB" name="LogAssert" visibility="public"/>
+      <ownedOperation xmi:id="EAID_93DB32A0_D92C_5B6D_84E4_8811CCE26FAF" name="LogAssertFormat" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8F8D749C_D251_5EA3_9C1F_E68711F450CE" name="UIAudioAutoInstaller" visibility="public">
+      <ownedAttribute xmi:id="EAID_DBA93BCE_71DD_543C_879A_9F5C22F3B0B6" name="clickSoundName" visibility="private" type="string"/>
+      <ownedOperation xmi:id="EAID_4CED0A07_CD99_5B39_890F_5E183AED82E6" name="Start" visibility="private"/>
+      <ownedOperation xmi:id="EAID_55D3F962_016B_5164_A266_496EF9E794A5" name="InitializeWithDelay" visibility="private"/>
+      <ownedOperation xmi:id="EAID_B2808F6F_3FCC_5664_9B49_CACBBCD3C427" name="PlaySound" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_B1D7E847_8155_5113_9685_347433818016" name="AreaAmbientSound" visibility="public">
+      <ownedAttribute xmi:id="EAID_04091432_7172_54B4_8D45_18F29FD7BBB9" name="soundName" visibility="private" type="string"/>
+      <ownedAttribute xmi:id="EAID_64B8BC19_5EB3_5DD7_8782_5A0F6AFA6577" name="fadeDuration" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_61E22051_77AD_5B03_B395_4351D2C6C759" name="targetVolume" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_50537438_CF03_5EA7_B88F_4C8E94D35197" name="playOnEnter" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_7F7770AC_D0AD_5057_B43C_D4EA190E5E1A" name="stopOnExit" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_04647989_90C3_5793_AFC0_FB61952AB1F8" name="loop" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_A28CB25D_3203_505F_81D6_E5FE87D18D9F" name="_am" visibility="private" type="IAudioManager"/>
+      <ownedAttribute xmi:id="EAID_5C5397FD_D13B_579B_A547_81FFBE2FC4E1" name="_musicManager" visibility="private" type="MusicTransitionManager"/>
+      <ownedAttribute xmi:id="EAID_4D6F5783_4AF9_5595_8363_3F9CCDEA8CFF" name="_isPlaying" visibility="private" type="bool"/>
+      <ownedOperation xmi:id="EAID_218A8AEA_9D0E_54B8_A37E_4F431384DC5D" name="OnTriggerEnter2D" visibility="private"/>
+      <ownedOperation xmi:id="EAID_47B51D62_781D_577F_A12B_49D6DF8CE325" name="OnTriggerExit2D" visibility="private"/>
+      <ownedOperation xmi:id="EAID_E06F3166_75A8_5DEB_8BF5_A7524CFB2723" name="PlaySound" visibility="private"/>
+      <ownedOperation xmi:id="EAID_45337D27_F4FF_54A3_B928_81EC1F6B52DD" name="StopSound" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_94842CE3_3B14_5CEF_A163_5AA27167913F" name="MusicTransitionManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_5D308F12_66E3_54B6_A5B1_883C6EB951F0" name="sceneMusicSettings" visibility="private" type="List[SceneMusicConfig]"/>
+      <ownedAttribute xmi:id="EAID_6F8C8496_9981_50B0_A189_4770D7D78E91" name="fadeDuration" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_A0FA101A_8757_5FFE_A433_25CA6D342216" name="normalVolume" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_916AC863_5F6C_5251_B4EF_C9CF202BCD0E" name="pausedVolume" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_C40D9696_3487_533B_B359_F18AD2A41A39" name="_am" visibility="private" type="IAudioManager"/>
+      <ownedAttribute xmi:id="EAID_780B5719_8C87_5A58_A68D_D54872B7A8ED" name="_currentMusicNames" visibility="private" type="List[string]"/>
+      <ownedAttribute xmi:id="EAID_9C5E960E_D790_5F8C_89FB_58AF8D7CF47D" name="_ambientSounds" visibility="private" type="List[string]"/>
+      <ownedAttribute xmi:id="EAID_E0632854_7ADE_55F8_85DD_1D504F400F3E" name="_isPaused" visibility="private" type="bool"/>
+      <ownedAttribute xmi:id="EAID_A5C241A1_2F7A_57E8_B5BF_AE1CD7C5CE49" name="_isDialogueActive" visibility="private" type="bool"/>
+      <ownedOperation xmi:id="EAID_B09E464E_82F4_5A10_9DCF_297A720DD2C6" name="RegisterAmbient" visibility="public"/>
+      <ownedOperation xmi:id="EAID_825C5BB5_EAA7_551D_8BF7_50650E2A859E" name="UnregisterAmbient" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9CE34315_6A4A_5DEE_BC91_17BFA20E3964" name="DuckMusic" visibility="public"/>
+      <ownedOperation xmi:id="EAID_0748E20B_50FD_5673_B239_B51C7B83F772" name="RestoreMusic" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D2A0BF15_B4E0_5CA9_B9F8_663A0D803759" name="HandleMusicChange" visibility="private"/>
+      <ownedOperation xmi:id="EAID_B808037E_C199_51B7_A50A_B6A626444E93" name="OnConversationStarted" visibility="private"/>
+      <ownedOperation xmi:id="EAID_087C272F_705C_5AE3_9E1B_0C804F18063F" name="OnConversationEnded" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_9CA9574C_38D0_5B54_A370_0BFA61E1EA9A" name="SceneMusicConfig" visibility="public">
+      <ownedAttribute xmi:id="EAID_0099244D_AA09_5ADB_AB1B_3DCC92ACA021" name="scene" visibility="public" type="SerializableScene"/>
+      <ownedAttribute xmi:id="EAID_8CBAFF61_F840_5872_A10B_663348991556" name="musicNames" visibility="public" type="List[string]"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_4E20AE62_728D_53F3_97AF_BE163A6EBB8D" name="SmoothMusicController" visibility="public">
+      <ownedAttribute xmi:id="EAID_904C775E_6488_5F1B_8E69_2F259AB5AF16" name="musicName" visibility="private" type="string"/>
+      <ownedAttribute xmi:id="EAID_5A4E26B9_D0C1_571A_B9FB_A23A8F18186A" name="fadeDuration" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_B54C353F_4379_58C1_A575_4CDB6FF69969" name="targetVolume" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_FFA513F4_44A3_5F41_B4BD_910F25085384" name="am" visibility="private" type="IAudioManager"/>
+      <ownedOperation xmi:id="EAID_0D32B0DF_15EC_5895_9130_642897F6CB11" name="FadeIn" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8FF1889B_E7A2_5AEE_86C1_0C489B38B0C2" name="FadeOut" visibility="public"/>
+    </packagedElement>
+  </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_613B7EF5_3097_594E_A74F_7F61B98585F5" name="ServiceLocator__s_audioManagerService">
+      <ownedEnd xmi:id="EAID_B3769F23_915D_5E1D_9548_C14D72EBB37C" type="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_638DEAB1_A53F_5400_9CD7_982233BD280E" name="s_audioManagerService" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_3D9EC0BC_B6FE_56B8_916D_A54D3FEC097D" name="ServiceLocator__s_nullAudioManagerService">
+      <ownedEnd xmi:id="EAID_D947543B_D3E4_5F19_AE28_1B3219BC8504" type="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_9CBBD9F4_05C0_50BF_82ED_35BA5F72A847" name="s_nullAudioManagerService" type="EAID_15185029_FF90_5139_A255_EC03755D3B71" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_D576E0B1_D78D_56E6_9A8C_600D127085A4" implementingClassifier="EAID_15185029_FF90_5139_A255_EC03755D3B71" contract="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C"/>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_59B4CDF9_6D15_502C_8CBE_249CB4A1C241" implementingClassifier="EAID_669E246A_3246_51AD_BABE_F363CA0BDEF0" contract="EAID_0EBD9310_D29A_533A_895D_823819D339B5"/>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_0CCBE0BB_447C_5DD6_8076_80B9747E8BE6" implementingClassifier="EAID_8745663E_CE4B_526C_9C1C_28BEB8A2F7D5" contract="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_F3052FCC_2D14_56E4_AAE7_6C2060CE2869" name="LoggedAudioManager__m_logger">
+      <ownedEnd xmi:id="EAID_212EC823_DF05_5557_9261_68AEF281933E" type="EAID_8745663E_CE4B_526C_9C1C_28BEB8A2F7D5" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_89D21EF9_9DF3_5C27_A254_BBB147C65693" name="m_logger" type="EAID_0EBD9310_D29A_533A_895D_823819D339B5" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_4FB0CBD3_FF0C_5284_BD44_151183A36509" name="LoggedAudioManager__m_wrappedInstance">
+      <ownedEnd xmi:id="EAID_6758CC7E_0640_5E80_92BB_64C346152031" type="EAID_8745663E_CE4B_526C_9C1C_28BEB8A2F7D5" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_6365D5DB_D20E_5E7D_8838_883CE6FB8DE6" name="m_wrappedInstance" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_3C6DC0D1_5AE6_54F5_863C_7027D488F746" implementingClassifier="EAID_E0C7BD36_EA03_549F_89F8_0B38409E55F8" contract="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_0BA82C0B_61DE_5938_BDF2_AFAF1D45FE62" name="DefaultAudioManager__m_soundDictionary">
+      <ownedEnd xmi:id="EAID_0F0D7CD2_FA0F_5C71_9CE0_15336BAB39E6" type="EAID_E0C7BD36_EA03_549F_89F8_0B38409E55F8" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_F001BE9F_BAFF_523A_BC52_4B7EEFE9160F" name="m_soundDictionary" type="EAID_EFEC2082_93F0_5DBF_9977_F2CF59F13ECB" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_051504AD_CA8E_5F47_8938_BC09B3DDC2F8" implementingClassifier="EAID_4A371BED_7FF0_5CC5_97F6_3ABCB3A2DCC3" contract="EAID_B7F94013_7514_51DA_8CFE_F4FFEB2FE008"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_CD27226A_C2CE_57BC_930B_60A11D5E22B2" name="FluentAudioManager__m_wrappedInstance">
+      <ownedEnd xmi:id="EAID_D0E880A8_786E_57C5_8C77_AB2D9B7F6BB6" type="EAID_4A371BED_7FF0_5CC5_97F6_3ABCB3A2DCC3" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_4EFCB7B9_18A0_5BEC_B49B_07B6CD972A05" name="m_wrappedInstance" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_D59A090C_DE18_56D6_B099_6DFC6D17230E" name="uses" client="EAID_EB54D3A9_0AFF_5FF2_A0DF_FAA61D00C6BB" supplier="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_BCCEFD9E_65D8_5302_9941_E9CB2FC5129B" name="creates" client="EAID_EB54D3A9_0AFF_5FF2_A0DF_FAA61D00C6BB" supplier="EAID_4A371BED_7FF0_5CC5_97F6_3ABCB3A2DCC3"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_E674906F_EC0B_53F5_AE4A_EA0EB07147D6" name="registers" client="EAID_CD70E80D_34A1_5D2D_A9D3_6E1E41D3672B" supplier="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_5FE6DA8D_4CD9_59D4_A4D3_28C5DBC1B393" name="creates" client="EAID_CD70E80D_34A1_5D2D_A9D3_6E1E41D3672B" supplier="EAID_E0C7BD36_EA03_549F_89F8_0B38409E55F8"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_0EC88F67_C46A_5559_88F2_301B4D7B8A1B" name="creates" client="EAID_CD70E80D_34A1_5D2D_A9D3_6E1E41D3672B" supplier="EAID_669E246A_3246_51AD_BABE_F363CA0BDEF0"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_571C8534_780E_54A3_B690_AF2CADB30477" name="AudioManagerSettings__settings">
+      <ownedEnd xmi:id="EAID_FE0F6B3E_2A77_531A_9CF2_FBFD0A8ED4F0" type="EAID_CD70E80D_34A1_5D2D_A9D3_6E1E41D3672B" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_E842F52A_BE60_5DC1_9586_F6B15F8DCACC" name="settings" type="EAID_8DA354F7_FDCA_539E_8974_E7AFCF04F648" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_943BD3E9_453D_5723_B276_0E6D078A95A1" name="AudioSourceSetting__audioClips">
+      <ownedEnd xmi:id="EAID_70C66940_6F85_5894_83F5_DE99E1D65233" type="EAID_8DA354F7_FDCA_539E_8974_E7AFCF04F648" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_0B4D2143_60EB_5A2F_90E5_8B0CC92762D5" name="audioClips" type="EAID_E11F1E22_45C4_56B7_B291_6E3E09040B45" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_8FB56EB7_8E69_5788_ABA2_84BE4E53DC8E" implementingClassifier="EAID_A8A6726C_9DC5_5A16_AF55_F259B4BFE562" contract="EAID_0EBD9310_D29A_533A_895D_823819D339B5"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_321D4C18_3BB7_5230_93E7_0F9E2C641C6D" name="UIAudioLogger__m_logLevel">
+      <ownedEnd xmi:id="EAID_974220C6_821C_5A50_B80C_167C29614652" type="EAID_A8A6726C_9DC5_5A16_AF55_F259B4BFE562" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_01DA2430_0350_5315_83AE_FB0BD5943727" name="m_logLevel" type="EAID_9BBBA8B7_409C_505B_B959_3194489F806F" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_0E7B1432_3623_5228_BB8B_8BE466D76D5D" name="uses" client="EAID_8F8D749C_D251_5EA3_9C1F_E68711F450CE" supplier="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_8466850F_D017_57BC_AD37_C0E535EC93EA" name="uses" client="EAID_8F8D749C_D251_5EA3_9C1F_E68711F450CE" supplier="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_CF8E8347_FF05_560A_8BBE_1DCD351CD87F" name="AreaAmbientSound___am">
+      <ownedEnd xmi:id="EAID_75570449_C3C1_53BD_B69B_A5E906E3012E" type="EAID_B1D7E847_8155_5113_9685_347433818016" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_FAABEF18_230B_52FB_876F_0F8BB431EBC3" name="_am" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_C9DB88AA_5A21_5CA2_807D_4CAC6448982F" name="AreaAmbientSound___musicManager">
+      <ownedEnd xmi:id="EAID_A4F97214_8E9A_56B7_9D8A_56BE97084E81" type="EAID_B1D7E847_8155_5113_9685_347433818016" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_D384F617_3318_5BA0_A3F2_85F431096C7C" name="_musicManager" type="EAID_94842CE3_3B14_5CEF_A163_5AA27167913F" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_8D543355_3F12_5874_B53F_CBC006EFFC68" name="uses" client="EAID_B1D7E847_8155_5113_9685_347433818016" supplier="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_7936E08B_78CD_5485_A506_276E36EB35F7" name="MusicTransitionManager___am">
+      <ownedEnd xmi:id="EAID_629540A7_118B_55A3_966B_50BFF3312876" type="EAID_94842CE3_3B14_5CEF_A163_5AA27167913F" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_57A76127_5670_5E08_82FB_D55FF0B31480" name="_am" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_0F70828D_BB7C_5438_96B7_DB244966A9F9" name="MusicTransitionManager__sceneMusicSettings">
+      <ownedEnd xmi:id="EAID_AFAF9A47_C944_5E0A_A7C2_7BAE637E3DAF" type="EAID_94842CE3_3B14_5CEF_A163_5AA27167913F" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_A9C81899_1708_5643_BFAB_44EB961296C7" name="sceneMusicSettings" type="EAID_9CA9574C_38D0_5B54_A370_0BFA61E1EA9A" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_251B5751_39FB_52C1_9B69_056802B5841A" name="uses" client="EAID_94842CE3_3B14_5CEF_A163_5AA27167913F" supplier="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_030F34FA_9143_51A8_AD47_E25453319064" name="SmoothMusicController__am">
+      <ownedEnd xmi:id="EAID_F72616BF_A2DD_5FD3_B62B_9715498DBA4B" type="EAID_4E20AE62_728D_53F3_97AF_BE163A6EBB8D" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_7387C947_6737_5F08_B538_549A16732D28" name="am" type="EAID_A257B9D7_57AC_52C3_9978_5EF1A98F971C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_3D9C6269_B193_527C_943E_B3B399D8C00A" name="uses" client="EAID_4E20AE62_728D_53F3_97AF_BE163A6EBB8D" supplier="EAID_C8125346_7F1C_5688_ACBA_968048F41CCA"/>
+</uml:Model>
