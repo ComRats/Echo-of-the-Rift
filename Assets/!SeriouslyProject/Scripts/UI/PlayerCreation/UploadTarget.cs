@@ -1,4 +1,4 @@
-﻿﻿using EchoRift;
+﻿using EchoRift;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -76,8 +76,12 @@ public class UploadTarget : MonoBehaviour
 
             RestoreValues();
 
-            playerInstance.dialogActor.SaveNameForDialogueActor(inputField.text);
+            string playerName = inputField.text;
+            playerInstance.dialogActor.SaveNameForDialogueActor(playerName);
             playerInstance.dialogActor.ApplyName();
+
+            PlayerDataHolder.PlayerName = playerName;
+
             nextSceneLoader._onSceneActivated.AddListener(() => 
             {
                 FindObjectOfType<TimeLineLogic>().StartConversationDelay();

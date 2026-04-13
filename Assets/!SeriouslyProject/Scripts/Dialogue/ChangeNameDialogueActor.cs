@@ -1,3 +1,4 @@
+using EchoRift;
 using EchoRift.EchoRiftSaveLoadSystem;
 using static EchoRift.EchoRiftSaveLoadSystem.SaveFileNames;
 using PixelCrushers.DialogueSystem;
@@ -30,6 +31,7 @@ public class ChangeNameDialogueActor : MonoBehaviour
     {
         DialogueLua.SetActorField(actorDatabaseName, "Name", _cachedName);
         DialogueLua.SetActorField(actorDatabaseName, "Display Name", _cachedName);
+        PlayerDataHolder.PlayerName = _cachedName;
 
         var playerNameData = new PLayerNameData
         {

@@ -1,4 +1,6 @@
+using EchoRift;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace PixelCrushers.DialogueSystem
 {
@@ -16,9 +18,13 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("HasCoins", this, SymbolExtensions.GetMethodInfo(() => HasCoins(0)));
             Lua.RegisterFunction("AddCoins", this, SymbolExtensions.GetMethodInfo(() => AddCoins(0)));
             Lua.RegisterFunction("RemoveCoins", this, SymbolExtensions.GetMethodInfo(() => RemoveCoins(0)));
+            Lua.RegisterFunction("StartDiceGame", this, SymbolExtensions.GetMethodInfo(() => StartDiceGame(0)));
 
             Lua.RegisterFunction("GetStat", this, SymbolExtensions.GetMethodInfo(() => GetStat(string.Empty)));
             Lua.RegisterFunction("HasStat", this, SymbolExtensions.GetMethodInfo(() => HasStat(string.Empty, 0)));
+
+            DialogueLua.SetVariable("DiceCanStart", false);
+            DialogueLua.SetVariable("DiceBet", 0);
         }
 
         private void Start()
@@ -135,6 +141,53 @@ namespace PixelCrushers.DialogueSystem
             inventoryManager.Wallet.TrySpendCoins((int)amount);
         }
 
+        public void StartDiceGame(double betAmount)
+        {
+            if (inventoryManager == null)
+            {
+                Debug.LogWarning("[StartDiceGame] InventoryManager не найден!");
+                return;
+            }
+
+            if (inventoryManager.Wallet == null)
+            {
+                Debug.LogWarning("[StartDiceGame] PlayerWallet не найден!");
+                return;
+            }
+
+            inventoryManager.SyncFromUI();
+
+            int normalizedBet = Mathf.RoundToInt((float)betAmount);
+            int currentCoins = inventoryManager.Wallet.Coins;
+
+            if (!global::EchoRift.DiceSessionState.CanStart(currentCoins, normalizedBet))
+            {
+                DialogueLua.SetVariable("DiceCanStart", false);
+                DialogueLua.SetVariable("DiceBet", normalizedBet);
+                Debug.LogWarning($"[StartDiceGame] Нельзя начать Dice. Ставка: {normalizedBet}, монет: {currentCoins}");
+                return;
+            }
+
+            string playerName = GetCurrentPlayerName();
+            string returnSceneName = SceneManager.GetActiveScene().name;
+
+            if (!global::EchoRift.DiceSessionState.TryStartSession(playerName, currentCoins, normalizedBet, returnSceneName))
+            {
+                DialogueLua.SetVariable("DiceCanStart", false);
+                DialogueLua.SetVariable("DiceBet", normalizedBet);
+                Debug.LogWarning("[StartDiceGame] Не удалось инициализировать сессию Dice.");
+                return;
+            }
+
+            PlayerDataHolder.PlayerName = playerName;
+            DialogueLua.SetVariable("DiceCanStart", true);
+            DialogueLua.SetVariable("DiceBet", normalizedBet);
+
+            DialogueManager.StopConversation();
+            GlobalLoader.Instance?.EnterIsolatedScene();
+            GlobalLoader.Instance?.LoadToScene("Dice");
+        }
+
         public double GetStat(string statName)
         {
             var stats = GetPlayerStats();
@@ -182,6 +235,18 @@ namespace PixelCrushers.DialogueSystem
             return 0;
         }
 
+        private string GetCurrentPlayerName()
+        {
+            string dialogueName = DialogueLua.GetVariable("PlayerName").asString;
+            if (!string.IsNullOrWhiteSpace(dialogueName))
+                return dialogueName;
+
+            if (!string.IsNullOrWhiteSpace(PlayerDataHolder.PlayerName))
+                return PlayerDataHolder.PlayerName;
+
+            return "Игрок";
+        }
+
         private void OnDestroy()
         {
             Lua.UnregisterFunction("HasItem");
@@ -192,6 +257,7 @@ namespace PixelCrushers.DialogueSystem
             Lua.UnregisterFunction("HasCoins");
             Lua.UnregisterFunction("AddCoins");
             Lua.UnregisterFunction("RemoveCoins");
+            Lua.UnregisterFunction("StartDiceGame");
             Lua.UnregisterFunction("GetStat");
             Lua.UnregisterFunction("HasStat");
         }

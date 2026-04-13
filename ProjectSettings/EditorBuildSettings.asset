@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/!SeriouslyProject/Scenes/FightCampScenes/ForestManHouse.unity
     guid: 6301b6c1b6ffe9942aad70575f5ded07
+  - enabled: 1
+    path: Assets/!SeriouslyProject/Scenes/Dice.unity
+    guid: a307a466e8145474d8440df696a951c7
   m_configObjects: {}

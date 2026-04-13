@@ -8,11 +8,18 @@ public class DiceUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerLabel;
     [SerializeField] private TextMeshProUGUI npcLabel;
     [SerializeField] private TextMeshProUGUI statusText;
+    [SerializeField] private TextMeshProUGUI coinsText;
     [SerializeField] private Button rollButton;
     [SerializeField] private CanvasGroup buttonGroup;
 
     public string PlayerName { get; set; } = "Игрок";
     public string NpcName { get; set; } = "NPC";
+
+    public void UpdateCoins(int coins)
+    {
+        if (coinsText != null)
+            coinsText.text = $"💰 {coins}";
+    }
 
     public void UpdateScores(int player, int npc)
     {

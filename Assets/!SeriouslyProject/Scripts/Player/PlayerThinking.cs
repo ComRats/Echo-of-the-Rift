@@ -20,6 +20,9 @@ public class PlayerThinking : MonoBehaviour
 
     public void SetThink(string textToShow)
     {
+        if (!isActiveAndEnabled || text == null)
+            return;
+
         typewriter.Stop();
         if (eraseCoroutine != null)
         {
@@ -29,6 +32,13 @@ public class PlayerThinking : MonoBehaviour
 
         if (string.IsNullOrEmpty(textToShow))
         {
+            if (!gameObject.activeInHierarchy)
+            {
+                text.text = "";
+                text.enableAutoSizing = originalAutoSize;
+                return;
+            }
+
             text.enableAutoSizing = false;
 
             eraseCoroutine = StartCoroutine(EraseText());

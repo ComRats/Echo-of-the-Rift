@@ -27,6 +27,20 @@ public class GlobalLoader : MonoBehaviour
     [Inject] private GameSettings gameSettings;
 
     private bool isStart;
+    private bool isIsolatedSceneActive;
+    private bool shouldRestoreAfterIsolatedSceneLoad;
+    private bool wasPlayerActiveBeforeIsolation;
+    private bool wasMainUIActiveBeforeIsolation;
+    private bool wasCursorVisibleBeforeIsolation;
+    private string isolatedSceneName;
+
+    private void LateUpdate()
+    {
+        if (!isIsolatedSceneActive || SceneManager.GetActiveScene().name != isolatedSceneName)
+            return;
+
+        HealIsolatedSceneState();
+    }
 
     private void Awake()
     {
@@ -77,11 +91,128 @@ public class GlobalLoader : MonoBehaviour
         mainUI.Hide();
     }
 
+    public void EnterIsolatedScene()
+    {
+        if (isIsolatedSceneActive)
+            return;
+
+        wasPlayerActiveBeforeIsolation = playerInstance != null && playerInstance.gameObject.activeSelf;
+        wasMainUIActiveBeforeIsolation = mainUI != null && mainUI.gameObject.activeSelf;
+        wasCursorVisibleBeforeIsolation = mainUI != null && mainUI.isCursorVisible;
+
+        if (playerInstance != null)
+            playerInstance.gameObject.SetActive(false);
+
+        if (mainUI != null)
+            mainUI.gameObject.SetActive(false);
+
+        isolatedSceneName = "Dice";
+        isIsolatedSceneActive = true;
+        HealIsolatedSceneState();
+    }
+
+    public void MarkIsolatedSceneLoaded(string sceneName)
+    {
+        isolatedSceneName = sceneName ?? string.Empty;
+
+        if (isIsolatedSceneActive)
+            HealIsolatedSceneState();
+    }
+
+    public void ExitIsolatedScene()
+    {
+        if (!isIsolatedSceneActive)
+            return;
+
+        if (playerInstance != null)
+            playerInstance.gameObject.SetActive(wasPlayerActiveBeforeIsolation);
+
+        if (mainUI != null)
+            mainUI.gameObject.SetActive(wasMainUIActiveBeforeIsolation);
+
+        if (mainUI != null)
+        {
+            if (wasCursorVisibleBeforeIsolation)
+                mainUI.ShowCursor();
+            else
+                mainUI.HideCursor();
+        }
+        else
+        {
+            CursorManager.Hide();
+        }
+
+        RestoreGameplayAudioListener();
+
+        isIsolatedSceneActive = false;
+        isolatedSceneName = string.Empty;
+    }
+
+    public void PrepareReturnFromIsolatedScene()
+    {
+        shouldRestoreAfterIsolatedSceneLoad = true;
+    }
+
+    private void HealIsolatedSceneState()
+    {
+        if (playerInstance != null && playerInstance.gameObject.activeSelf)
+            playerInstance.gameObject.SetActive(false);
+
+        if (mainUI != null && mainUI.gameObject.activeSelf)
+            mainUI.gameObject.SetActive(false);
+
+        CursorManager.Show();
+        RestoreIsolatedSceneAudioListener();
+    }
+
+    private void RestoreIsolatedSceneAudioListener()
+    {
+        AudioListener[] listeners = FindObjectsOfType<AudioListener>(true);
+        if (listeners.Length == 0)
+            return;
+
+        AudioListener isolatedListener = Camera.main != null
+            ? Camera.main.GetComponent<AudioListener>()
+            : null;
+
+        if (isolatedListener == null)
+        {
+            foreach (var listener in listeners)
+                listener.enabled = false;
+
+            listeners[0].enabled = true;
+            return;
+        }
+
+        foreach (var listener in listeners)
+            listener.enabled = listener == isolatedListener;
+    }
+
+    private void RestoreGameplayAudioListener()
+    {
+        AudioListener gameplayListener = playerInstance != null
+            ? playerInstance.GetComponentInChildren<AudioListener>(true)
+            : null;
+
+        AudioListener[] listeners = FindObjectsOfType<AudioListener>(true);
+
+        if (gameplayListener == null)
+        {
+            if (listeners.Length > 0)
+                listeners[0].enabled = true;
+            return;
+        }
+
+        foreach (var listener in listeners)
+            listener.enabled = listener == gameplayListener;
+    }
+
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         RestoreDialogueState();
 
-        PersistentObject.LoadAll();
+        if (scene.name != "Dice")
+            PersistentObject.LoadAll();
 
         LoadPlayer();
 
@@ -97,6 +228,20 @@ public class GlobalLoader : MonoBehaviour
         {
             mainUI.teamManager.UpdateTeamUI();
         }
+
+        if (shouldRestoreAfterIsolatedSceneLoad)
+        {
+            ExitIsolatedScene();
+            playerInstance?.cameraSettings.Initialize();
+
+            if (playerInstance != null)
+                playerInstance.movement.canMove = true;
+
+            shouldRestoreAfterIsolatedSceneLoad = false;
+        }
+
+        if (scene.name != "Dice" && !isIsolatedSceneActive && EchoRift.DiceSessionState.HasActiveSession)
+            EchoRift.DiceSessionState.Clear();
     }
 
     private void RestoreDialogueState()
@@ -246,7 +391,13 @@ public class GlobalLoader : MonoBehaviour
 
     public void LoadToScene(string sceneToLoad)
     {
-        fightSceneLoader.LoadAsync(sceneToLoad);
+        if (fightSceneLoader != null)
+        {
+            fightSceneLoader.LoadAsync(sceneToLoad);
+            return;
+        }
+
+        SceneManager.LoadScene(sceneToLoad);
     }
 
     public void SaveInventory()
