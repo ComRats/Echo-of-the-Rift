@@ -1,0 +1,340 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_39C93205_2D45_59CC_B612_D70D9154F597" name="UISystem">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_0956D114_E20D_5001_9972_3EA11FCA96AF" name="CoreUI">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" name="MainUI" visibility="public">
+      <ownedAttribute xmi:id="EAID_43294D29_827A_5984_8BB5_A5583B1230AB" name="pauseMenu" visibility="public" type="PauseMenu"/>
+      <ownedAttribute xmi:id="EAID_29461F83_5E9C_5213_8D8D_EF49DAA557CE" name="playerUI" visibility="public" type="PlayerUI"/>
+      <ownedAttribute xmi:id="EAID_26080899_5A56_5050_9966_2828DBC364D2" name="canvas" visibility="public" type="Canvas"/>
+      <ownedAttribute xmi:id="EAID_A8D83ECA_DE70_5665_8D27_6C88FCAA6BA9" name="screenFader" visibility="public" type="ScreenFader"/>
+      <ownedAttribute xmi:id="EAID_7319EC22_686D_519D_90C4_EAD7523B5E23" name="spriteCollection" visibility="public" type="SpriteCollection"/>
+      <ownedAttribute xmi:id="EAID_2B2A3B68_AE7D_5A85_96B4_63A93E4399EB" name="inventoryManager" visibility="public" type="InventoryManager"/>
+      <ownedAttribute xmi:id="EAID_AD841005_7675_5D18_8265_6AF95A36CC58" name="fishingUI" visibility="public" type="FishingUI"/>
+      <ownedAttribute xmi:id="EAID_85F2A4DB_B5A7_59C8_AFA8_914EDC90945E" name="shopUI" visibility="public" type="ShopUI"/>
+      <ownedAttribute xmi:id="EAID_AEBE4E72_AE35_5EE4_B61F_B26F5EF59D6A" name="tonguesCanvas" visibility="public" type="Canvas"/>
+      <ownedAttribute xmi:id="EAID_95BCCC04_CF77_54E5_B653_71E2ACE3EA66" name="questLogWindow" visibility="public" type="StandardUIQuestLogWindow"/>
+      <ownedAttribute xmi:id="EAID_09448CC7_293E_5C1B_90C5_350E90571C46" name="teamManager" visibility="public" type="TeamManager"/>
+      <ownedAttribute xmi:id="EAID_5D4A4800_0067_5EE9_8467_F108EBE5E5F9" name="canOpenUI" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_E9CFB9B1_39DA_545B_B7E7_3A854FC20F73" name="isOpenUI" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_E9B9B9D9_8187_5FAD_B89C_2136C4DADC74" name="isCursorVisible" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_B129EF97_2221_5B71_AB79_1E0024FFDB9B" name="gameSettings" visibility="private" type="GameSettings"/>
+      <ownedAttribute xmi:id="EAID_576022EB_A534_5A47_BA8B_CE179806F3EA" name="contextMenu" visibility="private" type="InventoryContextMenu"/>
+      <ownedAttribute xmi:id="EAID_BBDA0446_038F_5476_942F_5D9BFBBDBB42" name="musicManager" visibility="private" type="MusicTransitionManager"/>
+      <ownedOperation xmi:id="EAID_2CC0DB34_25AF_51CD_AE94_EBDB7AD7BFC7" name="ToggleInventory" visibility="public"/>
+      <ownedOperation xmi:id="EAID_BBF70561_9ED2_5905_83DB_73A6A6161BE8" name="OpenInventory" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7B23E74A_E20A_5BFC_9B48_EC88E4A0B22C" name="CloseInventory" visibility="public"/>
+      <ownedOperation xmi:id="EAID_082E9368_D968_5B25_9655_8C225DBAB1DF" name="ToggleQuestLog" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F0B5B2F3_FB5F_539B_A0AF_142A0D248DC4" name="OpenQuestLog" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C9374FB5_DD85_55EF_82F3_9AF3D1F1494E" name="CloseQuestLog" visibility="public"/>
+      <ownedOperation xmi:id="EAID_BDE8601C_7295_5A3F_8A02_E66F5AB16ACD" name="ShowCursor" visibility="public"/>
+      <ownedOperation xmi:id="EAID_15417130_2513_5058_9EC8_6314CA6CCF41" name="HideCursor" visibility="public"/>
+      <ownedOperation xmi:id="EAID_39DC0016_814C_525C_B8F2_21657EA6F860" name="ToggleCursorVisible" visibility="public"/>
+      <ownedOperation xmi:id="EAID_24ECAAA0_9342_5B51_AAA7_FBB13E774915" name="Show" visibility="public"/>
+      <ownedOperation xmi:id="EAID_79B86366_0D36_5259_8B3E_673CF55D3748" name="Hide" visibility="public"/>
+      <ownedOperation xmi:id="EAID_C8044572_E804_595C_BE3E_A6F383B2F829" name="ResetUIState" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_39BD6EE8_40CF_515A_9C8E_C9C4BB22D66D" name="PlayerUI" visibility="public">
+      <ownedAttribute xmi:id="EAID_B5E7980A_937D_5E09_8E80_C8E0C78F6BC4" name="mobGuide" visibility="public" type="MobGuide"/>
+      <ownedAttribute xmi:id="EAID_53417CDD_4721_54B1_A956_B3EA84648250" name="tongues" visibility="private" type="List[Tongue]"/>
+      <ownedAttribute xmi:id="EAID_C8FCD66E_CE23_53DA_8D04_FCF0E66D6E64" name="playerPanel" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_C3F12909_D600_54C0_8701_AFFA1F72FC0A" name="overlayPanel" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_2E713061_00D7_58DE_9878_389C1C3456F4" name="questTongueIndex" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_4D65937B_4108_57DB_92CE_BD0BDA727178" name="guideTongueIndex" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_5E952621_6D7E_54CB_AE1D_54BC5A2906CB" name="onQuestTongueSelected" visibility="public" type="Action"/>
+      <ownedAttribute xmi:id="EAID_FE49F635_9A12_50C6_BE8D_7CBCF81027EB" name="onQuestTongueDeselected" visibility="public" type="Action"/>
+      <ownedAttribute xmi:id="EAID_1035131C_13D0_54A9_8247_5597987E3482" name="onGuideTongueSelected" visibility="public" type="Action"/>
+      <ownedOperation xmi:id="EAID_0FE37CD5_017E_5942_B16A_4E7496CA80D0" name="OpenPlayerUI" visibility="public"/>
+      <ownedOperation xmi:id="EAID_4097AA76_3326_5E1E_B018_1A37793DC67D" name="ToggleInventoryOnFight" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9CBEFE92_F4DD_5D09_840A_FCB3A9452843" name="OnTongueSelected" visibility="private"/>
+      <ownedOperation xmi:id="EAID_EE2E6062_FB21_5FC1_BE1C_6CF4B6FA10D5" name="SelectTongue" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_535A17DC_4777_5325_81F5_3EA72F1FF8A0" name="PauseMenu" visibility="public">
+      <ownedAttribute xmi:id="EAID_A5A0564C_4F40_56E2_9A1E_1F9971B1924A" name="sceneLoader" visibility="private" type="SceneLoader"/>
+      <ownedAttribute xmi:id="EAID_495ED355_8B33_5F4C_BF07_E41CE1C58011" name="settingsPanel" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_BF59693E_4E4F_5417_8A91_7300A3433B59" name="pauseMenu" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_15E378B5_8127_5FCA_9A64_EEEA7FF10D32" name="buttons" visibility="private" type="ButtonSettings[]"/>
+      <ownedAttribute xmi:id="EAID_2FF8C694_0668_5F70_901A_5CFDC6CD984C" name="gameSettings" visibility="private" type="GameSettings"/>
+      <ownedAttribute xmi:id="EAID_02FF627A_B26D_5148_9287_EAF4E1C78ED1" name="isActive" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_66F4C2D2_06E9_5B6A_9E7D_DEAF67DB7444" name="_musicManager" visibility="private" type="MusicTransitionManager"/>
+      <ownedOperation xmi:id="EAID_D348A387_6C78_5D36_9B68_A0349C36F889" name="OpenPauseMenu" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F2332363_8603_52CD_A3CD_623555FAFC38" name="ClosePauseMenu" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7ED48A05_EC6A_5DC6_A22E_5F199A0B8DCB" name="PauseGame" visibility="public"/>
+      <ownedOperation xmi:id="EAID_73D17F3D_3DF8_5E9B_A847_FB0EF1005A8B" name="ResumeGame" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_46AB1696_5611_5AEC_8A1E_97E8A380C14D" name="CursorManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_64A95430_94D8_566D_9DFB_DCC00A5EAE86" name="Instance" visibility="public" type="CursorManager"/>
+      <ownedAttribute xmi:id="EAID_B98B1DF5_CC5A_58B4_8005_951413EC2CBA" name="_wantVisible" visibility="private" type="bool"/>
+      <ownedOperation xmi:id="EAID_220D0507_EC9A_5801_9F57_A72994EE2CFC" name="Show" visibility="public"/>
+      <ownedOperation xmi:id="EAID_88D3C580_A7FA_5917_B764_B409CF0CDAEF" name="Hide" visibility="public"/>
+      <ownedOperation xmi:id="EAID_6D4E7091_27FC_5600_99CF_32953389CBE3" name="EnforceState" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_E2B38352_4B2C_59C4_81BA_87534E855259" name="ContextText" visibility="public">
+      <ownedAttribute xmi:id="EAID_8A40ADA1_973E_5A3E_855C_A4A86BD80509" name="fjghtTurn" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_418EF208_A6A9_55CF_9257_CD5139336545" name="turn" visibility="private" type="int"/>
+      <ownedOperation xmi:id="EAID_69526B5A_1C13_5BFD_BBF8_BB5F39886867" name="ChangeTurnText" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_19D2DC34_9DA6_55E6_94B6_9008B1BD2CD6" name="QuestPanel" visibility="public">
+      <ownedAttribute xmi:id="EAID_956A5E65_F416_5102_A288_C904B2E81D80" name="questNameText" visibility="private" type="TextMeshProUGUI"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_947CF0FF_ECC9_5658_936E_982AC48E5653" name="GameAlert" visibility="public">
+      <ownedAttribute xmi:id="EAID_F8840615_558C_5F72_8620_A7A0C5E6BADA" name="mainText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_ABF35EF1_216A_5A53_AAFE_C930AC516086" name="leftButton" visibility="public" type="Button"/>
+      <ownedAttribute xmi:id="EAID_47B9AB22_BCA5_5711_AB20_306134EF9D26" name="leftButtonText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_4FC48B00_8A87_5065_BC7E_B41934D2A544" name="rightButton" visibility="public" type="Button"/>
+      <ownedAttribute xmi:id="EAID_69A6C50D_8EF7_50E2_81E2_8747BCF6897B" name="rightButtonText" visibility="public" type="TextMeshProUGUI"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_C78C015B_3057_50E0_96E8_CAFDDF7FD581" name="GameMassage" visibility="public">
+      <ownedOperation xmi:id="EAID_46C6C76D_D93D_5041_8CFF_2BF3F80C33C3" name="ButtonMassage" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D32C9282_F089_524A_91B6_4AA1AFC7305D" name="MassageText" visibility="public"/>
+      <ownedOperation xmi:id="EAID_570B367D_7F7E_5752_A244_FFA088F5391F" name="ButtonMassageWithText" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DEFAC17B_F4AD_5A1C_AAC8_8395E4CCED62" name="WarningMassage" visibility="public"/>
+      <ownedOperation xmi:id="EAID_967C1A2F_958D_5572_9F64_E57921E67966" name="GameAlert" visibility="public"/>
+      <ownedOperation xmi:id="EAID_D81F4968_8028_585B_92AA_4BB018CFB4A5" name="CloseAlert" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DF8570A6_886D_5D27_937B_4E95D337A40F" name="FindCanvas" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8D97489B_BD65_5C8D_972E_D3830AB20D4F" name="ContentScaler" visibility="public">
+      <ownedAttribute xmi:id="EAID_CE79090C_4E35_5AB1_80BC_D194B711A47F" name="content" visibility="private" type="RectTransform"/>
+      <ownedAttribute xmi:id="EAID_794128E5_AB31_576D_AF6B_601DCAC96CD2" name="layoutContainer" visibility="private" type="RectTransform"/>
+      <ownedOperation xmi:id="EAID_D3317159_61AB_5D4F_8E21_775586295A04" name="UpdateContentHeight" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_1E639394_2CE5_53CE_B296_129B2BAF5F4B" name="TurnPintogramm" visibility="public">
+      <ownedAttribute xmi:id="EAID_DE039048_832C_5F91_A040_605519F0C380" name="pintogramm" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_11BD5FCA_4CBF_5FAF_A67E_AB015595BE42" name="fightManager" visibility="private" type="FightManager"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_54F82145_1C2E_516F_8D69_34A37AEBB063" name="CustomInputField" visibility="public">
+      <ownedOperation xmi:id="EAID_BB7D8F91_6ADA_529D_BEA1_425515B8BFBF" name="OnPointerClick" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E45050DF_EEB8_5E45_BB7F_A0D3454CB1F5" name="OnBeginDrag" visibility="public"/>
+      <ownedOperation xmi:id="EAID_8DD4A917_7FCA_55B7_8807_36716E952075" name="OnEndDrag" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_C577B1AF_D796_59C4_97B7_0F4F49106B36" name="TMP_InputField" visibility="public">
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_3E446E4E_7A7B_5B86_81E0_58022A5565FD" name="Tabs">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_DEE42A24_CA8A_59B5_8F7A_9780D35C9CC8" name="SelectableTab" visibility="public" isAbstract="true">
+      <ownedAttribute xmi:id="EAID_83CDFC18_FC15_5065_A1FD_918789A2FF52" name="index" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_8684271E_1BA9_58D3_8F04_D283B42F762E" name="objectToOpen" visibility="public" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_D52BE599_3874_574B_A3B5_9DE5E3AF541B" name="isSelected" visibility="protected" type="bool"/>
+      <ownedAttribute xmi:id="EAID_E022A0B3_EBA4_5EDA_AC45_49E1A166E85B" name="rectTransform" visibility="protected" type="RectTransform"/>
+      <ownedAttribute xmi:id="EAID_914C6849_479C_5899_A411_962B74924402" name="originalPosition" visibility="protected" type="Vector2"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_F13578CF_6534_55EE_A91A_0C1BF755B6A6" name="Tongue" visibility="public">
+      <ownedAttribute xmi:id="EAID_9283C791_5289_567E_9B72_2546A66B40D0" name="hoverOffsetY" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_8BD2A501_92E1_5766_988E_872ECBBD3CE2" name="selectedOffsetY" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_DADA1982_EBA2_50C1_B31C_42BC246FD389" name="animationDuration" visibility="private" type="float"/>
+      <ownedAttribute xmi:id="EAID_67393B63_EF1D_51BA_BF22_A71EE8C17F7C" name="button" visibility="private" type="Button"/>
+      <ownedAttribute xmi:id="EAID_270B0563_5A19_5482_BF43_A5244BC6E317" name="IsSelected" visibility="public" type="bool"/>
+      <ownedOperation xmi:id="EAID_4A398900_D840_5CB2_BBC9_99CBD94EF7A6" name="Init" visibility="public"/>
+      <ownedOperation xmi:id="EAID_1F392AF8_42B1_542A_AA81_693D86387070" name="OnPointerEnter" visibility="public"/>
+      <ownedOperation xmi:id="EAID_9F4852A2_9AA6_58CA_82BB_AC6DDC440AA2" name="OnPointerExit" visibility="public"/>
+      <ownedOperation xmi:id="EAID_39BCF537_FE7E_5ED4_8945_3DC91D2605A6" name="OnPointerDown" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E457FFB9_9251_59CE_BDC3_ED9928313CCE" name="OnPointerUp" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7C786C94_DB8A_5137_8612_AD2BAD0F4F4B" name="AnimateToSelected" visibility="private"/>
+      <ownedOperation xmi:id="EAID_B38A7A4D_5F58_5C23_9051_0E678306547F" name="AnimateToNormal" visibility="private"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_2AF20036_1589_5402_A144_D410F28275E8" name="Tooltip">
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_0E01A736_6188_56EB_AC12_D444CEFF174D" name="TMP_BoundTooltipItem" visibility="public">
+      <ownedAttribute xmi:id="EAID_2727187B_1CB8_5D0E_9F0B_CCFC36AC46CB" name="Instance" visibility="public" type="TMP_BoundTooltipItem"/>
+      <ownedAttribute xmi:id="EAID_EFD870DF_8EEB_5FBD_9378_02969E3C7D9F" name="TooltipText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_6EEAF237_A6FA_5CCA_B633_15FBD05B972B" name="ToolTipOffset" visibility="public" type="Vector3"/>
+      <ownedOperation xmi:id="EAID_56639386_58BA_57C8_870E_5A4CF80AD874" name="ShowTooltip" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E2CF628B_7A04_58B4_B5AD_D10D77CB5BF0" name="HideTooltip" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_5B023BF5_F0AA_5783_8284_A5DF1AF680B7" name="TMP_BoundTooltipTrigger" visibility="public">
+      <ownedAttribute xmi:id="EAID_87D939E9_826F_5E30_B3F6_E6C02C017DD4" name="text" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_9908C685_0D5A_530E_A2D2_DC9A1C5E35DC" name="useMousePosition" visibility="public" type="bool"/>
+      <ownedAttribute xmi:id="EAID_3728A16B_9439_5E18_8651_8AA93C65B6B6" name="offset" visibility="public" type="Vector3"/>
+      <ownedOperation xmi:id="EAID_7342D446_26CC_58F6_B037_C5C7CE7593D1" name="OnPointerEnter" visibility="public"/>
+      <ownedOperation xmi:id="EAID_99C32EB1_2E11_571C_A9D5_793986A98613" name="OnPointerExit" visibility="public"/>
+      <ownedOperation xmi:id="EAID_08DABF24_05EE_534E_A201_A60AEFB29D59" name="OnSelect" visibility="public"/>
+      <ownedOperation xmi:id="EAID_198BACCE_C067_5CCA_8A29_8C1CF49DEA08" name="OnDeselect" visibility="public"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_DC689CF5_CFB8_563A_8E54_4AA4C1C2EC9A" name="GuideBook">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_95A91CBD_57E7_5057_88E1_4593AA5487C4" name="IMobProvider" visibility="public">
+      <ownedAttribute xmi:id="EAID_8EE32F41_1693_59EB_A965_BE387F902B96" name="MobData" visibility="public" type="Mob"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_8DB48053_DD51_53AF_80F5_506D76D6C69F" name="Mob" visibility="public">
+      <ownedAttribute xmi:id="EAID_332992CC_605A_595A_A21C_E69DC102C464" name="nickname" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_9A3B3674_C76D_5FC4_A8DA_A0D5E8CA3C44" name="shortDescription" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_5754EB17_0193_5EA6_87AA_3E1EC9DA17A2" name="longDescription" visibility="public" type="string"/>
+      <ownedAttribute xmi:id="EAID_44EF79C7_FE79_5622_9846_ECDD48BDF0AC" name="sprite" visibility="public" type="Sprite"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_AB561071_AA45_5075_92EA_27E7CD3E00BB" name="MobUI" visibility="public">
+      <ownedAttribute xmi:id="EAID_7C7EDA9A_4DD8_5242_9470_0C84EBBD9853" name="nickname" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_E1651E4B_64BC_5196_982F_349173A0D834" name="shortDescription" visibility="public" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_0A280BFE_7D8E_5D3B_AA17_C61F5E09D46C" name="button" visibility="public" type="Button"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_B8870053_A8D3_58D5_BEAA_DE2988B957EA" name="MobGuide" visibility="public">
+      <ownedAttribute xmi:id="EAID_F1095605_B75E_51E7_8A9D_5E051ED623DF" name="mobs" visibility="private" type="List[Mob]"/>
+      <ownedAttribute xmi:id="EAID_12DD4D03_7457_50E0_8180_9D1785585693" name="mobsUI" visibility="private" type="List[MobUI]"/>
+      <ownedAttribute xmi:id="EAID_474A1481_5A96_568E_A078_0DEB43E38B5D" name="mobPrefab" visibility="private" type="GameObject"/>
+      <ownedAttribute xmi:id="EAID_A5B27AB5_D7A8_55B5_8783_3699125129A0" name="mobImage" visibility="private" type="Image"/>
+      <ownedAttribute xmi:id="EAID_180FB376_4E42_565B_B3A7_E822190CFA4B" name="mobLongDescription" visibility="private" type="TextMeshProUGUI"/>
+      <ownedOperation xmi:id="EAID_AC80DAE9_4B50_56E6_AC85_C23F62F86C4F" name="UpdateMobsGrid" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DAF5798A_72A5_5A7A_A06C_4DCC0D5C7795" name="AddMob" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F4715D6A_D214_56F0_A9B1_D37F108F422C" name="ShowMob" visibility="private"/>
+      <ownedOperation xmi:id="EAID_47550E51_E8B8_5ADB_B266_08629F49FD51" name="LoadBestiary" visibility="private"/>
+      <ownedOperation xmi:id="EAID_3453B1C9_2A22_573A_AF69_6A115DEE6860" name="SaveBestiary" visibility="private"/>
+      <ownedOperation xmi:id="EAID_C7C07DB1_3247_5FC9_BE9A_3DD2250DAA80" name="CreateMobs" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_AD184708_FE3D_546B_AADD_A4570083E6EB" name="BestiaryData" visibility="public">
+      <ownedAttribute xmi:id="EAID_78BEFB48_532A_52B1_A477_87C9CDF5EA3E" name="mobNames" visibility="public" type="List[string]"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_A2384E79_8131_5C3E_A98E_DCC4E51CEA71" name="PlayerCreation">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_BBDD62F3_C0E0_5A5C_99E8_CF5F1F593B1B" name="IUpdatableUI" visibility="public">
+      <ownedAttribute xmi:id="EAID_43EAFD9B_46FA_568C_B50A_FA59A553C146" name="DescriptionText" visibility="public" type="TextMeshProUGUI"/>
+      <ownedOperation xmi:id="EAID_1A9585C1_585A_5F70_BCF8_16D1254D251E" name="UpdateUI" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_C6289C58_A814_5019_8274_6FED544443F0" name="PointsManager" visibility="public">
+      <ownedAttribute xmi:id="EAID_BD28D249_BEF1_5F6D_BA8D_F7F6DC0E96BA" name="maxPoints" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_E00C2D93_0A79_565B_BC09_D84F089B4F34" name="usedPoints" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_6DEA27C1_4D8C_55FA_BFE9_113DD53BA04A" name="pointsData" visibility="private" type="List[PointsData]"/>
+      <ownedAttribute xmi:id="EAID_7595C1B4_D1EE_5E26_8211_C98E7E367EE3" name="characterData" visibility="private" type="CharacterData"/>
+      <ownedOperation xmi:id="EAID_CF34545D_A851_560F_ABE0_7044347EB882" name="CanAddPoint" visibility="public"/>
+      <ownedOperation xmi:id="EAID_FC7F10E6_A342_52FE_A147_83B9D0C2CBD5" name="AddPoint" visibility="public"/>
+      <ownedOperation xmi:id="EAID_65C6DE48_50DD_5426_9585_CDBDC3D7B80A" name="RemovePoint" visibility="public"/>
+      <ownedOperation xmi:id="EAID_07532675_1B07_524E_8F10_E418B696FF5B" name="AddPointsToPlayer" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7CE431AE_A05B_5DF1_932F_42F6873D1CC8" name="GetDescription" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_36F11417_ABEF_515B_AB1B_374EE6C4E4AC" name="PointsData" visibility="public">
+      <ownedAttribute xmi:id="EAID_249F32D8_2E18_5C6E_9609_3A1F99892848" name="statType" visibility="public" type="StatType"/>
+      <ownedAttribute xmi:id="EAID_53EDA866_9EFB_509A_883E_BA095D5A488F" name="choosing" visibility="public" type="Choosing"/>
+      <ownedAttribute xmi:id="EAID_1ECF727A_5D39_59A0_99D6_4808070181CE" name="baseValue" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_B79B0E13_61F6_564F_B73B_9CFDA55A16AE" name="multiplier" visibility="public" type="float"/>
+      <ownedAttribute xmi:id="EAID_EF9098B3_1547_5256_8F40_3B219C6D9492" name="baseValue2" visibility="public" type="int"/>
+      <ownedAttribute xmi:id="EAID_0E0A6774_D315_5407_920B_6AB6FB8C5A8B" name="multiplier2" visibility="public" type="float"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_4ECC0828_F55C_5BBB_9939_07455D9383E6" name="Choosing" visibility="public">
+      <ownedAttribute xmi:id="EAID_6AE9E037_0862_54FD_A3E9_216C107D23F8" name="statType" visibility="private" type="StatType"/>
+      <ownedAttribute xmi:id="EAID_CB640879_2F19_5E6A_90C2_35A0B27EE13A" name="valueText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_D520F8A3_FE75_50E8_8500_4BE456E7015A" name="descriptionText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_F39F33FA_C6C0_5C51_A8F0_A444460AD4B6" name="pointsManager" visibility="private" type="PointsManager"/>
+      <ownedAttribute xmi:id="EAID_274549C4_B6E3_5B6B_AE32_6607AEE3DB8B" name="maxStatValue" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_103DD504_A365_5C29_9CF9_38047EF5A5C0" name="currentValue" visibility="public" type="int"/>
+      <ownedOperation xmi:id="EAID_05C1E602_3333_5CF6_B66B_586DBC49991A" name="UpdateUI" visibility="public"/>
+      <ownedOperation xmi:id="EAID_769E7316_C02D_5931_BDBE_DE8163145D8C" name="ChangeValue" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_40AEEC6E_724F_5322_BCA9_C0133A009FD0" name="Apperance" visibility="public">
+      <ownedAttribute xmi:id="EAID_803D06E0_A0DC_5790_91E3_533E28D752B1" name="descriptionText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_C59EB230_8B07_549D_A24A_9A4CFBE14CA5" name="leftButton" visibility="private" type="Button"/>
+      <ownedAttribute xmi:id="EAID_F53DB36F_DC69_52E9_8AB7_4909EAF72311" name="rightButton" visibility="private" type="Button"/>
+      <ownedAttribute xmi:id="EAID_85EBF0C0_7972_563C_896C_16CB78E35585" name="valueText" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_6295F627_9C3F_52CA_95E3_DB1811342FC1" name="appProperty" visibility="private" type="List[ApperanceProperty]"/>
+      <ownedAttribute xmi:id="EAID_3026DB0B_A458_55C8_A28B_8773C2EEBF4A" name="currentValue" visibility="private" type="int"/>
+      <ownedOperation xmi:id="EAID_FAC70337_BB5F_5EA6_A6E7_EDD1B71ED584" name="UpdateUI" visibility="public"/>
+      <ownedOperation xmi:id="EAID_E30D9714_6ACB_5926_99EF_1524B796718E" name="ChangeValue" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_BB7CE205_7EF0_5660_87EB_56937D94C27E" name="HeroSwitcher" visibility="public">
+      <ownedAttribute xmi:id="EAID_2708A75D_09F3_5C05_BC8A_F6A51869E698" name="heroes" visibility="private" type="List[GameObject]"/>
+      <ownedAttribute xmi:id="EAID_46C4C4EE_A143_5078_8EA1_7077A8778EAF" name="currentIndex" visibility="private" type="int"/>
+      <ownedOperation xmi:id="EAID_B9307348_C5D9_5703_A6D1_E6941A41D35F" name="NextHero" visibility="public"/>
+      <ownedOperation xmi:id="EAID_7429C518_8C84_5913_B8ED_C0D102D9EF85" name="PrevHero" visibility="public"/>
+      <ownedOperation xmi:id="EAID_DA25E95F_2A08_5204_BBE8_D0F8ACFA50BA" name="ShowHero" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_F1B7076C_A019_545A_A0E9_BD62E8139CAA" name="HoverHandler" visibility="public">
+      <ownedAttribute xmi:id="EAID_C5D484CD_8F35_55DF_BC13_14D074A9353B" name="descriptionText" visibility="private" type="string"/>
+      <ownedAttribute xmi:id="EAID_AF47E4AF_3F8B_5BCF_B375_3C8F77A55F87" name="points" visibility="private" type="PointsManager"/>
+      <ownedAttribute xmi:id="EAID_5A85E962_446D_5DBD_8E93_5CDE0432EB8D" name="uiHandler" visibility="private" type="IUpdatableUI"/>
+      <ownedOperation xmi:id="EAID_9609BC4F_1C1C_521C_ADCD_46B1D2362189" name="OnPointerEnter" visibility="public"/>
+      <ownedOperation xmi:id="EAID_F1C64E51_B95C_5419_8986_27BAB4C05792" name="OnPointerExit" visibility="public"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="EAID_C28714A0_779F_5A38_B96D_679D3545FA90" name="UploadTarget" visibility="public">
+      <ownedAttribute xmi:id="EAID_2CD7CAB8_8D29_5299_B251_A34DCFCC4CEC" name="nextSceneLoader" visibility="private" type="SceneLoader"/>
+      <ownedAttribute xmi:id="EAID_92DE374C_362C_5CB0_96C9_31F7439020D5" name="points" visibility="private" type="PointsManager"/>
+      <ownedAttribute xmi:id="EAID_F5A0B98A_2090_561E_A3BE_67500C9A99D5" name="descriptionStats" visibility="private" type="TextMeshProUGUI"/>
+      <ownedAttribute xmi:id="EAID_FAFA0A00_C130_54E1_A92D_F926082B8206" name="inputField" visibility="private" type="CustomInputField"/>
+      <ownedAttribute xmi:id="EAID_AE4B845D_BDED_5513_A464_C2F2AC586763" name="maxNameLength" visibility="private" type="int"/>
+      <ownedAttribute xmi:id="EAID_E5045254_9E64_5C14_A1D3_E42A5471215A" name="playerInstance" visibility="private" type="Player"/>
+      <ownedAttribute xmi:id="EAID_F2371A38_FFBE_5523_8426_07A8134F8AD2" name="mainUiInstance" visibility="private" type="MainUI"/>
+      <ownedOperation xmi:id="EAID_0BD8C7DD_59D5_57F5_A3CA_DEAB64E5EA45" name="NextScene" visibility="public"/>
+      <ownedOperation xmi:id="EAID_457257C8_4306_52BA_B267_0FA7704FCB9B" name="RestoreValues" visibility="private"/>
+      <ownedOperation xmi:id="EAID_5B2BC675_1EF8_5ACB_B2CF_9CEAEB081733" name="OnNameChanged" visibility="private"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Enumeration" xmi:id="EAID_4EBE1785_CC08_5EAB_9617_304E51C9535C" name="StatType" visibility="public">
+      <ownedLiteral xmi:id="EAID_C2EEBAF7_2AD3_5EFF_A06E_6D3F33045C5E" name="Power"/>
+      <ownedLiteral xmi:id="EAID_EB05151D_3962_5175_84AC_CC2379D00E74" name="Intellect"/>
+      <ownedLiteral xmi:id="EAID_757E247E_897F_5B51_98DC_E8B1436FF4C4" name="Charisma"/>
+      <ownedLiteral xmi:id="EAID_C3BA5880_17C3_5859_9F72_A43D0D076370" name="Lucky"/>
+      <ownedLiteral xmi:id="EAID_41A10B6E_960E_5895_B0AE_B73A7A78B528" name="HP"/>
+      <ownedLiteral xmi:id="EAID_132BE992_219B_5E46_B4CA_8948AE092AA0" name="MP"/>
+    </packagedElement>
+  </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_D64CE22A_2DD1_5CF3_9FA9_DC97A9536D3D" name="MainUI__pauseMenu">
+      <ownedEnd xmi:id="EAID_5966C731_2F82_5505_B120_9B6538C02790" type="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_954467A3_9850_50C8_9A0D_4687D4F26D0A" name="pauseMenu" type="EAID_535A17DC_4777_5325_81F5_3EA72F1FF8A0" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_74E03789_B37D_52E3_A794_3C1B96796AB9" name="MainUI__playerUI">
+      <ownedEnd xmi:id="EAID_06897CFB_0297_521B_A9DD_646A6280A00D" type="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_4353C498_ECE8_5CD3_B978_D2FFDBF7463B" name="playerUI" type="EAID_39BD6EE8_40CF_515A_9C8E_C9C4BB22D66D" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_6E1A4319_E9AE_5E3E_A898_22117225B32B" name="MainUI__inventoryManager">
+      <ownedEnd xmi:id="EAID_4EBA5A30_61AB_5480_8931_696B3760F39F" type="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_76734B79_D10E_5E88_A5A0_0DB0E62ADD97" name="inventoryManager" type="EAID_59AA3BF2_17AD_543B_9087_5F959DE20E81" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_F208440C_DA37_5E58_9504_7FE9CF3F1310" name="MainUI__teamManager">
+      <ownedEnd xmi:id="EAID_C2C1EF27_E03C_5CC4_A8EC_A28D42672113" type="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_FFADCF41_777A_5624_8C7F_F2F03B686C1F" name="teamManager" type="EAID_50D128D8_B13D_5545_ACC4_E7D572BF9656" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_27A2E25A_20F9_5E23_B4B2_90C71325CCEC" name="uses" client="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" supplier="EAID_46AB1696_5611_5AEC_8A1E_97E8A380C14D"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_78D83445_1F11_5935_BEA5_445DEC843DDD" name="uses" client="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" supplier="EAID_C2AE4B89_45DF_5C95_B87B_1A2678873367"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_8444DE7E_23E2_5545_BA6C_411F5B49B65F" name="uses" client="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C" supplier="EAID_1327B4ED_DC2C_54C6_813A_9A54B4F5881A"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_58E1DAB6_7CB2_518D_9D18_F30010EC0309" name="PlayerUI__tongues">
+      <ownedEnd xmi:id="EAID_080B49C8_9C78_508D_B15A_BAFCA5347DCA" type="EAID_39BD6EE8_40CF_515A_9C8E_C9C4BB22D66D" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_EAAF86A9_5197_562E_A0E1_2E3BCBFDEA2A" name="tongues" type="EAID_F13578CF_6534_55EE_A91A_0C1BF755B6A6" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_12FBDC46_E52E_5675_AC27_0EBD8B302C98" name="PlayerUI__mobGuide">
+      <ownedEnd xmi:id="EAID_A676CD9B_9C1A_51B5_92CA_ED36D443082E" type="EAID_39BD6EE8_40CF_515A_9C8E_C9C4BB22D66D" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_A6AD5BE3_E8E6_51F2_BE82_7438A7113552" name="mobGuide" type="EAID_B8870053_A8D3_58D5_BEAA_DE2988B957EA" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_170E977D_19A1_57B8_9ACA_C03460B652BD" name="uses" client="EAID_535A17DC_4777_5325_81F5_3EA72F1FF8A0" supplier="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_6FE32746_3C0D_5BC3_9A0B_040CBDF32D4C" name="uses" client="EAID_535A17DC_4777_5325_81F5_3EA72F1FF8A0" supplier="EAID_A13C38A9_8794_5E57_A1E7_44652972A06E"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_37D6CF0A_4674_5E90_8CD4_B626F5207C55" name="uses" client="EAID_535A17DC_4777_5325_81F5_3EA72F1FF8A0" supplier="EAID_C2AE4B89_45DF_5C95_B87B_1A2678873367"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_8245E2E7_CF01_53D6_A243_C17D8B2F08EB" name="creates" client="EAID_C78C015B_3057_50E0_96E8_CAFDDF7FD581" supplier="EAID_947CF0FF_ECC9_5658_936E_982AC48E5653"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_7FDDCDA7_3F24_5980_86DA_5C30E94EB237" name="TurnPintogramm__fightManager">
+      <ownedEnd xmi:id="EAID_67A9C245_0B91_5F20_8365_1AA1C4C9C449" type="EAID_1E639394_2CE5_53CE_B296_129B2BAF5F4B" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_E8061008_100A_57F0_B042_0D4B1CAFEE1D" name="fightManager" type="EAID_EF60E55C_0F7F_53FB_8364_596A0A93F03C" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Generalization" xmi:id="EAID_9AFDA7EB_4805_5110_BCD6_6DDAA752E4FF" specific="EAID_54F82145_1C2E_516F_8D69_34A37AEBB063" general="EAID_C577B1AF_D796_59C4_97B7_0F4F49106B36"/>
+    <packagedElement xmi:type="uml:Generalization" xmi:id="EAID_ADB136DE_621F_537C_B2B9_F64148263476" specific="EAID_F13578CF_6534_55EE_A91A_0C1BF755B6A6" general="EAID_DEE42A24_CA8A_59B5_8F7A_9780D35C9CC8"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_0586C304_EC1B_57B9_BD76_220C01CB8D7C" name="uses" client="EAID_5B023BF5_F0AA_5783_8284_A5DF1AF680B7" supplier="EAID_0E01A736_6188_56EB_AC12_D444CEFF174D"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_D0BAAB2B_92FE_5491_ADBC_EF07B411E03F" name="MobGuide__mobs">
+      <ownedEnd xmi:id="EAID_2CBDC0E8_EEC6_5367_ACD8_5DAC7E06DD14" type="EAID_B8870053_A8D3_58D5_BEAA_DE2988B957EA" aggregation="shared" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_36D65F54_EFEC_58F2_B1BA_3D7CA0A5F2E5" name="mobs" type="EAID_8DB48053_DD51_53AF_80F5_506D76D6C69F" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_1EF12BAA_C7C3_5FC8_AF43_7B17E93048D1" name="MobGuide__mobsUI">
+      <ownedEnd xmi:id="EAID_0B480B1B_25A6_588C_B6D3_749CAC65F037" type="EAID_B8870053_A8D3_58D5_BEAA_DE2988B957EA" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_E13C05DF_9D81_57CA_B603_5F2188A62BD5" name="mobsUI" type="EAID_AB561071_AA45_5075_92EA_27E7CD3E00BB" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_F363AABB_85C8_5A6D_8A2C_BFEAFA205CE1" name="uses" client="EAID_B8870053_A8D3_58D5_BEAA_DE2988B957EA" supplier="EAID_8A2EC02A_C82C_5D3E_9108_95DDA26D1AB9"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_FEAF92C9_77C7_57E3_9D56_D1FE00A8DF0C" name="modifies" client="EAID_C6289C58_A814_5019_8274_6FED544443F0" supplier="EAID_3B598E37_935C_530B_8EBE_B257CBCAB885"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_FF6EA001_7EDD_5A81_8ECB_6650B1C55596" name="PointsManager__pointsData">
+      <ownedEnd xmi:id="EAID_A12265E1_D45A_5627_AFA7_8DE3BFF07A66" type="EAID_C6289C58_A814_5019_8274_6FED544443F0" aggregation="composite" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_3E26FE10_26A1_5B53_84C4_7A86276480E3" name="pointsData" type="EAID_36F11417_ABEF_515B_AB1B_374EE6C4E4AC" isNavigable="true" multiplicity="0..*"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_2AC1C143_2DAE_51CB_91F5_6F26419F6184" implementingClassifier="EAID_4ECC0828_F55C_5BBB_9939_07455D9383E6" contract="EAID_BBDD62F3_C0E0_5A5C_99E8_CF5F1F593B1B"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_32A91584_D499_5093_9431_F928E7912340" name="Choosing__pointsManager">
+      <ownedEnd xmi:id="EAID_9489DBE2_180E_515B_B9C7_2539412BB6D7" type="EAID_4ECC0828_F55C_5BBB_9939_07455D9383E6" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_744ACE3E_98DA_5A2F_8D91_56D9DA1BFA79" name="pointsManager" type="EAID_C6289C58_A814_5019_8274_6FED544443F0" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:InterfaceRealization" xmi:id="EAID_2E0DA1BD_7F7E_554C_9747_EB4D14B57F69" implementingClassifier="EAID_40AEEC6E_724F_5322_BCA9_C0133A009FD0" contract="EAID_BBDD62F3_C0E0_5A5C_99E8_CF5F1F593B1B"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_5228562C_563E_53D1_A014_E9E37A6DD548" name="HoverHandler__points">
+      <ownedEnd xmi:id="EAID_80B39E0D_C541_51F0_BA59_00E9C773D8FC" type="EAID_F1B7076C_A019_545A_A0E9_BD62E8139CAA" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_AA0E90C0_BFFF_51E6_BEB0_15E9D9EAE2EE" name="points" type="EAID_C6289C58_A814_5019_8274_6FED544443F0" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_B810ACFA_98C0_5C25_9C08_3CFCD8AD8808" name="uses" client="EAID_F1B7076C_A019_545A_A0E9_BD62E8139CAA" supplier="EAID_BBDD62F3_C0E0_5A5C_99E8_CF5F1F593B1B"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_35246311_F998_57B9_8CDF_9640B3C1138D" name="UploadTarget__points">
+      <ownedEnd xmi:id="EAID_45D0C272_814E_5D45_8CC3_76BBC1635014" type="EAID_C28714A0_779F_5A38_B96D_679D3545FA90" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_962A3D1E_C16A_5C98_A5AC_2C8E0B19EAB0" name="points" type="EAID_C6289C58_A814_5019_8274_6FED544443F0" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="EAID_117486B4_EE7C_5BDD_A51E_C086E9D70AAF" name="UploadTarget__inputField">
+      <ownedEnd xmi:id="EAID_FF972434_669E_5876_BB32_1EB7074F00F6" type="EAID_C28714A0_779F_5A38_B96D_679D3545FA90" aggregation="none" isNavigable="false"/>
+      <ownedEnd xmi:id="EAID_686462BF_E0FA_5B86_A716_91686158E046" name="inputField" type="EAID_54F82145_1C2E_516F_8D69_34A37AEBB063" isNavigable="true" multiplicity="1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_A6399552_3985_5CB7_8BD7_9BE11E988072" name="uses" client="EAID_C28714A0_779F_5A38_B96D_679D3545FA90" supplier="EAID_A13C38A9_8794_5E57_A1E7_44652972A06E"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_D669BD88_C136_5766_A3EA_E701BF137FC3" name="uses" client="EAID_C28714A0_779F_5A38_B96D_679D3545FA90" supplier="EAID_F83C1EE3_68F6_5F9C_B197_D18DACD7F82C"/>
+</uml:Model>

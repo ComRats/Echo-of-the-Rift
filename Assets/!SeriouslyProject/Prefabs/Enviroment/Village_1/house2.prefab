@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4497223542392551594}
   - component: {fileID: 5832071930767001503}
   - component: {fileID: 954445257679791682}
+  - component: {fileID: 6278206543445024199}
   m_Layer: 0
   m_Name: house2
   m_TagString: Untagged
@@ -75,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: -423682559
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: a64099cd64ae4114798b07439f8b8ac8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a293fa53d90001b43a6e609f80703a36, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 10.24, y: 8.39}
+  m_Size: {x: 2.25, y: 1.845}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -121,9 +122,9 @@ BoxCollider2D:
   m_Offset: {x: -0.004609823, y: 0.22752945}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.49653816, y: 0.0823184}
-    oldSize: {x: 2.2502, y: 1.8436698}
-    newSize: {x: 10.24, y: 8.39}
+    pivot: {x: 0.5, y: 0.1}
+    oldSize: {x: 2.25, y: 1.845}
+    newSize: {x: 2.25, y: 1.845}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -131,6 +132,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.9828444, y: 0.5790903}
   m_EdgeRadius: 0
+--- !u!114 &6278206543445024199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3026351260013715926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000d5b71dc937ba7c0b7d6d8564011ebfe62d7e33f07d82733b
+  m_ShapePath:
+  - {x: -1.1250019, y: 0.82, z: 0}
+  - {x: -0.01, y: 1.6605, z: 0}
+  - {x: 1.1, y: 0.86, z: 0}
+  - {x: 0.96, y: -0.09, z: 0}
+  - {x: -1.01, y: -0.12, z: 0}
+  m_ShapePathHash: -82425109
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -140848
+  m_LocalBounds:
+    m_Center: {x: -0.012501001, y: 0.77025, z: 0}
+    m_Extent: {x: 1.1125009, y: 0.89025, z: 0}
 --- !u!1001 &6531131780203569319
 PrefabInstance:
   m_ObjectHideFlags: 0

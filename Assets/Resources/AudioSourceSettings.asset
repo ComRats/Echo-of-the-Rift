@@ -309,7 +309,7 @@ MonoBehaviour:
     source: {fileID: 0}
   - soundName: Miss1
     type: 0
-    audioClip: {fileID: 8300000, guid: 390c4a87a98cf044990b21e051b37ef6, type: 3}
+    audioClip: {fileID: 8300000, guid: 38c44135618327548bde63d7d34ceee5, type: 3}
     mixerGroup: {fileID: 0}
     loop: 0
     volume: 1

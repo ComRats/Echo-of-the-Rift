@@ -525,7 +525,10 @@ public class ActionButtons : MonoBehaviour
 
     private void OpenButtons(GameObject toOpen, GameObject toClose)
     {
-        toOpen.SetActive(!toOpen.activeSelf);
+        // Если уже открыта нужная панель — ничего не делаем
+        if (toOpen.activeSelf) return;
+
+        toOpen.SetActive(true);
         toClose.SetActive(false);
     }
 

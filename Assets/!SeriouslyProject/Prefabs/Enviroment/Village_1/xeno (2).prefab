@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5156755354476194584}
   - component: {fileID: 6527766653115358405}
   - component: {fileID: 3678761959060444816}
+  - component: {fileID: 2435541123497782830}
   m_Layer: 0
   m_Name: xeno (2)
   m_TagString: Untagged
@@ -74,12 +75,12 @@ SpriteRenderer:
   m_SortingLayerID: -423682559
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 3286163911610860551, guid: 43077177585c016458ed07f1509da80a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1ec6241f3ff2f2648b0608e8bcfea6d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.52059996, y: 0.61985356}
+  m_Size: {x: 0.52, y: 0.62}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -120,3 +121,33 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.13}
   m_Size: {x: 0.47926372, y: 0.29180944}
   m_Direction: 1
+--- !u!114 &2435541123497782830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1995939383499223048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: 00000000d5b71dc937ba7c0b7d6d8564011ebfe62d7e33f07d82733b
+  m_ShapePath:
+  - {x: -0.26541787, y: -0.013227884, z: 0.0000000038437538}
+  - {x: -0.25999916, y: 0.50380874, z: 0.0000000038437538}
+  - {x: 0.23290455, y: 0.5254852, z: 0.0000000038437538}
+  - {x: 0.2437431, y: -0.013227884, z: 0.0000000038437538}
+  m_ShapePathHash: -1865815192
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -118650
+  m_LocalBounds:
+    m_Center: {x: -0.010837376, y: 0.25612867, z: 0}
+    m_Extent: {x: 0.2545805, y: 0.26935655, z: 0}

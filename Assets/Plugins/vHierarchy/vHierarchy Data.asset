@@ -22,6 +22,8 @@ MonoBehaviour:
   - Assets/!SeriouslyProject/Scenes/VillageScenes/VillageScene_2.unity
   - Assets/!SeriouslyProject/Scenes/FightCampScenes/CampForest.unity
   - Assets/!SeriouslyProject/Scenes/FightCampScenes/FghtCamp1.unity
+  - Assets/!SeriouslyProject/Scenes/FightCampScenes/FightCamp2.unity
+  - Assets/!SeriouslyProject/Scenes/FightCampScenes/ForestManHouse.unity
   - Assets/!SeriouslyProject/Scenes/TestScene.unity
   - Assets/!SeriouslyProject/Scenes/PlayerCreating.unity
   - Assets/!SeriouslyProject/Scenes/Dice.unity

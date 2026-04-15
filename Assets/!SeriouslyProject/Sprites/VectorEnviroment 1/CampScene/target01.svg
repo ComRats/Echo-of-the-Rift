@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_Слой_1" data-name="Слой 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 367.59 409.72">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #e5d49d;
+      }
+
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+
+      .cls-2 {
+        fill: #c1563f;
+      }
+
+      .cls-3 {
+        fill: #c69c6d;
+      }
+
+      .cls-4 {
+        fill: #d1c095;
+      }
+    </style>
+  </defs>
+  <g>
+    <rect class="cls-3" x="7.42" y="5.77" width="99.7" height="3.16"/>
+    <polygon class="cls-1" points="18.31 7.35 7.42 7.35 1.26 .63 12.9 1.83 18.31 7.35"/>
+    <polygon class="cls-1" points="18.31 7.35 7.42 7.35 4.16 13.55 16.85 12.58 18.31 7.35"/>
+  </g>
+  <g>
+    <rect class="cls-3" x="323.53" y="300.99" width="12.4" height="90.41" transform="translate(-123.44 193.85) rotate(-27.81)"/>
+    <ellipse class="cls-4" cx="277.42" cy="292.12" rx="122.4" ry="82.22" transform="translate(-100.41 431.91) rotate(-66.78)"/>
+    <ellipse class="cls-1" cx="270.77" cy="289.27" rx="122.4" ry="82.22" transform="translate(-101.81 424.07) rotate(-66.78)"/>
+    <ellipse class="cls-2" cx="266.15" cy="289.27" rx="88.32" ry="59.33" transform="translate(-104.61 419.83) rotate(-66.78)"/>
+    <ellipse class="cls-1" cx="261.61" cy="287.32" rx="56.71" ry="38.09" transform="translate(-105.57 414.48) rotate(-66.78)"/>
+    <ellipse class="cls-2" cx="257.57" cy="283.6" rx="28.35" ry="19.05" transform="translate(-104.61 408.51) rotate(-66.78)"/>
+    <g>
+      <ellipse class="cls-3" cx="229.57" cy="285.53" rx="3.75" ry="1.78" transform="translate(-75.6 488.26) rotate(-84.8)"/>
+      <g>
+        <rect class="cls-3" x="168.04" y="281.17" width="62.07" height="3.16" transform="translate(26.45 -16.88) rotate(5.2)"/>
+        <polygon class="cls-1" points="179.01 280.93 168.16 279.94 162.64 272.68 174.12 274.93 179.01 280.93"/>
+        <polygon class="cls-1" points="179.01 280.93 168.16 279.94 164.35 285.82 177.08 286 179.01 280.93"/>
+      </g>
+    </g>
+    <g>
+      <ellipse class="cls-3" cx="253.29" cy="387.18" rx="3.75" ry="1.78" transform="translate(-155.26 604.32) rotate(-84.8)"/>
+      <g>
+        <rect class="cls-3" x="191.76" y="382.82" width="62.07" height="3.16" transform="translate(35.77 -18.61) rotate(5.2)"/>
+        <polygon class="cls-1" points="202.73 382.58 191.88 381.59 186.36 374.34 197.84 376.59 202.73 382.58"/>
+        <polygon class="cls-1" points="202.73 382.58 191.88 381.59 188.07 387.47 200.8 387.65 202.73 382.58"/>
+      </g>
+    </g>
+    <g>
+      <ellipse class="cls-3" cx="301.3" cy="189.12" rx="3.75" ry="1.78" transform="translate(68.56 458.17) rotate(-81.25)"/>
+      <g>
+        <rect class="cls-3" x="240" y="182.89" width="62.07" height="3.16" transform="translate(31.2 -39.06) rotate(8.75)"/>
+        <polygon class="cls-1" points="251.13 181.41 240.36 179.75 235.29 172.17 246.61 175.12 251.13 181.41"/>
+        <polygon class="cls-1" points="251.13 181.41 240.36 179.75 236.19 185.38 248.88 186.35 251.13 181.41"/>
+      </g>
+    </g>
+  </g>
+</svg>
