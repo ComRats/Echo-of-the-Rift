@@ -27,6 +27,12 @@ EditorBuildSettings:
     path: Assets/!SeriouslyProject/Scenes/FightCampScenes/CampForest.unity
     guid: 0fa6aa5f6ad4a69418365d9042a511e5
   - enabled: 1
+    path: Assets/!SeriouslyProject/Scenes/FightCampScenes/FghtCamp1.unity
+    guid: 4deb08f5745cbce47b699884b9c1834a
+  - enabled: 1
+    path: Assets/!SeriouslyProject/Scenes/FightCampScenes/FightCamp2.unity
+    guid: fa4d434d523e5934dbd3fec3808e6823
+  - enabled: 1
     path: Assets/!SeriouslyProject/Scenes/FightCampScenes/ForestManHouse.unity
     guid: 6301b6c1b6ffe9942aad70575f5ded07
   m_configObjects: {}
