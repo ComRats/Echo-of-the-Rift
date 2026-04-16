@@ -2918,6 +2918,20 @@ MonoBehaviour:
     musicNames:
     - Wind1
     - Village1
+  - scene:
+      Scene: {fileID: 102900000, guid: 4deb08f5745cbce47b699884b9c1834a, type: 3}
+      SceneName: FghtCamp1
+      _sceneIndexInBuildSettings: 7
+      _isSceneEnabledInBuildSettings: 1
+    musicNames:
+    - Camp1
+  - scene:
+      Scene: {fileID: 102900000, guid: fa4d434d523e5934dbd3fec3808e6823, type: 3}
+      SceneName: FightCamp2
+      _sceneIndexInBuildSettings: 8
+      _isSceneEnabledInBuildSettings: 1
+    musicNames:
+    - Camp1
   fadeDuration: 1.5
   normalVolume: 1
   pausedVolume: 0.3
@@ -3156,6 +3170,10 @@ PrefabInstance:
     - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: persistentDataSettings.recordPersistentDataOn
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
+      propertyPath: displaySettings.inputSettings.includeInvalidEntries
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7120163989576527616, guid: a514d20b78a4a9d43aac3b3c3cfcb860, type: 3}
       propertyPath: persistentDataSettings.includeAllConversationFields

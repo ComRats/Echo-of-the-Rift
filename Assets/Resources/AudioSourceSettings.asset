@@ -349,3 +349,59 @@ MonoBehaviour:
     minDistance: 0
     maxDistance: 0
     source: {fileID: 0}
+  - soundName: Battle1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 5f140f94d90a88a46b95519c2b06077a, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Recruit1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 6c1a976ccfd785e4e957353160e337b0, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Recruit2
+    type: 1
+    audioClip: {fileID: 8300000, guid: a7bad0734759b1f44a9b7427bbd6007b, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 0
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
+  - soundName: Camp1
+    type: 1
+    audioClip: {fileID: 8300000, guid: 73fc3b450ac2c274ebfc8ee7ce55d34f, type: 3}
+    mixerGroup: {fileID: 0}
+    loop: 1
+    volume: 1
+    pitch: 1
+    spatialBlend: 0.5
+    dopplerLevel: 0
+    spreadAngle: 0
+    volumeRolloff: 0
+    minDistance: 0
+    maxDistance: 0
+    source: {fileID: 0}
