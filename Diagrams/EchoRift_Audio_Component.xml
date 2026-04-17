@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_C01E4CA1_1374_58CC_B8CE_5854BDB577CE" name="AudioSystem_Component">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_A751E701_4024_5B04_9599_598C94E527AC" name="AudioSystem_Component">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353" name="IAudioManager" visibility="public">
+      <ownedOperation xmi:id="EAID_A8FC4AA4_D2D1_5201_A679_10F30A76FB19" name="Play" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_0C4EAB5A_ABA3_59F8_AC5D_A167AB4A6E72" name="Stop" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_E6EFF1B5_C533_58F6_A726_5FAC915E5151" name="LerpVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C4C096C7_E944_5F46_8412_76EF4D8F6269" name="LerpPitch" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F87DC837_034C_58B6_A6B7_0A1668EC136F" name="TryGetSource" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_EFBABB06_0343_569D_878F_9C348EB94C61" name="PlayOneShot" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_B9C6763E_9A5F_5C38_AAE6_61139C50DEFF" name="SetTypeVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_FC1ADA4F_E7B0_535A_AE7A_BE7A982DF184" name="GetTypeVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_4C9EFEAA_93AB_5AD9_8BC6_D91A3588B360" name="ChangeGroupValue" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_0BF12720_12D4_501A_879C_6815FD21F6EE" name="IFluentAudioManager" visibility="public">
+      <ownedOperation xmi:id="EAID_D4DEE497_6DBF_58B4_8C58_2FBB654132CC" name="Execute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_18B3A7FD_2073_533B_87D2_6D2215EB8130" name="Play" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_806AB079_3E21_5F1C_A9DA_561A78F00C55" name="Stop" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_E7F324B7_B641_540A_963D_8F45AF97D252" name="LerpVolume" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_C40BC16D_C66F_598A_B0CB_282627BA3C84" name="TryGetSource" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_F33A9EF9_E1C9_5EAE_BDFB_C7B9C670350D" name="IAudioLogger" visibility="public">
+      <ownedOperation xmi:id="EAID_98FEB7CA_3477_5793_8029_19B208C0EB71" name="Log" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7AAB0814_0402_5137_9D97_33062455BE65" name="LogFormat" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F239FB0C_8CD5_57CF_AE53_62905711CDB0" name="LogException" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_1CB5D8D6_81FD_53CA_9B1A_F9A16D07066D" name="LogAssert" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_BA9ABC57_85A3_5AFF_8B1D_F5FA4670672B" name="AudioCore" visibility="public">
+      <interfaceRealization xmi:id="EAID_62E794CF_3E0E_53DC_BDFA_11014FA27D8E" contract="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353" implementingClassifier="EAID_BA9ABC57_85A3_5AFF_8B1D_F5FA4670672B"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_4C624E3C_0715_5335_9788_6A39283C4C80" name="ServiceLocator" visibility="public">
+      <interfaceRealization xmi:id="EAID_61F07A80_303D_5A52_B23A_D33FF322B3CA" contract="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353" implementingClassifier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_C179440F_AA90_5D91_B8C1_B9FCBE5972A1" name="LoggedAudioManager" visibility="public">
+      <interfaceRealization xmi:id="EAID_DF089177_E222_5BB9_8841_DFABD77B7482" contract="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353" implementingClassifier="EAID_C179440F_AA90_5D91_B8C1_B9FCBE5972A1"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_C86F9044_2AEF_5176_AB30_A0402E517375" name="FluentAudioManager" visibility="public">
+      <interfaceRealization xmi:id="EAID_F8158BB9_DDED_5CBE_92CF_FB6DC38D94AB" contract="EAID_0BF12720_12D4_501A_879C_6815FD21F6EE" implementingClassifier="EAID_C86F9044_2AEF_5176_AB30_A0402E517375"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_483B0548_FE13_5B52_A2D2_5F12BD84AEDB" name="AudioLogger" visibility="public">
+      <interfaceRealization xmi:id="EAID_22184C4D_6FC7_55D7_A89A_C555FD71BB33" contract="EAID_F33A9EF9_E1C9_5EAE_BDFB_C7B9C670350D" implementingClassifier="EAID_483B0548_FE13_5B52_A2D2_5F12BD84AEDB"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_D418723C_84E3_5B8C_8CDB_C2D60A086A53" name="UIAudioLogger" visibility="public">
+      <interfaceRealization xmi:id="EAID_EA828B9D_1D00_5FDA_8581_7329C49D93F1" contract="EAID_F33A9EF9_E1C9_5EAE_BDFB_C7B9C670350D" implementingClassifier="EAID_D418723C_84E3_5B8C_8CDB_C2D60A086A53"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_8BF0930A_F617_51E7_B9C8_BB23DE2DE917" name="AudioManagerSettings" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_43E9E77B_6F96_59B8_96AB_959446077E40" name="MusicTransitionManager" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_23EE42DA_E19D_5C82_9BE2_94CB1A8E346C" name="AreaAmbientSound" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_0E8566EB_32A9_5991_A1C2_DDE1AAC1D3E6" name="SmoothMusicController" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_C34646A8_16FD_565C_A88E_2E2FDABB8C27" name="UIAudioAutoInstaller" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_0DEC985E_1659_5775_8AD2_6B13F9B6A117" name="registers" client="EAID_4C624E3C_0715_5335_9788_6A39283C4C80" supplier="EAID_BA9ABC57_85A3_5AFF_8B1D_F5FA4670672B"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_5F691DFD_1098_5C25_9D32_C940D5394948" client="EAID_C179440F_AA90_5D91_B8C1_B9FCBE5972A1" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_F58298CC_773F_599C_8009_1C37048D6211" client="EAID_C179440F_AA90_5D91_B8C1_B9FCBE5972A1" supplier="EAID_F33A9EF9_E1C9_5EAE_BDFB_C7B9C670350D"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_B02D45EB_B196_559D_AF98_118709813F77" client="EAID_C86F9044_2AEF_5176_AB30_A0402E517375" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_7B419E01_3DF2_58BE_9200_6E133CB0DB98" name="registers into" client="EAID_8BF0930A_F617_51E7_B9C8_BB23DE2DE917" supplier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_E5EE5462_F7A2_5532_A370_D01B01D2104A" name="creates" client="EAID_8BF0930A_F617_51E7_B9C8_BB23DE2DE917" supplier="EAID_BA9ABC57_85A3_5AFF_8B1D_F5FA4670672B"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_3C2EA439_FAC0_5812_9144_38EE2BC204AC" name="creates" client="EAID_8BF0930A_F617_51E7_B9C8_BB23DE2DE917" supplier="EAID_483B0548_FE13_5B52_A2D2_5F12BD84AEDB"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_C9869CC6_C9D8_5152_ABF2_BD22EB58417A" client="EAID_43E9E77B_6F96_59B8_96AB_959446077E40" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_46841BBB_958B_5F8C_B591_AF4774D18464" name="uses" client="EAID_43E9E77B_6F96_59B8_96AB_959446077E40" supplier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_76154D02_9409_5B25_A8B1_63703E90E01C" client="EAID_23EE42DA_E19D_5C82_9BE2_94CB1A8E346C" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_7B1C1440_489C_5267_A673_C11FE63DFBCA" name="uses" client="EAID_23EE42DA_E19D_5C82_9BE2_94CB1A8E346C" supplier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_6500D9F2_3C66_5361_8C3C_159C49909FE8" name="registers ambient" client="EAID_23EE42DA_E19D_5C82_9BE2_94CB1A8E346C" supplier="EAID_43E9E77B_6F96_59B8_96AB_959446077E40"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_03532BA2_B870_5C9E_97F2_AAF20470D682" client="EAID_0E8566EB_32A9_5991_A1C2_DDE1AAC1D3E6" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_2165A369_5051_52BD_82E8_2DB02E45FBC0" name="uses" client="EAID_0E8566EB_32A9_5991_A1C2_DDE1AAC1D3E6" supplier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_0A1FB8A3_E78E_5BDA_9B08_FC5805F41232" client="EAID_C34646A8_16FD_565C_A88E_2E2FDABB8C27" supplier="EAID_DF6000C9_F87C_57C5_B0E6_D96DE0166353"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_B32C8F2D_8A0C_506B_BDF5_E8AA61A96BF8" name="uses" client="EAID_C34646A8_16FD_565C_A88E_2E2FDABB8C27" supplier="EAID_4C624E3C_0715_5335_9788_6A39283C4C80"/>
+  </packagedElement>
+</uml:Model>

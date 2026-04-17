@@ -16453,8 +16453,16 @@ PrefabInstance:
       value: 7.3099384
       objectReference: {fileID: 0}
     - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
+      propertyPath: m_Size.y
+      value: 1.6997268
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_Offset.x
       value: 3.1549692
+      objectReference: {fileID: 0}
+    - target: {fileID: 2709835004028836067, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.3498634
       objectReference: {fileID: 0}
     - target: {fileID: 3174355926847393619, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
       propertyPath: m_LocalScale.x
@@ -16762,6 +16770,8 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  coinRewardOnWin: 0
+  coinPenaltyOnLose: 0
 --- !u!114 &968790520 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6832456148883741646, guid: 02cc49dca2e438d4cbe50f585f0a61e6, type: 3}
@@ -21596,7 +21606,7 @@ Transform:
   m_GameObject: {fileID: 1168779739}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -42.467472, y: -8.30026, z: 9.064268}
+  m_LocalPosition: {x: -44, y: -4.33, z: 9.064268}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -25252,7 +25262,7 @@ Transform:
   m_GameObject: {fileID: 1407210542}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -26.541513, y: -6.677467, z: 9.064268}
+  m_LocalPosition: {x: -26.62, y: -7.01, z: 9.064268}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -40111,7 +40121,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8807685687236996836, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
       propertyPath: m_Name
-      value: FightTrigger1
+      value: FightTriggerSolder
       objectReference: {fileID: 0}
     - target: {fileID: 8807685687236996836, guid: 107045fa3707e9044bb2c8b6f6d35d3e, type: 3}
       propertyPath: m_IsActive

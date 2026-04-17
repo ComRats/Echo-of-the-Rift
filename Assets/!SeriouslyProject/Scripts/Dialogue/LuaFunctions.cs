@@ -1,3 +1,4 @@
+using System.Reflection;
 using EchoRift;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,7 +24,7 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("GetStat", this, SymbolExtensions.GetMethodInfo(() => GetStat(string.Empty)));
             Lua.RegisterFunction("HasStat", this, SymbolExtensions.GetMethodInfo(() => HasStat(string.Empty, 0)));
             Lua.RegisterFunction("ShowAlert", this, SymbolExtensions.GetMethodInfo(() => ShowAlert(string.Empty)));
-            Lua.RegisterFunction("IncludeInvalidEntries", this, SymbolExtensions.GetMethodInfo(() => IncludeInvalidEntries()));
+            Lua.RegisterFunction("IncludeInvalidEntries", this, typeof(LuaFunctions).GetMethod(nameof(IncludeInvalidEntries)));
 
             DialogueLua.SetVariable("DiceCanStart", false);
             DialogueLua.SetVariable("DiceBet", 0);

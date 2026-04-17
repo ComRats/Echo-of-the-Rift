@@ -17989,11 +17989,11 @@ PrefabInstance:
       objectReference: {fileID: 1019406570}
     - target: {fileID: 65976778241086234, guid: 3a2050082c299c64781c3825f03aedf8, type: 3}
       propertyPath: nextScenePosition.x
-      value: 1.68
+      value: -44
       objectReference: {fileID: 0}
     - target: {fileID: 65976778241086234, guid: 3a2050082c299c64781c3825f03aedf8, type: 3}
       propertyPath: nextScenePosition.y
-      value: 0.39
+      value: -4.33
       objectReference: {fileID: 0}
     - target: {fileID: 1229631307460807624, guid: 3a2050082c299c64781c3825f03aedf8, type: 3}
       propertyPath: m_Icon

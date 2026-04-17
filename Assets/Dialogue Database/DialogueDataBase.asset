@@ -9153,8 +9153,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 977.2058
-        y: 250.16034
+        x: 978.2367
+        y: 254.28403
         width: 160
         height: 30
     - id: 2
@@ -9339,7 +9339,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 761.4164
+        x: 760.3855
         y: 404.8697
         width: 160
         height: 30
@@ -9397,8 +9397,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 976.2186
-        y: 409.3579
+        x: 980.3424
+        y: 436.16205
         width: 160
         height: 30
     - id: 6
@@ -9516,8 +9516,8 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 977.2495
-        y: 461.41974
+        x: 981.3733
+        y: 488.22388
         width: 160
         height: 30
     - id: 8
@@ -9700,11 +9700,11 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Actor
-        value: 1
+        value: 10
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 10
+        value: 1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -9768,7 +9768,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: Continue()
+        value: 'Continue();
+
+          SetActive(FightTriggerSolder, true)'
         type: 0
         typeString: 
       conversationID: 11
@@ -9786,7 +9788,7 @@ MonoBehaviour:
           m_Calls: []
       canvasRect:
         serializedVersion: 2
-        x: 1191.9417
+        x: 1189.8799
         y: 557.9871
         width: 160
         height: 30

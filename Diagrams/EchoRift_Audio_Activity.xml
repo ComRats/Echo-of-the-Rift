@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_970653A4_D365_5E9C_8166_8EB9505B5AFE" name="AudioSystem_Activity">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_96E01029_6FFD_574E_9045_770D3D55F29A" name="AudioSystem_Activity">
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_A98E1243_9572_500D_9657_18F3BB0BD0E0" name="Scene Music Transition" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_63E78E69_A835_5B79_AD25_056B78052CCD" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_2AC11EA0_3117_535B_BE0F_A54DC6A8461E" name="Awake: DontDestroyOnLoad"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8638B302_C4D9_525B_8C7B_2C9214D859B2" name="OnEnable: подписаться на SceneManager.sceneLoaded, DialogueManager events"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_34ED24DE_6207_5309_AB81_CC8C9B8F6C80" name="Start: получить IAudioManager, вызвать HandleMusicChange(currentScene)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_F87922D1_4495_55A7_B7A8_314F5BC9ADD3" name="Событие: OnSceneLoaded(scene)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_7D2FFB73_85BC_5A3F_8B69_C82ADC79FF0F" name="GetMusicForScene(sceneName) -&gt; targetMusicList"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_E8CE3D8C_9B71_574A_AB83_8F2EC7998014" name="targetMusicList пустой?"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_908F6686_5EFC_54EB_A0D6_819F0C34C0B1" name="Списки одинаковые?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_3E6C9A0D_7282_5FCB_84A4_5FB1B9C91C87" name="LerpVolume(играющий трек, normalVolume, fadeDuration)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_7AFBE8D7_3369_57B5_874D_1025FE54B694" name="LerpVolume(oldMusic, 0, fadeDuration) для каждого старого трека"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_97F161C9_8561_5244_8689_DC7E3D76E0F0" name="_currentMusicNames = targetMusicList"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_0E7600F0_240F_5244_B109_9D795A1D01C2" name="Play(newMusic), volume=0, LerpVolume(newMusic, normalVolume, fadeDuration)"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_2648F14D_14E7_5883_B79B_2D1FB8C938C7" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_974E7EF0_6E13_5DC5_ACE7_44C417370660" source="EAID_63E78E69_A835_5B79_AD25_056B78052CCD" target="EAID_2AC11EA0_3117_535B_BE0F_A54DC6A8461E"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5531445A_A52B_502B_92C8_B0410DEC6DEA" source="EAID_2AC11EA0_3117_535B_BE0F_A54DC6A8461E" target="EAID_8638B302_C4D9_525B_8C7B_2C9214D859B2"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_9F8AC957_2109_55D3_A38E_B8FA11A48408" source="EAID_8638B302_C4D9_525B_8C7B_2C9214D859B2" target="EAID_34ED24DE_6207_5309_AB81_CC8C9B8F6C80"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_54731EAD_47E2_5C4E_9967_B49E5C204AC3" source="EAID_34ED24DE_6207_5309_AB81_CC8C9B8F6C80" target="EAID_7D2FFB73_85BC_5A3F_8B69_C82ADC79FF0F"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8410875E_B9AE_506F_BB7A_A3062125368C" source="EAID_F87922D1_4495_55A7_B7A8_314F5BC9ADD3" target="EAID_7D2FFB73_85BC_5A3F_8B69_C82ADC79FF0F"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_BDA95E98_F40D_56B6_A41B_3B3422BB704B" source="EAID_7D2FFB73_85BC_5A3F_8B69_C82ADC79FF0F" target="EAID_E8CE3D8C_9B71_574A_AB83_8F2EC7998014"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5B6911C9_7701_54D8_BCB3_67964222B29B" source="EAID_E8CE3D8C_9B71_574A_AB83_8F2EC7998014" target="EAID_2648F14D_14E7_5883_B79B_2D1FB8C938C7" guard="[да - список пуст]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_6AD34D5A_6CAA_551F_8F65_A7343A33ADE9" source="EAID_E8CE3D8C_9B71_574A_AB83_8F2EC7998014" target="EAID_908F6686_5EFC_54EB_A0D6_819F0C34C0B1" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_59B86D19_59FB_5D48_854D_2D19B7D177D2" source="EAID_908F6686_5EFC_54EB_A0D6_819F0C34C0B1" target="EAID_3E6C9A0D_7282_5FCB_84A4_5FB1B9C91C87" guard="[да - треки совпадают]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_EB3DECCE_DBF0_5A2F_B5D6_19337F4DB9D9" source="EAID_908F6686_5EFC_54EB_A0D6_819F0C34C0B1" target="EAID_7AFBE8D7_3369_57B5_874D_1025FE54B694" guard="[нет - треки изменились]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CB43270C_9E98_546F_AC6D_D7D84ABFF7F9" source="EAID_3E6C9A0D_7282_5FCB_84A4_5FB1B9C91C87" target="EAID_2648F14D_14E7_5883_B79B_2D1FB8C938C7"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_1DFEA11F_D443_5746_8F0E_64C5415DAA08" source="EAID_7AFBE8D7_3369_57B5_874D_1025FE54B694" target="EAID_97F161C9_8561_5244_8689_DC7E3D76E0F0"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_535C6BE9_ACAB_5A60_9C22_B737DED09A7B" source="EAID_97F161C9_8561_5244_8689_DC7E3D76E0F0" target="EAID_0E7600F0_240F_5244_B109_9D795A1D01C2"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_FD097510_1D5F_5957_9F3B_BD3EA3AAB67B" source="EAID_0E7600F0_240F_5244_B109_9D795A1D01C2" target="EAID_2648F14D_14E7_5883_B79B_2D1FB8C938C7"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_D4565EA3_76DC_507C_8DCD_DC6E97E77CA5" name="Dialogue Music Duck" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_0F6326E6_7008_5149_AE6F_D2EA186F3B5E" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_B0E7C662_9770_561E_92BE_00616A3170C4" name="Событие: OnConversationStarted(actor)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_E083E5F3_63AE_57F8_B268_1B6F62CCF39E" name="_isDialogueActive уже true?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_B335889A_75D7_5BB4_AC83_AD0DC04300D4" name="_isDialogueActive = true"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_0CB79472_FBA6_5067_ADC8_3C38099E0298" name="LerpVolume(все звуки, pausedVolume, fadeDuration)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_A85CED44_90AE_52E0_B9FC_904E197CBB14" name="Событие: OnConversationEnded(actor)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_5B3942CF_21BC_58C5_979E_9606A38F863F" name="_isDialogueActive уже false?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_23895964_61B9_5E8C_A911_316E5619C227" name="_isDialogueActive = false"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_FF37F832_8A9E_59A8_8481_A5CAB07427B6" name="LerpVolume(все звуки, normalVolume, fadeDuration)"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_C8D8DF1A_6091_587E_8B4F_74F81570EBAF" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_BE29CF59_DFB9_5525_9CEB_9CFD22987FB2" source="EAID_0F6326E6_7008_5149_AE6F_D2EA186F3B5E" target="EAID_B0E7C662_9770_561E_92BE_00616A3170C4"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8E31A3C0_2EF4_5AEA_8824_F8AC018BFF10" source="EAID_B0E7C662_9770_561E_92BE_00616A3170C4" target="EAID_E083E5F3_63AE_57F8_B268_1B6F62CCF39E"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5E5481A0_DFF0_5C8F_9EF2_F7415E8FE0F7" source="EAID_E083E5F3_63AE_57F8_B268_1B6F62CCF39E" target="EAID_C8D8DF1A_6091_587E_8B4F_74F81570EBAF" guard="[да - уже активен]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_A6C35E4A_3B8E_5038_B326_1D0487D90F83" source="EAID_E083E5F3_63AE_57F8_B268_1B6F62CCF39E" target="EAID_B335889A_75D7_5BB4_AC83_AD0DC04300D4" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_44DAB2FC_B7DA_5C52_BF6F_E0EC80A9474C" source="EAID_B335889A_75D7_5BB4_AC83_AD0DC04300D4" target="EAID_0CB79472_FBA6_5067_ADC8_3C38099E0298"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_BD3208E7_0FEB_57C7_AC70_6B165FC33A1D" source="EAID_0CB79472_FBA6_5067_ADC8_3C38099E0298" target="EAID_A85CED44_90AE_52E0_B9FC_904E197CBB14"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_1759B8BA_6B33_5D94_A8A1_3353F804979D" source="EAID_A85CED44_90AE_52E0_B9FC_904E197CBB14" target="EAID_5B3942CF_21BC_58C5_979E_9606A38F863F"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_6815F9AD_8B1D_58EE_9BA1_7199882B801F" source="EAID_5B3942CF_21BC_58C5_979E_9606A38F863F" target="EAID_C8D8DF1A_6091_587E_8B4F_74F81570EBAF" guard="[да - уже неактивен]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4ECCF6AA_821E_57B9_A417_7862CA2972D8" source="EAID_5B3942CF_21BC_58C5_979E_9606A38F863F" target="EAID_23895964_61B9_5E8C_A911_316E5619C227" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F922D4F3_FF3D_5D5C_8601_0F81C842FAE7" source="EAID_23895964_61B9_5E8C_A911_316E5619C227" target="EAID_FF37F832_8A9E_59A8_8481_A5CAB07427B6"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_226ED599_53F6_5252_9FCA_7107DA3B0C9C" source="EAID_FF37F832_8A9E_59A8_8481_A5CAB07427B6" target="EAID_C8D8DF1A_6091_587E_8B4F_74F81570EBAF"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_DEF5FA34_988E_5BCD_8AC4_E465737EDEE8" name="Area Ambient Sound" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_5C10B3CE_BCC9_532E_8584_AACBCC393274" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_4754A65D_2880_53B5_998D_F93B83673C32" name="Start: получить IAudioManager, найти MusicTransitionManager"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_0555CAFF_9349_506F_BFBB_4358A0936250" name="Событие: OnTriggerEnter2D(other)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_37BD05D0_FE5A_5B44_8052_8BA7A94DA494" name="playOnEnter == true AND tag == Player?"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_0179C391_64A8_584D_A5D7_F3FFD62764C8" name="_isPlaying уже true?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_DF9F4613_1C17_5E32_9FB8_AE5FBF1F95B3" name="_isPlaying = true
+Play(soundName), RegisterAmbient(soundName)
+установить loop, volume=0
+LerpVolume(soundName, targetVolume, fadeDuration)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_3559F2BC_E7B6_593E_884F_573877D7D079" name="Событие: OnTriggerExit2D(other)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_47BA7394_2438_5AB7_9D5C_7925DCB04A1C" name="stopOnExit == true AND tag == Player?"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_4B5365D1_DCB6_587A_98A6_07C6849970F2" name="_isPlaying уже false?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_63502A67_710F_5161_B7FC_DD3B408C67DD" name="_isPlaying = false
+LerpVolume(soundName, 0, fadeDuration)
+UnregisterAmbient(soundName)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_A0A52D7C_0F2A_58C6_904F_80857066328A" name="gameObject активен?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_FE5E995F_F2FC_50ED_BE36_E26D68362FAC" name="StartCoroutine(StopAfterFade)
+ждать fadeDuration
+Stop(soundName)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_7581B836_2D4C_5D75_B961_FFC553BBED4A" name="Stop(soundName) немедленно"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_7A4F58C4_4D1F_5802_80EE_28BC1473A30D" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_87EB314D_379E_5D85_A1EC_07D2626452B0" source="EAID_5C10B3CE_BCC9_532E_8584_AACBCC393274" target="EAID_4754A65D_2880_53B5_998D_F93B83673C32"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_931EAA7C_02C5_5AFF_A72F_2427AB3EC0F3" source="EAID_4754A65D_2880_53B5_998D_F93B83673C32" target="EAID_0555CAFF_9349_506F_BFBB_4358A0936250"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_A549B8FB_1867_5627_A7FC_2D821D834AD3" source="EAID_0555CAFF_9349_506F_BFBB_4358A0936250" target="EAID_37BD05D0_FE5A_5B44_8052_8BA7A94DA494"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_25AA46E8_0110_589F_97EC_A589D45B4E15" source="EAID_37BD05D0_FE5A_5B44_8052_8BA7A94DA494" target="EAID_3559F2BC_E7B6_593E_884F_573877D7D079" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5DA1EC9C_06BE_5CB7_A52B_4C6716D2A703" source="EAID_37BD05D0_FE5A_5B44_8052_8BA7A94DA494" target="EAID_0179C391_64A8_584D_A5D7_F3FFD62764C8" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_387B3237_89B8_5D95_BCC6_85BFE95AA3D0" source="EAID_0179C391_64A8_584D_A5D7_F3FFD62764C8" target="EAID_3559F2BC_E7B6_593E_884F_573877D7D079" guard="[да - уже играет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_FB18A621_6AEA_5BF1_B47A_D21D22E14111" source="EAID_0179C391_64A8_584D_A5D7_F3FFD62764C8" target="EAID_DF9F4613_1C17_5E32_9FB8_AE5FBF1F95B3" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_9BA1D761_1E6D_5CE2_962B_9623ED6B5ED3" source="EAID_DF9F4613_1C17_5E32_9FB8_AE5FBF1F95B3" target="EAID_3559F2BC_E7B6_593E_884F_573877D7D079"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_647F49CB_2C77_523F_B0A4_0CD5D4505A6C" source="EAID_3559F2BC_E7B6_593E_884F_573877D7D079" target="EAID_47BA7394_2438_5AB7_9D5C_7925DCB04A1C"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4145FB7F_B27C_5FA4_AD57_50145128A3C8" source="EAID_47BA7394_2438_5AB7_9D5C_7925DCB04A1C" target="EAID_7A4F58C4_4D1F_5802_80EE_28BC1473A30D" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F212903D_946F_5C28_8E1F_5D08FC74AF0E" source="EAID_47BA7394_2438_5AB7_9D5C_7925DCB04A1C" target="EAID_4B5365D1_DCB6_587A_98A6_07C6849970F2" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5848EEF0_8AFA_557B_9313_8EB97D0F16EA" source="EAID_4B5365D1_DCB6_587A_98A6_07C6849970F2" target="EAID_7A4F58C4_4D1F_5802_80EE_28BC1473A30D" guard="[да - уже остановлен]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_C247DB73_29F7_51EE_A903_E0F5F835F28C" source="EAID_4B5365D1_DCB6_587A_98A6_07C6849970F2" target="EAID_63502A67_710F_5161_B7FC_DD3B408C67DD" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8023AF1C_7B43_5136_BF70_33E749AD4B2C" source="EAID_63502A67_710F_5161_B7FC_DD3B408C67DD" target="EAID_A0A52D7C_0F2A_58C6_904F_80857066328A"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_707164EF_E804_5610_99C0_5B12F2B13470" source="EAID_A0A52D7C_0F2A_58C6_904F_80857066328A" target="EAID_FE5E995F_F2FC_50ED_BE36_E26D68362FAC" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D64DDA33_A64C_5CF0_A4BB_D5380EFD32A3" source="EAID_A0A52D7C_0F2A_58C6_904F_80857066328A" target="EAID_7581B836_2D4C_5D75_B961_FFC553BBED4A" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8B31C1AD_8DC4_5C4B_AB6E_6355CF219674" source="EAID_FE5E995F_F2FC_50ED_BE36_E26D68362FAC" target="EAID_7A4F58C4_4D1F_5802_80EE_28BC1473A30D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4C1CAAF3_D246_52F9_ACBC_43F96308DEBF" source="EAID_7581B836_2D4C_5D75_B961_FFC553BBED4A" target="EAID_7A4F58C4_4D1F_5802_80EE_28BC1473A30D"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_15B48EF7_18E6_505D_A21A_5B1B54E7D96C" name="UI Audio Auto Installer" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_7FC76F75_B063_5770_99F8_00A6D0051B70" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_9C3AE4BF_6CE2_5C34_9D20_600FC1243F2F" name="Start: запустить корутину InitializeWithDelay()"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_2650D1D7_DF61_53F0_819C_952F300C1970" name="yield WaitForSeconds(0.1f)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_438063F1_CD53_5FE4_B9B1_57F66EF80A39" name="ServiceLocator.GetService() -&gt; audioManager"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_99267C8B_0332_54D5_9630_E09B05C73A3F" name="audioManager == null?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_A9FB36B2_4FA5_54F6_8BA5_C5B2F7385F8F" name="LogWarning: AudioManager not found"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_5C6C9229_1F84_557D_8616_EF57D68B0DC4" name="TryGetSource(clickSoundName)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_6DDEDCDE_35AC_5D69_8937_E8D1404C50A5" name="Звук зарегистрирован (AudioError.OK)?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8564828C_161B_5ACB_9195_196E8706510E" name="LogWarning: Sound not registered"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_A8F4D00D_E462_5858_881B_4A5F01D7B51B" name="GetComponentsInChildren(Button, includeInactive=true)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8365C7DB_964B_53F3_BE60_EB2298641925" name="Для каждой кнопки: btn.onClick.AddListener(PlaySound)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_7FF6B87F_E67B_5469_AAD9_6E8DCD552559" name="[Runtime] PlaySound:
+ServiceLocator.GetService()
+audioManager.Play(clickSoundName, ChildType.PARENT)"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_B03F4614_9CCF_57ED_966F_D90A6EF6B027" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_BE831C3B_B94F_5F74_B449_E11C014726D3" source="EAID_7FC76F75_B063_5770_99F8_00A6D0051B70" target="EAID_9C3AE4BF_6CE2_5C34_9D20_600FC1243F2F"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CA8C1279_D0C7_53AF_9DCD_4DF4CEE70E80" source="EAID_9C3AE4BF_6CE2_5C34_9D20_600FC1243F2F" target="EAID_2650D1D7_DF61_53F0_819C_952F300C1970"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_32B15376_C4E2_524B_B429_1128D81265CE" source="EAID_2650D1D7_DF61_53F0_819C_952F300C1970" target="EAID_438063F1_CD53_5FE4_B9B1_57F66EF80A39"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_76312874_B324_541D_8912_9E00EE7F5622" source="EAID_438063F1_CD53_5FE4_B9B1_57F66EF80A39" target="EAID_99267C8B_0332_54D5_9630_E09B05C73A3F"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_1A3AC9CA_3040_50B8_81BE_5C932EC09DF7" source="EAID_99267C8B_0332_54D5_9630_E09B05C73A3F" target="EAID_A9FB36B2_4FA5_54F6_8BA5_C5B2F7385F8F" guard="[да - null]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7923A1C1_F81F_517E_9F37_221A32C75487" source="EAID_99267C8B_0332_54D5_9630_E09B05C73A3F" target="EAID_5C6C9229_1F84_557D_8616_EF57D68B0DC4" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_42B189FB_F39F_5FAC_B245_E1E7BFE3E1B8" source="EAID_A9FB36B2_4FA5_54F6_8BA5_C5B2F7385F8F" target="EAID_B03F4614_9CCF_57ED_966F_D90A6EF6B027"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D0A85750_AF71_5803_9CAF_C04ACF293032" source="EAID_5C6C9229_1F84_557D_8616_EF57D68B0DC4" target="EAID_6DDEDCDE_35AC_5D69_8937_E8D1404C50A5"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_36239557_85BF_5081_9A65_9149DA5DB87D" source="EAID_6DDEDCDE_35AC_5D69_8937_E8D1404C50A5" target="EAID_8564828C_161B_5ACB_9195_196E8706510E" guard="[нет - не найден]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7B5DECC1_AB3F_5A6B_AAE3_E88304FF89D0" source="EAID_6DDEDCDE_35AC_5D69_8937_E8D1404C50A5" target="EAID_A8F4D00D_E462_5858_881B_4A5F01D7B51B" guard="[да - OK]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_2F8F825B_84CF_5ADF_A8E0_3199302D0216" source="EAID_8564828C_161B_5ACB_9195_196E8706510E" target="EAID_B03F4614_9CCF_57ED_966F_D90A6EF6B027"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F98FDF40_465F_5417_87B6_0EC01B7AEC29" source="EAID_A8F4D00D_E462_5858_881B_4A5F01D7B51B" target="EAID_8365C7DB_964B_53F3_BE60_EB2298641925"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_48E133B9_4E70_5AB6_903C_6EADAB1B0C3C" source="EAID_8365C7DB_964B_53F3_BE60_EB2298641925" target="EAID_B03F4614_9CCF_57ED_966F_D90A6EF6B027"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_2CA29AFD_EA58_52BC_AB41_4214DEA8C218" source="EAID_8365C7DB_964B_53F3_BE60_EB2298641925" target="EAID_7FF6B87F_E67B_5469_AAD9_6E8DCD552559" guard="[клик по кнопке]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_AFF5A740_1AC6_578D_AA96_935199B77055" source="EAID_7FF6B87F_E67B_5469_AAD9_6E8DCD552559" target="EAID_B03F4614_9CCF_57ED_966F_D90A6EF6B027"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

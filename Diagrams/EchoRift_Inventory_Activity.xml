@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_0C653311_9903_5499_8986_E7C8FC9D319A" name="Inventory_Activity">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_F3233ED3_CC55_5FEE_8F8B_290A05699938" name="Inventory_Activity">
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_C69E7EED_38A5_52F0_9064_6839A708FBC4" name="Inventory Initialization and Load" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_052EE17E_7A90_5A76_BB8D_11E5CC719267" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_89CA27A5_E5CC_54A5_8086_B94069AF70C4" name="Start: InitializeData()
+инициализировать InventoryData
+(inventorySlots.Length, equipmentSlots.Length)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_446CBB56_2B7B_5487_BEAE_5D55F24A0E87" name="inventoryData назначен?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_62799BE9_2AF8_5BB0_AD66_03C4CDC90962" name="LogError: InventoryData не назначен"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_AAB598D1_3A6D_5AC8_9F18_5F7488F3FB0E" name="LoadInventory()"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_C83F73AE_4868_5AD6_81E1_12CA8C84C889" name="SaveLoadSystem.Exists(INVENTORY_DATA)?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8AC58BDA_BDB3_5974_BAC3_0DC19AB5525C" name="Log: сохранение не найдено"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_20FF2984_AF31_572F_8C12_432A82D0EC8E" name="SaveLoadSystem.Load(INVENTORY_DATA) -&gt; InventorySaver"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_04EA82D8_006F_5334_96AF_35FCE3530478" name="saver == null?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_B977345E_C23B_5E3E_B0BA_04D156638993" name="LogWarning: не удалось загрузить данные"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_F3CA6DCB_5FCC_52D9_808B_78A8A0996E92" name="inventoryData.LoadFromSaveData(saver)
+LoadCoins(saver.coins)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_CD239BAF_E3FC_596E_83CC_52BDD9834950" name="RefreshUI():
+ClearAllSlots()
+SpawnItemInSlot для каждого слота"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_E500B203_756F_5E04_B604_7F9885F9DD43" name="EquipmentManager.RecalculateEquipmentBonuses(equipmentSlots, this)"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_ACBCB2F9_7BC0_57DE_B7AF_08E99A0580B7" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_697E4A39_EC6F_5B95_8313_556B83955195" source="EAID_052EE17E_7A90_5A76_BB8D_11E5CC719267" target="EAID_89CA27A5_E5CC_54A5_8086_B94069AF70C4"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_64102EAF_EA77_5C45_951B_D83A1E3BABCF" source="EAID_89CA27A5_E5CC_54A5_8086_B94069AF70C4" target="EAID_446CBB56_2B7B_5487_BEAE_5D55F24A0E87"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_70AC435C_BDBA_55BD_89A4_D5E61A0328C7" source="EAID_446CBB56_2B7B_5487_BEAE_5D55F24A0E87" target="EAID_62799BE9_2AF8_5BB0_AD66_03C4CDC90962" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_6EFD299E_171B_5DAF_93DE_90AB87ED1F48" source="EAID_62799BE9_2AF8_5BB0_AD66_03C4CDC90962" target="EAID_ACBCB2F9_7BC0_57DE_B7AF_08E99A0580B7"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7005C6A4_5BFD_5621_9B05_43A54E71F9E9" source="EAID_446CBB56_2B7B_5487_BEAE_5D55F24A0E87" target="EAID_AAB598D1_3A6D_5AC8_9F18_5F7488F3FB0E" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_51CC0A34_345B_5718_A9EF_926614A42451" source="EAID_AAB598D1_3A6D_5AC8_9F18_5F7488F3FB0E" target="EAID_C83F73AE_4868_5AD6_81E1_12CA8C84C889"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F8CCDE07_B1DA_50FC_AA6C_91D782888D4B" source="EAID_C83F73AE_4868_5AD6_81E1_12CA8C84C889" target="EAID_8AC58BDA_BDB3_5974_BAC3_0DC19AB5525C" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_82B0CE20_90FA_5FC4_8FB7_4FA7154FE136" source="EAID_8AC58BDA_BDB3_5974_BAC3_0DC19AB5525C" target="EAID_ACBCB2F9_7BC0_57DE_B7AF_08E99A0580B7"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_B5CBC79D_D94B_557D_90C6_51C1B75CEB57" source="EAID_C83F73AE_4868_5AD6_81E1_12CA8C84C889" target="EAID_20FF2984_AF31_572F_8C12_432A82D0EC8E" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_C708FF83_899C_517B_BC2F_98C9F2C2E2CB" source="EAID_20FF2984_AF31_572F_8C12_432A82D0EC8E" target="EAID_04EA82D8_006F_5334_96AF_35FCE3530478"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_59DDAD2C_CC54_5AB6_A6B3_888AC321124E" source="EAID_04EA82D8_006F_5334_96AF_35FCE3530478" target="EAID_B977345E_C23B_5E3E_B0BA_04D156638993" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CAE8DFEE_ACE6_53A5_9D85_DEDE1CAF65EF" source="EAID_B977345E_C23B_5E3E_B0BA_04D156638993" target="EAID_ACBCB2F9_7BC0_57DE_B7AF_08E99A0580B7"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_0BF6373E_8FB7_5FFB_85C9_66716178E39A" source="EAID_04EA82D8_006F_5334_96AF_35FCE3530478" target="EAID_F3CA6DCB_5FCC_52D9_808B_78A8A0996E92" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_86016D45_EE44_5BD9_870B_0E431A2CE6A0" source="EAID_F3CA6DCB_5FCC_52D9_808B_78A8A0996E92" target="EAID_CD239BAF_E3FC_596E_83CC_52BDD9834950"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_12A82EA2_6022_51E8_8AE1_5E4EAE63D705" source="EAID_CD239BAF_E3FC_596E_83CC_52BDD9834950" target="EAID_E500B203_756F_5E04_B604_7F9885F9DD43"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_44ACF238_0C11_59E4_B577_28C3EE934219" source="EAID_E500B203_756F_5E04_B604_7F9885F9DD43" target="EAID_ACBCB2F9_7BC0_57DE_B7AF_08E99A0580B7"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_E86FB91D_DAE5_5C4A_B2B7_7AD4BFD5F4C3" name="Add Item to Inventory" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_5BBE50CF_F0A2_5CF1_87EA_9C4355FF9E30" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_3A5A7A84_46A5_5E57_A491_DB11267582E4" name="FindItemDataByName(itemName)
+-&gt; Resources.LoadAll(Items)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_91AEB64A_3445_5080_894C_C9A3CF052D74" name="ItemData найден?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_90C5D160_BE54_5544_973B_DBFE326DADA3" name="LogWarning: предмет не найден"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_14177A8A_2589_54D6_82D9_309A5B209579" name="item.isStackable?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_673CDC53_9851_5209_BDF1_C5C896D34620" name="AddToExistingStacks(item, amount):
+найти слоты с тем же предметом
+добавить до maxStackSize"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_D8F1196D_EBC8_569A_80E2_B5392145CB30" name="remaining &gt; 0?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_9879DA82_1367_56CE_B35A_FDDB4A378E1A" name="AddToEmptySlots(item, amount):
+найти пустые слоты
+SpawnItemInSlot + SetInventorySlot"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_3A5E0AD8_FAF9_5CB8_931C_285AC1103F80" name="remaining &gt; 0 после добавления?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_6D1D6814_D9F8_5449_9517_27D0DA5D60F6" name="Log: Инвентарь полон!"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_CA93C639_EC9F_5B1A_9571_E0C469363EFC" name="return true"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_625F8183_DBA1_5F85_B9D7_924F45A608A0" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8CD44746_BBC2_50C5_8932_B3BC79322688" source="EAID_5BBE50CF_F0A2_5CF1_87EA_9C4355FF9E30" target="EAID_3A5A7A84_46A5_5E57_A491_DB11267582E4"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_A2242259_C8DB_5CE9_8E69_98AC3C1CC976" source="EAID_3A5A7A84_46A5_5E57_A491_DB11267582E4" target="EAID_91AEB64A_3445_5080_894C_C9A3CF052D74"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_78A349A4_36D8_5212_9094_3A99BFA15988" source="EAID_91AEB64A_3445_5080_894C_C9A3CF052D74" target="EAID_90C5D160_BE54_5544_973B_DBFE326DADA3" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F563B6D3_4A47_5CF8_BBAD_C0487D21FC3A" source="EAID_90C5D160_BE54_5544_973B_DBFE326DADA3" target="EAID_625F8183_DBA1_5F85_B9D7_924F45A608A0"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CC7F09CA_6AEC_5D93_9DB8_1D9C848FF5FA" source="EAID_91AEB64A_3445_5080_894C_C9A3CF052D74" target="EAID_14177A8A_2589_54D6_82D9_309A5B209579" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_366E225C_D742_58F5_A394_C082500B4269" source="EAID_14177A8A_2589_54D6_82D9_309A5B209579" target="EAID_673CDC53_9851_5209_BDF1_C5C896D34620" guard="[да — стакуемый]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_083E6454_7B3A_5571_9D0C_7C70189CC8C1" source="EAID_673CDC53_9851_5209_BDF1_C5C896D34620" target="EAID_D8F1196D_EBC8_569A_80E2_B5392145CB30"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_DB2C8595_54F4_5EB1_B4D1_415BD7F9EE29" source="EAID_D8F1196D_EBC8_569A_80E2_B5392145CB30" target="EAID_CA93C639_EC9F_5B1A_9571_E0C469363EFC" guard="[нет — всё добавлено]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_E475E1CC_A3D1_5D54_A985_D9039A06BA5F" source="EAID_D8F1196D_EBC8_569A_80E2_B5392145CB30" target="EAID_9879DA82_1367_56CE_B35A_FDDB4A378E1A" guard="[да — остаток]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F89E3009_49AA_5FF1_9A5E_619FF7383C86" source="EAID_14177A8A_2589_54D6_82D9_309A5B209579" target="EAID_9879DA82_1367_56CE_B35A_FDDB4A378E1A" guard="[нет — не стакуемый]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8A28216A_2CD9_5586_AEBB_83A6F8D52FB0" source="EAID_9879DA82_1367_56CE_B35A_FDDB4A378E1A" target="EAID_3A5E0AD8_FAF9_5CB8_931C_285AC1103F80"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5B1A7386_F2D0_53C1_AE8A_C8823A0E9B37" source="EAID_3A5E0AD8_FAF9_5CB8_931C_285AC1103F80" target="EAID_6D1D6814_D9F8_5449_9517_27D0DA5D60F6" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_762A8E5D_2957_5877_9504_52E220CFF29F" source="EAID_3A5E0AD8_FAF9_5CB8_931C_285AC1103F80" target="EAID_CA93C639_EC9F_5B1A_9571_E0C469363EFC" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5E55BE67_5E2A_5661_9675_B14F54526959" source="EAID_6D1D6814_D9F8_5449_9517_27D0DA5D60F6" target="EAID_625F8183_DBA1_5F85_B9D7_924F45A608A0"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4B05E622_57FA_56D3_8738_EF3BA727F18A" source="EAID_CA93C639_EC9F_5B1A_9571_E0C469363EFC" target="EAID_625F8183_DBA1_5F85_B9D7_924F45A608A0"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_57857CC7_70F8_50EA_B8EB_CDFF3EB6493B" name="Drag and Drop Item" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_A07A5C3E_3A82_5C59_A854_6DB3FE8F5CBA" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_B8B1AE02_A5DA_5680_86BF_4DD3B1D8E063" name="OnBeginDrag:
+проверить кнопку мыши (Left)
+проверить бой (FightManager)"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_17AE204C_EE7D_591A_A5E0_1C16A964222B" name="dragBlocked?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_A55F5F6E_B5EF_5622_8FCB_523E5040B31D" name="contextMenu.Hide()
+parentAfterDrag = transform.parent
+перенести на Canvas (SetAsLastSibling)
+image.raycastTarget = false"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_6712FC9D_E429_5D73_A00B_D422034F1AC0" name="OnDrag:
+transform.position = Input.mousePosition"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8BB8F9B5_C45E_5E67_A1AD_72F14706BB00" name="OnEndDrag:
+image.raycastTarget = true"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_E9DC0E37_1393_59FB_B219_FA3D3D7142B3" name="transform.parent == Canvas?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_570C8E06_327B_5761_AD19_505AF6AAD6B4" name="CheckForNearbySlot:
+найти ближайший слот (sqrMagnitude)
+если dist &lt;= snapDistance AND IsTypeAllowed
+-&gt; slot.OnDrop(eventData)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_352286A7_0BBC_5B53_9BC1_AB3E19E9A48D" name="transform.SetParent(parentAfterDrag)
+transform.localPosition = Vector3.zero"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_34E8A9DD_A842_5274_AFAF_E23627839954" name="inventoryManager.SyncFromUI()"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_0022E2AB_A944_5363_9CCF_5C8A858F8330" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_143285F1_A948_5876_8699_12399A9D7487" source="EAID_A07A5C3E_3A82_5C59_A854_6DB3FE8F5CBA" target="EAID_B8B1AE02_A5DA_5680_86BF_4DD3B1D8E063"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4BA2E21C_90BD_5542_9FA8_8CBAD152AAD3" source="EAID_B8B1AE02_A5DA_5680_86BF_4DD3B1D8E063" target="EAID_17AE204C_EE7D_591A_A5E0_1C16A964222B"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_E739CD02_D9D5_5024_BDAB_5883AAB85D88" source="EAID_17AE204C_EE7D_591A_A5E0_1C16A964222B" target="EAID_0022E2AB_A944_5363_9CCF_5C8A858F8330" guard="[да — заблокировано]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_910D2D94_92CB_5CA4_9240_DD8599625C7C" source="EAID_17AE204C_EE7D_591A_A5E0_1C16A964222B" target="EAID_A55F5F6E_B5EF_5622_8FCB_523E5040B31D" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_AF738D50_AB7F_5268_A245_D421FCB17A00" source="EAID_A55F5F6E_B5EF_5622_8FCB_523E5040B31D" target="EAID_6712FC9D_E429_5D73_A00B_D422034F1AC0"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_A6BE4306_431D_5909_A7FF_8D1C09A31E5C" source="EAID_6712FC9D_E429_5D73_A00B_D422034F1AC0" target="EAID_8BB8F9B5_C45E_5E67_A1AD_72F14706BB00"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_678E75B4_CF65_5FB1_92A9_C473D4CB0A48" source="EAID_8BB8F9B5_C45E_5E67_A1AD_72F14706BB00" target="EAID_E9DC0E37_1393_59FB_B219_FA3D3D7142B3"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F04F835C_465E_5CA0_B6DF_9B56FB991698" source="EAID_E9DC0E37_1393_59FB_B219_FA3D3D7142B3" target="EAID_570C8E06_327B_5761_AD19_505AF6AAD6B4" guard="[да — не попал в слот]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7B3C2E5C_3C7A_5BDF_BF7F_639D4F9D3D3D" source="EAID_E9DC0E37_1393_59FB_B219_FA3D3D7142B3" target="EAID_352286A7_0BBC_5B53_9BC1_AB3E19E9A48D" guard="[нет — уже в слоте]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CE36495C_DA75_5142_B9D3_31D8FBBABD33" source="EAID_570C8E06_327B_5761_AD19_505AF6AAD6B4" target="EAID_352286A7_0BBC_5B53_9BC1_AB3E19E9A48D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_2656D8A8_D05E_51E5_8F04_D579544E220E" source="EAID_352286A7_0BBC_5B53_9BC1_AB3E19E9A48D" target="EAID_34E8A9DD_A842_5274_AFAF_E23627839954"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_89D57998_9EC4_50A4_AB79_681A77921478" source="EAID_34E8A9DD_A842_5274_AFAF_E23627839954" target="EAID_0022E2AB_A944_5363_9CCF_5C8A858F8330"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_A4E64B2C_3240_5D66_B4D0_C7B489DBE07F" name="Drop Item on Slot" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_A4D32CC8_256B_5D05_A61D_3F33E78D6C87" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_0CE132E2_2DBE_5897_A825_25603C1E991A" name="OnDrop(eventData):
+получить DraggableItem из eventData.pointerDrag"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_DD7B7008_FD2E_5DE8_98E5_81CB436B98B1" name="IsEquipmentSlot() AND FightManager активен?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_DBB1BB02_87CD_5993_B578_44667B6810E1" name="Log: нельзя менять экипировку во время боя"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_8A1CB5C6_FC15_5989_A892_09B59011A78A" name="IsTypeAllowed(draggableItem)?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_AFFF8486_B31C_52AE_B54B_22CAB9706501" name="return — тип не подходит"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_69585B76_B35E_56FE_80AF_A6AAE27AEA29" name="transform.childCount == 0?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_776BE0C9_E5A1_5717_8E60_6591A13E551E" name="draggableItem.parentAfterDrag = transform
+[если слот экипировки] PlayEquipSound()"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_DF101815_A124_59A4_982B_E696F976D658" name="CanStackItems(draggableItem, currentItem)?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_EF9F53AB_2BF0_52F0_BAAA_FDD405F2E0EC" name="ProcessStackItems:
+сложить count
+если total &gt; maxStack — остаток в пустой слот"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_C8724CBF_223E_5884_87F3_EDCC7AB1F153" name="SwapItems:
+проверить IsTypeAllowed для обоих
+поменять parentAfterDrag местами"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_70C7E8BB_CB44_53F0_84F0_44E0160AB47E" name="SyncAfterChange() -&gt; Invoke(DoSync, 0.1f)
+-&gt; inventoryManager.SyncFromUI()"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_EE5F9856_5702_5FD3_8C92_0FF9C142C7DF" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_F649831D_5F0C_5105_8745_282EED1EBD7D" source="EAID_A4D32CC8_256B_5D05_A61D_3F33E78D6C87" target="EAID_0CE132E2_2DBE_5897_A825_25603C1E991A"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_46644A62_C92F_5645_83F0_986833A120EA" source="EAID_0CE132E2_2DBE_5897_A825_25603C1E991A" target="EAID_DD7B7008_FD2E_5DE8_98E5_81CB436B98B1"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_AE7FEF57_0C01_535B_9161_EA5240B9C1CF" source="EAID_DD7B7008_FD2E_5DE8_98E5_81CB436B98B1" target="EAID_DBB1BB02_87CD_5993_B578_44667B6810E1" guard="[да — бой активен]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_E6CC5177_C2A7_568E_9B37_A18274733FB1" source="EAID_DBB1BB02_87CD_5993_B578_44667B6810E1" target="EAID_EE5F9856_5702_5FD3_8C92_0FF9C142C7DF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_02269813_7169_5C34_838C_B240F46F7C22" source="EAID_DD7B7008_FD2E_5DE8_98E5_81CB436B98B1" target="EAID_8A1CB5C6_FC15_5989_A892_09B59011A78A" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_E0528B6B_5AAC_56DB_8132_ED0608FB91C7" source="EAID_8A1CB5C6_FC15_5989_A892_09B59011A78A" target="EAID_AFFF8486_B31C_52AE_B54B_22CAB9706501" guard="[нет — тип запрещён]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_3AFD3E88_BC85_5565_90D5_BC276C0477B4" source="EAID_AFFF8486_B31C_52AE_B54B_22CAB9706501" target="EAID_EE5F9856_5702_5FD3_8C92_0FF9C142C7DF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_FE48A37D_2B9F_5CA0_AAEA_DF3BA4812EF5" source="EAID_8A1CB5C6_FC15_5989_A892_09B59011A78A" target="EAID_69585B76_B35E_56FE_80AF_A6AAE27AEA29" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_FC2C1F63_960A_50E0_9520_60D12AA70739" source="EAID_69585B76_B35E_56FE_80AF_A6AAE27AEA29" target="EAID_776BE0C9_E5A1_5717_8E60_6591A13E551E" guard="[да — слот пуст]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_81D7ABE1_D15D_5E88_B207_D47D5F97C957" source="EAID_69585B76_B35E_56FE_80AF_A6AAE27AEA29" target="EAID_DF101815_A124_59A4_982B_E696F976D658" guard="[нет — слот занят]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_1A6F9073_233E_5E0C_A1EA_179C64F88EDB" source="EAID_DF101815_A124_59A4_982B_E696F976D658" target="EAID_EF9F53AB_2BF0_52F0_BAAA_FDD405F2E0EC" guard="[да — стакуемые]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_6BDD4798_433A_5D5E_8150_FCFBDEE27568" source="EAID_DF101815_A124_59A4_982B_E696F976D658" target="EAID_C8724CBF_223E_5884_87F3_EDCC7AB1F153" guard="[нет — разные предметы]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7750ADF9_203D_5DEA_B095_5D74A96F44DA" source="EAID_776BE0C9_E5A1_5717_8E60_6591A13E551E" target="EAID_70C7E8BB_CB44_53F0_84F0_44E0160AB47E"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_16CDA25B_4AFD_5518_9FD8_A6ECB42E281A" source="EAID_EF9F53AB_2BF0_52F0_BAAA_FDD405F2E0EC" target="EAID_70C7E8BB_CB44_53F0_84F0_44E0160AB47E"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_E221CD0F_9F3B_5A73_9CA4_9342BF5B18B5" source="EAID_C8724CBF_223E_5884_87F3_EDCC7AB1F153" target="EAID_70C7E8BB_CB44_53F0_84F0_44E0160AB47E"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D325196B_1A71_504D_8126_956B0037E2D8" source="EAID_70C7E8BB_CB44_53F0_84F0_44E0160AB47E" target="EAID_EE5F9856_5702_5FD3_8C92_0FF9C142C7DF"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_0F6EA5F1_81E3_5EC9_A4B6_7CA11CA4C043" name="Context Menu Actions" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_DBAE444B_07C7_53AA_BE63_02534949AB91" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_EA866AD5_9123_5214_BBB8_6D58DEE1037D" name="ПКМ по предмету -&gt; Show(item, position):
+определить режим (Shop / Normal)
+создать кнопки"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_1523D0C1_42C8_5850_B485_66BF7DA10B25" name="ShopUI.IsShopMode?"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_E030E491_A338_5ED2_A40A_B1C1CFA75F2D" name="IsMerchantSlot(slot)?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_9F6AD592_A34C_5DCD_908E_434C2F7C7436" name="CreateBuyButtons:
+Купить 1 / 5 / 10 / всё (цена)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_9B96FDF7_218E_53C9_A7E1_8D55572F2074" name="CreateSellButtons:
+Продать 1 / 5 / 10 / всё (цена)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_ADFA9E50_F80A_5005_B127_F0A7391AB28E" name="CreateButtonsForItem:
+Использовать (Food/Potion)
+Экипировать (Weapon/Armor/Amulet/Helmet)
+Выбросить"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_A7D3575D_345F_5F5E_94FA_64F566F44C0D" name="contextMenuPanel.SetActive(true)
+ClampMenuToScreen()"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_5F2EBDA6_A440_505C_B4FF_CAAB6FBA2420" name="Игрок нажимает кнопку"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" name="Действие?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_6EB33D12_DA54_55AC_82C9_087BAF5A8AA5" name="UseItem:
+найти TeamMember.CanUseItem
+-&gt; member.UseItemPublic(item)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_7D68C9FF_C923_50D9_86A2_0252BD77AD13" name="EquipItem:
+найти подходящий equipSlot
+переместить / поменять местами
+PlayEquipSound()"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_31A92D48_4D2D_5295_B467_54BB2E6F2068" name="DropItem:
+RemoveItemFromSlot(slot, 1)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_3EEFDABF_2FA8_5899_B19C_DBB193618282" name="BuyItem(item, qty):
+ShopManager.BuyItem
+OnItemTransactionComplete()"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_8DDE6FE1_33E7_5E20_A275_F886973A9D1D" name="SellItem(item, qty):
+ShopManager.SellItem
+OnItemTransactionComplete()"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF" name="Hide(): contextMenuPanel.SetActive(false)
+ClearButtons()"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_7410F58C_5C93_557C_A654_FE5BE2C69174" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_0006C7DE_8D6E_5CA1_93DF_E66E77A92169" source="EAID_DBAE444B_07C7_53AA_BE63_02534949AB91" target="EAID_EA866AD5_9123_5214_BBB8_6D58DEE1037D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CABDAD8B_FB0B_583A_A50D_3B7C00BDE641" source="EAID_EA866AD5_9123_5214_BBB8_6D58DEE1037D" target="EAID_1523D0C1_42C8_5850_B485_66BF7DA10B25"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_9FD4E24E_FB8A_552F_8562_FECB3803E6AC" source="EAID_1523D0C1_42C8_5850_B485_66BF7DA10B25" target="EAID_E030E491_A338_5ED2_A40A_B1C1CFA75F2D" guard="[да — режим магазина]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5DF02144_EE04_5E9F_A351_8F713939BFF3" source="EAID_E030E491_A338_5ED2_A40A_B1C1CFA75F2D" target="EAID_9F6AD592_A34C_5DCD_908E_434C2F7C7436" guard="[да — товар торговца]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D165EC4C_0CFC_5F28_9C35_00174F564143" source="EAID_E030E491_A338_5ED2_A40A_B1C1CFA75F2D" target="EAID_9B96FDF7_218E_53C9_A7E1_8D55572F2074" guard="[нет — предмет игрока]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CDFC218F_8623_5388_A8BC_BB0E9ECA172F" source="EAID_1523D0C1_42C8_5850_B485_66BF7DA10B25" target="EAID_ADFA9E50_F80A_5005_B127_F0A7391AB28E" guard="[нет — обычный режим]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_602EA41C_647E_59F8_BAD0_E27846D0DD6B" source="EAID_9F6AD592_A34C_5DCD_908E_434C2F7C7436" target="EAID_A7D3575D_345F_5F5E_94FA_64F566F44C0D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_EEBFD37C_45CA_50B1_8A59_A9E7886F7209" source="EAID_9B96FDF7_218E_53C9_A7E1_8D55572F2074" target="EAID_A7D3575D_345F_5F5E_94FA_64F566F44C0D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5E386385_B611_5E10_A28C_F54BEB05F65A" source="EAID_ADFA9E50_F80A_5005_B127_F0A7391AB28E" target="EAID_A7D3575D_345F_5F5E_94FA_64F566F44C0D"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D248C5CC_42BF_5E6B_9399_F7D86F50ED43" source="EAID_A7D3575D_345F_5F5E_94FA_64F566F44C0D" target="EAID_5F2EBDA6_A440_505C_B4FF_CAAB6FBA2420"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_81F4713D_5D7A_540A_8C26_E9C5D6E01D2B" source="EAID_5F2EBDA6_A440_505C_B4FF_CAAB6FBA2420" target="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_7FE08155_FB82_5ED3_9184_806122FEF029" source="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" target="EAID_6EB33D12_DA54_55AC_82C9_087BAF5A8AA5" guard="[Использовать]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CC255FBA_FAA2_5554_8E75_E9B9F78769B1" source="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" target="EAID_7D68C9FF_C923_50D9_86A2_0252BD77AD13" guard="[Экипировать]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_B695D3DF_F654_5D0A_9289_ADC4B6FE0448" source="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" target="EAID_31A92D48_4D2D_5295_B467_54BB2E6F2068" guard="[Выбросить]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_C8206BF8_3883_5693_A144_8C17DADDA668" source="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" target="EAID_3EEFDABF_2FA8_5899_B19C_DBB193618282" guard="[Купить]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CF23852A_E60B_55DA_8365_8155CD9D0999" source="EAID_987DA715_EF37_5387_9306_FCE36D53E4F2" target="EAID_8DDE6FE1_33E7_5E20_A275_F886973A9D1D" guard="[Продать]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_B2E9F5F0_6D39_57A2_A209_878A4C3B66DC" source="EAID_6EB33D12_DA54_55AC_82C9_087BAF5A8AA5" target="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_79790820_1B36_5C70_88B8_A49030E31F3B" source="EAID_7D68C9FF_C923_50D9_86A2_0252BD77AD13" target="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_A5718D7C_95A3_5667_8020_BBEE7027721A" source="EAID_31A92D48_4D2D_5295_B467_54BB2E6F2068" target="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D522D8BE_5CB0_5458_987E_ED77931E8E67" source="EAID_3EEFDABF_2FA8_5899_B19C_DBB193618282" target="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CA500C99_4228_504B_B9B0_F5B405DA343C" source="EAID_8DDE6FE1_33E7_5E20_A275_F886973A9D1D" target="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_56BFBA35_1791_5B6B_8C83_8F4802189B33" source="EAID_4BC88918_894A_5F41_AD64_5F11A18FD5BF" target="EAID_7410F58C_5C93_557C_A654_FE5BE2C69174"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Activity" xmi:id="EAID_C4F71EEE_FF82_526A_A4B1_CFEEB38B45A4" name="Equipment Bonuses Recalculation" visibility="public">
+      <ownedNode xmi:type="uml:InitialNode" xmi:id="EAID_324894CE_FFBD_5811_B1EE_8FA89592E1D0" name=""/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_072C85EB_1CE6_54C4_B969_42FD96496A2C" name="GetPlayerRuntime():
+GlobalLoader -&gt; Team -&gt; CharacterDataRuntime"/>
+      <ownedNode xmi:type="uml:DecisionNode" xmi:id="EAID_F1F71615_1B67_58AC_A10F_1320AF331CFC" name="runtime == null?"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_0005D266_FEC3_5148_9A8F_5DECBE46EC80" name="return — нет данных игрока"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_64CB7C43_77CC_5D2B_92FB_5B3234AF235D" name="baseHealth = runtime._health
+baseMana = runtime._mana"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_1EBEC3CA_C8E8_5BBE_91C2_9DBD6767A2A9" name="RemoveAppliedBonuses(runtime):
+вычесть ранее применённые бонусы
+сбросить applied* = 0"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_77A61E12_4E42_566A_BE4F_0A1044C296FB" name="Для каждого equipmentSlot:
+если DraggableItem != null AND IsEquipable()
+суммировать bonusDamage, bonusArmor,
+bonusMaxHealth, bonusMaxMana, bonusHeal, bonusLucky"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_D5063FB6_712E_5291_94FE_EE986EA436A3" name="runtime += новые бонусы
+пересчитать _health / _mana
+(clamp к новым максимумам)"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_80B18D9A_F485_5EC5_BB18_D28948A54CB8" name="сохранить applied* = новые значения"/>
+      <ownedNode xmi:type="uml:OpaqueAction" xmi:id="EAID_69119684_2E76_5664_8547_682224660C24" name="TeamManager.UpdateTeamUI()"/>
+      <ownedNode xmi:type="uml:ActivityFinalNode" xmi:id="EAID_CA774907_5F6E_5882_AE8B_CBBE289CC0D5" name=""/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_2D32DEA0_FA05_5885_AB43_D9AD41CF43A1" source="EAID_324894CE_FFBD_5811_B1EE_8FA89592E1D0" target="EAID_072C85EB_1CE6_54C4_B969_42FD96496A2C"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_4F7B1739_E97B_54BD_9D09_E00DFA360472" source="EAID_072C85EB_1CE6_54C4_B969_42FD96496A2C" target="EAID_F1F71615_1B67_58AC_A10F_1320AF331CFC"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_D60A79D1_56F2_5BF3_84B0_883896B07014" source="EAID_F1F71615_1B67_58AC_A10F_1320AF331CFC" target="EAID_0005D266_FEC3_5148_9A8F_5DECBE46EC80" guard="[да]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_CAC57EA4_4E5F_5C43_B7BC_39817A9FA492" source="EAID_0005D266_FEC3_5148_9A8F_5DECBE46EC80" target="EAID_CA774907_5F6E_5882_AE8B_CBBE289CC0D5"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_6009E9C5_11E8_5B3A_854A_4A898134CE07" source="EAID_F1F71615_1B67_58AC_A10F_1320AF331CFC" target="EAID_64CB7C43_77CC_5D2B_92FB_5B3234AF235D" guard="[нет]"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_9D20D679_B796_5DF8_A2E9_E36EE067C73D" source="EAID_64CB7C43_77CC_5D2B_92FB_5B3234AF235D" target="EAID_1EBEC3CA_C8E8_5BBE_91C2_9DBD6767A2A9"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_753743A9_F70F_53F6_953B_A66BA2D59F0A" source="EAID_1EBEC3CA_C8E8_5BBE_91C2_9DBD6767A2A9" target="EAID_77A61E12_4E42_566A_BE4F_0A1044C296FB"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_77BD50BE_43B5_5574_BD03_FC883218FF3E" source="EAID_77A61E12_4E42_566A_BE4F_0A1044C296FB" target="EAID_D5063FB6_712E_5291_94FE_EE986EA436A3"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_76A20171_C8A7_505D_87F4_3C06B46AF4D4" source="EAID_D5063FB6_712E_5291_94FE_EE986EA436A3" target="EAID_80B18D9A_F485_5EC5_BB18_D28948A54CB8"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_5A62BC9E_D337_5009_A3D9_D76A9D52996C" source="EAID_80B18D9A_F485_5EC5_BB18_D28948A54CB8" target="EAID_69119684_2E76_5664_8547_682224660C24"/>
+      <ownedEdge xmi:type="uml:ControlFlow" xmi:id="EAID_8C5DBC21_48E3_5C45_BBB9_4C8B5544E138" source="EAID_69119684_2E76_5664_8547_682224660C24" target="EAID_CA774907_5F6E_5882_AE8B_CBBE289CC0D5"/>
+    </packagedElement>
+  </packagedElement>
+</uml:Model>

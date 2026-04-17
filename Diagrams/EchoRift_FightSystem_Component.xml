@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1"
+  xmlns:xmi="http://www.omg.org/spec/XMI/20131001"
+  xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML"
+  xmi:id="EAID_8B9395B7_0216_5D5E_8D5A_A8605DE7CB73" name="FightSystem_Component">
+
+  <packagedElement xmi:type="uml:Package" xmi:id="EAID_CB264A2B_4FB0_5936_8672_803B17ABF578" name="FightSystem_Component">
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_29D6D15C_EFFB_567C_8BA2_F98E8697E8F3" name="IData" visibility="public">
+      <ownedOperation xmi:id="EAID_62C3929C_4BB0_5047_BEEC_C9F404E03053" name="Name" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_F861EAC0_DDA7_5DEA_980E_52300908E26B" name="Damage" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_B073A8DD_8F3A_5DA4_A481_42B4986EED96" name="MaxHealth" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_918AAB4E_F134_5348_8E31_8F9D6EA92844" name="Health" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_167EEF14_EBC4_5942_9ED4_F816F670AAF8" name="MaxMana" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_DE0F4D64_1FA3_54C7_A2AB_F439551A5279" name="Mana" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_B93B700D_B13E_5F88_A858_B5DF3157B931" name="Heal" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_DE98AF52_8CF5_5E5B_AF95_FDFD732F6DD4" name="Armor" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_094901A7_37FC_5FC2_8F16_FD95F804C95F" name="Level" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_D479BA41_A59F_57DE_A4D5_9DE1A364C3D9" name="CurrentXP" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_4162E86F_2CC1_525C_9E7D_DB64A91E2BAD" name="XpReward" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_B45B6B1D_31DD_51B9_B139_A7407B82A97B" name="AttackAnimationName" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_72237795_250D_565B_9352_302CB1475D28" name="IBattleUnit" visibility="public">
+      <ownedOperation xmi:id="EAID_82138D28_95EC_5383_85AF_3D8492DA2A6E" name="TakeDamage" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_7C412D45_BDF4_5280_8CA8_D35BD0DF2F0E" name="TakeMagicDamage" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_3730E06B_0A87_50B1_B409_38BF22850ACF" name="TakeHeal" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_68FF52C9_7844_5DF8_A4E1_AE34B888C5BF" name="GiveDamage" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_62F97822_D37E_564C_9FBD_D406F8B7E4E5" name="ProcessStatusEffects" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_053FB235_F128_5E61_8367_10B41737F13D" name="GetXP" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_5A0D210E_81B5_5996_9455_3B4EECB28D27" name="UpdateUI" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" name="IBattleAbility" visibility="public">
+      <ownedOperation xmi:id="EAID_A4C0AF74_D397_51CB_9C64_383A2D710AAE" name="Execute" visibility="public" isAbstract="true"/>
+      <ownedOperation xmi:id="EAID_20BDDEBB_3526_58A1_B058_74CBCB656924" name="CanUse" visibility="public" isAbstract="true"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_220FCD66_C06D_5ADD_9A57_AE610F9EBFC8" name="EntityStats" visibility="public">
+      <interfaceRealization xmi:id="EAID_7AB25A57_E8C2_5549_84A5_79A1008456B4" contract="EAID_29D6D15C_EFFB_567C_8BA2_F98E8697E8F3" implementingClassifier="EAID_220FCD66_C06D_5ADD_9A57_AE610F9EBFC8"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355" name="Base" visibility="public">
+      <interfaceRealization xmi:id="EAID_5001B1CC_D0D8_532F_8085_80A6B473C502" contract="EAID_29D6D15C_EFFB_567C_8BA2_F98E8697E8F3" implementingClassifier="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355"/>
+      <interfaceRealization xmi:id="EAID_ED4F8342_4A85_50A1_8DFD_7E4CA6B7EA9D" contract="EAID_72237795_250D_565B_9352_302CB1475D28" implementingClassifier="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD" name="Character" visibility="public">
+      <interfaceRealization xmi:id="EAID_060F43DC_7706_5878_BEF7_CB46594D918F" contract="EAID_72237795_250D_565B_9352_302CB1475D28" implementingClassifier="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0" name="Enemy" visibility="public">
+      <interfaceRealization xmi:id="EAID_987AE43A_1812_533D_840C_FFDB3E1FD128" contract="EAID_72237795_250D_565B_9352_302CB1475D28" implementingClassifier="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_2509602D_8CB5_53B7_9F2B_022D9853145D" name="CharacterData" visibility="public">
+      <interfaceRealization xmi:id="EAID_0BB7D346_4DF2_5180_9C27_DB5735B1ADC2" contract="EAID_29D6D15C_EFFB_567C_8BA2_F98E8697E8F3" implementingClassifier="EAID_2509602D_8CB5_53B7_9F2B_022D9853145D"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_C7076937_B8C0_5320_B790_8A7C6317D25D" name="EnemyData" visibility="public">
+      <interfaceRealization xmi:id="EAID_4F301D6F_52F7_58B4_A5A1_36EEDC4E7DB3" contract="EAID_29D6D15C_EFFB_567C_8BA2_F98E8697E8F3" implementingClassifier="EAID_C7076937_B8C0_5320_B790_8A7C6317D25D"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_973445D0_C3E9_5F89_B53B_F2E5C96D6199" name="CharacterAbilitySet" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241" name="BattleAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_916EB770_5A20_5DCC_9D5F_3128EA179251" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_3F1B566A_8F2C_5DCF_A7D2_2E6BCA788169" name="MeleeAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_5EFAF95E_8379_51E7_BD36_F4049829940B" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_3F1B566A_8F2C_5DCF_A7D2_2E6BCA788169"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_C20AA5FD_F864_5D79_846F_86906453663D" name="MagicAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_BBAC5B05_6EDA_5F10_8786_FBFE120B9717" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_C20AA5FD_F864_5D79_846F_86906453663D"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_7DCE0046_3ADE_58D8_8D4F_B1AA6CD974F2" name="HealAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_98669B09_CC02_5C09_B179_E5DD00B5437E" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_7DCE0046_3ADE_58D8_8D4F_B1AA6CD974F2"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_70CAE783_3496_5495_82AC_12501AF64FA3" name="DefenseAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_E2A1E773_E43E_53CC_B450_A8DD4526EFF3" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_70CAE783_3496_5495_82AC_12501AF64FA3"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_71707285_5152_513E_89FF_1F9FB8075509" name="StatusAbility" visibility="public">
+      <interfaceRealization xmi:id="EAID_71C79C84_CC30_51F2_8263_EB9EB4CAB2EB" contract="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D" implementingClassifier="EAID_71707285_5152_513E_89FF_1F9FB8075509"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" name="FightManager" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A" name="AbilityManager" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC" name="ActionButtons" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_D8740805_B171_5430_8493_20C3A14018B3" name="BattleTeamSync" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_440B66BF_38B3_578A_83C6_AEDA6D96D401" name="FightTrigger" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_154ED88B_C9CA_5FB3_A865_757CFFF56B35" name="FightDataLoader" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_41108C68_7F44_58E5_8130_25592C3907C5" name="StatusEffectSO" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_CD1041CC_E335_587E_8C24_4BC6B2DA9691" name="SaveLoadSystem" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_A28D253F_1E97_5974_939D_32B7AA3FDABB" name="GlobalLoader" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_85572931_29EE_5AAF_BE83_39FD87F7E907" name="SceneLoader" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Component" xmi:id="EAID_13D1503D_C511_533C_AC86_450824444985" name="GameSettings" visibility="public">
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_5F529866_C7F4_5EE0_9B9C_A3ADA815154C" name="contains" client="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355" supplier="EAID_220FCD66_C06D_5ADD_9A57_AE610F9EBFC8"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_ED6892F7_0121_552B_949D_271E298402BF" name="extends" client="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD" supplier="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_BC343119_C077_5758_BDCA_8BCAAD5E15F7" name="initialized from" client="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD" supplier="EAID_2509602D_8CB5_53B7_9F2B_022D9853145D"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_645401CF_D61B_53B2_A57D_826569DD8CE0" name="notifies" client="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD" supplier="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_621D203F_9A9A_56FD_86E0_7641845E87A7" name="extends" client="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0" supplier="EAID_3E0C4FCB_7AE3_50DA_8397_5634A3A94355"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_1FA2BD77_E888_5BC2_8072_9174F3970B96" name="initialized from" client="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0" supplier="EAID_C7076937_B8C0_5320_B790_8A7C6317D25D"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_60B9D745_F92A_55AA_8F45_8D3F4505BDAD" name="owns" client="EAID_2509602D_8CB5_53B7_9F2B_022D9853145D" supplier="EAID_973445D0_C3E9_5F89_B53B_F2E5C96D6199"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_124D852D_EC5D_53CF_923F_8DA0D1D9233F" name="contains" client="EAID_973445D0_C3E9_5F89_B53B_F2E5C96D6199" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_EA4DBCCB_8292_55B1_A251_1AD56D3AD4B7" name="extends" client="EAID_3F1B566A_8F2C_5DCF_A7D2_2E6BCA788169" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_C4861D95_8CE6_5FE1_86AF_E477D7CF3AA1" name="extends" client="EAID_C20AA5FD_F864_5D79_846F_86906453663D" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_E8759F15_D115_5A92_A542_2489A556970F" name="extends" client="EAID_7DCE0046_3ADE_58D8_8D4F_B1AA6CD974F2" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_485EFED5_80C9_5360_AD73_8CDBD9756C21" name="extends" client="EAID_70CAE783_3496_5495_82AC_12501AF64FA3" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_94B5BDAF_9CC9_5F81_9438_2E49456C071B" name="extends" client="EAID_71707285_5152_513E_89FF_1F9FB8075509" supplier="EAID_2586AC0A_8FB4_5AFB_902D_1D447CFC0241"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_555BB919_55D0_586E_AB75_774487A712C0" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_72237795_250D_565B_9352_302CB1475D28"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_756CD0AB_F914_5FE4_94EF_E11A1CD3F8F4" name="manages" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_F79C7E2F_7703_5F2B_8B91_DBABA3763995" name="manages" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_01613214_7AAF_5722_A7F1_03FA40FD233B" name="uses" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_F4111BAB_F1F0_55CC_B251_2E64DCC24CDF" name="uses" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_D8740805_B171_5430_8493_20C3A14018B3"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_AB3A6423_5BA5_516D_8078_41B9655DA85A" name="reads" client="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA" supplier="EAID_13D1503D_C511_533C_AC86_450824444985"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_18B57BAD_2457_530C_854F_C44F3F5BC88F" client="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A" supplier="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_D6B9E3DE_A747_55E6_9EFC_9F3FD081FE82" name="reads" client="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A" supplier="EAID_973445D0_C3E9_5F89_B53B_F2E5C96D6199"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_B615ADA0_2BDD_50F8_8A28_44EE3A4F9690" name="notifies" client="EAID_4C2F3B4C_FEDC_5225_9A55_0800A124080A" supplier="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_6FD06DCF_62E4_566E_BD1A_37FEBCE2EFE9" client="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC" supplier="EAID_E75496CF_C8B3_5B89_8239_71E2AF69D93D"/>
+    <packagedElement xmi:type="uml:Usage" xmi:id="EAID_5E3C6A15_6A1E_5B41_BD59_FE07119075F0" client="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC" supplier="EAID_72237795_250D_565B_9352_302CB1475D28"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_E08F6650_DA8A_578B_BB4F_4AA4ADE740C5" name="uses" client="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC" supplier="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_68E00503_2FC0_59C0_8BF8_2CD03C195B4C" name="calls on escape" client="EAID_1733E715_EEEB_59C6_BEE0_B726A2166ADC" supplier="EAID_D8740805_B171_5430_8493_20C3A14018B3"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_11D70CA5_3A3F_590C_A168_E2F37D26374B" name="reads characters" client="EAID_D8740805_B171_5430_8493_20C3A14018B3" supplier="EAID_D78F7643_2865_5F93_AB85_23A6E612B0CA"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_95796725_04B8_5D50_AAE8_1AFCBFF1E930" name="saves team data" client="EAID_D8740805_B171_5430_8493_20C3A14018B3" supplier="EAID_CD1041CC_E335_587E_8C24_4BC6B2DA9691"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_5AD49CB5_1041_56A8_B5B6_DA99AA5F74AB" name="reads player team" client="EAID_D8740805_B171_5430_8493_20C3A14018B3" supplier="EAID_A28D253F_1E97_5974_939D_32B7AA3FDABB"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_8846B1AE_0E70_5666_B3B3_907CA7CC1EA3" name="saves fight data" client="EAID_440B66BF_38B3_578A_83C6_AEDA6D96D401" supplier="EAID_CD1041CC_E335_587E_8C24_4BC6B2DA9691"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_CA863719_0137_5E7E_837F_0594FB5750D4" name="gets sceneLoader" client="EAID_440B66BF_38B3_578A_83C6_AEDA6D96D401" supplier="EAID_A28D253F_1E97_5974_939D_32B7AA3FDABB"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_0A21446B_D943_5406_89B7_7C39C42B4BAF" name="loads fight scene" client="EAID_440B66BF_38B3_578A_83C6_AEDA6D96D401" supplier="EAID_85572931_29EE_5AAF_BE83_39FD87F7E907"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_C82C932F_AE0B_54BB_B29B_C3323D1D19C4" name="loads fight data" client="EAID_154ED88B_C9CA_5FB3_A865_757CFFF56B35" supplier="EAID_CD1041CC_E335_587E_8C24_4BC6B2DA9691"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_890B8FAE_BF12_5196_A890_E55C2E9E3E2B" name="initializes" client="EAID_154ED88B_C9CA_5FB3_A865_757CFFF56B35" supplier="EAID_421D5182_EDF8_5D19_A15A_21AF28E9B3CD"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="EAID_C2FC5F42_28A4_50F8_9A6B_D8EF0B3847D8" name="initializes" client="EAID_154ED88B_C9CA_5FB3_A865_757CFFF56B35" supplier="EAID_81A58219_6B84_58FC_8E6F_19A1CF3690D0"/>
+  </packagedElement>
+</uml:Model>
