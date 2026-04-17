@@ -16,7 +16,7 @@ MonoBehaviour:
   _description: "\u041E\u0431\u043D\u0430\u0433\u043B\u0435\u0432\u0448\u0430\u044F
     \u0431\u043E\u0441\u043E\u0442\u0430"
   _sprite: {fileID: 3286163911610860551, guid: 4c9b7c40e3383a84ba33e9bc563e70c9, type: 3}
-  _damage: 4
+  _damage: 3
   _magicDamage: 0
   _priority: 5
   _maxMana: 0

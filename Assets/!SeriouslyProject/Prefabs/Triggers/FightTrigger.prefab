@@ -50,7 +50,6 @@ MonoBehaviour:
     SceneName: TestScene
     _sceneIndexInBuildSettings: 2
     _isSceneEnabledInBuildSettings: 1
-  _loadingSpeed: 0.5
   _preloadOnStart: 0
   _loadSceneMode: 0
   _useSceneManager: 0
@@ -94,7 +93,7 @@ GameObject:
   m_Layer: 0
   m_Name: FightTrigger
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 5721338939258241955, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
@@ -172,6 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 859c872a3338425429256d1ae9799e9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canTriggered: 1
   sceneLoader: {fileID: 6720105593597586563}
   enemies:
   - useEnemyData: 1

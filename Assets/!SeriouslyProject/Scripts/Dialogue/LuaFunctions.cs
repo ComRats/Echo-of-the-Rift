@@ -22,6 +22,8 @@ namespace PixelCrushers.DialogueSystem
 
             Lua.RegisterFunction("GetStat", this, SymbolExtensions.GetMethodInfo(() => GetStat(string.Empty)));
             Lua.RegisterFunction("HasStat", this, SymbolExtensions.GetMethodInfo(() => HasStat(string.Empty, 0)));
+            Lua.RegisterFunction("ShowAlert", this, SymbolExtensions.GetMethodInfo(() => ShowAlert(string.Empty)));
+            Lua.RegisterFunction("IncludeInvalidEntries", this, SymbolExtensions.GetMethodInfo(() => IncludeInvalidEntries()));
 
             DialogueLua.SetVariable("DiceCanStart", false);
             DialogueLua.SetVariable("DiceBet", 0);
@@ -218,6 +220,29 @@ namespace PixelCrushers.DialogueSystem
             return GetStat(statName) >= amount;
         }
 
+        public void ShowAlert(string message)
+        {
+            DialogueManager.ShowAlert(message);
+        }
+
+        /// <summary>
+        /// Включает Include Invalid Entries для текущего разговора.
+        /// Вызывай в поле Script диалога: IncludeInvalidEntries()
+        /// Сбрасывается автоматически после окончания разговора.
+        /// </summary>
+        public void IncludeInvalidEntries()
+        {
+            if (!DialogueManager.hasInstance) return;
+            DialogueManager.instance.isDialogueEntryValid = entry => true;
+            DialogueManager.instance.conversationEnded += ResetIncludeInvalidEntries;
+        }
+
+        private void ResetIncludeInvalidEntries(Transform actor)
+        {
+            DialogueManager.instance.isDialogueEntryValid = null;
+            DialogueManager.instance.conversationEnded -= ResetIncludeInvalidEntries;
+        }
+
         private EntityStats GetPlayerStats()
         {
             var player = GlobalLoader.Instance?.playerInstance;
@@ -260,6 +285,8 @@ namespace PixelCrushers.DialogueSystem
             Lua.UnregisterFunction("StartDiceGame");
             Lua.UnregisterFunction("GetStat");
             Lua.UnregisterFunction("HasStat");
+            Lua.UnregisterFunction("ShowAlert");
+            Lua.UnregisterFunction("IncludeInvalidEntries");
         }
     }
 }

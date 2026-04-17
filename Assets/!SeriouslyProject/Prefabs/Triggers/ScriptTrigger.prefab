@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3925967841836363092
+--- !u!1 &9090985272126634164
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,23 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 399732423978234326}
-  - component: {fileID: 7754708835122394673}
-  - component: {fileID: 8109550630443489489}
+  - component: {fileID: 8461248330491726236}
+  - component: {fileID: 6061495096668957763}
+  - component: {fileID: 5361441924488352959}
+  - component: {fileID: 1383274215787465987}
   m_Layer: 0
-  m_Name: InfoTrigger
+  m_Name: ScriptTrigger
   m_TagString: Untagged
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &399732423978234326
+--- !u!4 &8461248330491726236
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3925967841836363092}
+  m_GameObject: {fileID: 9090985272126634164}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -33,13 +34,46 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &7754708835122394673
+--- !u!114 &6061495096668957763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090985272126634164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e00ae2a66cfbcf46993a26ea3d5edf4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onEnterScripts: []
+  onEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  onExitScripts: []
+  onExit:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5361441924488352959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9090985272126634164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a936c553accd43749a8a1981104f0374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  persistentId: FightCamp2_ScriptTrigger_-42,7_-10,8_0,0
+--- !u!61 &1383274215787465987
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3925967841836363092}
+  m_GameObject: {fileID: 9090985272126634164}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -62,7 +96,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -76,36 +110,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.55, y: 0.55}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &8109550630443489489
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3925967841836363092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae37a982b07f42649b507038ecf19e79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  quests: []
-  infoText: 
-  useButton: 0
-  useButtText: "\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD\uFFFD"
-  keyMassageOffset: {x: 0, y: 0, z: 0}
-  textMassageOffset: {x: 0, y: 0, z: 0}
-  useButtonMusic: LockDoor1
-  onPressedButton:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerEnter:
-    m_PersistentCalls:
-      m_Calls: []
-  onTriggerExit:
-    m_PersistentCalls:
-      m_Calls: []
-  onExitAfterPressed:
-    m_PersistentCalls:
-      m_Calls: []
