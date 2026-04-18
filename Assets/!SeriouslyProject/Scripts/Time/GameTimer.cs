@@ -4,10 +4,15 @@ using System;
 public static class GameTimer
 {
     public static event Action<float> OnTimeScaleChanged;
-
     public static event Action OnGamePaused;
-
     public static event Action OnGameResumed;
+
+    /// <summary>
+    /// Сколько игровых минут проходит за 1 реальную секунду.
+    /// По умолчанию 1 = 1 мин/сек (1 реальный час = 1 игровой день).
+    /// Уменьши до 0.1–0.5 для более медленного хода времени.
+    /// </summary>
+    public static float GameMinutesPerRealSecond = 1f;
 
     public static float GameTime => gameTime;
 

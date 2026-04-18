@@ -75,6 +75,7 @@ public class DiceController : MonoBehaviour
         if (global::EchoRift.DiceSessionState.HasActiveSession)
         {
             playerName = global::EchoRift.DiceSessionState.PlayerName;
+            npcName = global::EchoRift.DiceSessionState.NpcName;
             currentCoins = global::EchoRift.DiceSessionState.CurrentCoins;
             currentBet = global::EchoRift.DiceSessionState.BetAmount;
             return;

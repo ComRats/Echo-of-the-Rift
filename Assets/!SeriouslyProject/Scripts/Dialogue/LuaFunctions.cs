@@ -20,6 +20,7 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("AddCoins", this, SymbolExtensions.GetMethodInfo(() => AddCoins(0)));
             Lua.RegisterFunction("RemoveCoins", this, SymbolExtensions.GetMethodInfo(() => RemoveCoins(0)));
             Lua.RegisterFunction("StartDiceGame", this, SymbolExtensions.GetMethodInfo(() => StartDiceGame(0)));
+            Lua.RegisterFunction("StartDiceGameWith", this, SymbolExtensions.GetMethodInfo(() => StartDiceGameWith(0, string.Empty)));
 
             Lua.RegisterFunction("GetStat", this, SymbolExtensions.GetMethodInfo(() => GetStat(string.Empty)));
             Lua.RegisterFunction("HasStat", this, SymbolExtensions.GetMethodInfo(() => HasStat(string.Empty, 0)));
@@ -146,6 +147,12 @@ namespace PixelCrushers.DialogueSystem
 
         public void StartDiceGame(double betAmount)
         {
+            StartDiceGameWith(betAmount, "Компьютер");
+        }
+
+        public void StartDiceGameWith(double betAmount, string npcName)
+        {
+            Debug.Log($"[StartDiceGame] Вызов: betAmount={betAmount}, npcName='{npcName}'");
             if (inventoryManager == null)
             {
                 Debug.LogWarning("[StartDiceGame] InventoryManager не найден!");
@@ -174,7 +181,7 @@ namespace PixelCrushers.DialogueSystem
             string playerName = GetCurrentPlayerName();
             string returnSceneName = SceneManager.GetActiveScene().name;
 
-            if (!global::EchoRift.DiceSessionState.TryStartSession(playerName, currentCoins, normalizedBet, returnSceneName))
+            if (!global::EchoRift.DiceSessionState.TryStartSession(playerName, currentCoins, normalizedBet, returnSceneName, npcName))
             {
                 DialogueLua.SetVariable("DiceCanStart", false);
                 DialogueLua.SetVariable("DiceBet", normalizedBet);
@@ -285,6 +292,7 @@ namespace PixelCrushers.DialogueSystem
             Lua.UnregisterFunction("AddCoins");
             Lua.UnregisterFunction("RemoveCoins");
             Lua.UnregisterFunction("StartDiceGame");
+            Lua.UnregisterFunction("StartDiceGameWith");
             Lua.UnregisterFunction("GetStat");
             Lua.UnregisterFunction("HasStat");
             Lua.UnregisterFunction("ShowAlert");
