@@ -3,11 +3,6 @@ using UnityEngine;
 
 public class FightNPC : BaseTrigger
 {
-    [Header("Coin Reward")]
-    [Tooltip("Монеты за победу (положительное значение). За поражение отнимаются.")]
-    [SerializeField] private int coinRewardOnWin = 0;
-    [SerializeField] private int coinPenaltyOnLose = 0;
-
     private void Start()
     {
         EventApply();
@@ -18,16 +13,17 @@ public class FightNPC : BaseTrigger
     {
         var wallet = GlobalLoader.Instance?.mainUI?.inventoryManager?.Wallet;
         if (wallet == null) return;
+    }
 
-        switch (Player.Result)
-        {
-            case FightResult.Win when coinRewardOnWin > 0:
-                wallet.AddCoins(coinRewardOnWin);
-                break;
+    public void AddCoins(int amount)
+    {
+        var wallet = GlobalLoader.Instance?.mainUI?.inventoryManager?.Wallet;
+        wallet?.AddCoins(amount);
+    }
 
-            case FightResult.Lose when coinPenaltyOnLose > 0:
-                wallet.TrySpendCoins(coinPenaltyOnLose);
-                break;
-        }
+    public void RemoveCoins(int amount)
+    {
+        var wallet = GlobalLoader.Instance?.mainUI?.inventoryManager?.Wallet;
+        wallet?.TrySpendCoins(amount);
     }
 }

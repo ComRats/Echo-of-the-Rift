@@ -234,13 +234,14 @@ namespace PixelCrushers.DialogueSystem
         public void IncludeInvalidEntries()
         {
             if (!DialogueManager.hasInstance) return;
-            DialogueManager.instance.isDialogueEntryValid = entry => true;
+            DialogueManager.displaySettings.inputSettings.includeInvalidEntries = true;
             DialogueManager.instance.conversationEnded += ResetIncludeInvalidEntries;
         }
 
         private void ResetIncludeInvalidEntries(Transform actor)
         {
-            DialogueManager.instance.isDialogueEntryValid = null;
+            if (DialogueManager.hasInstance)
+                DialogueManager.displaySettings.inputSettings.includeInvalidEntries = false;
             DialogueManager.instance.conversationEnded -= ResetIncludeInvalidEntries;
         }
 
