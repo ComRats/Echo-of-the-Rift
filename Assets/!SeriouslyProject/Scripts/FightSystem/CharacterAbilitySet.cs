@@ -49,6 +49,34 @@ public class CharacterAbilitySet : ScriptableObject
     }
 
     /// <summary>
+    /// Получить активные способности с учётом дополнительно разблокированных индексов из PlayerSaver.
+    /// Игнорирует activeAbilityIndices ScriptableObject — использует только defaultIndices + extraIndices.
+    /// </summary>
+    public List<CharacterAbility> GetActiveAbilities(int characterLevel, List<int> extraUnlockedIndices)
+    {
+        // Сначала берём дефолтные (isActiveByDefault = true, уровень подходит)
+        var result = abilities
+            .Where(a => a.isActiveByDefault && a.IsUnlocked(characterLevel))
+            .ToList();
+
+        // Добавляем разблокированные через диалог (без проверки уровня — игрок их заслужил)
+        if (extraUnlockedIndices != null)
+        {
+            foreach (int index in extraUnlockedIndices)
+            {
+                if (index >= 0 && index < abilities.Count)
+                {
+                    var ability = abilities[index];
+                    if (!result.Contains(ability))
+                        result.Add(ability);
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
     /// Получить способности по типу
     /// </summary>
     public List<CharacterAbility> GetAbilitiesByType(int characterLevel, AbilityType type)
@@ -75,5 +103,13 @@ public class CharacterAbilitySet : ScriptableObject
     public void DeactivateAbility(int abilityIndex)
     {
         activeAbilityIndices.Remove(abilityIndex);
+    }
+
+    /// <summary>
+    /// Проверить, разблокирована ли способность по имени
+    /// </summary>
+    public bool HasAbilityByName(string abilityName)
+    {
+        return abilities.Exists(a => a.ability != null && a.ability.AbilityName == abilityName);
     }
 }

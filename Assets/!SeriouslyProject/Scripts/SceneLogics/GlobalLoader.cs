@@ -240,6 +240,8 @@ public class GlobalLoader : MonoBehaviour
             shouldRestoreAfterIsolatedSceneLoad = false;
         }
 
+        RestoreUnlockedAbilities();
+
         if (scene.name != "Dice" && !isIsolatedSceneActive && EchoRift.DiceSessionState.HasActiveSession)
             EchoRift.DiceSessionState.Clear();
     }
@@ -404,6 +406,8 @@ public class GlobalLoader : MonoBehaviour
     {
         mainUI.inventoryManager.SaveInventory();
     }
+
+    private void RestoreUnlockedAbilities() { }
 
     public void RefreshPlayerDataFromCharacterData()
     {

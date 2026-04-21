@@ -9,8 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 31e3f9f0cba9f474985b0773994a360d, type: 3}
+  m_Script: {fileID: 0}
   m_Name: "\u041A\u0430\u043C\u0435\u043D\u0447\u044B\u043A"
   m_EditorClassIdentifier: 
-  _sprite: {fileID: 992282850, guid: 62ac10b75a33b5648aef1ef50de04c13, type: 3}
-  _speed: 1

@@ -1,5 +1,6 @@
 using FightSystem.Data;
 using PixelCrushers.DialogueSystem;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -17,6 +18,7 @@ namespace EchoRift
         public PlayerSaver playerSaver;
 
         public static FightResult Result = FightResult.None;
+        public static string LastFightTriggerID = string.Empty;
         public Vector3 startPosition;
 
         private void Awake()
@@ -51,9 +53,14 @@ namespace EchoRift
         public class PlayerSaver : EntityStats
         {
             [SerializeField] private string spritePath;
+            public List<string> unlockedAbilities = new List<string>();
+            public List<int> unlockedAbilityIndices = new List<int>();
 
             public void LoadFrom(CharacterData data)
             {
+                unlockedAbilities.Clear();
+                unlockedAbilityIndices.Clear();
+
                 Name = data.Name;
                 Description = data.Description;
 

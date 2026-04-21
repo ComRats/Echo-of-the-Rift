@@ -44,6 +44,8 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(gameSettings.openPauseMenuKey))
         {
+            if (!_mainUIInstance.canOpenUI) return;
+
             if (_mainUIInstance.shopUI != null && _mainUIInstance.shopUI.IsShopMode)
             {
                 _mainUIInstance.shopUI.CloseShop();

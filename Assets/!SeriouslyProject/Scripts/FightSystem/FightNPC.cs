@@ -1,4 +1,5 @@
 using EchoRift;
+using PixelCrushers.DialogueSystem;
 using UnityEngine;
 
 public class FightNPC : BaseTrigger
@@ -7,6 +8,13 @@ public class FightNPC : BaseTrigger
     {
         EventApply();
         ApplyCoinResult();
+    }
+
+    public void StartDialogue(string conversationName)
+    {
+        if (string.IsNullOrEmpty(conversationName)) return;
+        var player = GlobalLoader.Instance?.playerInstance;
+        DialogueManager.StartConversation(conversationName, player?.transform);
     }
 
     private void ApplyCoinResult()

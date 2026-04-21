@@ -10,7 +10,13 @@ public class TimeWeatherQuest : MonoBehaviour
     [SerializeField] private Image questImage;
     [SerializeField] private Image weatherImage;
 
+    [Header("Pause Blink")]
+    [SerializeField] private float blinkSpeed = 2f;
+    [SerializeField] private float minAlpha = 0.3f;
+
     private int currentDay = 1;
+    private bool isPaused = false;
+    private float blinkTimer = 0f;
 
     private void Awake()
     {
@@ -29,6 +35,17 @@ public class TimeWeatherQuest : MonoBehaviour
     private void Update()
     {
         UpdateTimeAndDay();
+        UpdateBlink();
+    }
+
+    private void UpdateBlink()
+    {
+        if (!isPaused || time == null) return;
+
+        blinkTimer += Time.unscaledDeltaTime * blinkSpeed;
+        float alpha = Mathf.Lerp(minAlpha, 1f, (Mathf.Sin(blinkTimer * Mathf.PI) + 1f) * 0.5f);
+        var c = time.color;
+        time.color = new Color(c.r, c.g, c.b, alpha);
     }
 
     private void UpdateTimeAndDay()
@@ -52,10 +69,20 @@ public class TimeWeatherQuest : MonoBehaviour
 
     private void OnGamePaused()
     {
+        isPaused = true;
+        blinkTimer = 0f;
     }
 
     private void OnGameResumed()
     {
+        isPaused = false;
+
+        if (time != null)
+        {
+            var c = time.color;
+            time.color = new Color(c.r, c.g, c.b, 1f);
+        }
+
         UpdateTimeAndDay();
     }
 

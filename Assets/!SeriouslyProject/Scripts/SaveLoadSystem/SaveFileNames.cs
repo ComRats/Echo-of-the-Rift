@@ -31,9 +31,9 @@ namespace EchoRift.EchoRiftSaveLoadSystem
             public float musicVolume = 1f;
             public float sfxVolume = 1f;
 
-            public float enemyTurnDelay = 1.5f;
+            public float enemyTurnDelay = 1f;
             public float enemyTurnSpeed = 1f;
-            public float loadingSceneSpeed = 1f;
+            public float loadingSceneSpeed = 3f;
 
             public KeyCode openInventoryKey = KeyCode.E;
             public KeyCode openPauseMenuKey = KeyCode.Escape;

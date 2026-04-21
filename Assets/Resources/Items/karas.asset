@@ -16,9 +16,16 @@ MonoBehaviour:
   itemName: karas
   itemGameName: "\u041A\u0430\u0440\u0430\u0441\u044C"
   itemType: 2
-  itemPrice: 5
+  itemPrice: 7
   description: 
   isStackable: 1
   maxStackSize: 16
   healthRestore: 3
   manaRestore: 0
+  bonusDamage: 0
+  bonusMagicDamage: 0
+  bonusArmor: 0
+  bonusMaxHealth: 0
+  bonusMaxMana: 0
+  bonusHeal: 0
+  bonusLucky: 0

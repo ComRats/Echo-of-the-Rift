@@ -26,6 +26,10 @@ namespace PixelCrushers.DialogueSystem
             Lua.RegisterFunction("HasStat", this, SymbolExtensions.GetMethodInfo(() => HasStat(string.Empty, 0)));
             Lua.RegisterFunction("ShowAlert", this, SymbolExtensions.GetMethodInfo(() => ShowAlert(string.Empty)));
             Lua.RegisterFunction("IncludeInvalidEntries", this, typeof(LuaFunctions).GetMethod(nameof(IncludeInvalidEntries)));
+            Lua.RegisterFunction("LockForTutorial", this, typeof(LuaFunctions).GetMethod(nameof(LockForTutorial)));
+            Lua.RegisterFunction("UnlockAfterTutorial", this, typeof(LuaFunctions).GetMethod(nameof(UnlockAfterTutorial)));
+            Lua.RegisterFunction("UnlockAbility", this, SymbolExtensions.GetMethodInfo(() => UnlockAbility(string.Empty)));
+            Lua.RegisterFunction("HasAbility", this, SymbolExtensions.GetMethodInfo(() => HasAbility(string.Empty)));
 
             DialogueLua.SetVariable("DiceCanStart", false);
             DialogueLua.SetVariable("DiceBet", 0);
@@ -245,6 +249,131 @@ namespace PixelCrushers.DialogueSystem
             DialogueManager.instance.conversationEnded += ResetIncludeInvalidEntries;
         }
 
+        /// <summary>
+        /// Блокирует весь UI и движение игрока для обучения/катсцен.
+        /// Вызывай в поле Script диалога: LockForTutorial()
+        /// </summary>
+        public void LockForTutorial()
+        {
+            var mainUI = GlobalLoader.Instance?.mainUI;
+            if (mainUI != null)
+            {
+                mainUI.LockForTutorial();
+                Debug.Log("[LuaFunctions] UI заблокирован для обучения");
+            }
+            else
+            {
+                Debug.LogWarning("[LuaFunctions] MainUI не найден для блокировки");
+            }
+        }
+
+        /// <summary>
+        /// Снимает блокировку после обучения/катсцены.
+        /// Вызывай в поле Script диалога: UnlockAfterTutorial()
+        /// </summary>
+        public void UnlockAfterTutorial()
+        {
+            var mainUI = GlobalLoader.Instance?.mainUI;
+            if (mainUI != null)
+            {
+                mainUI.UnlockAfterTutorial();
+                Debug.Log("[LuaFunctions] UI разблокирован после обучения");
+            }
+            else
+            {
+                Debug.LogWarning("[LuaFunctions] MainUI не найден для разблокировки");
+            }
+        }
+
+        /// <summary>
+        /// Разблокирует способность игроку по имени.
+        /// Вызывай в поле Script диалога: UnlockAbility("RudeBlow")
+        /// Имя должно совпадать с именем объекта BattleAbility (не AbilityName, а название ассета).
+        /// </summary>
+        public void UnlockAbility(string abilityName)
+        {
+            var player = GlobalLoader.Instance?.playerInstance;
+            if (player == null)
+            {
+                Debug.LogWarning("[UnlockAbility] playerInstance не найден!");
+                return;
+            }
+
+            // Ищем CharacterAbilitySet через Team → первый персонаж
+            var team = player.GetComponent<Team>();
+            if (team == null || team.characters.Count == 0)
+            {
+                Debug.LogWarning("[UnlockAbility] Team не найден!");
+                return;
+            }
+
+            var abilitySet = team.characters[0].GetCharacterData()?.AbilitySet;
+            if (abilitySet == null)
+            {
+                // Пробуем напрямую через characterData поле
+                abilitySet = team.characters[0].characterData?.AbilitySet;
+            }
+            if (abilitySet == null)
+            {
+                Debug.LogWarning("[UnlockAbility] AbilitySet не найден!");
+                return;
+            }
+
+            // Ищем индекс способности по имени ассета или AbilityName
+            int index = -1;
+            for (int i = 0; i < abilitySet.abilities.Count; i++)
+            {
+                var a = abilitySet.abilities[i];
+                if (a.ability == null) continue;
+                if (a.ability.name == abilityName || a.ability.AbilityName == abilityName)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index == -1)
+            {
+                Debug.LogWarning($"[UnlockAbility] Способность '{abilityName}' не найдена в AbilitySet. Доступные: {string.Join(", ", System.Linq.Enumerable.Select(abilitySet.abilities, a => a.ability?.name + "/" + a.ability?.AbilityName))}");
+                return;
+            }
+
+            // Добавляем в activeAbilityIndices ScriptableObject
+            abilitySet.ActivateAbility(index);
+
+            // Сохраняем в PlayerSaver чтобы пережило перезапуск
+            var saver = player.playerSaver;
+            if (!saver.unlockedAbilityIndices.Contains(index))
+                saver.unlockedAbilityIndices.Add(index);
+
+            Debug.Log($"[UnlockAbility] Способность '{abilityName}' (индекс {index}) разблокирована");
+        }
+
+        /// <summary>
+        /// Проверяет, разблокирована ли способность у игрока.
+        /// </summary>
+        public bool HasAbility(string abilityName)
+        {
+            var player = GlobalLoader.Instance?.playerInstance;
+            if (player == null) return false;
+
+            var team = player.GetComponent<Team>();
+            if (team == null || team.characters.Count == 0) return false;
+
+            var abilitySet = team.characters[0].GetCharacterData()?.AbilitySet;
+            if (abilitySet == null) return false;
+
+            for (int i = 0; i < abilitySet.abilities.Count; i++)
+            {
+                var a = abilitySet.abilities[i];
+                if (a.ability == null) continue;
+                if ((a.ability.name == abilityName || a.ability.AbilityName == abilityName)
+                    && abilitySet.activeAbilityIndices.Contains(i))
+                    return true;
+            }
+            return false;
+        }
+
         private void ResetIncludeInvalidEntries(Transform actor)
         {
             if (DialogueManager.hasInstance)
@@ -297,6 +426,10 @@ namespace PixelCrushers.DialogueSystem
             Lua.UnregisterFunction("HasStat");
             Lua.UnregisterFunction("ShowAlert");
             Lua.UnregisterFunction("IncludeInvalidEntries");
+            Lua.UnregisterFunction("LockForTutorial");
+            Lua.UnregisterFunction("UnlockAfterTutorial");
+            Lua.UnregisterFunction("UnlockAbility");
+            Lua.UnregisterFunction("HasAbility");
         }
     }
 }

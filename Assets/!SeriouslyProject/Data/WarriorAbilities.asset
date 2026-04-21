@@ -23,4 +23,9 @@ MonoBehaviour:
     abilityType: 1
     abilityIcon: {fileID: 0}
     isActiveByDefault: 1
+  - ability: {fileID: 11400000, guid: 9f9d62fcca659794d98e97e6b4ce3aa4, type: 2}
+    requiredLevel: 2
+    abilityType: 0
+    abilityIcon: {fileID: 0}
+    isActiveByDefault: 1
   activeAbilityIndices: 0000000001000000020000000300000004000000

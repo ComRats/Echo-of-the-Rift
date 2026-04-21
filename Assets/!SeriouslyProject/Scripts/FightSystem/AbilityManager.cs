@@ -39,7 +39,9 @@ public class AbilityManager : MonoBehaviour
             return;
         }
 
-        var activeAbilities = character.AbilitySet.GetActiveAbilities(character.Level);
+        // Берём разблокированные индексы из PlayerSaver
+        List<int> extraIndices = GlobalLoader.Instance?.playerInstance?.playerSaver?.unlockedAbilityIndices;
+        var activeAbilities = character.AbilitySet.GetActiveAbilities(character.Level, extraIndices);
 
         foreach (var charAbility in activeAbilities)
         {

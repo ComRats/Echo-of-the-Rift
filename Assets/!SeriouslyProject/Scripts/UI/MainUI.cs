@@ -294,4 +294,37 @@ public class MainUI : MonoBehaviour
         isOpenUI = false;
         canOpenUI = true;
     }
+
+    /// <summary>
+    /// Блокирует весь UI и движение игрока для обучения/катсцен.
+    /// Останавливает игровое время.
+    /// </summary>
+    public void LockForTutorial()
+    {
+        canOpenUI = false;
+
+        // Закрыть всё открытое
+        if (isOpenUI) CloseInventory();
+        if (pauseMenu != null && pauseMenu.isActive) pauseMenu.ClosePauseMenu();
+        if (questLogWindow != null && questLogWindow.isOpen) questLogWindow.Close();
+
+        // Запретить движение
+        var movement = FindObjectOfType<Movement>();
+        if (movement != null) movement.CanMoveFalse();
+
+        GameTimer.PauseGame();
+    }
+
+    /// <summary>
+    /// Снимает блокировку после обучения/катсцены.
+    /// </summary>
+    public void UnlockAfterTutorial()
+    {
+        canOpenUI = true;
+
+        var movement = FindObjectOfType<Movement>();
+        if (movement != null) movement.CanMoveTrue();
+
+        GameTimer.ResumeGame();
+    }
 }

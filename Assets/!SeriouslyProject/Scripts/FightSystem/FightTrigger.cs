@@ -15,6 +15,16 @@ public class FightTrigger : MonoBehaviour
     [Header("OtherSettings")]
     [SerializeField] private SceneLoader sceneLoader;
 
+    [Header("Trigger Identity")]
+    [SerializeField] private string triggerID;
+
+    private void OnValidate()
+    {
+        // Автогенерация ID если пустой
+        if (string.IsNullOrEmpty(triggerID))
+            triggerID = System.Guid.NewGuid().ToString();
+    }
+
     [Header("EnemyFightSettings")]
     [ListDrawerSettings(ShowIndexLabels = true, DraggableItems = true)]
     [SerializeField] private List<EnemiesSettings> enemies = new List<EnemiesSettings>();
@@ -69,6 +79,7 @@ public class FightTrigger : MonoBehaviour
 
     private void EnterTrigger()
     {
+        EchoRift.Player.LastFightTriggerID = triggerID;
         SaveEnemiesToFile();
         SaveCharactersToFile();
     }

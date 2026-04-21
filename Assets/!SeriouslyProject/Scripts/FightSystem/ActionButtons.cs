@@ -76,7 +76,7 @@ public class ActionButtons : MonoBehaviour
         {
             if (!character.IsTurn)
             {
-                Debug.Log("Не ваш ход!");
+                //Debug.Log("Не ваш ход!");
                 return;
             }
         }

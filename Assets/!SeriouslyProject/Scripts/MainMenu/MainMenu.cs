@@ -61,7 +61,19 @@ public class MainMenu : MonoBehaviour
         DialogueSaveManager.Delete();
 
         if (GlobalLoader.Instance != null)
+        {
             GlobalLoader.Instance.mainUI.inventoryManager.ResetForNewGame();
+
+            // Сбрасываем playerSaver в памяти, чтобы старые разблокированные способности не переносились
+            var player = GlobalLoader.Instance.playerInstance;
+            if (player != null)
+            {
+                var humanData = Resources.Load<FightSystem.Data.CharacterData>("CharacterData/Human");
+                player.playerSaver = new EchoRift.Player.PlayerSaver();
+                if (humanData != null)
+                    player.playerSaver.LoadFrom(humanData);
+            }
+        }
         else
             inventoryData.Clear();
 

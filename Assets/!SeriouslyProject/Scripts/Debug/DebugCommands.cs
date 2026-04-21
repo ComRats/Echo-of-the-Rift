@@ -85,6 +85,16 @@ public static class DebugCommands
         DebugLogConsole.AddCommand          ("time.evening",  "Пропустить до вечера (18:00)",              SkipToEvening);
         DebugLogConsole.AddCommand<int,int> ("time.set",      "Установить время (hour [minute])",          SetTime);
 
+        DebugLogConsole.AddCommand<string>  ("quest.state",   "Показать состояние квеста",                 QuestState);
+        DebugLogConsole.AddCommand<string,string>("quest.set","Установить состояние квеста (name state)",  QuestSet);
+        DebugLogConsole.AddCommand          ("quest.all",     "Показать все квесты и их состояния",        QuestAll);
+        DebugLogConsole.AddCommand<string>  ("dialogue.start","Запустить диалог по имени",                 DialogueStart);
+        DebugLogConsole.AddCommand          ("dialogue.stop", "Остановить текущий диалог",                 DialogueStop);
+        DebugLogConsole.AddCommand          ("dialogue.info", "Показать текущий активный диалог",          DialogueInfo);
+        DebugLogConsole.AddCommand<string>  ("lua.run",       "Выполнить Lua-скрипт",                      LuaRun);
+        DebugLogConsole.AddCommand<string>  ("lua.var",       "Показать значение Lua-переменной",          LuaVar);
+        DebugLogConsole.AddCommand<string,string>("lua.set",  "Установить Lua-переменную (name value)",    LuaSet);
+
         Debug.Log("[DebugCommands] Зарегистрировано. Введите 'help' для списка команд.");
     }
 
@@ -359,5 +369,108 @@ public static class DebugCommands
         var tm = GetTimeManager();
         if (tm == null) { Debug.LogWarning("[Time] TimeManager не найден"); return; }
         tm.SetTime(hour, minute);
+    }
+
+    // ── Диалоги и квесты ──────────────────────────────────────────────────────
+
+    static void QuestState(string questName)
+    {
+        var state = PixelCrushers.DialogueSystem.QuestLog.GetQuestState(questName);
+        Debug.Log($"[Quest] '{questName}' → {state}");
+    }
+
+    static void QuestSet(string questName, string state)
+    {
+        // Допустимые значения: unassigned, active, success, failure, abandoned, grantable, returnToNPC
+        if (!System.Enum.TryParse<PixelCrushers.DialogueSystem.QuestState>(state, true, out var questState))
+        {
+            Debug.LogWarning($"[Quest] Неизвестное состояние '{state}'. Допустимые: unassigned, active, success, failure, abandoned");
+            return;
+        }
+        PixelCrushers.DialogueSystem.QuestLog.SetQuestState(questName, questState);
+        Debug.Log($"[Quest] '{questName}' → {questState}");
+    }
+
+    static void QuestAll()
+    {
+        var db = PixelCrushers.DialogueSystem.DialogueManager.masterDatabase;
+        if (db == null) { Debug.LogWarning("[Quest] База диалогов не найдена"); return; }
+        foreach (var item in db.items)
+        {
+            if (!item.IsItem)
+            {
+                var state = PixelCrushers.DialogueSystem.QuestLog.GetQuestState(item.Name);
+                Debug.Log($"[Quest] {item.Name} → {state}");
+            }
+        }
+    }
+
+    static void DialogueStart(string conversationName)
+    {
+        var player = Player;
+        if (!PixelCrushers.DialogueSystem.DialogueManager.HasInstance)
+        {
+            Debug.LogWarning("[Dialogue] DialogueManager не найден");
+            return;
+        }
+        Debug.Log($"[Dialogue] Запуск '{conversationName}'");
+        PixelCrushers.DialogueSystem.DialogueManager.StartConversation(conversationName, player?.transform);
+    }
+
+    static void DialogueStop()
+    {
+        if (!PixelCrushers.DialogueSystem.DialogueManager.HasInstance) return;
+        PixelCrushers.DialogueSystem.DialogueManager.StopConversation();
+        Debug.Log("[Dialogue] Диалог остановлен");
+    }
+
+    static void DialogueInfo()
+    {
+        if (!PixelCrushers.DialogueSystem.DialogueManager.HasInstance)
+        {
+            Debug.Log("[Dialogue] DialogueManager не найден");
+            return;
+        }
+        bool active = PixelCrushers.DialogueSystem.DialogueManager.IsConversationActive;
+        if (active)
+        {
+            var title = PixelCrushers.DialogueSystem.DialogueManager.lastConversationStarted;
+            Debug.Log($"[Dialogue] Активен: '{title}'");
+        }
+        else
+        {
+            Debug.Log("[Dialogue] Нет активного диалога");
+        }
+    }
+
+    static void LuaRun(string script)
+    {
+        var result = PixelCrushers.DialogueSystem.Lua.Run(script, true, true);
+        Debug.Log($"[Lua] Выполнено: {script}\n→ {result}");
+    }
+
+    static void LuaVar(string varName)
+    {
+        var val = PixelCrushers.DialogueSystem.DialogueLua.GetVariable(varName);
+        Debug.Log($"[Lua] {varName} = {val}");
+    }
+
+    static void LuaSet(string varName, string value)
+    {
+        // Пробуем число, потом bool, потом строку
+        if (double.TryParse(value, System.Globalization.NumberStyles.Any,
+            System.Globalization.CultureInfo.InvariantCulture, out double num))
+        {
+            PixelCrushers.DialogueSystem.DialogueLua.SetVariable(varName, num);
+        }
+        else if (bool.TryParse(value, out bool b))
+        {
+            PixelCrushers.DialogueSystem.DialogueLua.SetVariable(varName, b);
+        }
+        else
+        {
+            PixelCrushers.DialogueSystem.DialogueLua.SetVariable(varName, value);
+        }
+        Debug.Log($"[Lua] {varName} = {value}");
     }
 }
