@@ -28,6 +28,9 @@ public static class DebugCommands
 #if !UNITY_EDITOR && !DEVELOPMENT_BUILD
         return;
 #endif
+        var allSettings = Resources.FindObjectsOfTypeAll<GameSettings>();
+        if (allSettings.Length > 0 && !allSettings[0].showDebugConsole) return;
+
         var prefab = Resources.Load<GameObject>("AutoCreateObjects/IngameDebugConsole");
         if (prefab == null)
         {

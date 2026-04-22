@@ -6,6 +6,10 @@ using Zenject;
 [CreateAssetMenu(fileName = "GameSettings", menuName = "Installers/GameSettings")]
 public class GameSettings : ScriptableObjectInstaller<GameSettings>
 {
+    [Header("Debug")]
+    [Tooltip("Показывать игровую консоль (IngameDebugConsole) в Editor и Development Build")]
+    public bool showDebugConsole = true;
+
     [Header("UI Settings")]
     public KeyCode openInvenoryKey = KeyCode.E;
     public KeyCode openPauseMenuKey = KeyCode.Escape;
