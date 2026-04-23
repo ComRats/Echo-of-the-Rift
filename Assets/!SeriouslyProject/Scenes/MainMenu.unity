@@ -2936,6 +2936,13 @@ MonoBehaviour:
       _isSceneEnabledInBuildSettings: 1
     musicNames:
     - Camp1
+  - scene:
+      Scene: {fileID: 102900000, guid: 27c91897e6b225b4b89a430d6f14a966, type: 3}
+      SceneName: TestScene
+      _sceneIndexInBuildSettings: 2
+      _isSceneEnabledInBuildSettings: 1
+    musicNames:
+    - Battle1
   fadeDuration: 1.5
   normalVolume: 1
   pausedVolume: 0.3

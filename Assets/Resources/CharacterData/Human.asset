@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _name: Human
   _description: Human
-  _sprite: {fileID: 862427899, guid: 0a51a8ee9d846b9428a48924d15a35ce, type: 3}
+  _sprite: {fileID: 21300000, guid: 9c5de9b0a39838b42b235b175e745f1c, type: 3}
   _damage: 0
   _magicDamage: 0
   _priority: 0

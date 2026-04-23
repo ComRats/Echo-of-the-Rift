@@ -1369,9 +1369,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4963530579156132911}
   - component: {fileID: 5008593237249819487}
-  - component: {fileID: 7927453354154011553}
+  - component: {fileID: 6614823660078674278}
   m_Layer: 5
-  m_Name: SVG Image
+  m_Name: PlayerImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1386,8 +1386,8 @@ RectTransform:
   m_GameObject: {fileID: 1277846513081113776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.8, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1804066498545272176}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1404,7 +1404,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1277846513081113776}
   m_CullTransparentMesh: 1
---- !u!114 &7927453354154011553
+--- !u!114 &6614823660078674278
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1413,7 +1413,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1277846513081113776}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef8b96895a0ec4ba685178a052544251, type: 3}
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -1424,8 +1424,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 3286163911610860551, guid: 0bc50712dc338694b83b3154c65c5ad6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9c5de9b0a39838b42b235b175e745f1c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &1465079840471085890
 GameObject:
   m_ObjectHideFlags: 0
