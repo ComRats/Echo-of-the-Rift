@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b444c0b03aeacc043a507ad7ac13e493, type: 3}
   m_Name: GameSettings
   m_EditorClassIdentifier: 
-  showDebugConsole: 0
+  showDebugConsole: 1
   openInvenoryKey: 101
   openPauseMenuKey: 27
   useButton: 102
@@ -74,6 +74,6 @@ MonoBehaviour:
     spriteIndex: 35
   - key: 9
     spriteIndex: 36
-  enemyTurnDelay: 0.5
-  enemyTurnSpeed: 0.5
-  loadingSceneSpeed: 1
+  enemyTurnDelay: 1
+  enemyTurnSpeed: 1
+  loadingSceneSpeed: 3

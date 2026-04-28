@@ -11102,7 +11102,7 @@ MonoBehaviour:
         typeString: 
       - title: Sequence
         value: "ScreenFade(in); SetActive(\u041C\u0430\u0440\u043A\u0438\u0442\u0430\u043D\u0442,true);
-          ScreenFade(out)\r@2"
+          ScreenFade(out)\r@2;\nSetActive(InfoTriggerShop,false);\nSetActive(\u041C\u0430\u0440\u043A\u0438\u0442\u0430\u043D\u0442,true)"
         type: 0
         typeString: 
       conversationID: 12
@@ -12437,7 +12437,7 @@ MonoBehaviour:
         width: 160
         height: 30
     entryGroups: []
-    canvasScrollPosition: {x: 61.501484, y: 0}
+    canvasScrollPosition: {x: 108.64441, y: 71.42853}
     canvasZoom: 0.7000001
   - id: 13
     fields:

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c551596197fcb154583b3d48c417793e
+guid: 36f089206fc03d24bb0e82a2a7c26971
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,13 +123,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: wtraider_0
+      name: wtraider (2)_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 623
-        height: 1337
+        height: 1341
       alignment: 9
       pivot: {x: 0.5, y: 0.02}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -137,50 +137,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6115ad117f1a2e4da398558fc325e58
-      internalID: 1393397627
+      spriteID: 6b3de83960dbc35428837e62c9f1afdf
+      internalID: -1099042290
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: wtraider_1
+      name: wtraider (2)_1
       rect:
         serializedVersion: 2
-        x: 728
-        y: 0
-        width: 454
-        height: 1337
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5562fdab0cfd4b0459d848ca4d07211c
-      internalID: -1575976964
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: wtraider_2
-      rect:
-        serializedVersion: 2
-        x: 1170
-        y: 2
-        width: 630
-        height: 1335
+        x: 748
+        y: 18
+        width: 469
+        height: 1296
       alignment: 9
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0.5, y: 0.02}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58fcd80d3e8506142a8a9db2c83ef256
-      internalID: 724172852
+      spriteID: b604235a75415d4419fb241231417306
+      internalID: 302959782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: wtraider (2)_2
+      rect:
+        serializedVersion: 2
+        x: 1335
+        y: 0
+        width: 626
+        height: 1341
+      alignment: 9
+      pivot: {x: 0.5, y: 0.02}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e045f1eb3eb946743914d952e3a5e988
+      internalID: 1042843748
       vertices: []
       indices: 
       edges: []
@@ -196,9 +196,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      wtraider_0: 1393397627
-      wtraider_1: -1575976964
-      wtraider_2: 724172852
+      wtraider (2)_0: -1099042290
+      wtraider (2)_1: 302959782
+      wtraider (2)_2: 1042843748
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
